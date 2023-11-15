@@ -1,7 +1,7 @@
 export default function Page() {
     return (
       <main>
-        <p>메인 페이지</p>
+        <p>서비스 관리자 페이지</p>
       </main>
     );
   }
