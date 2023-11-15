@@ -1,0 +1,51 @@
+@keyframes moveLeftLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@mixin loop {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 20px;
+  padding-right: 20px;
+  animation: moveLeftLoop 40s linear infinite;
+}
+
+.bandBannerContainer {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 50px;
+  background-color: #000;
+  overflow: hidden;
+
+  .loopWrapper {
+    @include loop;
+  }
+
+  .loopWrapperCopy {
+    @include loop;
+  }
+
+  .textWrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    .text {
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+
+    .icon {
+      color: #fff;
+      font-size: 18px;
+    }
+  }
+}
