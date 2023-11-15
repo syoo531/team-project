@@ -1,3 +1,6 @@
+import "../styles/reset.scss";
+import "../styles/global.scss";
+
 export const metadata = {
   title: "pop.spot!",
   description: "pop-up service",
@@ -6,9 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

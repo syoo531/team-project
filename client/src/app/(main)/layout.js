@@ -1,8 +1,12 @@
-export default function RootLayout({ children }) {
+import BandBanner from "./components/bandBanner/BandBanner";
+import Header from "./components/header/Header";
+
+export default function HomeLayout({ children }) {
   return (
-    <main>
-      <h1>HEADER</h1>
+    <div>
+      <BandBanner />
+      <Header />
       {children}
-    </main>
+    </div>
   );
 }

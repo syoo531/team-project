@@ -1,7 +1,5 @@
-export default function Page() {
-    return (
-      <main>
-        <p>메인 페이지</p>
-      </main>
-    );
-  }
+import "./home.scss";
+
+export default function Home() {
+  return <div className="home"></div>;
+}

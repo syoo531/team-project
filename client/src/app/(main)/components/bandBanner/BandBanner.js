@@ -7,7 +7,7 @@ const textArray = new Array(10).fill(text);
 
 export default function BandBanner() {
   return (
-    <div className="bandBannerContainer">
+    <div className="bandBanner">
       <div className="loopWrapper">
         {textArray.map((text, index) => (
           <div className="textWrapper" key={index}>

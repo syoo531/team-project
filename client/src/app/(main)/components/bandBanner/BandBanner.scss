@@ -16,11 +16,11 @@
   animation: moveLeftLoop 40s linear infinite;
 }
 
-.bandBannerContainer {
+.bandBanner {
   display: flex;
   flex-wrap: nowrap;
   height: 50px;
-  background-color: #000;
+  background-color: #222;
   overflow: hidden;
 
   .loopWrapper {
