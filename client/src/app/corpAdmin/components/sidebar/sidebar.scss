@@ -1,0 +1,25 @@
+/* components/Sidebar.module.scss */
+.sidebar {
+  background: #333;
+  color: white;
+  padding: 1rem;
+  width: 200px;
+  height: 100vh;
+  flex-shrink: 0;
+
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+
+      &:hover {
+        background-color: #444;
+      }
+    }
+  }
+}
