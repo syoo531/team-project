@@ -1,9 +1,24 @@
 "use client";
 import "./page.scss";
+import React, { useState } from "react";
+import axios from "axios";
 
 export default function Login() {
-  const handleLogin = (e) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/users/login",
+        { email, password }
+      );
+      if (response.status === 200) {
+        window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
+      }
+    } catch (error) {
+      console.error(error); // 에러 처리
+    }
   };
 
   return (
@@ -13,12 +28,20 @@ export default function Login() {
         <div className="loginInputContainer">
           <form className="loginForm" onSubmit={handleLogin}>
             <div className="loginText">이메일 주소</div>
-            <input className="loginInput" type="email" required />
+            <input
+              className="loginInput"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
             <div className="loginText">비밀번호</div>
             <input
               className="loginInput"
               id="password"
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <button className="loginBtn" type="submit">
