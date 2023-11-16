@@ -1,0 +1,143 @@
+@keyframes moveLeftLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes moveRightLoop {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@mixin Rolling {
+  align-items: center;
+  flex-shrink: 0;
+  display: flex;
+  gap: 50px;
+}
+
+.rollingBanner {
+  margin-bottom: 150px;
+  overflow: hidden;
+
+  .contentWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    text-align: center;
+    margin-bottom: 50px;
+
+    .title {
+      color: #222;
+      font-size: 50px;
+      font-weight: 700;
+    }
+
+    .subTitle {
+      color: #222;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    .viewBtn {
+      padding: 16px 30px;
+      border: 2px solid #222;
+      border-radius: 50px;
+      background-color: #222;
+      color: #fff;
+      transition: 0.5s;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #fff;
+        color: #222;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .leftRollingWrapper {
+    display: flex;
+    margin-bottom: 40px;
+
+    .moveToLeftRolling {
+      @include Rolling;
+      padding-right: 50px;
+      animation: moveLeftLoop 40s linear infinite;
+    }
+
+    .moveToLeftRollingCopy {
+      @include Rolling;
+      padding-right: 50px;
+      animation: moveLeftLoop 40s linear infinite;
+    }
+
+    .stop {
+      animation-play-state: paused;
+    }
+  }
+
+  .rightRollingWrapper {
+    display: flex;
+    justify-content: flex-end;
+
+    .moveToRightRolling {
+      @include Rolling;
+      padding-left: 50px;
+      animation: moveRightLoop 40s linear infinite;
+    }
+
+    .moveToRightRollingCopy {
+      @include Rolling;
+      padding-left: 50px;
+      animation: moveRightLoop 40s linear infinite;
+    }
+
+    .stop {
+      animation-play-state: paused;
+    }
+  }
+
+  .popUpImg {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    border-radius: 12px;
+    background-image: url("https://user-images.githubusercontent.com/126956430/283044460-29d638e3-b93a-49aa-bdc6-addbbdfacffc.png");
+    background-size: cover;
+    background-position: center;
+    transition: 0.5s;
+
+    .blackBackGround {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background-color: #222;
+      opacity: 0;
+      transition: 0.5s;
+    }
+
+    &:nth-child(even) {
+      width: 220x;
+      height: 220px;
+    }
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(0.96);
+
+      .blackBackGround {
+        opacity: 0.5;
+      }
+    }
+  }
+}
