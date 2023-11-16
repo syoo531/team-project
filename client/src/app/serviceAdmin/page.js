@@ -1,6 +1,6 @@
 // 서비스 관리자 페이지
 //import StoreForm from "./_components/StoreForm.js";
-import PopupStoreList from "./_components/PopupStoreList";
+import PopupStoreList from "./components/PopupStoreList";
 
 async function getData() {
   try {
@@ -14,7 +14,7 @@ async function getData() {
 }
 
 export default async function ServiceAdmin() {
-  const {data}  = await getData();
+  const { data } = await getData();
   console.log(data);
   return (
     <main>

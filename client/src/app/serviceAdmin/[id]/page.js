@@ -1,4 +1,4 @@
-import StoreForm from "../_components/StoreForm";
+import StoreForm from "../components/StoreForm";
 
 async function getData(id) {
   try {

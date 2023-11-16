@@ -3,6 +3,7 @@
 import "./styles.scss";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { deleteImageS3 } from "./imageUploader";
 import axios from "axios";
 
 export default function PopupStoreList({ storeData: stores }) {
@@ -27,7 +28,6 @@ export default function PopupStoreList({ storeData: stores }) {
       );
       console.log(data);
       router.refresh();
-      // fetchStoreData();
     } catch (err) {
       console.log(err);
     }
@@ -54,25 +54,26 @@ export default function PopupStoreList({ storeData: stores }) {
           </tr>
         </thead>
         <tbody>
-          {stores && stores?.map((store) => (
-            <tr key={store._id}>
-              <td>{store.name}</td>
-              <td>{store.brand}</td>
-              <td>{store.category}</td>
-              <td>{store.address}</td>
-              <td>{store.location}</td>
-              <td>{store.start_date}</td>
-              <td>{store.end_date}</td>
-              <td>
-                <button
-                  onClick={() => router.push(`/serviceAdmin/${store._id}`)}
-                >
-                  수정
-                </button>
-                <button onClick={() => handleDelete(store._id)}>삭제</button>
-              </td>
-            </tr>
-          ))}
+          {stores &&
+            stores?.map((store) => (
+              <tr key={store._id}>
+                <td>{store.name}</td>
+                <td>{store.brand}</td>
+                <td>{store.category}</td>
+                <td>{store.address}</td>
+                <td>{store.location}</td>
+                <td>{store.start_date}</td>
+                <td>{store.end_date}</td>
+                <td>
+                  <button
+                    onClick={() => router.push(`/serviceAdmin/${store._id}`)}
+                  >
+                    수정
+                  </button>
+                  <button onClick={() => handleDelete(store._id)}>삭제</button>
+                </td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
