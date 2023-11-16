@@ -23,6 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", userRouter);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is listening Port on ${process.env.PORT}`);
+app.listen(4000, () => {
+  console.log(`Server is listening Port on 4000`);
 });

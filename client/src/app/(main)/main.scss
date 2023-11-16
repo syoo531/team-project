@@ -1,0 +1,27 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.home {
+  .video {
+    width: 92%;
+    height: 500px;
+    margin: 30px auto 120px;
+    border: 2px solid #222;
+  }
+  .popUpBtn {
+    position: fixed;
+    left: 50px;
+    bottom: 40px;
+    width: 110px;
+    animation: rotate 10s linear infinite;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
