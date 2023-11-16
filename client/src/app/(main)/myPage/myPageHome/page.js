@@ -1,8 +1,8 @@
 // 마이페이지
-import "./ReservationList.scss";
+import "./page.scss";
 import Link from "next/link";
 
-export default function ReservationList() {
+export default function MyPageHome() {
   return (
     <div className="menuMainContainer">
       <div className="menuContainer">
