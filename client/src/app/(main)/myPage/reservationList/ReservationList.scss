@@ -1,0 +1,81 @@
+.menuMainContainer {
+  display: flex;
+  margin-top: 50px;
+}
+
+.menuContainer {
+  background-color: black;
+  width: 200px;
+  height: 1000px;
+  padding-top: 50px;
+}
+
+.mainContainer {
+  flex: column;
+  margin-left: 50px;
+}
+
+.menuText {
+  width: 150px;
+  color: white;
+  font-size: 17px;
+  margin: 50px;
+  text-decoration-line: none;
+}
+
+.menuTextWrapper {
+  margin-top: 8px;
+}
+
+.waitingReviewContainer {
+  display: flex;
+}
+
+.waitingContainer {
+  background-color: white;
+  width: 500px;
+  height: 600px;
+  padding: 20px 20px 20px;
+  border: 1px solid black;
+  margin-right: 50px;
+}
+
+.popUpStoreName {
+}
+
+.popUpStoreWaitingTitle {
+}
+
+.popUpStoreWaitingNum {
+}
+
+.popUpStoreWaitingTimeTitle {
+}
+
+.popUpStoreWaitingTimeNum {
+}
+
+.reviewContainer {
+  background-color: white;
+  width: 500px;
+  height: 600px;
+  padding: 20px 20px 20px;
+  border: 1px solid black;
+}
+
+.reviewTitle {
+  text-align: center;
+}
+
+.favPopUpStore {
+  background-color: white;
+  width: 1050px;
+  height: 600px;
+  padding: 20px 20px 20px;
+  border: 1px solid black;
+  margin-top: 50px;
+}
+
+.favPopUpStoreTitle {
+  text-align: center;
+}
