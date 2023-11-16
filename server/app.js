@@ -6,6 +6,8 @@ dotenv.config();
 const connectDB = require("./config/DBConnection");
 const userRouter = require("./routes/userRouter");
 const errorHandler = require("./middlewares/errorHandler");
+const popupStoreRouter = require("./routes/popupStoreRouter")
+
 
 connectDB();
 const app = express();
@@ -15,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", userRouter);
+app.use("/popupStore", popupStoreRouter)
 
 app.use(errorHandler); // 에러 처리 미들웨어
 

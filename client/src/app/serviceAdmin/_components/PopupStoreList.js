@@ -54,7 +54,7 @@ export default function PopupStoreList({ storeData: stores }) {
           </tr>
         </thead>
         <tbody>
-          {stores?.map((store) => (
+          {stores && stores?.map((store) => (
             <tr key={store._id}>
               <td>{store.name}</td>
               <td>{store.brand}</td>

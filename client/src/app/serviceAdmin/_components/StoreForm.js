@@ -35,14 +35,12 @@ const StoreForm = ({ storeData, storeId }) => {
     main_image_url: storeData?.image?.main_image_url || null,
     thumbnail_image_url: storeData?.image?.thumbnail_image_url || null,
     detail_image_url: storeData?.image?.detail_image_url || null,
-  }
+  };
 
   const [form, setForm] = useState(formIntialState);
   const [images, setimages] = useState(imageInitialState);
   const [error, setError] = useState({});
   const [showImages, setShowImages] = useState(showImagesInitial);
-
-  console.log(images)
 
   const client = new S3Client({
     region: "ap-southeast-2",
@@ -64,12 +62,10 @@ const StoreForm = ({ storeData, storeId }) => {
         Body: file,
         ContentType: file.type,
       });
+      await client.send(command);
 
-      const response = await client.send(command);
-      console.log("res from s3", response);
-
-      if (storeId) await deleteImageS3(showImages[image])
-      console.log(showImages[image])
+      if (storeId) await deleteImageS3(showImages[image]);
+      console.log("image to delete", showImages[image]);
 
       imageURL = {
         ...imageURL,
@@ -80,14 +76,14 @@ const StoreForm = ({ storeData, storeId }) => {
   };
 
   const deleteImageS3 = async (imageUrl) => {
-    console.log("url to delete", imageUrl)
+    console.log("url to delete", imageUrl);
     const input = {
       Bucket: "mybucket-elice",
       Key: imageUrl.split("/").pop().toString(),
     };
     const command = new DeleteObjectCommand(input);
     const response = await client.send(command);
-    console.log("res from delete s3", response)
+    console.log("delete response from s3", response);
     return response;
   };
 
@@ -104,10 +100,9 @@ const StoreForm = ({ storeData, storeId }) => {
     e.preventDefault();
     try {
       if (storeId) {
-        console.log("click")
-        const updatedURL = await imageUploader();
-        console.log("updateURLS", updatedURL)
-        const formData = { ...form, ...updatedURL };
+        const newImages = await imageUploader();
+        console.log("updated image URLS", newImages);
+        const formData = { ...form, ...newImages };
         const { data } = await axios.patch(
           `http://localhost:4000/popupStore/${storeId}`,
           formData
@@ -276,7 +271,10 @@ const StoreForm = ({ storeData, storeId }) => {
         </div>
         <div>
           <img style={{ width: "200px" }} src={showImages.main_image_url} />
-          <img style={{ width: "200px" }} src={showImages.thumbnail_image_url} />
+          <img
+            style={{ width: "200px" }}
+            src={showImages.thumbnail_image_url}
+          />
           <img style={{ width: "200px" }} src={showImages.detail_image_url} />
         </div>
         <button type="submit">Submit</button>

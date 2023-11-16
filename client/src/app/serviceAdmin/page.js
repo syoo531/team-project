@@ -14,7 +14,7 @@ async function getData() {
 }
 
 export default async function ServiceAdmin() {
-  const { data } = await getData();
+  const {data}  = await getData();
   console.log(data);
   return (
     <main>
