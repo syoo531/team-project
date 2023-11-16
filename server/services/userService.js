@@ -32,7 +32,6 @@ class UserService {
   async login(email, password) {
     let is_admin = false;
     const user = await User.findOne({ email });
-    console.log("여기33", user);
     const is_pass = await bcrypt.compare(password, user.password);
     if (user && is_pass) {
       // access 토큰
