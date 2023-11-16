@@ -2,7 +2,7 @@ import StoreForm from "../_components/StoreForm";
 
 async function getData(id) {
   try {
-    const res = await fetch(`http://localhost:3000/api/serviceAdmin/${id}`, {
+    const res = await fetch(`http://localhost:4000/popupStore/${id}`, {
       cache: "no-store",
     });
     return res.json();
@@ -13,11 +13,10 @@ async function getData(id) {
 
 export default async function ServiceAdmin({ params }) {
   const storeData = await getData(params.id);
-  console.log(storeData);
   return (
     <main>
       <p>팝업스토어 정보 변경</p>
-      <StoreForm storeData={storeData} />
+      <StoreForm storeData={storeData} storeId={params.id} />
     </main>
   );
 }

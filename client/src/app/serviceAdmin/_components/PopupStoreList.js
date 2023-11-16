@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-export default function PopupStoreList() {
+export default function PopupStoreList({ storeData: stores }) {
   const router = useRouter();
-  const [stores, setStores] = useState([]);
+  //const [stores, setStores] = useState([]);
 
   // const getAllPopupStore = async () => {
   //   const { data } = await axios.get("/api/serviceAdmin");
@@ -23,7 +23,7 @@ export default function PopupStoreList() {
     console.log(id);
     try {
       const { data } = await axios.delete(
-        `http://localhost:3000/api/serviceAdmin/${id}`
+        `http://localhost:4000/popupStore/${id}`
       );
       console.log(data);
       router.refresh();
