@@ -12,10 +12,10 @@ const client = new S3Client({
   },
 });
 
+//이미지들을 객체로 받아 S3에 업로드 + 기존 이미지는 S3에서 삭제
 export const imageUploader = async (images, existingImage = false) => {
   let imageURL = {};
-  let promises = [];
-  console.log(images, existingImage);
+  let uploadPromises = [];
 
   for (const [imageName, file] of Object.entries(images)) {
     if (!file) continue;
@@ -28,15 +28,15 @@ export const imageUploader = async (images, existingImage = false) => {
       ContentType: file.type,
     });
 
-    promises.push(client.send(command));
+    uploadPromises.push(client.send(command));
     imageURL = {
       ...imageURL,
       [imageName]: `https://mybucket-elice.s3.ap-southeast-2.amazonaws.com/${Key}`,
     };
 
-    if (existingImage) promises.push(deleteImageS3(existingImage[imageName]));
+    if (existingImage) uploadPromises.push(deleteImageS3(existingImage[imageName]));
   }
-  await Promise.all(promises);
+  await Promise.all(uploadPromises);
   return imageURL;
 };
 
@@ -48,9 +48,17 @@ export const deleteImageS3 = async (imageUrl) => {
   };
   const command = new DeleteObjectCommand(input);
   const response = await client.send(command);
-  console.log("delete response from s3", response);
   return response;
 };
+
+export const deleteAllS3 = async ( imageArray ) => {
+  const deletePromises = imageArray.map((image) => {
+    return deleteImageS3(image)
+  })
+  console.log("delete all array", deletePromises)
+  const result = await Promise.all(deletePromises)
+  return result
+}
 
 // export const imageUploader = async (images, existingImage=false) => {
 //   let imageURL = {};
