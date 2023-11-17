@@ -1,0 +1,32 @@
+.reservation-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+  padding: 10px;
+
+  .reservation-box {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &:last-child {
+      margin-bottom: 0; // 마지막 요소의 하단 여백 제거
+    }
+
+    .reservation-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+
+      .detail {
+        margin-right: 10px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
