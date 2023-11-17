@@ -1,7 +1,6 @@
 // 마이페이지
-import "./page.scss";
-import Link from "next/link";
+import "./ReservationList.scss";
 
 export default function ReservationList() {
-  return <div>예약내역</div>;
+  return <div className="myPageReserveTitle">예약내역</div>;
 }

@@ -1,4 +1,8 @@
-.homeContainer {
+.menuMyPageHomeContainer {
+  display: flex;
+}
+
+.myPageHomeContainer {
   flex: column;
   margin-left: 50px;
 }
@@ -26,7 +30,7 @@
 
 .waitingTimeContainer {
   background-color: #f9f7f7;
-  padding: 50px 10px;
+  padding: 20px 10px;
   border-radius: 15px;
   display: flex;
 }
@@ -73,12 +77,16 @@
   margin: 20px;
 }
 
-.reviewContainer {
+.myPageReviewContainer {
   background-color: white;
   width: 500px;
   height: 600px;
   padding: 20px 20px 20px;
   border: 1px solid black;
+}
+
+.myPageReviewTitle {
+  font-size: 15px;
 }
 
 .reviewTitle {

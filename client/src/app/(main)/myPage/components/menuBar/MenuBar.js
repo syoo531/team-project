@@ -1,12 +1,19 @@
 // 메뉴바
+"use client";
 import "./MenuBar.scss";
+import Link from "next/link";
+// import { usePathname } from "next/navigation";
 
 export default function MenuBar() {
+  // const pathname = usePathname();
   return (
     <div className="menuContainer">
-      <div className="menuText">홈</div>
-      <div className="menuText">예약내역</div>
-      <div className="menuText">관심리스트</div>
+      <li>
+        <Link href="/myPage">홈</Link>
+      </li>
+      <li>
+        <Link href="/myPage/reservationList">예약내역</Link>
+      </li>
       <div className="menuText">문의하기</div>
       <div className="menuText">문의내역 확인</div>
       <div className="menuText">리뷰관리</div>
