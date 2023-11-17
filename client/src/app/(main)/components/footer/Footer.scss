@@ -1,0 +1,127 @@
+.footer {
+  position: relative;
+  padding: 50px;
+  background-color: #000;
+  color: #fff;
+
+  .topWrapper {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid #fff;
+
+    .serviceWrapper {
+      display: flex;
+      gap: 100px;
+
+      .useGuideWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .useGuideTitle {
+          margin-bottom: 10px;
+          font-size: 18px;
+          font-weight: 700;
+        }
+
+        .useGuideItem {
+          font-size: 12px;
+        }
+      }
+      .supportWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .supportTitle {
+          margin-bottom: 10px;
+          font-size: 18px;
+          font-weight: 700;
+        }
+
+        .supportItem {
+          font-size: 12px;
+        }
+      }
+    }
+    .customerCenterWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .customerCenterNumber {
+        margin-bottom: 10px;
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .customerCenterItem {
+        font-size: 12px;
+      }
+    }
+  }
+  .linkWrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+
+    .textLinkWrapper {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+
+      .textLink {
+        font-size: 18px;
+        font-weight: 700;
+      }
+    }
+
+    .iconLinkWrapper {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex: 1 auto;
+      gap: 14px;
+
+      .icon {
+        font-size: 26px;
+      }
+    }
+  }
+  .businessWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .name {
+      font-size: 12px;
+    }
+
+    .registrationNumber {
+      font-size: 12px;
+    }
+
+    .businessType {
+      font-size: 12px;
+    }
+  }
+
+  .addressWrapper {
+    .businessAddress {
+      font-size: 12px;
+      margin-bottom: 10px;
+    }
+
+    .hosting {
+      font-size: 12px;
+    }
+  }
+  .logo {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    width: 200px;
+  }
+}

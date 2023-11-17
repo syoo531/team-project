@@ -1,0 +1,92 @@
+.weekPopUp {
+  padding: 0 50px;
+  margin-bottom: 150px;
+
+  .titleWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 60px;
+
+    .title {
+      color: #222;
+      font-size: 48px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .subTitle {
+      color: #222;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.5;
+      text-align: center;
+    }
+  }
+
+  .popUpListWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-shrink: 0;
+
+    .popUpWrapper {
+      position: relative;
+      flex: 1 auto;
+      height: 500px;
+      border-radius: 14px;
+      background-image: url("https://user-images.githubusercontent.com/126956430/283500522-4833b00f-4949-4ea3-9366-734a0eaecb47.png");
+      background-position: center;
+      background-size: cover;
+
+      .backGround {
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        background-color: #000;
+        opacity: 0.4;
+      }
+
+      .contentWrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        position: absolute;
+        left: 40px;
+        bottom: 40px;
+        color: #fff;
+
+        .popUpBrand {
+          font-size: 34px;
+          font-weight: 700;
+        }
+
+        .popUpTitle {
+          font-size: 16px;
+        }
+
+        .popUpSummary {
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
+
+        .readMoreBtn {
+          align-self: flex-start;
+          padding: 16px 30px;
+          border: 2px solid #fff;
+          border-radius: 50px;
+          color: #fff;
+          transition: 0.5s;
+
+          &:hover {
+            cursor: pointer;
+            background-color: #fff;
+            color: #000;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}

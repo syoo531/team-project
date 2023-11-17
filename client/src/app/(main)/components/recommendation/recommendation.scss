@@ -2,15 +2,17 @@
   font-size: 40px;
   color: #222;
   transition: 0.5s;
+  opacity: 0.5;
 
   &:hover {
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 1;
   }
 }
 
 .recommendation {
   padding: 0 50px;
+  margin-bottom: 100px;
 
   .headerWrapper {
     display: flex;
@@ -38,82 +40,97 @@
   }
 
   .popUpListWrapper {
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
     overflow: hidden;
 
-    .popUpWrapper {
-      position: relative;
+    .slideWrapper {
       display: flex;
-      flex-direction: column;
-      gap: 14px;
+      justify-content: space-between;
+      gap: 40px;
+      transition: 0.8s;
 
-      .popUpMark {
+      .popUpWrapper {
+        position: relative;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background-color: #0472ff;
-        font-size: 12px;
-        font-weight: 700;
-        font-style: italic;
-        color: #fff;
-        text-align: center;
-      }
+        flex-direction: column;
+        gap: 10px;
+        flex-basis: calc(25% - 30px);
+        flex-shrink: 0;
 
-      .popUpImg {
-        width: 200px;
-        height: 200px;
-        border-radius: 12px;
-        background-image: url("https://user-images.githubusercontent.com/126956430/283044460-29d638e3-b93a-49aa-bdc6-addbbdfacffc.png");
-        background-position: center;
-        background-size: cover;
-      }
-
-      .brand {
-        font-size: 16px;
-        font-weight: 800;
-        color: #222;
-      }
-
-      .popUpTitle {
-        font-size: 14px;
-        font-weight: 500;
-        color: #222;
-      }
-
-      .locationWrapper {
-        display: flex;
-        gap: 6px;
-
-        .locationIcon {
-          font-size: 16px;
-          color: #0472ff;
+        .popUpMark {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: #0472ff;
+          font-size: 12px;
+          font-weight: 700;
+          font-style: italic;
+          color: #fff;
+          text-align: center;
+          line-height: 1;
         }
 
-        .locationText {
-          font-size: 13px;
-        }
-      }
-
-      .dateWrapper {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-
-        .dateIcon {
-          font-size: 16px;
-          color: #0472ff;
+        .popUpImg {
+          height: 300px;
+          border-radius: 12px;
+          background-image: url("https://user-images.githubusercontent.com/126956430/283044460-29d638e3-b93a-49aa-bdc6-addbbdfacffc.png");
+          background-position: center;
+          background-size: cover;
         }
 
-        .dateText {
-          font-size: 13px;
+        .brand {
+          font-size: 14px;
+          font-weight: 800;
+          color: #909090;
+        }
+
+        .popUpTitle {
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .locationWrapper {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .locationIcon {
+            font-size: 16px;
+            color: #0472ff;
+          }
+
+          .locationText {
+            font-size: 14px;
+          }
+        }
+
+        .dateWrapper {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          .dateIcon {
+            font-size: 16px;
+            color: #0472ff;
+          }
+
+          .dateText {
+            font-size: 14px;
+          }
+        }
+
+        .readMore {
+          font-size: 14px;
+
+          &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+          }
         }
       }
     }

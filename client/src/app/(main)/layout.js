@@ -1,4 +1,5 @@
 import BandBanner from "./components/bandBanner/BandBanner";
+import Footer from "./components/footer/Footer";
 import Header from "./components/header/Header";
 
 export default function HomeLayout({ children }) {
@@ -7,6 +8,7 @@ export default function HomeLayout({ children }) {
       <BandBanner />
       <Header />
       {children}
+      <Footer />
     </div>
   );
 }

@@ -33,33 +33,33 @@
     align-items: center;
     gap: 40px;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
 
     .title {
       color: #222;
-      font-size: 50px;
+      font-size: 48px;
       font-weight: 700;
     }
 
     .subTitle {
       color: #222;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 400;
       line-height: 1.5;
     }
 
     .viewBtn {
       padding: 16px 30px;
-      border: 2px solid #222;
+      border: 2px solid #000;
       border-radius: 50px;
-      background-color: #222;
+      background-color: #000;
       color: #fff;
       transition: 0.5s;
 
       &:hover {
         cursor: pointer;
         background-color: #fff;
-        color: #222;
+        color: #000;
         font-weight: 500;
       }
     }
@@ -126,6 +126,20 @@
       transition: 0.5s;
     }
 
+    .readMoreBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px 18px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      font-size: 16px;
+      color: #fff;
+      opacity: 0;
+      transition: 0.5s;
+    }
+
     &:nth-child(even) {
       width: 220x;
       height: 220px;
@@ -137,6 +151,10 @@
 
       .blackBackGround {
         opacity: 0.5;
+      }
+
+      .readMoreBtn {
+        opacity: 1;
       }
     }
   }
