@@ -7,6 +7,11 @@
   height: 100vh;
   flex-shrink: 0;
 
+  .logo {
+    width: 160px;
+    margin-top: 10px;
+  }
+
   ul {
     list-style: none;
     padding: 0;
@@ -23,12 +28,9 @@
         color: #fff;
       }
     }
+    .active {
+      color: #fff; // 활성화된 링크의 텍스트 색상
+      font-weight: bold; // 텍스트를 굵게
+    }
   }
-}
-
-.logo {
-  width: 160px;
-  background: white;
-  margin-top: 10px;
-  border-radius: 4px;
 }
