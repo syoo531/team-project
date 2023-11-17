@@ -20,9 +20,10 @@ const login = async (req, res, next) => {
     const [accessToken, refreshToken, is_admin] = tokens;
     res
       .cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        sameSite: "strict",
-      })
+        // 쿠키 사인으로 해싱한다. secure
+        httpOnly: true, // 리프레시 토큰을 쿠키나 로컬스토리지가 아니라 글로벌스테이트(리덕스,리코일)에 저장한다
+        sameSite: "strict", // 세션: 서버 메모리에 저장, 토큰: 사용자에게 저장, MSA방식
+      }) // 토큰을 저장 1쿠키,2로컬스토리지,세션스토리지,클라이언트메모리
       .status(200)
       .json({
         accessToken: accessToken,

@@ -44,7 +44,7 @@ class UserService {
           },
         },
         process.env.ACCESS_TOKEN_SECERT,
-        { expiresIn: "30m" }
+        { expiresIn: "30s" }
       );
 
       // refresh 토큰
