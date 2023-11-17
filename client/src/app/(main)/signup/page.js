@@ -11,13 +11,19 @@ export default function Signup() {
   const [selectedInterests, setSelectedInterests] = useState([]);
 
   const interests = [
-    "게임",
-    "장난감",
-    "화장품",
+    "토이",
+    "뷰티",
     "패션",
     "음식",
-    "독서",
     "예술",
+    "주류",
+    "게임",
+    "전자기기",
+    "가구",
+    "캐릭터",
+    "럭셔리",
+    "카페",
+    "아이돌",
   ];
   const toggleInterest = (interest) => {
     if (selectedInterests.includes(interest)) {
@@ -28,19 +34,19 @@ export default function Signup() {
   };
 
   const checkEmailValid = (email) => {
-    // 간단한 이메일 유효성 검사: @가 포함되어 있는지 확인
+    // 이메일 유효성 검사
     return email.includes("@");
   };
 
   const checkPasswordValid = (password) => {
-    // 비밀번호 유효성 검사: 최소 9자리, 대소문자, 숫자, 특수문자 포함
+    // 패스워드 유효성 검사
     const regex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/;
     return regex.test(password);
   };
 
   const checkInterestsValid = (selectedInterests) => {
-    // 관심 카테고리 유효성 검사: 최소 3개 선택
+    // 관심 카테고리 3개 유효성 검사
     return selectedInterests.length >= 3;
   };
 
@@ -53,7 +59,7 @@ export default function Signup() {
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    const isNameValid = !!nameValid;
+    const isNameValid = !!name;
     const isEmailValid = checkEmailValid(email);
     const isPasswordValid = checkPasswordValid(password);
     const isPhoneNumberValid = !!phoneNumber;
@@ -66,7 +72,6 @@ export default function Signup() {
       !isPhoneNumberValid ||
       !areInterestsValid
     ) {
-      // 유효하지 않은 필드가 있다면, 상태를 업데이트하여 에러 메시지를 표시
       setNameValid(isNameValid);
       setEmailValid(isEmailValid);
       setPasswordValid(isPasswordValid);
@@ -94,87 +99,107 @@ export default function Signup() {
         <div className="signupTitle">SIGNUP</div>
         <div className="signupInputContainer">
           <form className="signupForm" onSubmit={handleSignup}>
-            <div className="signupText">이름</div>
-            <input
-              className={`signupInput ${!nameValid ? "error" : ""}`}
-              type="text"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                setNameValid(true); // 입력하면 에러 상태 제거
-              }}
-            />
-            {!nameValid && (
-              <div className="errorText">이름을 입력해주세요.</div>
-            )}
-            <div className="signupText">이메일 주소</div>
-            <input
-              className={`signupInput ${!emailValid ? "error" : ""}`}
-              type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-                setEmailValid(true); // 입력하면 에러 상태 제거
-              }}
-            />
-            {!emailValid && (
-              <div className="errorText">
-                유효한 이메일 주소를 입력해주세요.
-              </div>
-            )}
-            <div className="signupText">비밀번호</div>
-            <input
-              className={`signupInput ${!passwordValid ? "error" : ""}`}
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                setPasswordValid(true); // 입력하면 에러 상태 제거
-              }}
-              placeholder="최소 9자리, 대 소문자, 숫자, 특수문자 포함"
-            />
-            {!passwordValid && (
-              <div className="errorText">유효한 비밀번호를 입력해주세요.</div>
-            )}
-            <div className="signupText">휴대폰 번호</div>
-            <input
-              className={`signupInput phoneNumber ${
-                !phoneNumberValid ? "error" : ""
-              }`}
-              type="text"
-              value={phoneNumber}
-              onChange={(e) => {
-                const newValue = e.target.value;
-                if (!isNaN(newValue)) {
-                  setPhoneNumber(newValue);
-                  setPhoneNumberValid(true); // 입력하면 에러 상태 제거
-                }
-              }}
-              placeholder="- 없이 숫자만 입력"
-            />
-            {!phoneNumberValid && (
-              <div className="errorText">휴대폰 번호를 입력해주세요.</div>
-            )}
-            <div className="signupText">관심 카테고리</div>
-            <div className="interests-container">
-              {interests.map((interest, index) => (
-                <button
-                  key={index}
-                  className={`interest-tag ${
-                    selectedInterests.includes(interest) ? "selected" : ""
-                  }`}
-                  onClick={() => toggleInterest(interest)}
-                >
-                  {interest}
-                </button>
-              ))}
+            <div className="signupInputElement">
+              <div className="signupText">이름</div>
+              <input
+                className={`signupInput ${!nameValid ? "error" : ""}`}
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                  setNameValid(true); // 입력하면 에러 상태 제거
+                }}
+              />
+              {!nameValid && (
+                <div className="errorText">이름을 입력해주세요.</div>
+              )}
             </div>
-            {!interestsValid && (
-              <div className="errorText">
-                최소 3개의 관심 카테고리를 선택해주세요.
+            <div className="signupInputElement">
+              <div className="signupText">이메일 주소</div>
+              <input
+                className={`signupInput ${!emailValid ? "error" : ""}`}
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  setEmailValid(true); // 입력하면 에러 상태 제거
+                }}
+              />
+              {!emailValid && (
+                <div className="errorText">
+                  유효한 이메일 주소를 입력해주세요.
+                </div>
+              )}
+            </div>
+            <div className="signupInputElement">
+              <div className="signupText">비밀번호</div>
+              <input
+                className={`signupInput ${!passwordValid ? "error" : ""}`}
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordValid(true); // 입력하면 에러 상태 제거
+                }}
+                placeholder="최소 9자리, 대 소문자, 숫자, 특수문자 포함"
+              />
+              {!passwordValid && (
+                <div className="errorText">
+                  최소 9자리, 대 소문자, 숫자, 특수문자 포함하여 입력해주세요.
+                </div>
+              )}
+            </div>
+            <div className="signupInputElement">
+              <div className="signupText">휴대폰 번호</div>
+              <input
+                className={`signupInput phoneNumber ${
+                  !phoneNumberValid ? "error" : ""
+                }`}
+                type="text"
+                value={phoneNumber}
+                onChange={(e) => {
+                  const newValue = e.target.value;
+                  if (!isNaN(newValue)) {
+                    setPhoneNumber(newValue);
+                    setPhoneNumberValid(true); // 입력하면 에러 상태 제거
+                  }
+                }}
+                placeholder="- 없이 숫자만 입력"
+              />
+              {!phoneNumberValid && (
+                <div className="errorText">휴대폰 번호를 입력해주세요.</div>
+              )}
+            </div>
+            <div className="signupInputElement">
+              <div className="signupText">관심 카테고리</div>
+              <div
+                className={`interests-container ${
+                  !interestsValid ? "errorIntersts" : ""
+                }`}
+              >
+                {interests.map((interest, index) => (
+                  <button
+                    key={index}
+                    className={`interest-tag ${
+                      selectedInterests.includes(interest) ? "selected" : ""
+                    }`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      toggleInterest(interest);
+                    }}
+                  >
+                    {interest}
+                  </button>
+                ))}
               </div>
-            )}
+              {!interestsValid && (
+                <div className="errorText">
+                  최소 3개의 관심 카테고리를 선택해주세요.
+                </div>
+              )}
+            </div>
+
             <button className="signupBtn" type="submit">
               회원가입
             </button>

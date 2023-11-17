@@ -14,14 +14,14 @@ class UserService {
   }
 
   // 회원 등록
-  async signUp(name, email, password, phone_number, address) {
+  async signUp(name, email, password, phoneNumber, selectedInterests) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
       name,
       email,
       password: hashedPassword,
-      address,
-      phone_number,
+      phone_number: phoneNumber,
+      category: selectedInterests,
       admin_role: 0,
     };
     const user = await User.create(newUser);

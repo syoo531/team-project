@@ -21,69 +21,77 @@
       font-style: normal;
       font-weight: 900;
       line-height: normal;
-      margin-top: 40px;
+      margin-top: 20px;
     }
     .signupInputContainer {
       .signupForm {
         display: flex;
         flex-direction: column;
-        .signupText {
-          display: flex;
-          width: 123px;
-          height: 24px;
-          flex-direction: column;
-          justify-content: center;
-          color: #000;
-          font-family: Noto Sans KR;
-          font-size: 15px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-          margin-bottom: 10px;
-        }
-
-        .signupInput {
+        .signupInputElement {
           width: 430px;
-          height: 45px;
-          border: 0.8px solid rgba(0, 0, 0, 0.3);
-          background: #fff;
-          padding-left: 20px;
-          padding-bottom: 4px;
-          font-size: 13px;
-          margin-bottom: 40px;
-        }
-        .interests-container {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 10px;
-        }
+          margin-bottom: 20px;
+          .signupText {
+            display: flex;
+            width: 123px;
+            height: 24px;
+            flex-direction: column;
+            justify-content: center;
+            color: #000;
+            font-family: Noto Sans KR;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-bottom: 10px;
+          }
 
-        .interest-tag {
-          padding: 10px;
-          border: none;
-          border-radius: 20px;
-          background-color: #e0e0e0;
-          color: #000;
-          font-size: 14px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
+          .signupInput {
+            width: 430px;
+            height: 45px;
+            border: 0.8px solid rgba(0, 0, 0, 0.3);
+            background: #fff;
+            padding-left: 18px;
+            padding-bottom: 3px;
+            font-size: 13px;
+            margin-bottom: 17px;
+          }
+          .interests-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 17px;
+          }
+          .errorIntersts {
+            margin-bottom: 0px;
+          }
 
-        .interest-tag.selected {
-          background-color: #007bff;
-          color: #fff;
-        }
-        .error {
-          border-color: red;
-        }
+          .interest-tag {
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background-color: #e0e0e0;
+            color: #000;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          }
 
-        .errorText {
-          color: red;
-          font-size: 12px;
-        }
+          .interest-tag.selected {
+            background-color: #007bff;
+            color: #fff;
+          }
+          .error {
+            border-color: red;
+            margin-bottom: 0px;
+          }
 
+          .errorText {
+            color: red;
+            font-size: 12px;
+          }
+        }
         .signupBtn {
-          width: 450px;
+          width: 430px;
           height: 50px;
           border: 0.8px solid #000;
           background: #000;
@@ -93,7 +101,7 @@
           font-style: normal;
           font-weight: 400;
           line-height: normal;
-          margin-top: 75px;
+          margin-top: 45px;
         }
       }
     }
