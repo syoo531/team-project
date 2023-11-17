@@ -14,17 +14,18 @@ export default function WeekPopUp() {
       </div>
 
       <div className="popUpListWrapper">
-        {popUpArr.map((el) => {
+        {popUpArr.map((el, index) => {
           return (
-            <div className="popUpWrapper">
+            <div className="popUpWrapper" key={index}>
               <div className="backGround"></div>
               <div className="contentWrapper">
-                <div className="popUpBrand">Spotify</div>
+                <div className="popUpBrand">선양 소주</div>
                 <div className="popUpTitle">
-                  뉴진스 ✕ 스포티파이 Bunnyland 팝업 스토어
+                  어른들의 놀이터: 선양 소주 팝업스토어
                 </div>
                 <div className="popUpSummary">
-                  버니랜드에서 기다릴게! From.스포티버니니
+                  선양을 보고 느낄 수 있는 다양한 전시, 체험 공간을 통해 선양에
+                  퐁당 빠져볼까요?
                 </div>
                 <div className="readMoreBtn">자세히 보기</div>
               </div>

@@ -1,0 +1,21 @@
+.seongsuPopUp {
+  margin-bottom: 120px;
+  .titleWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 60px;
+    text-align: center;
+
+    .title {
+      color: #222;
+      font-size: 48px;
+      font-weight: 700;
+      text-align: center;
+    }
+  }
+  .contentWrapper {
+    height: 500px;
+    background-color: #000;
+  }
+}
