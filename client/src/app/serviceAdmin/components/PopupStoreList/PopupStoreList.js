@@ -1,9 +1,9 @@
 "use client";
 
-import "./styles.scss";
-import { useState, useEffect } from "react";
+import "./PopupStoreList.scss";
+//import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { deleteAllS3, deleteImageS3 } from "./imageUploader";
+import { deleteAllS3 } from "../imageUploader";
 import axios from "axios";
 
 export default function PopupStoreList({ storeData: stores }) {

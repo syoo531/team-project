@@ -1,4 +1,4 @@
-import StoreForm from "../components/StoreForm.js";
+import StoreForm from "../components/StoreForm/StoreForm.js";
 
 export default function ServiceAdmin() {
   return (

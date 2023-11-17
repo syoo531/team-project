@@ -1,10 +1,10 @@
 "use client";
 
-import "./styles.scss";
+import "./StoreForm.scss";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { imageUploader } from "./imageUploader";
+import { imageUploader } from "../imageUploader";
 
 const StoreForm = ({ storeData, storeId }) => {
   const router = useRouter();
@@ -52,60 +52,6 @@ const StoreForm = ({ storeData, storeId }) => {
     }
   }, [storeData]);
 
-  // const client = new S3Client({
-  //   region: "ap-southeast-2",
-  //   credentials: {
-  //     secretAccessKey: "Dxk4x3wV68vNRsvMlP2Ot/q4qI1PDC38M2bo/M9r",
-  //     accessKeyId: "AKIARFBUMILQ6S3M63MX",
-  //   },
-  // });
-
-  // const imageUploader = async () => {
-  //   let imageURL = {};
-  //   for (const [image, file] of Object.entries(images)) {
-  //     if (!file) continue;
-
-  //     const Key = `${Date.now()}-${image}`;
-  //     const command = new PutObjectCommand({
-  //       Bucket: "mybucket-elice",
-  //       Key,
-  //       Body: file,
-  //       ContentType: file.type,
-  //     });
-  //     await client.send(command);
-
-  //     if (storeId) await deleteImageS3(showImages[image]);
-  //     console.log("image to delete", showImages[image]);
-
-  //     imageURL = {
-  //       ...imageURL,
-  //       [image]: `https://mybucket-elice.s3.ap-southeast-2.amazonaws.com/${Key}`,
-  //     };
-  //   }
-  //   return imageURL;
-  // };
-
-  // const deleteImageS3 = async (imageUrl) => {
-  //   console.log("url to delete", imageUrl);
-  //   const input = {
-  //     Bucket: "mybucket-elice",
-  //     Key: imageUrl.split("/").pop().toString(),
-  //   };
-  //   const command = new DeleteObjectCommand(input);
-  //   const response = await client.send(command);
-  //   console.log("delete response from s3", response);
-  //   return response;
-  // };
-
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-
-  //   setForm((prevForm) => ({
-  //     ...prevForm,
-  //     [name]: value,
-  //   }));
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -129,16 +75,15 @@ const StoreForm = ({ storeData, storeId }) => {
           `http://localhost:4000/popupStore/${storeId}`,
           updatedFormData
         );
-        console.log(data);
+        console.log("store updated", data);
       } else {
-        console.log(newImages);
         const imageURL = await imageUploader(newImages, false);
         const updatedFormData = { ...formData, ...imageURL };
         const { data } = await axios.post(
           `http://localhost:4000/popupStore`,
           updatedFormData
         );
-        console.log("res from server", data);
+        console.log("store created", data);
       }
       router.push("/serviceAdmin");
       router.refresh();
@@ -182,6 +127,32 @@ const StoreForm = ({ storeData, storeId }) => {
         </div>
         <div>
           <label>
+            소개:
+            <input type="text" name="summary" ref={summary} />
+          </label>
+        </div>
+        <div>
+          <label>
+            설명:
+            <input type="text" name="description" ref={description} />
+          </label>
+        </div>
+        <div>
+          <label>
+            이벤트 시작일:
+            <input type="text" name="start_date" ref={start_date} />
+          </label>
+        </div>
+        <div>
+          <label>
+            이벤트 종료일:
+            <input type="text" name="end_date" ref={end_date} />
+          </label>
+        </div>
+        <div>
+
+        <div className="container-image-upload">
+          <label>
             메인 이미지:
             <input
               type="file"
@@ -223,31 +194,7 @@ const StoreForm = ({ storeData, storeId }) => {
             />
           </label>
         </div>
-        <div>
-          <label>
-            소개:
-            <input type="text" name="summary" ref={summary} />
-          </label>
-        </div>
-        <div>
-          <label>
-            설명:
-            <input type="text" name="description" ref={description} />
-          </label>
-        </div>
-        <div>
-          <label>
-            이벤트 시작일:
-            <input type="text" name="start_date" ref={start_date} />
-          </label>
-        </div>
-        <div>
-          <label>
-            이벤트 종료일:
-            <input type="text" name="end_date" ref={end_date} />
-          </label>
-        </div>
-        <div>
+
           <img style={{ width: "200px" }} src={existingImage?.main_image_url} />
           <img
             style={{ width: "200px" }}
