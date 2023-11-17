@@ -1,8 +1,8 @@
 export default function RootLayout({ children }) {
   return (
-    <main>
+    <div>
       <h1>HEADER</h1>
       {children}
-    </main>
+    </div>
   );
 }
