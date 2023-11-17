@@ -1,17 +1,16 @@
 .navbar {
-  background: #333;
-  color: white;
-  padding: 1rem;
+  padding: 2rem;
   flex-shrink: 0;
 
   ul {
     list-style: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 84px;
   }
 
   a {
-    color: white;
+    color: #000;
     text-decoration: none;
   }
 }

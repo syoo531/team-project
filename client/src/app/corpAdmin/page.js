@@ -2,6 +2,7 @@
 
 import Navbar from "./components/navbar/navbar";
 import Sidebar from "./components/sidebar/sidebar";
+import Waiting from "./components/waiting/waiting";
 import "./main.scss";
 
 export default function CorpAdmin() {
@@ -10,7 +11,9 @@ export default function CorpAdmin() {
       <Sidebar />
       <div className="main">
         <Navbar />
-        <div className="content">내용</div>
+        <div className="content">
+          <Waiting />
+        </div>
       </div>
     </div>
   );

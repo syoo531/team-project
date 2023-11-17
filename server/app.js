@@ -3,12 +3,19 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
-const connectDB = require("./config/DBConnection");
-const userRouter = require("./routes/userRouter");
-const errorHandler = require("./middlewares/errorHandler");
 
-connectDB();
+const userRouter = require("./routes/userRouter");
+
 const app = express();
+
+// mongoose
+//   .connect(process.env.MONGO_DB_URL)
+//   .then(() => {
+//     console.log("MongoDB에 연결되었습니다.");
+//   })
+//   .catch((error) => {
+//     console.error("MongoDB 연결 실패:", error);
+//   });
 
 app.use(cors());
 app.use(express.json());
@@ -16,11 +23,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/users", userRouter);
 
-app.use(errorHandler); // 에러 처리 미들웨어
-
-mongoose.connection.once("open", () => {
-  console.log("Connected to MongoDB");
-  app.listen(4000, () => {
-    console.log(`Server running on port 4000`);
-  });
+app.listen(process.env.PORT, () => {
+  console.log(`Server is listening Port on ${process.env.PORT}`);
 });
