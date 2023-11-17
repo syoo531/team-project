@@ -1,6 +1,6 @@
 // 서비스 관리자 페이지
 //import StoreForm from "./_components/StoreForm.js";
-import PopupStoreList from "./components/PopupStoreList";
+import PopupStoreList from "./components/PopupStoreList/PopupStoreList";
 
 async function getData() {
   try {

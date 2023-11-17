@@ -9,10 +9,10 @@ const {
 
 const router = Router();
 
-router.get("/", getAllStores);
 router.post("/", createPopupStore);
 router.get("/:id", getPopupStore);
 router.patch("/:id", updatePopupStore);
 router.delete("/:id", deletePopupStore);
+router.get("/", getAllStores);
 
 module.exports = router;

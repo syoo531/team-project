@@ -1,9 +1,9 @@
 "use client";
 
-import "./styles.scss";
-import { useState, useEffect } from "react";
+import "./PopupStoreList.scss";
+//import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { deleteImageS3 } from "./imageUploader";
+import { deleteAllS3 } from "../imageUploader";
 import axios from "axios";
 
 export default function PopupStoreList({ storeData: stores }) {
@@ -21,12 +21,23 @@ export default function PopupStoreList({ storeData: stores }) {
   // }, []);
 
   const handleDelete = async (id) => {
-    console.log(id);
     try {
-      const { data } = await axios.delete(
-        `http://localhost:4000/popupStore/${id}`
-      );
-      console.log(data);
+      const {
+        data: { image },
+      } = await axios.get(`http://localhost:4000/popupStore/${id}`);
+
+      const imageArray = [
+        image.main_image_url,
+        image.thumbnail_image_url,
+        image.detail_image_url,
+      ].filter((v) => v !== undefined && v !== null);
+
+      //S3와 몽고DB 데이터 한번에 삭제
+      const res = await Promise.all([
+        deleteAllS3(imageArray),
+        axios.delete(`http://localhost:4000/popupStore/${id}`),
+      ]);
+      console.log(res);
       router.refresh();
     } catch (err) {
       console.log(err);
