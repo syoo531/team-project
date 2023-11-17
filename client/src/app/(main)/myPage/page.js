@@ -1,14 +1,13 @@
 import "./mypage.scss";
-import MenuBar from "./components/menuBar/MenuBar";
 import MyPageHome from "./components/myPageHome/MyPageHome";
+import ReservationList from "./components/reservationList/ReservationList";
 
 // MyPage Path : http://localhost:3000/myPage
 export default function MyPage() {
   return (
     <div className="Container">
-      <MenuBar />
       <MyPageHome />
-      <reservationList />
+      <ReservationList />
     </div>
   );
 }
