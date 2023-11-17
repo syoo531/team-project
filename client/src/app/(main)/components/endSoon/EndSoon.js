@@ -5,11 +5,12 @@ import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
-import "./recommendation.scss";
+import { faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import "./EndSoon.scss";
 
 const popUpArr = new Array(8).fill(0);
 
-export default function Recommendation() {
+export default function EndSoon() {
   const [slide, setSlide] = useState(0);
   const [count, setCount] = useState(popUpArr.length);
 
@@ -28,9 +29,9 @@ export default function Recommendation() {
   }
 
   return (
-    <div className="recommendation">
+    <div className="EndSoon">
       <div className="headerWrapper">
-        <div className="title">OOO님을 위한 추천 팝업스토어!</div>
+        <div className="title">끝나기 전에 서둘러 방문해보세요!</div>
         <div className="btnWrapper">
           <FontAwesomeIcon
             className="leftArrowIcon"
@@ -58,25 +59,27 @@ export default function Recommendation() {
           {popUpArr.map((el, index) => (
             <div className="popUpWrapper" key={index}>
               <div className="Mark">
-                POP
+                END
                 <br />
-                UP
+                SOON
+              </div>
+              <div className="remainingTime">
+                <FontAwesomeIcon className="timeIcon" icon={faStopwatch} beat />
+                <div className="time">종료까지 남은 시간 :</div>
               </div>
               <div className="popUpImg"></div>
-              <div className="brand">NH 올원뱅크</div>
-              <div className="popUpTitle">신선놀음 팝업스토어</div>
+              <div className="brand">해태</div>
+              <div className="popUpTitle">쌍쌍바 팝업스토어</div>
               <div className="locationWrapper">
                 <FontAwesomeIcon
                   className="locationIcon"
                   icon={faLocationDot}
                 />
-                <div className="locationText">
-                  서울 성동구 연무장11길 13, 플란트란스 성수
-                </div>
+                <div className="locationText">서울 성동구 서울숲 4길 26-14</div>
               </div>
               <div className="dateWrapper">
                 <FontAwesomeIcon className="dateIcon" icon={faCalendar} />
-                <div className="dateText">2023.11.15 - 2023.11.21</div>
+                <div className="dateText">2023.11.09 - 2023.12.22</div>
               </div>
               <div className="readMore">{"자세히 보기 >"}</div>
             </div>

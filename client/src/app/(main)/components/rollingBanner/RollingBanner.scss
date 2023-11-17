@@ -112,7 +112,7 @@
     width: 250px;
     height: 250px;
     border-radius: 12px;
-    background-image: url("https://user-images.githubusercontent.com/126956430/283044460-29d638e3-b93a-49aa-bdc6-addbbdfacffc.png");
+    background-image: url("https://user-images.githubusercontent.com/126956430/283732118-9504097d-9196-46e7-8cdd-cc903509b4a0.png");
     background-size: cover;
     background-position: center;
     transition: 0.5s;
@@ -131,10 +131,11 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      padding: 10px 18px;
+      padding: 10px 20px;
       border: 2px solid #fff;
       border-radius: 10px;
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: 600;
       color: #fff;
       opacity: 0;
       transition: 0.5s;

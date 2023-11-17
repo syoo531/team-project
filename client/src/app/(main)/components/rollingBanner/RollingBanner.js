@@ -23,8 +23,9 @@ export default function RollingBanner() {
       </div>
       <div className="leftRollingWrapper">
         <div className={`moveToLeftRolling ${isOperated.left ? null : "stop"}`}>
-          {popUpArr.map((el) => (
+          {popUpArr.map((el, index) => (
             <div
+              key={index}
               className="popUpImg"
               onMouseEnter={() => {
                 setIsOperated({ ...isOperated, left: false });
@@ -41,8 +42,9 @@ export default function RollingBanner() {
         <div
           className={`moveToLeftRollingCopy ${isOperated.left ? null : "stop"}`}
         >
-          {popUpArr.map((el) => (
+          {popUpArr.map((el, index) => (
             <div
+              key={index}
               className="popUpImg"
               onMouseEnter={() => {
                 setIsOperated({ ...isOperated, left: false });
@@ -61,8 +63,9 @@ export default function RollingBanner() {
         <div
           className={`moveToRightRolling ${isOperated.right ? null : "stop"}`}
         >
-          {popUpArr.map((el) => (
+          {popUpArr.map((el, index) => (
             <div
+              key={index}
               className="popUpImg"
               onMouseEnter={() => {
                 setIsOperated({ ...isOperated, right: false });
@@ -81,8 +84,9 @@ export default function RollingBanner() {
             isOperated.right ? null : "stop"
           }`}
         >
-          {popUpArr.map((el) => (
+          {popUpArr.map((el, index) => (
             <div
+              key={index}
               className="popUpImg"
               onMouseEnter={() => {
                 setIsOperated({ ...isOperated, right: false });

@@ -36,7 +36,7 @@
       flex: 1 auto;
       height: 500px;
       border-radius: 14px;
-      background-image: url("https://user-images.githubusercontent.com/126956430/283500522-4833b00f-4949-4ea3-9366-734a0eaecb47.png");
+      background-image: url("https://user-images.githubusercontent.com/126956430/283694190-ebe089bd-b062-403e-932b-b98c645bc66e.png");
       background-position: center;
       background-size: cover;
 
@@ -58,17 +58,19 @@
         color: #fff;
 
         .popUpBrand {
-          font-size: 34px;
+          font-size: 30px;
           font-weight: 700;
         }
 
         .popUpTitle {
-          font-size: 16px;
+          font-size: 20px;
         }
 
         .popUpSummary {
-          font-size: 16px;
+          width: 60%;
+          font-size: 14px;
           margin-bottom: 10px;
+          line-height: 1.8;
         }
 
         .readMoreBtn {

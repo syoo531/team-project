@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
@@ -12,13 +11,12 @@ export default function Header() {
   const [isFocused, setIsFocused] = useState(false);
   return (
     <div className="header">
-      <Link href="/">
-        <img
-          className="logo"
-          src="https://user-images.githubusercontent.com/126956430/282671069-a09c630b-27dd-4089-9cdc-a2117ca9c132.png"
-          alt="로고이미지"
-        />
-      </Link>
+      <img
+        className="logo"
+        src="https://user-images.githubusercontent.com/126956430/282671069-a09c630b-27dd-4089-9cdc-a2117ca9c132.png"
+        alt="로고이미지"
+        onClick={() => router.push("/")}
+      />
       <div className={`searchBarWrapper ${isFocused ? "focused" : null}`}>
         <label htmlFor="search">
           <FontAwesomeIcon className="icon" icon={faMagnifyingGlass} />
