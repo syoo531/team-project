@@ -1,5 +1,12 @@
 @import url(https://use.fontawesome.com/releases/v5.15.3/css/all.css);
-
+@mixin container {
+    width: 100%;
+    max-width: 1130px;
+    padding: 0 15px;
+    display: block;
+    padding: 100px 0;
+    margin: 0 auto;
+}
 @mixin flex($a, $b) {
     display: flex;
     align-items: $a;
@@ -13,12 +20,7 @@
 }
 
 .List {
-    width: 100%;
-    max-width: 1130px;
-    padding: 0 15px;
-    display: block;
-    padding: 100px 0;
-    margin: 0 auto;
+@include container;
     .list {
         @include flex(center, space-between);
         flex-wrap: wrap;
@@ -70,6 +72,14 @@
                         overflow: hidden;
                         text-overflow: ellipsis;
                         width: 90%;
+                        a {
+                            text-decoration: none;
+                            color: inherit;
+                        }
+                        a:hover {
+                            color: #e21680;
+                            transition: 0.3s ease all;
+                        }
                     }
                 }
                 .itemLocation {
