@@ -1,10 +1,12 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import "./RollingBanner.scss";
 
 const popUpArr = new Array(6).fill(0);
 
 export default function RollingBanner() {
+  const router = useRouter();
   const [isOperated, setIsOperated] = useState({ left: true, right: true });
 
   return (
@@ -15,7 +17,9 @@ export default function RollingBanner() {
           아트, 뮤직, 미식, 패션, 뷰티, 캐릭터 등 <br />
           핫플레이스를 주도하는 다양한 팝업스토어를 만나보세요.
         </p>
-        <div className="viewBtn">모두 보기</div>
+        <div className="viewBtn" onClick={() => router.push("/list")}>
+          모두 보기
+        </div>
       </div>
       <div className="leftRollingWrapper">
         <div className={`moveToLeftRolling ${isOperated.left ? null : "stop"}`}>
@@ -30,6 +34,7 @@ export default function RollingBanner() {
               }}
             >
               <div className="blackBackGround"></div>
+              <div className="readMoreBtn">VIEW</div>
             </div>
           ))}
         </div>
@@ -47,6 +52,7 @@ export default function RollingBanner() {
               }}
             >
               <div className="blackBackGround"></div>
+              <div className="readMoreBtn">VIEW</div>
             </div>
           ))}
         </div>
@@ -66,6 +72,7 @@ export default function RollingBanner() {
               }}
             >
               <div className="blackBackGround"></div>
+              <div className="readMoreBtn">VIEW</div>
             </div>
           ))}
         </div>
@@ -85,6 +92,7 @@ export default function RollingBanner() {
               }}
             >
               <div className="blackBackGround"></div>
+              <div className="readMoreBtn">VIEW</div>
             </div>
           ))}
         </div>
