@@ -17,10 +17,9 @@ export default async function ServiceAdmin() {
   const { data } = await getData();
   console.log(data);
   return (
-    <main>
-      <p>서비스 관리자 페이지</p>
-      <br></br>
+    <div className="main__container">
+      <h2 className="main__heading">팝업스토어 목록</h2>
       <PopupStoreList storeData={data} />
-    </main>
+    </div>
   );
 }

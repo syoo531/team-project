@@ -1,5 +1,4 @@
-import "./NavBar.scss";
-import Link from "next/link";
+import "./Search.scss";
 
 export default function NavBar() {
   return (

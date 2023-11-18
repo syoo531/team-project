@@ -1,0 +1,15 @@
+.app {
+  display: flex;
+
+  main {
+    width: 100%;
+  }
+}
+
+.main__container {
+  padding: 0px 50px;
+
+  .main__heading {
+    padding: 40px 0px;
+  }
+}

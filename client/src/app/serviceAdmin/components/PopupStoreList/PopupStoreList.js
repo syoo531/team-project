@@ -45,11 +45,13 @@ export default function PopupStoreList({ storeData: stores }) {
   };
 
   return (
-    <div>
-      <h1>팝업스토어 목록</h1>
-      <button onClick={() => router.push("/serviceAdmin/form")}>
-        신규등록!!
-      </button>
+    <div className="list__container">
+      <div className="action__menu">
+        <button onClick={() => router.push("/serviceAdmin/form")}>
+          신규등록!!
+        </button>
+      </div>
+
       <hr></hr>
       <table className="borderTable">
         <thead>
