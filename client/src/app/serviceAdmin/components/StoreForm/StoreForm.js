@@ -4,7 +4,7 @@ import "./StoreForm.scss";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { imageUploader } from "../imageUploader";
+import { s3imageUploader } from "../imageUploader";
 
 const StoreForm = ({
   name,
@@ -21,15 +21,15 @@ const StoreForm = ({
 }) => {
   const router = useRouter();
 
-  const nameRef = useRef(name || null)
-  const brandRef = useRef(brand || null)
-  const categoryRef = useRef(category || null)
-  const addressRef = useRef(address || null);
-  const locationRef = useRef(location || null);
-  const summaryRef = useRef(summary || null);
-  const descriptionRef = useRef(description || null);
-  const start_dateRef = useRef(start_date || null);
-  const end_dateRef = useRef(end_date || null);
+  const nameRef = useRef();
+  const brandRef = useRef();
+  const categoryRef = useRef();
+  const addressRef = useRef();
+  const locationRef = useRef();
+  const summaryRef = useRef();
+  const descriptionRef = useRef();
+  const start_dateRef = useRef();
+  const end_dateRef = useRef();
 
   const imageInitialState = {
     main_image_url: "",
@@ -43,10 +43,35 @@ const StoreForm = ({
     detail_image_url: image?.detail_image_url || "",
   };
 
+  useEffect(() => {
+    console.log('Props:', { name, brand, locationRef });
+  });
+
   //const [form, setForm] = useState(formIntialState);
   const [newImages, setNewImages] = useState(imageInitialState);
   const [error, setError] = useState({});
   const [existingImage, setExistingImage] = useState(existingImageState);
+
+  const createPopupStore = async (formData) => {
+    const imageURL = await s3imageUploader(newImages, false);
+    const updatedFormData = { ...formData, ...imageURL };
+    const { data } = await axios.post(
+      `http://localhost:4000/popupStore`,
+      updatedFormData
+    );
+    console.log("store created", data);
+  };
+
+  const updatePopupStore = async (formData) => {
+    const newImageUrl = await s3imageUploader(newImages, existingImage);
+    console.log("updated image URLS", newImageUrl);
+    const updatedFormData = { ...formData, ...newImageUrl };
+    const { data } = await axios.patch(
+      `http://localhost:4000/popupStore/${storeId}`,
+      updatedFormData
+    );
+    console.log("store updated", data);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,31 +87,16 @@ const StoreForm = ({
         start_date: start_dateRef.current.value,
         end_date: end_dateRef.current.value,
       };
-      console.log("formData", formData)
-      console.log("newImages", newImages)
-      console.log("existingImage", existingImage)
-
 
       if (storeId) {
-        const newImageUrl = await imageUploader(newImages, existingImage);
-        console.log("updated image URLS", newImageUrl);
-        const updatedFormData = { ...formData, ...newImageUrl };
-        const { data } = await axios.patch(
-          `http://localhost:4000/popupStore/${storeId}`,
-          updatedFormData
-        );
-        console.log("store updated", data);
+        await updatePopupStore(formData);
+        router.refresh();
+        return;
       } else {
-        const imageURL = await imageUploader(newImages, false);
-        const updatedFormData = { ...formData, ...imageURL };
-        const { data } = await axios.post(
-          `http://localhost:4000/popupStore`,
-          updatedFormData
-        );
-        console.log("store created", data);
+        await createPopupStore(formData);
+        router.push("/serviceAdmin");
+        router.refresh();
       }
-      router.push("/serviceAdmin");
-      router.refresh();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -102,7 +112,7 @@ const StoreForm = ({
               type="text"
               name="name"
               ref={nameRef}
-              defaultValue={nameRef?.current || ""}
+              defaultValue={name || ""}
             />
           </label>
         </div>
@@ -113,7 +123,7 @@ const StoreForm = ({
               type="text"
               name="brand"
               ref={brandRef}
-              defaultValue={brandRef?.current || ""}
+              defaultValue={brand || ""}
             />
           </label>
         </div>
@@ -124,7 +134,7 @@ const StoreForm = ({
               type="text"
               name="category"
               ref={categoryRef}
-              defaultValue={categoryRef?.current || ""}
+              defaultValue={category || ""}
             />
           </label>
         </div>
@@ -135,7 +145,7 @@ const StoreForm = ({
               type="text"
               name="address"
               ref={addressRef}
-              defaultValue={addressRef?.current || ""}
+              defaultValue={address || ""}
             />
           </label>
         </div>
@@ -146,7 +156,7 @@ const StoreForm = ({
               type="text"
               name="location"
               ref={locationRef}
-              defaultValue={locationRef?.current || ""}
+              defaultValue={location || ""}
             />
           </label>
         </div>
@@ -157,7 +167,7 @@ const StoreForm = ({
               type="text"
               name="summary"
               ref={summaryRef}
-              defaultValue={summaryRef?.current || ""}
+              defaultValue={summary || ""}
             />
           </label>
         </div>
@@ -168,7 +178,7 @@ const StoreForm = ({
               type="text"
               name="description"
               ref={descriptionRef}
-              defaultValue={descriptionRef?.current || ""}
+              defaultValue={description || ""}
             />
           </label>
         </div>
@@ -179,7 +189,7 @@ const StoreForm = ({
               type="text"
               name="start_date"
               ref={start_dateRef}
-              defaultValue={start_dateRef?.current || ""}
+              defaultValue={start_date || ""}
             />
           </label>
         </div>
@@ -190,7 +200,7 @@ const StoreForm = ({
               type="text"
               name="end_date"
               ref={end_dateRef}
-              defaultValue={end_dateRef?.current || ""}
+              defaultValue={end_date || ""}
             />
           </label>
         </div>

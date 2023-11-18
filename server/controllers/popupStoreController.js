@@ -56,7 +56,8 @@ const getAllStores = async (req, res) => {
     const data = await PopupStore.find()
       .sort({ _id: -1 })
       .limit(limitPerPage)
-      .skip(skipCount);
+      .skip(skipCount)
+      .populate("image");
 
     res.status(200).json({
       data,
