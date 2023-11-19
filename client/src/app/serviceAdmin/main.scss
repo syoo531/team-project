@@ -1,14 +1,15 @@
-.app {
+main {
   display: flex;
+  width: 100%;
+  background-color: #dedee0;
 
-  main {
+  section {
     width: 100%;
-    background-color: #dedee0;
   }
 }
 
 .main__container {
-  padding: 0px 50px;
+  padding: 0px 100px;
 
   .main__header {
     padding: 40px 0px 10px 0px;

@@ -52,7 +52,7 @@ const StoreForm = ({
     const imageURL = await s3imageUploader(newImages, false);
     const updatedFormData = { ...formData, ...imageURL };
     const { data } = await axios.post(
-      `http://localhost:4000/popupStore`,
+      `http://localhost:4000/api/popupStore`,
       updatedFormData
     );
     console.log("store created", data);
@@ -63,7 +63,7 @@ const StoreForm = ({
     console.log("updated image URLS", newImageUrl);
     const updatedFormData = { ...formData, ...newImageUrl };
     const { data } = await axios.patch(
-      `http://localhost:4000/popupStore/${storeId}`,
+      `http://localhost:4000/api/popupStore/${storeId}`,
       updatedFormData
     );
     console.log("store updated", data);

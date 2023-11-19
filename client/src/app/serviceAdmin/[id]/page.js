@@ -2,7 +2,7 @@ import StoreForm from "../components/StoreForm/StoreForm";
 
 async function getData(id) {
   try {
-    const res = await fetch(`http://localhost:4000/popupStore/${id}`, {
+    const res = await fetch(`http://localhost:4000/api/popupStore/${id}`, {
       cache: "no-store",
     });
     return res.json();

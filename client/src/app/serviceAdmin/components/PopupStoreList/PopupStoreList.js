@@ -12,7 +12,7 @@ export default function PopupStoreList({ storeData: stores }) {
     try {
       const {
         data: { image },
-      } = await axios.get(`http://localhost:4000/popupStore/${id}`);
+      } = await axios.get(`http://localhost:4000/api/popupStore/${id}`);
 
       const imageArray = [
         image.main_image_url,
@@ -23,7 +23,7 @@ export default function PopupStoreList({ storeData: stores }) {
       //S3와 몽고DB 데이터 한번에 삭제
       const res = await Promise.all([
         deleteAllS3(imageArray),
-        axios.delete(`http://localhost:4000/popupStore/${id}`),
+        axios.delete(`http://localhost:4000/api/popupStore/${id}`),
       ]);
       console.log(res);
       router.refresh();
@@ -51,7 +51,6 @@ export default function PopupStoreList({ storeData: stores }) {
               <th>팝업스토어 이름</th>
               <th>브랜드 이름</th>
               <th>카테고리</th>
-              <th>주소</th>
               <th>지역</th>
               <th>시작일</th>
               <th>종료일</th>
@@ -61,14 +60,19 @@ export default function PopupStoreList({ storeData: stores }) {
           <tbody>
             {stores &&
               stores?.map((store) => (
-                <tr className="table-row" key={store._id}>
+                <tr
+                  className="table-row"
+                  key={store._id}
+                  onClick={() => router.push(`/serviceAdmin/${store._id}`)}
+                >
                   <td>{store.name}</td>
                   <td>{store.brand}</td>
                   <td>{store.category}</td>
-                  <td>{store.address}</td>
                   <td>{store.location}</td>
-                  <td>{store.start_date.split('T')[0]}</td>
-                  <td>{store.end_date.split('T')[0]}</td>
+                  <td>
+                    {store.start_date && store?.start_date.split("T")[0]}
+                  </td>
+                  <td>{store.end_date && store?.start_date.split("T")[0]}</td>
                   <td className="list__action-button">
                     <button
                       onClick={() => router.push(`/serviceAdmin/${store._id}`)}
