@@ -37,10 +37,18 @@ export default function Waiting() {
                   {reservation.phone}
                 </span>
               </div>
-              <div>예약 시간: {reservation.time}</div>
-              <div>
-                <FontAwesomeIcon icon={faCheck} />
-                입장
+              <div className="reservationTime">
+                예약시간: {reservation.time}
+              </div>
+              <div className="buttonContainer">
+                <button>
+                  <FontAwesomeIcon icon={faCheck} />
+                  대기
+                </button>
+                <button>
+                  <FontAwesomeIcon icon={faCheck} />
+                  입장
+                </button>
               </div>
             </div>
           </div>

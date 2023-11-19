@@ -7,6 +7,7 @@ const connectDB = require("./config/DBConnection");
 const userRouter = require("./routes/userRouter");
 const errorHandler = require("./middlewares/errorHandler");
 const popupStoreRouter = require("./routes/popupStoreRouter");
+const reservationRouter = require("./routes/reservationRouter");
 const cookieParser = require("cookie-parser");
 
 connectDB();
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 app.use("/api/users", userRouter);
 app.use("/popupStore", popupStoreRouter);
+app.use("/api/reservation", reservationRouter);
 
 app.use(errorHandler); // 에러 처리 미들웨어
 
