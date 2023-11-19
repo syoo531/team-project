@@ -8,30 +8,6 @@ import axios from "axios";
 export default function PopupStoreList({ storeData: stores }) {
   const router = useRouter();
 
-  const handleDelete = async (id) => {
-    try {
-      const {
-        data: { image },
-      } = await axios.get(`http://localhost:4000/api/popupStore/${id}`);
-
-      const imageArray = [
-        image.main_image_url,
-        image.thumbnail_image_url,
-        image.detail_image_url,
-      ].filter((v) => v !== undefined && v !== null);
-
-      //S3와 몽고DB 데이터 한번에 삭제
-      const res = await Promise.all([
-        deleteAllS3(imageArray),
-        axios.delete(`http://localhost:4000/api/popupStore/${id}`),
-      ]);
-      console.log(res);
-      router.refresh();
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   return (
     <>
       <div className="main__header list__header">
@@ -54,7 +30,7 @@ export default function PopupStoreList({ storeData: stores }) {
               <th>지역</th>
               <th>시작일</th>
               <th>종료일</th>
-              <th>기능</th>
+              {/* <th>기능</th> */}
             </tr>
           </thead>
           <tbody>
@@ -73,7 +49,7 @@ export default function PopupStoreList({ storeData: stores }) {
                     {store.start_date && store?.start_date.split("T")[0]}
                   </td>
                   <td>{store.end_date && store?.start_date.split("T")[0]}</td>
-                  <td className="list__action-button">
+                  {/* <td className="list__action-button">
                     <button
                       onClick={() => router.push(`/serviceAdmin/${store._id}`)}
                     >
@@ -82,7 +58,7 @@ export default function PopupStoreList({ storeData: stores }) {
                     <button onClick={() => handleDelete(store._id)}>
                       삭제
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
           </tbody>

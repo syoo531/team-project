@@ -6,7 +6,7 @@ export default function RootLayout({ children }) {
   return (
     <div className="app">
       <NavBar />
-      <main className="main">
+      <main>
         <SideMenu />
         <section>{children}</section>
       </main>

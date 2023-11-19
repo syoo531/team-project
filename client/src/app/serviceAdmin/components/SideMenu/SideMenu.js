@@ -4,7 +4,6 @@ import Link from "next/link";
 export default function SideMenu() {
   return (
     <div className="left-menu__container">
-      <div>로고 넣기</div>
 
       <div className="left-menu__list">
         <ul>
