@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import axios from "axios";
 
 export default function Signup() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [selectedInterests, setSelectedInterests] = useState([]);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    phoneNumber: "",
+    selectedInterests: [],
+  });
 
   const interests = [
     "토이",
@@ -26,10 +28,17 @@ export default function Signup() {
     "아이돌",
   ];
   const toggleInterest = (interest) => {
+    const { selectedInterests } = formData;
     if (selectedInterests.includes(interest)) {
-      setSelectedInterests(selectedInterests.filter((i) => i !== interest));
+      setFormData({
+        ...formData,
+        selectedInterests: selectedInterests.filter((i) => i !== interest),
+      });
     } else {
-      setSelectedInterests([...selectedInterests, interest]);
+      setFormData({
+        ...formData,
+        selectedInterests: [...selectedInterests, interest],
+      });
     }
   };
 
@@ -50,14 +59,25 @@ export default function Signup() {
     return selectedInterests.length >= 3;
   };
 
-  const [nameValid, setNameValid] = useState(true);
-  const [emailValid, setEmailValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
-  const [phoneNumberValid, setPhoneNumberValid] = useState(true);
-  const [interestsValid, setInterestsValid] = useState(true);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const [validCheck, setValidCheck] = useState({
+    nameValid: true,
+    emailValid: true,
+    passwordValid: true,
+    phoneNumberValid: true,
+    interestsValid: true,
+  });
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    const { name, email, password, phoneNumber, selectedInterests } = formData;
 
     const isNameValid = !!name;
     const isEmailValid = checkEmailValid(email);
@@ -72,11 +92,13 @@ export default function Signup() {
       !isPhoneNumberValid ||
       !areInterestsValid
     ) {
-      setNameValid(isNameValid);
-      setEmailValid(isEmailValid);
-      setPasswordValid(isPasswordValid);
-      setPhoneNumberValid(isPhoneNumberValid);
-      setInterestsValid(areInterestsValid);
+      setValidCheck({
+        nameValid: isNameValid,
+        emailValid: isEmailValid,
+        passwordValid: isPasswordValid,
+        phoneNumberValid: isPhoneNumberValid,
+        interestsValid: areInterestsValid,
+      });
       return;
     }
 
@@ -102,30 +124,30 @@ export default function Signup() {
             <div className="signupInputElement">
               <div className="signupText">이름</div>
               <input
-                className={`signupInput ${!nameValid ? "error" : ""}`}
+                className={`signupInput ${
+                  !validCheck.nameValid ? "error" : ""
+                }`}
                 type="text"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                  setNameValid(true); // 입력하면 에러 상태 제거
-                }}
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
               />
-              {!nameValid && (
+              {!validCheck.nameValid && (
                 <div className="errorText">이름을 입력해주세요.</div>
               )}
             </div>
             <div className="signupInputElement">
               <div className="signupText">이메일 주소</div>
               <input
-                className={`signupInput ${!emailValid ? "error" : ""}`}
+                className={`signupInput ${
+                  !validCheck.emailValid ? "error" : ""
+                }`}
                 type="email"
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  setEmailValid(true); // 입력하면 에러 상태 제거
-                }}
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
               />
-              {!emailValid && (
+              {!validCheck.emailValid && (
                 <div className="errorText">
                   유효한 이메일 주소를 입력해주세요.
                 </div>
@@ -134,17 +156,17 @@ export default function Signup() {
             <div className="signupInputElement">
               <div className="signupText">비밀번호</div>
               <input
-                className={`signupInput ${!passwordValid ? "error" : ""}`}
+                className={`signupInput ${
+                  !validCheck.passwordValid ? "error" : ""
+                }`}
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setPasswordValid(true); // 입력하면 에러 상태 제거
-                }}
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
                 placeholder="최소 9자리, 대 소문자, 숫자, 특수문자 포함"
               />
-              {!passwordValid && (
+              {!validCheck.passwordValid && (
                 <div className="errorText">
                   최소 9자리, 대 소문자, 숫자, 특수문자 포함하여 입력해주세요.
                 </div>
@@ -154,20 +176,20 @@ export default function Signup() {
               <div className="signupText">휴대폰 번호</div>
               <input
                 className={`signupInput phoneNumber ${
-                  !phoneNumberValid ? "error" : ""
+                  !validCheck.phoneNumberValid ? "error" : ""
                 }`}
                 type="text"
-                value={phoneNumber}
+                name="phoneNumber"
+                value={formData.phoneNumber}
                 onChange={(e) => {
                   const newValue = e.target.value;
                   if (!isNaN(newValue)) {
-                    setPhoneNumber(newValue);
-                    setPhoneNumberValid(true); // 입력하면 에러 상태 제거
+                    handleInputChange(e);
                   }
                 }}
                 placeholder="- 없이 숫자만 입력"
               />
-              {!phoneNumberValid && (
+              {!validCheck.phoneNumberValid && (
                 <div className="errorText">휴대폰 번호를 입력해주세요.</div>
               )}
             </div>
@@ -175,14 +197,16 @@ export default function Signup() {
               <div className="signupText">관심 카테고리</div>
               <div
                 className={`interests-container ${
-                  !interestsValid ? "errorIntersts" : ""
+                  !validCheck.interestsValid ? "errorIntersts" : ""
                 }`}
               >
                 {interests.map((interest, index) => (
                   <button
                     key={index}
                     className={`interest-tag ${
-                      selectedInterests.includes(interest) ? "selected" : ""
+                      formData.selectedInterests.includes(interest)
+                        ? "selected"
+                        : ""
                     }`}
                     onClick={(e) => {
                       e.preventDefault();
@@ -193,7 +217,7 @@ export default function Signup() {
                   </button>
                 ))}
               </div>
-              {!interestsValid && (
+              {!validCheck.interestsValid && (
                 <div className="errorText">
                   최소 3개의 관심 카테고리를 선택해주세요.
                 </div>
