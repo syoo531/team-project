@@ -13,17 +13,17 @@ const login = async (req, res, next) => {
       throw new Error("이미 탈퇴한 회원 입니다!!!");
     }
 
-    const tokens = await userService.login(email, password);
-    if (!tokens) {
+    const loginResult = await userService.login(email, password);
+    if (!loginResult) {
       throw new Error("이메일 또는 비밀번호를 잘못 입력하셨습니다.");
     }
-    const [accessToken, is_admin] = tokens;
+    const [accessToken, is_admin] = loginResult;
+    console.log(loginResult);
     res
       .cookie("accessToken", accessToken, {
-        // 쿠키 사인으로 해싱한다. secure
-        httpOnly: true, // 리프레시 토큰을 쿠키나 로컬스토리지가 아니라 글로벌스테이트(리덕스,리코일)에 저장한다
-        sameSite: "strict", // 세션: 서버 메모리에 저장, 토큰: 사용자에게 저장, MSA방식
-      }) // 토큰을 저장 1쿠키,2로컬스토리지,세션스토리지,클라이언트메모리
+        httpOnly: true,
+        sameSite: "strict",
+      })
       .status(200)
       .json({
         is_admin: is_admin,
