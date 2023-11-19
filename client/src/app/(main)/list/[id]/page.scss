@@ -36,35 +36,75 @@
 
 .PopUp {
     @include container;
+    .reserveBtn {
+        // position: fixed;
+        // left: 0;
+        // bottom: 0;
+        width: 100%;
+        @include cflex();
+        background: #fff;
+        padding: 50px 0;
+        box-sizing: border-box;
+
+        button {
+            cursor: pointer;
+            border: 0;
+            padding: 10px 30px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background: #e21680;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
     .popImgWrap {
         @include flex(flex-start, space-between);
-        height: 60vh;
+        // height: 60vh;
         width: 100%;
         margin-bottom: 60px;
         .mainImg {
             width: 50%;
             height: 100%;
-            border-radius: 15px;
-            background: #999;
-            @include cflex;
-            color: #333;
-            font-weight: bold;
-            font-size: 36px;
+            img {
+                width: 100%;
+                border-radius: 15px;
+                display: block;
+            }
         }
         .subImg {
-            @include flex(center, space-between);
-            flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             width: 48%;
-            gap: 15px;
-            .subImg {
-                width: 48%;
-                border-radius: 15px;
-                height: 29vh;
-                @include cflex;
-                background: #999;
-                color: #333;
-                font-weight: bold;
-                font-size: 24px;
+            gap: 20px;
+            .subImg1 {
+                width: 100%;
+                height: 35vh;
+                position: relative;
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    object-fit: cover;
+                }
+            }
+            .subImg2 {
+                width: 100%;
+                height: 35vh;
+                position: relative;
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    object-fit: none;
+                }
             }
         }
     }
@@ -106,11 +146,11 @@
         p {
             @include cflex;
             width: 100%;
-            height: 50vh;
-            background: #999;
+            padding: 100px 0;
             color: #333;
             font-size: 36px;
             font-weight: 600;
+            border: 1px solid #ddd;
         }
     }
     .popLocation {

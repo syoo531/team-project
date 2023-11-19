@@ -10,7 +10,7 @@ config.autoAddCss = false;
 export default function List() {
     const generatorsItems = () => {
         const items = [];
-        for (let i = 1; i < 8; i++) {
+        for (let i = 0; i < 8; i++) {
             items.push({
                 id: i,
                 title: `와일드터키 팝업스토어${i}`,
