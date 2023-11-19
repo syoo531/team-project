@@ -6,8 +6,8 @@ dotenv.config();
 const connectDB = require("./config/DBConnection");
 const userRouter = require("./routes/userRouter");
 const errorHandler = require("./middlewares/errorHandler");
-const popupStoreRouter = require("./routes/popupStoreRouter")
-
+const popupStoreRouter = require("./routes/popupStoreRouter");
+const cookieParser = require("cookie-parser");
 
 connectDB();
 const app = express();
@@ -15,9 +15,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 app.use("/api/users", userRouter);
-app.use("/popupStore", popupStoreRouter)
+app.use("/popupStore", popupStoreRouter);
 
 app.use(errorHandler); // 에러 처리 미들웨어
 
