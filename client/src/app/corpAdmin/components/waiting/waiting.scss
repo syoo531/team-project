@@ -1,12 +1,11 @@
 .reservationContainer {
   display: flex;
   flex-direction: column;
-  margin: 20px;
+  margin: 24px 48px;
   padding: 10px;
 
   .reservationBox {
-    height: 128px;
-    padding: 15px;
+    padding: 32px;
     margin-bottom: 10px;
     border-radius: 6px;
     background: #fff;
@@ -28,6 +27,22 @@
         &:last-child {
           margin-right: 0;
         }
+      }
+      .buttonContainer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+      }
+      .reservationTime {
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      button {
+        background: #fff;
+        color: #333;
+        border: 1px solid #222;
+        padding: 6px 8px;
+        border-radius: 4px;
       }
     }
   }

@@ -1,15 +1,19 @@
 /* components/Sidebar.module.scss */
 .sidebar {
-  background: #000;
+  background: #333;
   color: white;
   padding: 1rem;
   width: 200px;
   height: 100vh;
   flex-shrink: 0;
 
+  .linkLogo {
+    display: flex;
+    justify-content: center;
+  }
+
   .logo {
-    width: 160px;
-    margin-top: 10px;
+    width: 132px;
   }
 
   ul {
@@ -23,6 +27,7 @@
       display: block;
       padding: 10px 15px;
       margin-bottom: 8px;
+      font-size: 14px;
 
       &:hover {
         color: #fff;
