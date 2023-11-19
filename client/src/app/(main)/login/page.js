@@ -14,7 +14,9 @@ export default function Login() {
         { email, password }
       );
       if (response.status === 200) {
-        window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
+        console.log(response);
+
+        // window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
       }
     } catch (error) {
       console.error(error); // 에러 처리
@@ -57,7 +59,12 @@ export default function Login() {
           <div className="kakaoText">카카오 로그인 </div>
         </button>
 
-        <button className="googleBtn">구글 로그인</button>
+        <button className="googleBtn">
+          <div className="googleLogo">
+            <img src="/googleBtn.svg" alt="google" />
+          </div>
+          <div className="googleText">구글 로그인</div>
+        </button>
       </div>
     </div>
   );

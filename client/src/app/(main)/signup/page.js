@@ -11,6 +11,10 @@ export default function Signup() {
     phoneNumber: "",
     selectedInterests: [],
   });
+  const [checkboxes, setCheckboxes] = useState({
+    terms: false,
+    over14: false,
+  });
 
   const interests = [
     "토이",
@@ -40,6 +44,13 @@ export default function Signup() {
         selectedInterests: [...selectedInterests, interest],
       });
     }
+  };
+
+  const handleCheckboxChange = (e) => {
+    setCheckboxes({
+      ...checkboxes,
+      [e.target.name]: e.target.checked,
+    });
   };
 
   const checkEmailValid = (email) => {
@@ -223,8 +234,32 @@ export default function Signup() {
                 </div>
               )}
             </div>
+            <div className="checkboxContainer">
+              <div className="checkboxTerms">
+                <input
+                  type="checkbox"
+                  name="terms"
+                  checked={checkboxes.terms}
+                  onChange={handleCheckboxChange}
+                />{" "}
+                [필수] 이용 약관 및 개인정보 처리방침에 동의합니다.
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="over14"
+                  checked={checkboxes.over14}
+                  onChange={handleCheckboxChange}
+                />{" "}
+                [필수] 만 14세 이상임을 확인하고 동의합니다.
+              </div>
+            </div>
 
-            <button className="signupBtn" type="submit">
+            <button
+              className="signupBtn"
+              type="submit"
+              disabled={!checkboxes.terms || !checkboxes.over14}
+            >
               회원가입
             </button>
           </form>
