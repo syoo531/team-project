@@ -13,7 +13,7 @@ const s3client = new S3Client({
 });
 
 //이미지들을 객체로 받아 S3에 업로드 + 기존 이미지는 S3에서 삭제
-export const imageUploader = async (images, existingImage= false) => {
+export const s3imageUploader = async (images, existingImage= false) => {
   let imageURL = {};
   let uploadPromises = [];
 

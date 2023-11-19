@@ -4,20 +4,32 @@ import "./StoreForm.scss";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { imageUploader } from "../imageUploader";
+import { s3imageUploader } from "../imageUploader";
 
-const StoreForm = ({ storeData, storeId }) => {
+const StoreForm = ({
+  name,
+  brand,
+  category,
+  address,
+  location,
+  summary,
+  description,
+  start_date,
+  end_date,
+  image, //이미지 url 담긴 객체
+  storeId,
+}) => {
   const router = useRouter();
 
-  const name = useRef();
-  const brand = useRef();
-  const category = useRef();
-  const address = useRef();
-  const location = useRef();
-  const summary = useRef();
-  const description = useRef();
-  const start_date = useRef();
-  const end_date = useRef();
+  const nameRef = useRef();
+  const brandRef = useRef();
+  const categoryRef = useRef();
+  const addressRef = useRef();
+  const locationRef = useRef();
+  const summaryRef = useRef();
+  const descriptionRef = useRef();
+  const start_dateRef = useRef();
+  const end_dateRef = useRef();
 
   const imageInitialState = {
     main_image_url: "",
@@ -26,9 +38,9 @@ const StoreForm = ({ storeData, storeId }) => {
   };
 
   const existingImageState = {
-    main_image_url: "",
-    thumbnail_image_url: "",
-    detail_image_url: "",
+    main_image_url: image?.main_image_url || "",
+    thumbnail_image_url: image?.thumbnail_image_url || "",
+    detail_image_url: image?.detail_image_url || "",
   };
 
   //const [form, setForm] = useState(formIntialState);
@@ -36,57 +48,51 @@ const StoreForm = ({ storeData, storeId }) => {
   const [error, setError] = useState({});
   const [existingImage, setExistingImage] = useState(existingImageState);
 
-  useEffect(() => {
-    if (storeData) {
-      name.current.value = storeData.name || "";
-      brand.current.value = storeData.brand || "";
-      category.current.value = storeData.category || "";
-      address.current.value = storeData.address || "";
-      location.current.value = storeData.location || "";
-      summary.current.value = storeData.summary || "";
-      description.current.value = storeData.description || "";
-      start_date.current.value = storeData.start_date || "";
-      end_date.current.value = storeData.end_date || "";
+  const createPopupStore = async (formData) => {
+    const imageURL = await s3imageUploader(newImages, false);
+    const updatedFormData = { ...formData, ...imageURL };
+    const { data } = await axios.post(
+      `http://localhost:4000/popupStore`,
+      updatedFormData
+    );
+    console.log("store created", data);
+  };
 
-      setExistingImage(() => storeData.image);
-    }
-  }, [storeData]);
+  const updatePopupStore = async (formData) => {
+    const newImageUrl = await s3imageUploader(newImages, existingImage);
+    console.log("updated image URLS", newImageUrl);
+    const updatedFormData = { ...formData, ...newImageUrl };
+    const { data } = await axios.patch(
+      `http://localhost:4000/popupStore/${storeId}`,
+      updatedFormData
+    );
+    console.log("store updated", data);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const formData = {
-        name: name.current.value,
-        brand: brand.current.value,
-        category: category.current.value,
-        address: address.current.value,
-        location: location.current.value,
-        summary: summary.current.value,
-        description: description.current.value,
-        start_date: start_date.current.value,
-        end_date: end_date.current.value,
+        name: nameRef.current.value,
+        brand: brandRef.current.value,
+        category: categoryRef.current.value,
+        address: addressRef.current.value,
+        location: locationRef.current.value,
+        summary: summaryRef.current.value,
+        description: descriptionRef.current.value,
+        start_date: start_dateRef.current.value,
+        end_date: end_dateRef.current.value,
       };
 
       if (storeId) {
-        const newImageUrl = await imageUploader(newImages, existingImage);
-        console.log("updated image URLS", newImageUrl);
-        const updatedFormData = { ...formData, ...newImageUrl };
-        const { data } = await axios.patch(
-          `http://localhost:4000/popupStore/${storeId}`,
-          updatedFormData
-        );
-        console.log("store updated", data);
+        await updatePopupStore(formData);
+        router.refresh();
+        return;
       } else {
-        const imageURL = await imageUploader(newImages, false);
-        const updatedFormData = { ...formData, ...imageURL };
-        const { data } = await axios.post(
-          `http://localhost:4000/popupStore`,
-          updatedFormData
-        );
-        console.log("store created", data);
+        await createPopupStore(formData);
+        router.push("/serviceAdmin");
+        router.refresh();
       }
-      router.push("/serviceAdmin");
-      router.refresh();
     } catch (error) {
       console.error("Error:", error);
     }
@@ -98,102 +104,147 @@ const StoreForm = ({ storeData, storeId }) => {
         <div>
           <label>
             팝업스토어 이름:
-            <input type="text" name="name" ref={name} />
+            <input
+              type="text"
+              name="name"
+              ref={nameRef}
+              defaultValue={name || ""}
+            />
           </label>
         </div>
         <div>
           <label>
             브랜드 이름:
-            <input type="text" name="brand" ref={brand} />
+            <input
+              type="text"
+              name="brand"
+              ref={brandRef}
+              defaultValue={brand || ""}
+            />
           </label>
         </div>
         <div>
           <label>
             카테고리:
-            <input type="text" name="category" ref={category} />
+            <input
+              type="text"
+              name="category"
+              ref={categoryRef}
+              defaultValue={category || ""}
+            />
           </label>
         </div>
         <div>
           <label>
             주소:
-            <input type="text" name="address" ref={address} />
+            <input
+              type="text"
+              name="address"
+              ref={addressRef}
+              defaultValue={address || ""}
+            />
           </label>
         </div>
         <div>
           <label>
             지역:
-            <input type="text" name="location" ref={location} />
+            <input
+              type="text"
+              name="location"
+              ref={locationRef}
+              defaultValue={location || ""}
+            />
           </label>
         </div>
         <div>
           <label>
             소개:
-            <input type="text" name="summary" ref={summary} />
+            <input
+              type="text"
+              name="summary"
+              ref={summaryRef}
+              defaultValue={summary || ""}
+            />
           </label>
         </div>
         <div>
           <label>
             설명:
-            <input type="text" name="description" ref={description} />
+            <input
+              type="text"
+              name="description"
+              ref={descriptionRef}
+              defaultValue={description || ""}
+            />
           </label>
         </div>
         <div>
           <label>
             이벤트 시작일:
-            <input type="text" name="start_date" ref={start_date} />
+            <input
+              type="text"
+              name="start_date"
+              ref={start_dateRef}
+              defaultValue={start_date?.split('T')[0] || ""}
+            />
           </label>
         </div>
         <div>
           <label>
             이벤트 종료일:
-            <input type="text" name="end_date" ref={end_date} />
+            <input
+              type="text"
+              name="end_date"
+              ref={end_dateRef}
+              defaultValue={end_date?.split('T')[0] || ""}
+            />
           </label>
         </div>
-        <div>
 
-        <div className="container-image-upload">
-          <label>
-            메인 이미지:
-            <input
-              type="file"
-              name="main_image_url"
-              onChange={(e) =>
-                setNewImages((cur) => ({
-                  ...cur,
-                  main_image_url: e.target.files[0],
-                }))
-              }
-            />
-          </label>
-          <br></br>
-          <label>
-            썸네일 이미지:
-            <input
-              type="file"
-              name="thumbnail_image_url"
-              onChange={(e) =>
-                setNewImages((cur) => ({
-                  ...cur,
-                  thumbnail_image_url: e.target.files[0],
-                }))
-              }
-            />
-          </label>
-          <br></br>
-          <label>
-            상세 이미지:
-            <input
-              type="file"
-              name="detail_image_url"
-              onChange={(e) =>
-                setNewImages((cur) => ({
-                  ...cur,
-                  detail_image_url: e.target.files[0],
-                }))
-              }
-            />
-          </label>
-        </div>
+        <div>
+          <div className="container-image-upload">
+            <label>
+              메인 이미지:
+              <input
+                type="file"
+                name="main_image_url"
+                onChange={(e) =>
+                  setNewImages((cur) => ({
+                    ...cur,
+                    main_image_url: e.target.files[0],
+                  }))
+                }
+              />
+            </label>
+            <br></br>
+            <label>
+              썸네일 이미지:
+              <input
+                type="file"
+                name="thumbnail_image_url"
+                onChange={(e) =>
+                  setNewImages((cur) => ({
+                    ...cur,
+                    thumbnail_image_url: e.target.files[0],
+                  }))
+                }
+              />
+            </label>
+            <br></br>
+            <label>
+              상세 이미지:
+              <input
+                type="file"
+                name="detail_image_url"
+                onChange={(e) =>
+                  setNewImages((cur) => ({
+                    ...cur,
+                    detail_image_url: e.target.files[0],
+                  }))
+                }
+              />
+            </label>
+          </div>
 
           <img style={{ width: "200px" }} src={existingImage?.main_image_url} />
           <img
