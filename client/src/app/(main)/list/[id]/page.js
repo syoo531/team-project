@@ -1,7 +1,7 @@
 "use client";
 import "./page.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { config } from "@fortawesome/fontawesome-svg-core";
@@ -10,7 +10,7 @@ config.autoAddCss = false;
 
 // 팝업스토어 상세 페이지
 export default function PopUp(props) {
-    const path = usePathname();
+    // const path = usePathname();
     const storeId = props.params.id;
     const [popupData, setPopupData] = useState({});
     const startDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].start_date;
