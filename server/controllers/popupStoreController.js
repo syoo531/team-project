@@ -63,7 +63,7 @@ const getAllStores = async (req, res) => {
       data,
       totalStores,
       currentPage: Number(page) || 1,
-      numberOfPages: Math.ceil(totalStores / limitPerPage),
+      totalPages: Math.ceil(totalStores / limitPerPage),
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -95,16 +95,15 @@ const updatePopupStore = async (req, res) => {
       await images.save();
     }
 
-    const popupStore = await PopupStore.findByIdAndUpdate(
-      id,
-      req.body
-    ).populate("image");
+    const popupStore = await PopupStore.findByIdAndUpdate(id, req.body, {
+      new: true,
+    }).populate("image");
 
     if (!popupStore) {
       return res.status(404).json({ message: "Popup Store not found" });
     }
 
-    res.status(200).json({ popupStore });
+    res.status(200).json(popupStore);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

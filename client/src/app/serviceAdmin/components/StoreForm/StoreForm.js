@@ -43,10 +43,6 @@ const StoreForm = ({
     detail_image_url: image?.detail_image_url || "",
   };
 
-  useEffect(() => {
-    console.log('Props:', { name, brand, locationRef });
-  });
-
   //const [form, setForm] = useState(formIntialState);
   const [newImages, setNewImages] = useState(imageInitialState);
   const [error, setError] = useState({});
@@ -189,7 +185,7 @@ const StoreForm = ({
               type="text"
               name="start_date"
               ref={start_dateRef}
-              defaultValue={start_date || ""}
+              defaultValue={start_date?.split('T')[0] || ""}
             />
           </label>
         </div>
@@ -200,7 +196,7 @@ const StoreForm = ({
               type="text"
               name="end_date"
               ref={end_dateRef}
-              defaultValue={end_date || ""}
+              defaultValue={end_date?.split('T')[0] || ""}
             />
           </label>
         </div>
