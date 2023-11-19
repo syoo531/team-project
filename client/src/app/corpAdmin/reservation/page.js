@@ -1,6 +1,6 @@
 // 팝업스토어 업체 관리자: 사전등록관리페이지
 
-import ReservationContent from "../components/\breservationContent/reservationContent";
+import ReservationContent from "../components/reservationContent/reservationContent";
 import Navbar from "../components/navbar/navbar";
 import Sidebar from "../components/sidebar/sidebar";
 
