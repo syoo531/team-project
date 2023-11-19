@@ -40,20 +40,6 @@ class UserService {
           user: {
             username: user.name,
             email: user.email,
-            id: user._id,
-          },
-        },
-        process.env.ACCESS_TOKEN_SECERT,
-        { expiresIn: "30s" }
-      );
-
-      // refresh 토큰
-      const refreshToken = jwt.sign(
-        {
-          user: {
-            username: user.name,
-            email: user.email,
-            id: user._id,
           },
         },
         process.env.ACCESS_TOKEN_SECERT,
@@ -64,7 +50,7 @@ class UserService {
         is_admin = true;
       }
 
-      return [accessToken, refreshToken, is_admin];
+      return [accessToken, is_admin];
     } else return false;
   }
 }

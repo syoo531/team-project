@@ -1,6 +1,6 @@
 import "./mypage.scss";
 import MyPageHome from "./components/myPageHome/MyPageHome";
-import ReservationList from "./components/reservationList/ReservationList";
+import ReservationList from "./components/reservationList/reservationList";
 
 // MyPage Path : http://localhost:3000/myPage
 export default function MyPage() {
