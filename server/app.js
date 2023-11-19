@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/users", userRouter);
-app.use("/popupStore", popupStoreRouter);
+app.use("/api/popupStore", popupStoreRouter);
 
 app.use(errorHandler); // 에러 처리 미들웨어
 
