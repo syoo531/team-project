@@ -15,7 +15,12 @@ const cookieParser = require("cookie-parser");
 connectDB();
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credential: "true",
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
