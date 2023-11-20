@@ -1,17 +1,43 @@
-main {
-  display: flex;
-  width: 100%;
-  background-color: #dedee0;
+@import "../../styles/adminStyles.scss";
 
-  section {
+//layout.js 스타일
+.app-flex-container {
+  display: flex;
+  align-items: stretch;
+  min-height: calc(100vh - 50px);
+  width: 100%;
+  background-color: $admin-background-color;
+
+  main {
     width: 100%;
+    padding: 40px 30px;
   }
 }
 
-.main__container {
-  padding: 0px 100px;
+//page.js 스타일
+.main__header {
+  padding: 20px 0px 10px 0px;
+}
 
-  .main__header {
-    padding: 40px 0px 10px 0px;
+@mixin admin-button-base-style {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: none;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+  font-size: 12px;
+  text-align: center;
+  text-decoration: none;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+//액션 버튼 스타일
+@mixin admin-action-button-style {
+  background-color: #cdced0;
+
+  &:hover {
+    color: rgb(0, 0, 0);
+    background-color: #ababac;
   }
 }

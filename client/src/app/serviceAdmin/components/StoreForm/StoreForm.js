@@ -6,6 +6,23 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { s3imageUploader, deleteAllS3 } from "../imageUploader";
 
+//카테고리 selectbox options 정의
+const CATEGORY_OPTIONS = [
+  { value: "토이", name: "토이" },
+  { value: "뷰티", name: "뷰티" },
+  { value: "패션", name: "패션" },
+  { value: "음식", name: "음식" },
+  { value: "예술", name: "예술" },
+  { value: "주류", name: "주류" },
+  { value: "게임", name: "게임" },
+  { value: "전자기기", name: "전자기기" },
+  { value: "가구", name: "가구" },
+  { value: "캐릭터", name: "캐릭터" },
+  { value: "럭셔리", name: "럭셔리" },
+  { value: "카페", name: "카페" },
+  { value: "아이돌", name: "아이돌" },
+];
+
 const StoreForm = ({
   name,
   brand,
@@ -23,7 +40,7 @@ const StoreForm = ({
 
   const nameRef = useRef();
   const brandRef = useRef();
-  const categoryRef = useRef();
+  const categorySelectRef = useRef();
   const addressRef = useRef();
   const locationRef = useRef();
   const summaryRef = useRef();
@@ -75,7 +92,7 @@ const StoreForm = ({
       const formData = {
         name: nameRef.current.value,
         brand: brandRef.current.value,
-        category: categoryRef.current.value,
+        category: categorySelectRef.current.value,
         address: addressRef.current.value,
         location: locationRef.current.value,
         summary: summaryRef.current.value,
@@ -127,42 +144,68 @@ const StoreForm = ({
     }
   };
 
-  return (
-    <>
-      <div className="main__header form__header">
-        <h1>팝업스토어 등록</h1>
-        <div className="action__menu">
-          <button
-            className="delete-button"
-            onClick={() => handleDelete(storeId)}
-          >
-            팝업스토어 삭제
-          </button>
-        </div>
-      </div>
+  const handleUploadImage = (e) => {
+    setNewImages((cur) => ({
+      ...cur,
+      detail_image_url: e.target.files[0],
+    }));
+    const objectURL = window.URL.createObjectURL(e.target.files[0]);
+  };
 
-      <div className="form__container">
-        <form onSubmit={handleSubmit}>
-          <div className="form__text-section">
-            <div className="form__field">
-              <label>팝업스토어 이름</label>
-              <input
-                type="text"
-                name="name"
-                ref={nameRef}
-                defaultValue={name || ""}
-              />
-            </div>
-            <div>
-              <label>브랜드 이름</label>
-              <input
-                type="text"
-                name="brand"
-                ref={brandRef}
-                defaultValue={brand || ""}
-              />
-            </div>
-            <div>
+  return (
+    <div className="main-content__layout">
+      <div className="main-content__container">
+        <div className="main__header form__header">
+          {storeId ? <h1>팝업스토어 수정</h1> : <h1>팝업스토어 등록</h1>}
+          <div className="action__menu">
+            <button
+              className="delete-button"
+              onClick={() => handleDelete(storeId)}
+            >
+              팝업스토어 삭제
+            </button>
+          </div>
+        </div>
+
+        <div className="form__container">
+          <form onSubmit={handleSubmit}>
+            <section className="form__text-section">
+              <div>
+                <label>팝업스토어 이름</label>
+                <input
+                  type="text"
+                  name="name"
+                  ref={nameRef}
+                  defaultValue={name || ""}
+                />
+              </div>
+              <div>
+                <label>브랜드 이름</label>
+                <input
+                  type="text"
+                  name="brand"
+                  ref={brandRef}
+                  defaultValue={brand || ""}
+                />
+              </div>
+
+              <div className="category-selectbox__div">
+                <label>
+                  카테고리
+                  <select
+                    className="category-selectbox"
+                    ref={categorySelectRef}
+                    defaultValue={category}
+                  >
+                    {CATEGORY_OPTIONS.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              {/* <div>
               <label>카테고리</label>
               <input
                 type="text"
@@ -170,129 +213,150 @@ const StoreForm = ({
                 ref={categoryRef}
                 defaultValue={category || ""}
               />
-            </div>
-            <div>
-              <label>주소</label>
-              <input
-                type="text"
-                name="address"
-                ref={addressRef}
-                defaultValue={address || ""}
-              />
-            </div>
-            <div>
-              <label>지역</label>
-              <input
-                type="text"
-                name="location"
-                ref={locationRef}
-                defaultValue={location || ""}
-              />
-            </div>
-            <div>
-              <label>소개</label>
-              <input
-                className="form-summary"
-                type="text"
-                name="summary"
-                ref={summaryRef}
-                defaultValue={summary || ""}
-              />
-            </div>
-            <div>
-              <label>설명</label>
-              <input
-                className="form-description"
-                type="text"
-                name="description"
-                ref={descriptionRef}
-                defaultValue={description || ""}
-              />
-            </div>
-            <div>
-              <label>이벤트 시작일</label>
-              <input
-                type="text"
-                name="start_date"
-                ref={start_dateRef}
-                defaultValue={start_date?.split("T")[0] || ""}
-              />
-            </div>
-            <div>
-              <label>이벤트 종료일</label>
-              <input
-                type="text"
-                name="end_date"
-                ref={end_dateRef}
-                defaultValue={end_date?.split("T")[0] || ""}
-              />
-            </div>
-          </div>
+            </div> */}
+              <div>
+                <label>주소</label>
+                <input
+                  type="text"
+                  name="address"
+                  ref={addressRef}
+                  defaultValue={address || ""}
+                />
+              </div>
+              <div>
+                <label>지역</label>
+                <input
+                  type="text"
+                  name="location"
+                  ref={locationRef}
+                  defaultValue={location || ""}
+                />
+              </div>
+              <div>
+                <label>소개</label>
+                <input
+                  className="form-summary"
+                  type="text"
+                  name="summary"
+                  ref={summaryRef}
+                  defaultValue={summary || ""}
+                />
+              </div>
+              <div>
+                <label>설명</label>
+                <textarea
+                  className="form-description"
+                  type="text"
+                  name="description"
+                  ref={descriptionRef}
+                  defaultValue={description || ""}
+                />
+              </div>
+              <div>
+                <label>이벤트 시작일</label>
+                <input
+                  type="text"
+                  name="start_date"
+                  ref={start_dateRef}
+                  defaultValue={start_date?.split("T")[0] || ""}
+                />
+              </div>
+              <div>
+                <label>이벤트 종료일</label>
+                <input
+                  type="text"
+                  name="end_date"
+                  ref={end_dateRef}
+                  defaultValue={end_date?.split("T")[0] || ""}
+                />
+              </div>
+            </section>
 
-          <div className="form__media-section">
-            <h1 className="section-title">이미지 업로드</h1>
-            <label>
-              메인 이미지:
-              <input
-                type="file"
-                name="main_image_url"
-                onChange={(e) =>
-                  setNewImages((cur) => ({
-                    ...cur,
-                    main_image_url: e.target.files[0],
-                  }))
-                }
-              />
-            </label>
-            <br></br>
-            <label>
-              썸네일 이미지:
-              <input
-                type="file"
-                name="thumbnail_image_url"
-                onChange={(e) =>
-                  setNewImages((cur) => ({
-                    ...cur,
-                    thumbnail_image_url: e.target.files[0],
-                  }))
-                }
-              />
-            </label>
-            <br></br>
-            <label>
-              상세 이미지:
-              <input
-                type="file"
-                name="detail_image_url"
-                onChange={(e) =>
-                  setNewImages((cur) => ({
-                    ...cur,
-                    detail_image_url: e.target.files[0],
-                  }))
-                }
-              />
-            </label>
+            {/* 사진 업로드 구간 */}
+            <section className="form__media-section">
+              <h1 className="section-title">이미지 업로드</h1>
 
-            <img
-              style={{ width: "200px" }}
-              src={existingImage?.main_image_url}
-            />
-            <img
-              style={{ width: "200px" }}
-              src={existingImage?.thumbnail_image_url}
-            />
-            <img
-              style={{ width: "200px" }}
-              src={existingImage?.detail_image_url}
-            />
-          </div>
-          <button type="submit">Submit</button>
-          <button type="button" onClick={() => router.push("/serviceAdmin")}>
-            취소
-          </button>
-        </form>
+              <hr></hr>
+
+              <div className="image-upload-wrapper">
+                <div className="image-upload-custom-buttom">
+                  <label>메인 이미지</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="main_image_url"
+                    onChange={(e) =>
+                      setNewImages((cur) => ({
+                        ...cur,
+                        main_image_url: e.target.files[0],
+                      }))
+                    }
+                  />
+                </div>
+                <div
+                  style={{
+                    border: "1px solid grey",
+                    width: "200px",
+                    height: "150px",
+                  }}
+                >
+                  {newImages.main_image_url && (
+                    <img
+                      style={{ width: "200px" }}
+                      src={window.URL.createObjectURL(newImages.main_image_url)}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <br></br>
+              <label>
+                썸네일 이미지:
+                <input
+                  type="file"
+                  name="thumbnail_image_url"
+                  onChange={(e) =>
+                    setNewImages((cur) => ({
+                      ...cur,
+                      thumbnail_image_url: e.target.files[0],
+                    }))
+                  }
+                />
+              </label>
+              <br></br>
+              <label>
+                상세 이미지:
+                <input
+                  type="file"
+                  name="detail_image_url"
+                  onChange={handleUploadImage}
+                />
+              </label>
+
+              <br></br>
+              <hr></hr>
+
+              <img
+                style={{ width: "200px" }}
+                src={existingImage?.main_image_url}
+              />
+              <img
+                style={{ width: "200px" }}
+                src={existingImage?.thumbnail_image_url}
+              />
+              <img
+                style={{ width: "200px" }}
+                src={existingImage?.detail_image_url}
+              />
+            </section>
+            <button type="submit">Submit</button>
+            <button type="button" onClick={() => router.push("/serviceAdmin")}>
+              취소
+            </button>
+          </form>
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,28 +1,35 @@
+@import "../../../../styles/adminStyles.scss";
+@import "../../main.scss";
+
+.main-content__layout {
+  padding: 0px 50px;
+  max-width: 90%;
+  flex: 1 1;
+  box-sizing: border-box;
+}
+
+.main-content__container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
 .form__header {
-  width: 70%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .action__menu {
-  padding: 10px 0px;
-  width: 130px;
-  margin-left: auto;
+  padding: 10px 8px;
 
   .delete-button {
-    padding: 5px 15px;
+    @include admin-button-base-style;
     color: white;
-    background-color: #df3220;
-    border: none;
-    border-radius: 6px;
-    box-shadow:
-      rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
-      rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    background-color: map-get($admin-button-colors, warningLight);
 
     &:hover {
       color: rgb(251, 251, 251);
-      background-color: #b6291a;
+      background-color: map-get($admin-button-colors, warningDark);
     }
   }
 }
@@ -32,52 +39,87 @@
   padding-bottom: 50px;
 }
 
-.form__text-section {
-  width: 70%;
+.form__text-section,
+.form__media-section {
   padding: 20px 20px;
   margin-bottom: 20px;
+  background-color: $admin-card-background;
 
-  background-color: rgb(255, 251, 251);
-  border-radius: 7px;
-  box-shadow:
-    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  border-radius: $admin-border-radius;
+  box-shadow: $admin-box-shadow;
+}
+
+.form__text-section {
+  label {
+    display: block;
+    padding-bottom: 5px;
+  }
+  input {
+    width: 100%;
+    height: 30px;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+
+    border-radius: 6px;
+    border: 1px grey solid;
+    font-weight: map-get($admin-font-weights, light);
+  }
+
+  textarea {
+    width: 100%;
+    height: 150px;
+    padding: 4px 6px;
+    margin-bottom: 8px;
+
+    border-radius: 6px;
+    resize: none;
+    font-weight: map-get($admin-font-weights, light);
+  }
+
+  .category-selectbox__div {
+    margin: 8px 0px 10px 0px;
+  }
+
+  .category-selectbox {
+    width: 150px;
+    height: 26px;
+    padding-left: 8px;
+
+    margin-left: 10px;
+    padding-left: 10px;
+    border-radius: 6px;
+  }
 }
 
 .form__media-section {
-  width: 70%;
-  padding: 10px 10px;
-  margin-bottom: 20px;
-  background-color: rgb(245, 242, 242);
-  border-radius: 7px;
-  box-shadow:
-    rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  .section-title {
+    padding-bottom: 10px;
+  }
 }
 
-form label {
-  display: block;
-  padding-bottom: 5px;
+.image-upload-wrapper {
+  border: 1px solid grey;
+  width: 250px;
 }
 
-form input {
-  width: 100%;
-  height: 30px;
-  padding: 4px 6px;
+.image-upload-custom-buttom {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  background-color: blue;
+  width: 100px;
   border-radius: 6px;
-  border: 1px grey solid;
-}
 
-form div {
-  padding: 5px;
-}
+  label {
+    position: absolute;
+    font-size: 15px;
+    background-color: red;
+  }
 
-.section-title {
-  padding: 10px 0px;
-}
-
-.form-description {
-  height: 100px;
-  text-align: start;
-  vertical-align: top;
+  input {
+    left: 0;
+    top: 0;
+    opacity: 0;
+    background-color: grey;
+  }
 }

@@ -1,3 +1,10 @@
+@import "../../../../styles/adminStyles.scss";
+@import "../../main.scss";
+
+.main__layout {
+  padding: 0px 50px;
+}
+
 .list__header {
   display: flex;
   justify-content: space-between;
@@ -5,33 +12,25 @@
 }
 
 .action__menu {
-  padding: 10px 0px;
-  margin-left: auto;
+  padding: 10px 8px;
 
   button {
-    border: none;
-    background-color: #cdced0;
-    padding: 5px 15px;
-    border-radius: 6px;
-
-    &:hover {
-      color: rgb(0, 0, 0);
-      background-color: #ababac;
-    }
+    @include admin-action-button-style;
+    @include admin-button-base-style;
   }
 }
 
 .list__container {
   width: 100%;
   padding: 7px 0px;
-  background-color: rgb(235, 232, 232);
-  border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  background-color: $admin-card-background;
+  border-radius: $admin-border-radius;
+  box-shadow: $admin-box-shadow;
 }
 
 table.list-table {
   width: 100%;
-  border-radius: 6px;
+  border-radius: $admin-border-radius;
   border-collapse: collapse;
 
   th,
@@ -41,29 +40,29 @@ table.list-table {
   }
 
   th {
-    font-weight: 500;
+    font-weight: map-get($admin-font-weights, "bold");
     border-bottom: 1px rgb(201, 199, 199) solid;
   }
 
   .table-row {
     &:hover {
       color: rgb(0, 0, 0);
-      background-color: #cecaca;
+      background-color: #cfcaca;
       cursor: pointer;
     }
   }
 
   td {
     border-top: 1px rgb(201, 199, 199) solid;
-    font-weight: 300;
+    font-weight: map-get($admin-font-weights, "light");
     text-align: center;
   }
 
-  .list__action-button {
-    width: 150px;
-  }
+  // .list__action-button {
+  //   width: 150px;
+  // }
 
-  .list__action-button button{
-    margin: 0px 3px;
-  }
+  // .list__action-button button {
+  //   margin: 0px 3px;
+  // }
 }

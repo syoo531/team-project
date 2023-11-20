@@ -9,7 +9,7 @@ export default function PopupStoreList({ storeData: stores }) {
   const router = useRouter();
 
   return (
-    <>
+    <div className="main__layout">
       <div className="main__header list__header">
         <div className="main-title">
           <h1>팝업스토어 목록</h1>
@@ -64,6 +64,6 @@ export default function PopupStoreList({ storeData: stores }) {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 }
