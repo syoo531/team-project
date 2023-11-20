@@ -1,0 +1,40 @@
+// 색상
+$admin-primary-color: blue !default;
+$admin-primary-dark-color: blue !default;
+$admin-primary-light-color: blue !default;
+
+$admin-secondary-color: blue;
+$admin-secondary-dark-color: blue;
+$admin-secondary-dark-color: blue;
+
+$admin-background-color: #dedee0;
+$admin-card-background: white;
+
+$admin-theme-colors: (
+  "success": #28a745,
+  "info": #17a2b8,
+  "warning": #ffc107,
+);
+
+$admin-button-colors: (
+  "light": #cdced0,
+  "dark": #ababac,
+  "warningLight": #df3220,
+  "warningDark": #b6291a
+);
+
+$admin-font-weights: (
+  "bold": 500,
+  "light": 300,
+);
+
+$admin-font-sizes: (
+  "small": 12px,
+  "normal": 18px,
+  "large": 24px,
+);
+
+//기타 스타일
+$admin-box-shadow:rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+$admin-border-radius: 7px;

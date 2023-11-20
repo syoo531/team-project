@@ -6,10 +6,10 @@ export default function RootLayout({ children }) {
   return (
     <div className="app">
       <NavBar />
-      <main>
+      <div className="app-flex-container">
         <SideMenu />
-        <section>{children}</section>
-      </main>
+        <main>{children}</main>
+      </div>
     </div>
   );
 }

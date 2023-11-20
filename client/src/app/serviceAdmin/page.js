@@ -19,8 +19,8 @@ export default async function ServiceAdmin() {
   const { data } = await getData();
   console.log(data);
   return (
-    <div className="main__container">
+    <>
       <PopupStoreList storeData={data} />
-    </div>
+    </>
   );
 }

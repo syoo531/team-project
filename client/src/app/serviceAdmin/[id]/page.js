@@ -15,8 +15,8 @@ export default async function ServiceAdmin({ params }) {
   const storeData = await getData(params.id);
 
   return (
-    <div className="main__container">
+    <>
       <StoreForm {...storeData} storeId={params.id} />
-    </div>
+    </>
   );
 }

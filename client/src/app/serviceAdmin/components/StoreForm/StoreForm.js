@@ -128,7 +128,7 @@ const StoreForm = ({
   };
 
   return (
-    <>
+    <div className="main-content__container">
       <div className="main__header form__header">
         <h1>팝업스토어 등록</h1>
         <div className="action__menu">
@@ -143,8 +143,8 @@ const StoreForm = ({
 
       <div className="form__container">
         <form onSubmit={handleSubmit}>
-          <div className="form__text-section">
-            <div className="form__field">
+          <section className="form__text-section">
+            <div>
               <label>팝업스토어 이름</label>
               <input
                 type="text"
@@ -201,7 +201,7 @@ const StoreForm = ({
             </div>
             <div>
               <label>설명</label>
-              <input
+              <textarea
                 className="form-description"
                 type="text"
                 name="description"
@@ -227,9 +227,9 @@ const StoreForm = ({
                 defaultValue={end_date?.split("T")[0] || ""}
               />
             </div>
-          </div>
+          </section>
 
-          <div className="form__media-section">
+          <section className="form__media-section">
             <h1 className="section-title">이미지 업로드</h1>
             <label>
               메인 이미지:
@@ -285,14 +285,14 @@ const StoreForm = ({
               style={{ width: "200px" }}
               src={existingImage?.detail_image_url}
             />
-          </div>
+          </section>
           <button type="submit">Submit</button>
           <button type="button" onClick={() => router.push("/serviceAdmin")}>
             취소
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
