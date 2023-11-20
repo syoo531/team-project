@@ -5,6 +5,8 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { s3imageUploader, deleteAllS3 } from "../imageUploader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 //카테고리 selectbox options 정의
 const CATEGORY_OPTIONS = [
@@ -47,11 +49,14 @@ const StoreForm = ({
   const descriptionRef = useRef();
   const start_dateRef = useRef();
   const end_dateRef = useRef();
+  const mainImageRef = useRef();
+  const thumbnailRef = useRef();
+  const detailImageRef = useRef();
 
   const imageInitialState = {
-    main_image_url: "",
-    thumbnail_image_url: "",
-    detail_image_url: "",
+    main_image_url: null,
+    thumbnail_image_url: null,
+    detail_image_url: null,
   };
 
   const existingImageState = {
@@ -150,6 +155,19 @@ const StoreForm = ({
       detail_image_url: e.target.files[0],
     }));
     const objectURL = window.URL.createObjectURL(e.target.files[0]);
+  };
+
+  const renderImagePreview = (newImage, existingImage) => {
+    return (
+      <>
+        {newImage || existingImage ? (
+          <img
+            src={newImage ? URL.createObjectURL(newImage) : existingImage}
+            alt="이미지 미리보기"
+          />
+        ) : null}
+      </>
+    );
   };
 
   return (
@@ -273,13 +291,125 @@ const StoreForm = ({
             </section>
 
             {/* 사진 업로드 구간 */}
-            <section className="form__media-section">
-              <h1 className="section-title">이미지 업로드</h1>
 
+            <section className="form__media-section">
+              <h2 style={{ marginBottom: "10px" }}>Media</h2>
+              <div className="form__media-flex">
+                <div className="main-image-upload-wrapper">
+                  <div
+                    className="image-upload-custom-buttom"
+                    onClick={() => mainImageRef.current.click()}
+                  >
+                    <FontAwesomeIcon icon={faFileArrowUp} beat />
+                    <div>메인 이미지</div>
+                    <input
+                      className="fileInput"
+                      type="file"
+                      ref={mainImageRef}
+                      accept="image/*"
+                      name="main_image_url"
+                      onChange={(e) => {
+                        const selectedFile = e.target.files[0];
+                        if (selectedFile) {
+                          setNewImages((cur) => ({
+                            ...cur,
+                            main_image_url: selectedFile,
+                          }));
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="image-preview">
+                    {renderImagePreview(
+                      newImages?.main_image_url,
+                      existingImage?.main_image_url
+                    )}
+                    {/* {newImages?.main_image_url ? (
+                      <img
+                        src={URL.createObjectURL(newImages?.main_image_url)}
+                        alt="이미지 미리보기"
+                      />
+                    ) : existingImage?.main_image_url ? (
+                      <img src={existingImage?.main_image_url} />
+                    ) : ""} */}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="image-upload-wrapper">
+                    <div
+                      className="image-upload-custom-buttom"
+                      onClick={() => thumbnailRef.current.click()}
+                    >
+                      <FontAwesomeIcon icon={faFileArrowUp} beat />
+                      <div>상세 이미지</div>
+                      <input
+                        className="fileInput"
+                        type="file"
+                        ref={thumbnailRef}
+                        accept="image/*"
+                        name="thumbnail_image_url"
+                        onChange={(e) => {
+                          const selectedFile = e.target.files[0];
+                          if (selectedFile) {
+                            setNewImages((cur) => ({
+                              ...cur,
+                              thumbnail_image_url: selectedFile,
+                            }));
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="image-preview">
+                      {renderImagePreview(
+                        newImages?.thumbnail_image_url,
+                        existingImage?.thumbnail_image_url
+                      )}
+                    </div>
+                  </div>
+                  <div className="image-upload-wrapper">
+                    <div
+                      className="image-upload-custom-buttom"
+                      onClick={() => detailImageRef.current.click()}
+                    >
+                      <FontAwesomeIcon icon={faFileArrowUp} beat />
+                      <div>상세 이미지</div>
+                      <input
+                        className="fileInput"
+                        type="file"
+                        ref={detailImageRef}
+                        accept="image/*"
+                        name="detail_image_url"
+                        onChange={(e) => {
+                          const selectedFile = e.target.files[0];
+                          if (selectedFile) {
+                            setNewImages((cur) => ({
+                              ...cur,
+                              detail_image_url: selectedFile,
+                            }));
+                          }
+                        }}
+                      />
+                    </div>
+                    <div className="image-preview">
+                      {renderImagePreview(
+                        newImages?.detail_image_url,
+                        existingImage?.detail_image_url
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* <section className="form__media-section">
+              <h1 className="section-title">이미지 업로드</h1>
+            
               <hr></hr>
 
               <div className="image-upload-wrapper">
                 <div className="image-upload-custom-buttom">
+                <FontAwesomeIcon icon={faFileArrowUp} beat style={{color: "#092a62",}} />
                   <label>메인 이미지</label>
                   <input
                     type="file"
@@ -307,7 +437,7 @@ const StoreForm = ({
                     />
                   )}
                 </div>
-              </div>
+              </div>         
 
               <br></br>
               <label>
@@ -348,7 +478,8 @@ const StoreForm = ({
                 style={{ width: "200px" }}
                 src={existingImage?.detail_image_url}
               />
-            </section>
+            </section> */}
+
             <button type="submit">Submit</button>
             <button type="button" onClick={() => router.push("/serviceAdmin")}>
               취소

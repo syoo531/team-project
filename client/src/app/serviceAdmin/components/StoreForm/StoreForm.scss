@@ -91,35 +91,114 @@
   }
 }
 
-.form__media-section {
-  .section-title {
-    padding-bottom: 10px;
-  }
+.form__media-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.main-image-upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 450px;
+  border: 1px rgb(212, 212, 212) solid;
+  height: 400px;
+  border-radius: 7px;
+}
+
+.main-image-upload-wrapper:hover .image-upload-custom-buttom {
+  background-color: rgba(128, 128, 128, 0.7);
+  z-index: 50;
+  transition: all 0.2s ease;
 }
 
 .image-upload-wrapper {
-  border: 1px solid grey;
-  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 200px;
+  border: 1px rgb(212, 212, 212) solid;
+  height: 200px;
+  border-radius: 7px;
 }
 
 .image-upload-custom-buttom {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  background-color: blue;
-  width: 100px;
-  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 7px;
+  gap: 10px;
+  font-size: 16px;
+  opacity: 0.9;
+}
 
-  label {
-    position: absolute;
-    font-size: 15px;
-    background-color: red;
-  }
+.image-upload-wrapper:hover .image-upload-custom-buttom {
+  background-color: rgba(128, 128, 128, 0.7);
+  z-index: 50;
+  transition: all 0.2s ease;
+}
 
-  input {
-    left: 0;
-    top: 0;
-    opacity: 0;
-    background-color: grey;
+.image-upload-custom-buttom input {
+  display: none;
+}
+
+.image-preview {
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    object-fit: contain;
   }
 }
+
+.image-preview:hover + .image-upload-custom-buttom {
+  z-index: 50;
+}
+
+// .form__media-section {
+//   .section-title {
+//     padding-bottom: 10px;
+//   }
+// }
+
+// .image-upload-wrapper {
+//   border: 1px solid grey;
+//   width: 250px;
+// }
+
+// .image-upload-custom-buttom {
+//   position: relative;
+//   overflow: hidden;
+//   display: inline-block;
+//   background-color: blue;
+//   width: 100px;
+//   border-radius: 6px;
+
+//   label {
+//     position: absolute;
+//     font-size: 15px;
+//     background-color: red;
+//     color: white;
+//     text-align: center;
+//     padding: 15px 40px;
+//     letter-spacing: 1.5px;
+//     user-select: none;
+//     cursor: pointer;
+//   }
+
+//   input {
+
+//   }
+// }
