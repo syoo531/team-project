@@ -1,10 +1,13 @@
+
 "use client";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPhone } from "@fortawesome/free-solid-svg-icons";
 import "./../waiting/waiting.scss";
 import "../../main.scss";
+
 
 export default function ReservationContent({ id }) {
   const [reservations, setReservations] = useState([]);
@@ -23,10 +26,15 @@ export default function ReservationContent({ id }) {
     }
   }, [id]);
 
+
+
+export default function ReservationContent() {
+
   return (
     <div className="reservationContainer">
       <div className="reservationList">
         {reservations.map((reservation) => (
+
           <div key={reservation._id} className="reservationBox">
             <div className="reservationDetails">
               <div>
@@ -46,6 +54,7 @@ export default function ReservationContent({ id }) {
                   <FontAwesomeIcon icon={faCheck} />
                   입장
                 </button>
+
               </div>
             </div>
           </div>
