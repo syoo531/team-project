@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import ApplyFilter from "./components/applyFilter/ApplyFilter";
 import Area from "./components/area/Area";
 import Category from "./components/category/Category";
@@ -7,9 +9,9 @@ import Period from "./components/period/Period";
 import "./FilterModal.scss";
 
 const FILTER_TYPES = [
-  { id: 1, typeName: "Area" },
-  { id: 2, typeName: "Category" },
-  { id: 3, typeName: "Period" },
+  { id: 1, typeName: "구역" },
+  { id: 2, typeName: "카테고리" },
+  { id: 3, typeName: "방문날짜" },
 ];
 
 export default function FilterModal({ closeModal }) {
@@ -41,56 +43,63 @@ export default function FilterModal({ closeModal }) {
 
   return (
     <div className="filterModal">
-      <div className="filterNavigation">
-        {FILTER_TYPES.map((type) => {
-          return (
-            <div
-              key={type.id}
-              className="filterTypeWrapper"
-              onClick={() => {
-                handleChange(type.id);
-              }}
-            >
-              <div
-                className={`dotText ${
-                  currentId === type.id ? "clicked" : null
-                }`}
-              >
-                •
-              </div>
-              <div
-                key={type.id}
-                className={`typeText ${
-                  currentId === type.id ? "clicked" : null
-                }`}
-              >
-                {type.typeName}
-              </div>
-            </div>
-          );
-        })}
-        <div className="filterTitle">어떤 주제에 관심 있어요?</div>
+      <div className="filterModalHeader">
+        <div className="filterText">필터</div>
+        <FontAwesomeIcon
+          className="closeBtn"
+          icon={faCircleXmark}
+          onClick={() => {
+            closeModal();
+          }}
+        />
       </div>
-      {currentId === 1 && (
-        <Area
-          areaSelectList={areaSelectList}
-          handleAreaSelect={handleAreaSelect}
-        />
-      )}
-      {currentId === 2 && (
-        <Category
-          categorySelectList={categorySelectList}
-          handleCategorySelect={handleCategorySelect}
-        />
-      )}
-      {currentId === 3 && <Period />}
-      <ApplyFilter
+      <div className="filterModalMain">
+        <div className="filterNavWrapper">
+          <div className="filterNavTitle">필터 유형</div>
+          <div className="filterNavSubTitle">
+            내가 딱 원하는 팝업스토어를 찾아보세요.
+          </div>
+          <div className="filterListWrapper">
+            {FILTER_TYPES.map((type) => {
+              return (
+                <div
+                  key={type.id}
+                  className={`filterType ${
+                    currentId === type.id ? "clicked" : null
+                  }`}
+                  onClick={() => {
+                    handleChange(type.id);
+                  }}
+                >
+                  {type.typeName}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {currentId === 1 && (
+          <Area
+            areaSelectList={areaSelectList}
+            handleAreaSelect={handleAreaSelect}
+          />
+        )}
+        {currentId === 2 && (
+          <Category
+            categorySelectList={categorySelectList}
+            handleCategorySelect={handleCategorySelect}
+          />
+        )}
+        {currentId === 3 && <Period />}
+        {/* <ApplyFilter
         areaSelectList={areaSelectList}
         handleAreaSelect={handleAreaSelect}
         categorySelectList={categorySelectList}
         handleCategorySelect={handleCategorySelect}
         closeModal={closeModal}
-      />
+      /> */}
+      </div>
+      <div className="filterModalFooter"></div>
     </div>
   );
 }

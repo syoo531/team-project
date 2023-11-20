@@ -5,6 +5,7 @@ import "./Area.scss";
 export default function Area({ areaSelectList, handleAreaSelect }) {
   return (
     <div className="area">
+      <div className="areaTitle">어느 구역에 방문하실까요?</div>
       <svg
         id="seoulMap"
         className="seoulMap"
