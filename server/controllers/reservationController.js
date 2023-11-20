@@ -1,5 +1,5 @@
 const ReservationService = require("../services/reservationService");
-const { PopupStore } = require("../models");
+const { PopupStore, User } = require("../models");
 
 // 예약 생성
 const createReservation = async (req, res, next) => {
