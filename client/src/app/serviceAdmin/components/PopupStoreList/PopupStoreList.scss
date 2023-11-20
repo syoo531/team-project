@@ -1,6 +1,10 @@
 @import "../../../../styles/adminStyles.scss";
 @import "../../main.scss";
 
+.main__layout {
+  padding: 0px 50px;
+}
+
 .list__header {
   display: flex;
   justify-content: space-between;
