@@ -2,10 +2,12 @@
 import "./page.scss";
 import React, { useState } from "react";
 import axios from "axios";
+import { KAKAO_AUTH_URL } from "./auth.js";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -23,6 +25,10 @@ export default function Login() {
     }
   };
 
+  const handleKakaoLogin = async (e) => {
+    e.preventDefault();
+    window.location.href = KAKAO_AUTH_URL;
+  };
   return (
     <div className="loginPage">
       <div className="loginContainer">
@@ -52,7 +58,7 @@ export default function Login() {
           </form>
           <div className="forgetPassword">비밀번호를 잊으셨나요?</div>
         </div>
-        <button className="kakaoBtn">
+        <button className="kakaoBtn" onClick={handleKakaoLogin}>
           <div className="kakaoLogo">
             <img src="/kakaoBtn.svg" alt="kakao" />
           </div>

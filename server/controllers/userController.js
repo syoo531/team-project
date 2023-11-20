@@ -1,3 +1,4 @@
+const axios = require("axios");
 const UserService = require("../services/userService");
 
 const login = async (req, res, next) => {
@@ -63,4 +64,39 @@ const signup = async (req, res, next) => {
   }
 };
 
-module.exports = { login, signup };
+const kakaoAuth = async (req, res, next) => {
+  const body = {
+    grant_type: "authorization_code",
+    client_id: "b9e0d9e1d07d6c583f83c80677315658",
+    redirect_uri: "http://localhost:3000/login/kakao",
+    code: req.body.code,
+  };
+  try {
+    const response = await axios.post(
+      "https://kauth.kakao.com/oauth/token",
+      body,
+      {
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+      }
+    );
+    console.log("여기1", response.data);
+    const accessToken = response.data.access_token;
+    const kakaoUser = await axios.post(
+      "https://kapi.kakao.com/v2/user/me",
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+      }
+    );
+    console.log("여기2", kakaoUser.data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { login, signup, kakaoAuth };
