@@ -6,12 +6,6 @@ const checkWaitingTeam = 0;
 class WaitingService {
   async createWaiting(date, waiting_queue, popup_store, complete_waiting) {
     const parsedWaitingQueue = waiting_queue ? JSON.parse(waiting_queue) : [];
-    /*
-    // Check if the parsed date is a valid date
-    if (isNaN(parsedDate.getTime())) {
-      throw new Error("Invalid date format");
-    }
-    */
 
     const waitingList = await Waiting.create({
       date: new Date(), // 전달된 날짜 문자열을 날짜 객체로 변환
@@ -23,15 +17,30 @@ class WaitingService {
     return waitingList;
   }
 
-  // 대기 번호
-  // [...] length
-  async waitingNumber(waiting_queue) {
-    const waitingTeam = waiting_queue.length;
-    console.log("WaitingNumber Data OK");
-    return waitingTeam;
+  // 전체 대기 목록 조회
+  async getWaiting() {
+    const getWaitingList = await Waiting.find();
+    console.log("Get Waiting Data");
+    return getWaitingList;
   }
 
-  // 대기 팀 확인
+  // 업체 관리자 페이지에서
+  // 특정 팝업 스토어 Id에 대한 웨이팅 리스트를 조회할 수 있다.
+  async getWaitingByPopupStore(popup_store) {
+    const getWaitingListByPopupStore = await Waiting.find({ popup_store });
+    console.log("Get Waiting Data By Id");
+    return getWaitingListByPopupStore;
+  }
+
+  // 현장 대기 번호 조회
+  // [...] length
+  async waitingNumber(waiting_queue) {
+    const waitingNumber = waiting_queue.length;
+    console.log("WaitingNumber Data OK");
+    return waitingNumber;
+  }
+
+  // 현장 대기 팀 수 조회
   async checkWaitingTeam() {
     checkWaitingTeam = waitingTeam - completeCounter + 1;
     res.json(checkWaitingTeam);

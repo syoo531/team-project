@@ -5,12 +5,6 @@ const createWaiting = async (req, res, next) => {
   try {
     const waitingService = new WaitingService();
     const waitingList = await waitingService.createWaiting(req.body);
-    /*
-    const validDate = new Date(date);
-    if (isNaN(validDate.getTime())) {
-      return res.status(400).json({ message: "Invalid date format" });
-    }
-    */
     return res
       .status(400)
       .json({ message: "현장대기 예약 완료입니다.", data: waitingList });
@@ -19,9 +13,42 @@ const createWaiting = async (req, res, next) => {
   }
 };
 
+const getWaiting = async (req, res, next) => {
+  try {
+    const waitingService = new WaitingService();
+    const getWaitingList = await waitingService.getWaiting(req.body);
+    return res.status(400).json({
+      message: "현장대기 예약 조회 목록입니다.",
+      data: getWaitingList,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// popupStoreId에 대한 대기열 조회
+const getWaitingByPopupStore = async (req, res, next) => {
+  try {
+    const waitingService = new WaitingService();
+    const popupStoreId = req.params.popup_store;
+    const getWaitingListByPopupStore =
+      await waitingService.getWaitingListByPopupStore(popupStoreId);
+    return res.status(400).json({
+      message: "현장대기 예약 조회 목록입니다.",
+      data: getWaitingListByPopupStore,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const waitingNumber = async (req, res, next) => {
   try {
-    return res.status(400).json({ message: "대기 번호입니다." });
+    const waitingService = new WaitingService();
+    const waitingNumber = await waitingService.waitingNumber(req.body);
+    return res
+      .status(400)
+      .json({ message: "대기 번호입니다.", data: waitingNumber });
   } catch (error) {
     next(error);
   }
@@ -56,6 +83,8 @@ const completeWaiting = async (req, res, next) => {
 
 module.exports = {
   createWaiting,
+  getWaiting,
+  getWaitingByPopupStore,
   waitingNumber,
   checkWaitingTeam,
   checkWaitingTime,
