@@ -96,3 +96,30 @@
     padding-bottom: 10px;
   }
 }
+
+.image-upload-wrapper {
+  border: 1px solid grey;
+  width: 250px;
+}
+
+.image-upload-custom-buttom {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  background-color: blue;
+  width: 100px;
+  border-radius: 6px;
+
+  label {
+    position: absolute;
+    font-size: 15px;
+    background-color: red;
+  }
+
+  input {
+    left: 0;
+    top: 0;
+    opacity: 0;
+    background-color: grey;
+  }
+}

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { s3imageUploader, deleteAllS3 } from "../imageUploader";
 
-//selectbox options 정의
+//카테고리 selectbox options 정의
 const CATEGORY_OPTIONS = [
   { value: "토이", name: "토이" },
   { value: "뷰티", name: "뷰티" },
@@ -144,6 +144,14 @@ const StoreForm = ({
     }
   };
 
+  const handleUploadImage = (e) => {
+    setNewImages((cur) => ({
+      ...cur,
+      detail_image_url: e.target.files[0],
+    }));
+    const objectURL = window.URL.createObjectURL(e.target.files[0]);
+  };
+
   return (
     <div className="main-content__layout">
       <div className="main-content__container">
@@ -264,21 +272,43 @@ const StoreForm = ({
               </div>
             </section>
 
+            {/* 사진 업로드 구간 */}
             <section className="form__media-section">
               <h1 className="section-title">이미지 업로드</h1>
-              <label>
-                메인 이미지:
-                <input
-                  type="file"
-                  name="main_image_url"
-                  onChange={(e) =>
-                    setNewImages((cur) => ({
-                      ...cur,
-                      main_image_url: e.target.files[0],
-                    }))
-                  }
-                />
-              </label>
+
+              <hr></hr>
+
+              <div className="image-upload-wrapper">
+                <div className="image-upload-custom-buttom">
+                  <label>메인 이미지</label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    name="main_image_url"
+                    onChange={(e) =>
+                      setNewImages((cur) => ({
+                        ...cur,
+                        main_image_url: e.target.files[0],
+                      }))
+                    }
+                  />
+                </div>
+                <div
+                  style={{
+                    border: "1px solid grey",
+                    width: "200px",
+                    height: "150px",
+                  }}
+                >
+                  {newImages.main_image_url && (
+                    <img
+                      style={{ width: "200px" }}
+                      src={window.URL.createObjectURL(newImages.main_image_url)}
+                    />
+                  )}
+                </div>
+              </div>
+
               <br></br>
               <label>
                 썸네일 이미지:
@@ -299,14 +329,12 @@ const StoreForm = ({
                 <input
                   type="file"
                   name="detail_image_url"
-                  onChange={(e) =>
-                    setNewImages((cur) => ({
-                      ...cur,
-                      detail_image_url: e.target.files[0],
-                    }))
-                  }
+                  onChange={handleUploadImage}
                 />
               </label>
+
+              <br></br>
+              <hr></hr>
 
               <img
                 style={{ width: "200px" }}
