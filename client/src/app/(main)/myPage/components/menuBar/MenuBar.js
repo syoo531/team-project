@@ -8,17 +8,13 @@ export default function MenuBar() {
   // const pathname = usePathname();
   return (
     <div className="menuContainer">
-      <li>
-        <Link href="/myPage">홈</Link>
-      </li>
-      <li>
-        <Link href="/myPage/reservationList">예약내역</Link>
-      </li>
-      <div className="menuText">문의하기</div>
-      <div className="menuText">문의내역 확인</div>
-      <div className="menuText">리뷰관리</div>
-      <div className="menuText">회원정보수정</div>
-      <div className="menuText">회원탈퇴</div>
+      <Link href="/myPage">홈</Link>
+      <Link href="/myPage/reservationList">예약내역</Link>
+      <Link href="/myPage/reviewManage">리뷰관리</Link>
+      <a className="menuText">문의하기</a>
+      <a className="menuText">문의내역 확인</a>
+      <Link href="/myPage/updateUserInfo">회원정보수정</Link>
+      <Link href="/myPage/deleteUser">회원탈퇴</Link>
     </div>
   );
 }

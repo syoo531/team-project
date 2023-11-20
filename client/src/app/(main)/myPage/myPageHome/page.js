@@ -1,6 +1,6 @@
 // 마이페이지
-import "./MyPageHome.scss";
-import MenuBar from "../menuBar/MenuBar";
+import "./page.scss";
+import MenuBar from "../components/menuBar/MenuBar";
 
 export default function MyPageHome() {
   return (

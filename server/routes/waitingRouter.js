@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const {
   createWaiting,
+  getWaiting,
+  getWaitingByPopupStore,
   waitingNumber,
   checkWaitingTeam,
   checkWaitingTime,
@@ -9,10 +11,12 @@ const {
 
 const router = Router();
 
-router.post("/myPageHome", createWaiting);
-router.get("/myPageHome/waitingNumber", waitingNumber);
-router.get("/myPageHome/checkWaitingTeam", checkWaitingTeam);
-router.get("/myPageHome/checkWaitingTime", checkWaitingTime);
+router.post("/createWaiting", createWaiting);
+router.get("/getWaitingList", getWaiting);
+router.get("/getWaitingByPopupStore/:popup_store", getWaitingByPopupStore);
+router.get("/waitingNumber", waitingNumber);
+router.get("/checkWaitingTeam", checkWaitingTeam);
+router.get("/checkWaitingTime", checkWaitingTime);
 router.get("/corpAdmin", completeWaiting);
 
 module.exports = router;
