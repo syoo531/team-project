@@ -1,15 +1,16 @@
 .container {
+  flex-direction: column;
   display: flex;
   height: 100vh;
-}
 
-.main {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  background: #f0f0f0;
-}
+  .main {
+    display: flex;
+    width: 100%;
+    background-color: #dedee0;
+    flex: 1;
+  }
 
-.content {
-  flex-grow: 1;
+  .content {
+    flex: 1;
+  }
 }

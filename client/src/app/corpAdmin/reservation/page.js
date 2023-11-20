@@ -7,9 +7,9 @@ import Sidebar from "../components/sidebar/sidebar";
 export default function CorpAdmin() {
   return (
     <div className="container">
-      <Sidebar />
+      <Navbar />
       <div className="main">
-        <Navbar />
+        <Sidebar />
         <div className="content">
           <ReservationContent />
         </div>

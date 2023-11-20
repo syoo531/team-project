@@ -16,16 +16,9 @@ export default function Sidebar() {
 
   return (
     <div className="sidebar">
-      <Link href="/corpAdmin" className="linkLogo">
-        <img
-          className="logo"
-          src="https://user-images.githubusercontent.com/126956430/282671088-36fecca9-631c-4a3d-a73e-80047a312533.png"
-          alt="로고 이미지"
-        />
-      </Link>
       <ul>
         {links.map(({ href, label }) => (
-          <li key={href}>
+          <li key={label}>
             <Link href={href} className={isActive(href)}>
               {label}
             </Link>

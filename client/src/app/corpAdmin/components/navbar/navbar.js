@@ -8,9 +8,16 @@ export default function Navbar() {
   ];
   return (
     <nav className="navbar">
+      <Link href="/corpAdmin" className="linkLogo">
+        <img
+          className="logo"
+          src="https://user-images.githubusercontent.com/126956430/282671088-36fecca9-631c-4a3d-a73e-80047a312533.png"
+          alt="로고 이미지"
+        />
+      </Link>
       <ul>
         {links.map(({ href, label }) => (
-          <li key={href}>
+          <li key={label}>
             <Link href={href}>{label}</Link>
           </li>
         ))}
