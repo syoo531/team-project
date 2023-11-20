@@ -1,45 +1,45 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faPhone } from "@fortawesome/free-solid-svg-icons";
 import "./../waiting/waiting.scss";
 import "../../main.scss";
 
-// 임시 예약 데이터
-const reservations = [
-  {
-    id: 1,
-    name: "홍길동",
-    count: 2,
-    phone: "010-3333-4444",
-    time: "17:30",
-  },
-  {
-    id: 2,
-    name: "김철수",
-    count: 3,
-    phone: "010-1111-2222",
-    time: "14:00",
-  },
-];
+export default function ReservationContent({ id }) {
+  const [reservations, setReservations] = useState([]);
 
-export default function ReservationContent() {
+  useEffect(() => {
+    if (id) {
+      console.log(id);
+      axios
+        .get(`http://localhost:4000/api/reservation/${id}`)
+        .then((response) => {
+          setReservations(response.data);
+        })
+        .catch((error) => {
+          console.error("There was an error!", error);
+        });
+    }
+  }, [id]);
+
   return (
     <div className="reservationContainer">
       <div className="reservationList">
         {reservations.map((reservation) => (
-          <div key={reservation.id} className="reservationBox">
+          <div key={reservation._id} className="reservationBox">
             <div className="reservationDetails">
               <div>
-                <span>예약:{reservation.id}</span>
-                <span>이름: {reservation.name}</span>
-                <span>인원수: {reservation.count}</span>
+                <span>예약: {reservation._id}</span>
+                <span>{reservation.user?.name}</span>
+                <span>{reservation.people}명</span>
                 <span>
                   <FontAwesomeIcon icon={faPhone} />
-                  {reservation.phone}
+                  {reservation.user?.phone_number}
                 </span>
               </div>
               <div className="reservationTime">
-                예약시간: {reservation.time}
+                예약시간: {reservation.date} {reservation.hour}
               </div>
               <div className="buttonContainer">
                 <button>

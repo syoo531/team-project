@@ -8,9 +8,9 @@ import "./main.scss";
 export default function CorpAdmin() {
   return (
     <div className="container">
-      <Sidebar />
+      <Navbar />
       <div className="main">
-        <Navbar />
+        <Sidebar />
         <div className="content">
           <Waiting />
         </div>

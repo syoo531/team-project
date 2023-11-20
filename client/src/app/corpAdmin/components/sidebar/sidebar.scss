@@ -1,40 +1,37 @@
 /* components/Sidebar.module.scss */
 .sidebar {
-  background: #333;
-  color: white;
-  padding: 1rem;
-  width: 200px;
-  height: 100vh;
   flex-shrink: 0;
-
-  .linkLogo {
-    display: flex;
-    justify-content: center;
-  }
-
-  .logo {
-    width: 132px;
-  }
+  width: 200px;
+  padding: 10px 10px;
+  background-color: #cdced0;
+  overflow: hidden;
 
   ul {
-    list-style: none;
+    margin: 0;
     padding: 0;
-    margin-top: 32px;
+    list-style: none;
+    margin-top: 40px;
 
-    li a {
-      color: #bdbdbd;
+    li {
+      height: 35px;
+      margin-bottom: 7px;
+    }
+    a {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+
       text-decoration: none;
-      display: block;
-      padding: 10px 15px;
-      margin-bottom: 8px;
-      font-size: 14px;
+      color: rgb(0, 0, 0);
+      border-radius: 6px;
 
       &:hover {
-        color: #fff;
+        background-color: #ece8e8;
       }
     }
     .active {
-      color: #fff; // 활성화된 링크의 텍스트 색상
+      // color: #e21680;
       font-weight: bold; // 텍스트를 굵게
     }
   }
