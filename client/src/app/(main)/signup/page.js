@@ -78,6 +78,8 @@ export default function Signup() {
     });
   };
 
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [validCheck, setValidCheck] = useState({
     nameValid: true,
     emailValid: true,
@@ -110,6 +112,13 @@ export default function Signup() {
         phoneNumberValid: isPhoneNumberValid,
         interestsValid: areInterestsValid,
       });
+      return;
+    }
+    if (password !== confirmPassword) {
+      setValidCheck((prevValidCheck) => ({
+        ...prevValidCheck,
+        passwordValid: false,
+      }));
       return;
     }
 
@@ -183,6 +192,24 @@ export default function Signup() {
                 </div>
               )}
             </div>
+            <div className="signupInputElement">
+              <div className="signupText">비밀번호 확인</div>
+              <input
+                className={`signupInput ${
+                  !validCheck.passwordValid ? "error" : ""
+                }`}
+                type="password"
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="비밀번호를 한번 더 입력해주세요."
+              />
+              {/* 비밀번호 확인 에러 메시지 */}
+              {!validCheck.passwordValid && (
+                <div className="errorText">비밀번호가 일치하지 않습니다.</div>
+              )}
+            </div>
+
             <div className="signupInputElement">
               <div className="signupText">휴대폰 번호</div>
               <input
