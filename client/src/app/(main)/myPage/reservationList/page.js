@@ -7,12 +7,16 @@ import ReservationBox from "../components/reservationBox/ReservationBox";
 export default function ReservationList() {
   return (
     <div className="reservationContainer">
-      <MenuBar />
-      <div className="myPageReserveTitle">예약내역</div>
-      <ReservationBox />
-      <ReservationBox />
-      <ReservationBox />
-      <ReservationBox />
+      <div>
+        <MenuBar />
+      </div>
+      <div className="reserveBox">
+        <div className="reserveListTitle">000님의 예약내역</div>
+        <ReservationBox />
+        <ReservationBox />
+        <ReservationBox />
+        <ReservationBox />
+      </div>
     </div>
   );
 }

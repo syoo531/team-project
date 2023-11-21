@@ -1,4 +1,33 @@
 .updateUserInfoContainer {
+  display: flex;
+}
+
+.updateUserInfoList {
+  width: 1000px;
   margin: 100px;
-  text-align: center;
+  justify-content: center;
+  // flex-direction: column;
+  // align-items: center;
+}
+
+.updateUserInfoBox {
+  width: 500px;
+  display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  margin: 20px;
+  padding: 20px;
+
+  border: 1px solid black;
+
+  // 적용 안되는중,,,
+  .div {
+    margin-right: 20px;
+    text-align: center;
+  }
+}
+
+.updateInfoButton {
+  margin-top: 50px;
+  margin-right: 50px;
 }

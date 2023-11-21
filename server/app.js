@@ -27,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/users", userRouter);
-app.use("/api/myPage", waitingRouter);
+app.use("/api/waiting", waitingRouter);
 app.use("/api/reservation", reservationRouter);
 app.use("/api/popupStore", popupStoreRouter);
 
