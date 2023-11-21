@@ -1,4 +1,3 @@
-const axios = require("axios");
 const UserService = require("../services/userService");
 
 const login = async (req, res, next) => {
@@ -65,38 +64,70 @@ const signup = async (req, res, next) => {
 };
 
 const kakaoAuth = async (req, res, next) => {
-  const body = {
-    grant_type: "authorization_code",
-    client_id: "b9e0d9e1d07d6c583f83c80677315658",
-    redirect_uri: "http://localhost:3000/login/kakao",
-    code: req.body.code,
-  };
   try {
-    const response = await axios.post(
-      "https://kauth.kakao.com/oauth/token",
-      body,
-      {
-        headers: {
-          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-      }
-    );
-    console.log("여기1", response.data);
-    const accessToken = response.data.access_token;
-    const kakaoUser = await axios.post(
-      "https://kapi.kakao.com/v2/user/me",
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        },
-      }
-    );
-    console.log("여기2", kakaoUser.data);
+    const code = req.body.code;
+    const userService = new UserService();
+    const [kakao_id, email, name] = await userService.kakaoAuth(code);
+    console.log([kakao_id, email, name]); // [카카오회원번호, 이메일, 닉네임]
+    const isRegistered = await userService.checkRegistration(email);
+    if (isRegistered.length !== 0) {
+      // 이미 가입된 경우
+      console.log("이미가입", isRegistered);
+      const [accessToken, is_admin] = await userService.kakaoLogin(email);
+      res
+        .cookie("accessToken", accessToken, {
+          httpOnly: true,
+          SameSite: "none",
+        })
+        .status(200)
+        .json({
+          is_admin: is_admin,
+          message: "로그인에 성공했습니다!",
+        });
+    } else {
+      // 해당 이메일로 가입 안된 경우
+      res.status(202).json({
+        email: email,
+        name: name,
+        message: "카카오로 회원가입합니다!",
+      });
+    }
   } catch (err) {
     console.log(err);
   }
 };
 
-module.exports = { login, signup, kakaoAuth };
+const kakaoSignup = async (req, res, next) => {
+  try {
+    const phoneNumber = req.body.phoneNumber;
+    const email = req.body.email;
+    const name = req.body.name;
+    const selectedInterests = req.body.selectedInterests;
+    const userService = new UserService();
+
+    const user = await userService.kakaoSignUp(
+      name,
+      email,
+      phoneNumber,
+      selectedInterests
+    );
+    if (!user) {
+      throw new Error("서버 오류 입니다.");
+    }
+    const [accessToken, is_admin] = await userService.kakaoLogin(email);
+    res
+      .cookie("accessToken", accessToken, {
+        httpOnly: true,
+        SameSite: "none",
+      })
+      .status(200)
+      .json({
+        is_admin: is_admin,
+        message: "로그인에 성공했습니다!",
+      });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { login, signup, kakaoAuth, kakaoSignup };

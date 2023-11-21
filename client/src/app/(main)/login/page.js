@@ -19,7 +19,7 @@ export default function Login() {
       if (response.status === 200) {
         console.log(response);
 
-        // window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
+        window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
       }
     } catch (error) {
       console.error(error); // 에러 처리
