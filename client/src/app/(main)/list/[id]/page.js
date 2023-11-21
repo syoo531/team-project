@@ -1,5 +1,6 @@
 "use client";
 import "./page.scss";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -15,17 +16,16 @@ export default function PopUp(props) {
     const [popupData, setPopupData] = useState({});
     const startDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].start_date;
     const endDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].end_date;
-
     // start_date 변환
     const formattedStartDate = startDate ? new Date(startDate).toLocaleDateString() : "";
-
     // end_date 변환
     const formattedEndDate = endDate ? new Date(endDate).toLocaleDateString() : "";
     const popupFetch = async () => {
         try {
-            const response = await fetch("http://localhost:4000/popupstore");
-            const data = await response.json();
+            const response = await axios.get("http://localhost:4000/api/popupstore");
+            const data = response.data;
             setPopupData(data);
+            console.log(data);
         } catch (err) {
             console.log("error!", err);
         }
@@ -36,7 +36,7 @@ export default function PopUp(props) {
 
     return (
         <div className="PopUp">
-            <div>팝업스토어 id : {storeId}</div>
+            {/* <div>팝업스토어 id : {storeId}</div> */}
             <div className="popImgWrap">
                 <div className="mainImg">
                     <img

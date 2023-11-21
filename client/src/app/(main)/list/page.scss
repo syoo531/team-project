@@ -20,7 +20,7 @@
 }
 
 .List {
-@include container;
+    @include container;
     .list {
         @include flex(center, space-between);
         flex-wrap: wrap;
@@ -47,15 +47,24 @@
             @include flex(flex-start, space-between);
             height: 25vh;
             margin-bottom: 35px;
+            @media (max-width: 768px) {
+                width: 100%;
+            }
             .itemImg {
                 @include flex(center, center);
                 width: 40%;
-                color: #fff;
-                text-align: center;
-                font-size: 24px;
-                border-radius: 15px;
-                background: #999;
                 height: 100%;
+                h1 {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    img {
+                        display: block;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 15px;
+                    }
+                }
             }
             .itemInfo {
                 width: 55%;
@@ -65,9 +74,9 @@
                 .itemTitle {
                     h1 {
                         display: block;
-                        font-size: 17px;
+                        font-size: 18px;
                         font-weight: 500;
-                        margin-bottom: 10px;
+                        margin-bottom: 2px;
                         white-space: nowrap;
                         overflow: hidden;
                         text-overflow: ellipsis;
@@ -83,7 +92,7 @@
                     }
                 }
                 .itemLocation {
-                    @include nflex;
+                    @include flex(center, normal);
                     .icon {
                         margin-right: 5px;
                     }
@@ -123,6 +132,45 @@
                     font-size: 22px;
                     color: #e21680;
                 }
+            }
+        }
+    }
+    .pageBtn {
+        @include container();
+        @include flex(center, center);
+        .prevBtn {
+            margin-right: 10px;
+            button {
+                border: 0;
+                color: #333;
+                font-size: 18px;
+                background: inherit;
+                cursor: pointer;
+            }
+        }
+        .pageNum {
+            @include flex(center, center);
+            gap: 10px;
+            button {
+                color: #999;
+                background: inherit;
+                border: 0;
+                font-size: 18px;
+                font-weight: bold;
+                cursor: pointer;
+                &.active {
+                    color: #333;
+                }
+            }
+        }
+        .nextBtn {
+            margin-left: 10px;
+            button {
+                border: 0;
+                color: #333;
+                font-size: 18px;
+                background: inherit;
+                cursor: pointer;
             }
         }
     }
