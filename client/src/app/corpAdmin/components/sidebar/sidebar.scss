@@ -1,9 +1,12 @@
-/* components/Sidebar.module.scss */
+@import "../../../../styles/adminStyles.scss";
+
 .sidebar {
   flex-shrink: 0;
   width: 200px;
   padding: 10px 10px;
-  background-color: #cdced0;
+  background-color: $admin-sidbar-background;
+  filter: $admin-sidbar-filter;
+  backdrop-filter: $admin-sidbar-backdrop-filter;
   overflow: hidden;
 
   ul {
@@ -27,12 +30,13 @@
       border-radius: 6px;
 
       &:hover {
-        background-color: #ece8e8;
+        background-color: $admin-sidbar-hover-background;
+        border-radius: $admin-sidbar-hover-border-radius;
       }
     }
     .active {
       // color: #e21680;
-      font-weight: bold; // 텍스트를 굵게
+      font-weight: #0472ff; // 텍스트를 굵게
     }
   }
 }

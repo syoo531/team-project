@@ -7,8 +7,13 @@ $admin-secondary-color: blue;
 $admin-secondary-dark-color: blue;
 $admin-secondary-light-color: blue;
 
-$admin-background-color: #dedee0;
+// $admin-background-color: #dedee0;
+$admin-background-color: #e5e5e5;
+$admin-sidbar-background: #dbdbdb;
+$admin-sidbar-hover-background: #f5f5f5;
 $admin-card-background: white;
+$admin-point-color: #0472ff;
+$admin-font-color: #666;
 
 $admin-theme-colors: (
   "success": #28a745,
@@ -20,7 +25,7 @@ $admin-button-colors: (
   "light": #cdced0,
   "dark": #ababac,
   "warningLight": #df3220,
-  "warningDark": #b6291a
+  "warningDark": #b6291a,
 );
 
 $admin-font-weights: (
@@ -35,6 +40,14 @@ $admin-font-sizes: (
 );
 
 //기타 스타일
-$admin-box-shadow:rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
-rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+$admin-box-shadow:
+  rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+  rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 $admin-border-radius: 7px;
+$admin-card-border-radius: 10px;
+$admin-card-filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.15));
+$admin-card-backdrop-filter: blur(6px);
+
+$admin-sidbar-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.1));
+$admin-sidbar-backdrop-filter: blur(6px);
+$admin-sidbar-hover-border-radius: 4px;

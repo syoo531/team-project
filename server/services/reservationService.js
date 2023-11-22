@@ -21,8 +21,10 @@ class ReservationService {
   }
 
   // 특정 예약 조회
-  async getReservationById(id) {
-    return await Reservation.findById(id)
+  async getReservationById() {
+    return await Reservation.find({
+      popup_store: "6559272a6e93f614f57c589a",
+    })
       .populate("popup_store")
       .populate("user");
   }
@@ -32,10 +34,23 @@ class ReservationService {
     return await Reservation.findByIdAndDelete(id);
   }
 
-  // 예약 수정 (주석 처리된 부분, 필요한 경우 구현)
-  // async updateReservation(id, data) {
-  //   return await Reservation.findByIdAndUpdate(id, data, { new: true }).populate("popup_store").populate("user");
-  // }
+  //예약 완료
+  async completeReservation(id) {
+    return await Reservation.findByIdAndUpdate(
+      id,
+      { status: "완료됨" },
+      { new: true }
+    )
+      .populate("popup_store")
+      .populate("user");
+  }
+
+  // 예약 수정
+  async updateReservation(id, data) {
+    return await Reservation.findByIdAndUpdate(id, data, { new: true })
+      .populate("popup_store")
+      .populate("user");
+  }
 }
 
 module.exports = ReservationService;

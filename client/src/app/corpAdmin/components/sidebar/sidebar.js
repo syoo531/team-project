@@ -11,7 +11,6 @@ export default function Sidebar() {
   const links = [
     { href: "/corpAdmin", label: "웨이팅 관리" },
     { href: "/corpAdmin/reservation", label: "사전예약 관리" },
-    { href: "", label: "공지사항" },
   ];
 
   return (

@@ -1,15 +1,12 @@
 import React from "react";
-import "./waiting.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import "../waiting/waiting.scss";
 
-// 임시 예약 데이터
-
-export default function Waiting({ reservations, onCompleted }) {
+export default function CompletedWaiting({ completedList }) {
   return (
     <div className="reservationContainer">
+      <h2>완료</h2>
       <div className="reservationList">
-        {reservations.map((reservation) => (
+        {completedList.map((reservation) => (
           <div key={reservation.id} className="reservationBox">
             <div className="reservationDetails">
               <div>
@@ -22,10 +19,7 @@ export default function Waiting({ reservations, onCompleted }) {
                 예약시간: {reservation.time}
               </div>
               <div className="buttonContainer">
-                <button onClick={() => onCompleted(reservation.id)}>
-                  <FontAwesomeIcon icon={faCheck} className="icon" />
-                  입장
-                </button>
+                <button>완료</button>
               </div>
             </div>
           </div>

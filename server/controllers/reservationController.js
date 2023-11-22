@@ -75,12 +75,29 @@ const deleteReservation = async (req, res, next) => {
   try {
     const reservationService = new ReservationService();
     const deletedReservation = await reservationService.deleteReservation(
-      req.params.id
+      req.params.id,
+      req.body
     );
     if (!deletedReservation) {
       return res.status(404).json({ message: "Reservation not found" });
     }
     res.status(200).json({ message: "Reservation deleted" });
+  } catch (err) {
+    next(err);
+  }
+};
+
+//예약 완료
+const completeReservation = async (req, res, next) => {
+  try {
+    const reservationService = new ReservationService();
+    const updatedReservation = await reservationService.completeReservation(
+      req.params.id
+    );
+    if (!updatedReservation) {
+      return res.status(404).json({ message: "Reservation not found" });
+    }
+    res.status(200).json(updatedReservation);
   } catch (err) {
     next(err);
   }
@@ -92,4 +109,5 @@ module.exports = {
   getReservationById,
   updateReservation,
   deleteReservation,
+  completeReservation,
 };
