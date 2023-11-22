@@ -1,19 +1,13 @@
 "use client";
 
 import "./UpdateStore.scss";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { s3imageUploader, deleteAllS3 } from "../imageUploader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 import Form from "../Form/Form";
 
-const UpdateStore = ({
-  storeData,
-  image, //이미지 url 담긴 객체
-  storeId,
-}) => {
+export default function UpdateStore({ storeData, image, storeId }) {
   const router = useRouter();
 
   const formIntialState = {
@@ -67,14 +61,14 @@ const UpdateStore = ({
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async () => {
     try {
       const result = window.confirm("삭제하시겠습니까?");
       if (!result) return;
 
       const {
         data: { image },
-      } = await axios.get(`http://localhost:4000/api/popupStore/${id}`);
+      } = await axios.get(`http://localhost:4000/api/popupStore/${storeId}`);
 
       const imageArray = [
         image.main_image_url,
@@ -85,7 +79,7 @@ const UpdateStore = ({
       //S3와 몽고DB 데이터 한번에 삭제
       const res = await Promise.all([
         deleteAllS3(imageArray),
-        axios.delete(`http://localhost:4000/api/popupStore/${id}`),
+        axios.delete(`http://localhost:4000/api/popupStore/${storeId}`),
       ]);
       console.log(res);
       router.push("/serviceAdmin");
@@ -97,32 +91,10 @@ const UpdateStore = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prevForm) => ({
       ...prevForm,
       [name]: value,
     }));
-  };
-
-  const handleUploadImage = (e) => {
-    setNewImages((cur) => ({
-      ...cur,
-      detail_image_url: e.target.files[0],
-    }));
-    const objectURL = window.URL.createObjectURL(e.target.files[0]);
-  };
-
-  const renderImagePreview = (newImage, existingImage) => {
-    return (
-      <>
-        {newImage || existingImage ? (
-          <img
-            src={newImage ? URL.createObjectURL(newImage) : existingImage}
-            alt="이미지 미리보기"
-          />
-        ) : null}
-      </>
-    );
   };
 
   return (
@@ -138,10 +110,7 @@ const UpdateStore = ({
         newImages={newImages}
         existingImage={existingImage}
         setExistingImage={setExistingImage}
-        renderImagePreview={renderImagePreview}
       />
     </div>
   );
-};
-
-export default UpdateStore;
+}

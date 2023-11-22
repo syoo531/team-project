@@ -15,8 +15,11 @@
   padding: 10px 8px;
 
   button {
-    @include admin-action-button-style;
-    @include admin-button-base-style;
+    @include admin-button-base-style(#0095ff, white);
+    &:hover {
+      background: (0, 0, 0, 0.8);
+      transform: scale(1.05);
+    }
   }
 }
 
@@ -47,7 +50,7 @@ table.list-table {
   .table-row {
     &:hover {
       color: rgb(0, 0, 0);
-      background-color: #cfcaca;
+      background-color: #e4f3fd67;
       cursor: pointer;
     }
   }
@@ -57,12 +60,4 @@ table.list-table {
     font-weight: map-get($admin-font-weights, "light");
     text-align: center;
   }
-
-  // .list__action-button {
-  //   width: 150px;
-  // }
-
-  // .list__action-button button {
-  //   margin: 0px 3px;
-  // }
 }

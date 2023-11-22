@@ -15,7 +15,7 @@ export default function PopupStoreList({ storeData: stores }) {
           <h1>팝업스토어 목록</h1>
         </div>
         <div className="action__menu">
-          <button onClick={() => router.push("/serviceAdmin/form")}>
+          <button onClick={() => router.push("/serviceAdmin/create")}>
             신규등록!!
           </button>
         </div>

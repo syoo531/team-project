@@ -1,15 +1,13 @@
 "use client";
 
 import "./CreateStore.scss";
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { s3imageUploader } from "../imageUploader";
 import axios from "axios";
-import { s3imageUploader, deleteAllS3 } from "../imageUploader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 import Form from "../Form/Form.js";
 
-const CreateStore = () => {
+export default function CreateStore() {
   const router = useRouter();
 
   const formIntialState = {
@@ -46,7 +44,6 @@ const CreateStore = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     setFormData((prevForm) => ({
       ...prevForm,
       [name]: value,
@@ -64,27 +61,6 @@ const CreateStore = () => {
     }
   };
 
-  const handleUploadImage = (e) => {
-    setNewImages((cur) => ({
-      ...cur,
-      detail_image_url: e.target.files[0],
-    }));
-    const objectURL = window.URL.createObjectURL(e.target.files[0]);
-  };
-
-  const renderImagePreview = (newImage, existingImage) => {
-    return (
-      <>
-        {newImage || existingImage ? (
-          <img
-            src={newImage ? URL.createObjectURL(newImage) : existingImage}
-            alt="이미지 미리보기"
-          />
-        ) : null}
-      </>
-    );
-  };
-
   return (
     <div>
       <Form
@@ -92,11 +68,9 @@ const CreateStore = () => {
         handleChange={handleChange}
         setFormData={setFormData}
         handleSubmit={handleSubmit}
-        handleUploadImage={handleUploadImage}
-        renderImagePreview={renderImagePreview}
+        setNewImages={setNewImages}
+        newImages={newImages}
       />
     </div>
   );
-};
-
-export default CreateStore;
+}

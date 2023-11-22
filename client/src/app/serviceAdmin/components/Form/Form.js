@@ -2,14 +2,9 @@
 
 import "./Form.scss";
 import MediaUpload from "./MediaUpload/MediaUpload";
-import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-import { s3imageUploader, deleteAllS3 } from "../imageUploader";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
 
-const Form = ({
+export default function Form({
   formData,
   storeId,
   handleChange,
@@ -19,8 +14,7 @@ const Form = ({
   newImages,
   existingImage,
   setExistingImage,
-  renderImagePreview,
-}) => {
+}) {
   const router = useRouter();
 
   //카테고리 selectbox options 정의
@@ -58,7 +52,9 @@ const Form = ({
         <div className="form__container">
           <form onSubmit={handleSubmit}>
             <section className="form__text-section">
-              <div>
+
+
+            <div>
                 <label>팝업스토어 이름</label>
                 <input
                   type="text"
@@ -73,6 +69,26 @@ const Form = ({
                   type="text"
                   name="brand"
                   value={formData?.brand || ""}
+                  onChange={handleChange}
+                />
+              </div>
+
+
+              <div className="date-field">
+                <label>기간</label>
+                <input
+                  className="date-input"
+                  type="date"
+                  name="start_date"
+                  value={formData?.start_date?.split("T")[0] || ""}
+                  onChange={handleChange}
+                />
+                <div> ~ </div>
+                <input
+                  className="date-input"
+                  type="date"
+                  name="end_date"
+                  value={formData?.end_date?.split("T")[0] || ""}
                   onChange={handleChange}
                 />
               </div>
@@ -97,6 +113,8 @@ const Form = ({
                   </select>
                 </label>
               </div>
+              
+
               <div>
                 <label>주소</label>
                 <input
@@ -135,24 +153,6 @@ const Form = ({
                   onChange={handleChange}
                 />
               </div>
-              <div>
-                <label>이벤트 시작일</label>
-                <input
-                  type="date"
-                  name="start_date"
-                  value={formData?.start_date?.split("T")[0] || ""}
-                  onChange={handleChange}
-                />
-              </div>
-              <div>
-                <label>이벤트 종료일</label>
-                <input
-                  type="date"
-                  name="end_date"
-                  value={formData?.end_date?.split("T")[0] || ""}
-                  onChange={handleChange}
-                />
-              </div>
             </section>
 
             <MediaUpload
@@ -160,191 +160,8 @@ const Form = ({
               newImages={newImages}
               existingImage={existingImage}
               setExistingImage={setExistingImage}
-              renderImagePreview={renderImagePreview}
               storeId={storeId}
             />
-
-            {/* 사진 업로드 구간 */}
-            {/* <section className="form__media-section">
-              <h2 style={{ marginBottom: "10px" }}>Media</h2>
-              <div className="form__media-flex">
-                <div className="main-image-upload-wrapper">
-                  <div
-                    className="image-upload-custom-buttom"
-                    onClick={() => mainImageRef.current.click()}
-                  >
-                    <FontAwesomeIcon icon={faFileArrowUp} beat />
-                    <div>메인 이미지</div>
-                    <input
-                      className="fileInput"
-                      type="file"
-                      ref={mainImageRef}
-                      accept="image/*"
-                      name="main_image_url"
-                      onChange={(e) => {
-                        const selectedFile = e.target.files[0];
-                        if (selectedFile) {
-                          setNewImages((cur) => ({
-                            ...cur,
-                            main_image_url: selectedFile,
-                          }));
-                        }
-                      }}
-                    />
-                  </div>
-                  <div className="image-preview">
-                    {renderImagePreview(
-                      newImages?.main_image_url,
-                      existingImage?.main_image_url
-                    )}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="image-upload-wrapper">
-                    <div
-                      className="image-upload-custom-buttom"
-                      onClick={() => thumbnailRef.current.click()}
-                    >
-                      <FontAwesomeIcon icon={faFileArrowUp} beat />
-                      <div>상세 이미지</div>
-                      <input
-                        className="fileInput"
-                        type="file"
-                        ref={thumbnailRef}
-                        accept="image/*"
-                        name="thumbnail_image_url"
-                        onChange={(e) => {
-                          const selectedFile = e.target.files[0];
-                          if (selectedFile) {
-                            setNewImages((cur) => ({
-                              ...cur,
-                              thumbnail_image_url: selectedFile,
-                            }));
-                          }
-                        }}
-                      />
-                    </div>
-                    <div className="image-preview">
-                      {renderImagePreview(
-                        newImages?.thumbnail_image_url,
-                        existingImage?.thumbnail_image_url
-                      )}
-                    </div>
-                  </div>
-                  <div className="image-upload-wrapper">
-                    <div
-                      className="image-upload-custom-buttom"
-                      onClick={() => detailImageRef.current.click()}
-                    >
-                      <FontAwesomeIcon icon={faFileArrowUp} beat />
-                      <div>상세 이미지</div>
-                      <input
-                        className="fileInput"
-                        type="file"
-                        ref={detailImageRef}
-                        accept="image/*"
-                        name="detail_image_url"
-                        onChange={(e) => {
-                          const selectedFile = e.target.files[0];
-                          if (selectedFile) {
-                            setNewImages((cur) => ({
-                              ...cur,
-                              detail_image_url: selectedFile,
-                            }));
-                          }
-                        }}
-                      />
-                    </div>
-                    <div className="image-preview">
-                      {renderImagePreview(
-                        newImages?.detail_image_url,
-                        existingImage?.detail_image_url
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section> */}
-
-            {/* <section className="form__media-section">
-              <h1 className="section-title">이미지 업로드</h1>
-            
-              <hr></hr>
-
-              <div className="image-upload-wrapper">
-                <div className="image-upload-custom-buttom">
-                <FontAwesomeIcon icon={faFileArrowUp} beat style={{color: "#092a62",}} />
-                  <label>메인 이미지</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    name="main_image_url"
-                    onChange={(e) =>
-                      setNewImages((cur) => ({
-                        ...cur,
-                        main_image_url: e.target.files[0],
-                      }))
-                    }
-                  />
-                </div>
-                <div
-                  style={{
-                    border: "1px solid grey",
-                    width: "200px",
-                    height: "150px",
-                  }}
-                >
-                  {newImages.main_image_url && (
-                    <img
-                      style={{ width: "200px" }}
-                      src={window.URL.createObjectURL(newImages.main_image_url)}
-                    />
-                  )}
-                </div>
-              </div>         
-
-              <br></br>
-              <label>
-                썸네일 이미지:
-                <input
-                  type="file"
-                  name="thumbnail_image_url"
-                  onChange={(e) =>
-                    setNewImages((cur) => ({
-                      ...cur,
-                      thumbnail_image_url: e.target.files[0],
-                    }))
-                  }
-                />
-              </label>
-              <br></br>
-              <label>
-                상세 이미지:
-                <input
-                  type="file"
-                  name="detail_image_url"
-                  onChange={handleUploadImage}
-                />
-              </label>
-
-              <br></br>
-              <hr></hr>
-
-              <img
-                style={{ width: "200px" }}
-                src={existingImage?.main_image_url}
-              />
-              <img
-                style={{ width: "200px" }}
-                src={existingImage?.thumbnail_image_url}
-              />
-              <img
-                style={{ width: "200px" }}
-                src={existingImage?.detail_image_url}
-              />
-            </section> */}
-
             <button type="submit">Submit</button>
             <button type="button" onClick={() => router.push("/serviceAdmin")}>
               취소
@@ -354,6 +171,4 @@ const Form = ({
       </div>
     </div>
   );
-};
-
-export default Form;
+}
