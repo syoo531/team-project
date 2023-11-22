@@ -73,7 +73,7 @@ const kakaoAuth = async (req, res, next) => {
     if (isRegistered.length !== 0) {
       // 이미 가입된 경우
       console.log("이미가입", isRegistered);
-      const [accessToken, is_admin] = await userService.kakaoLogin(email);
+      const [accessToken, is_admin] = await userService.oAuthLogin(email);
       res
         .cookie("accessToken", accessToken, {
           httpOnly: true,
@@ -97,7 +97,7 @@ const kakaoAuth = async (req, res, next) => {
   }
 };
 
-const kakaoSignup = async (req, res, next) => {
+const oAuthSignup = async (req, res, next) => {
   try {
     const phoneNumber = req.body.phoneNumber;
     const email = req.body.email;
@@ -105,7 +105,7 @@ const kakaoSignup = async (req, res, next) => {
     const selectedInterests = req.body.selectedInterests;
     const userService = new UserService();
 
-    const user = await userService.kakaoSignUp(
+    const user = await userService.oAuthSignUp(
       name,
       email,
       phoneNumber,
@@ -114,7 +114,7 @@ const kakaoSignup = async (req, res, next) => {
     if (!user) {
       throw new Error("서버 오류 입니다.");
     }
-    const [accessToken, is_admin] = await userService.kakaoLogin(email);
+    const [accessToken, is_admin] = await userService.oAuthLogin(email);
     res
       .cookie("accessToken", accessToken, {
         httpOnly: true,
@@ -130,4 +130,40 @@ const kakaoSignup = async (req, res, next) => {
   }
 };
 
-module.exports = { login, signup, kakaoAuth, kakaoSignup };
+const googleAuth = async (req, res, next) => {
+  try {
+    const code = req.body.code;
+    console.log("여기1", code);
+    const userService = new UserService();
+
+    const [google_id, email, name] = await userService.googleAuth(code);
+    console.log([google_id, email, name]); // [구글회원번호, 이메일, 이름]
+    const isRegistered = await userService.checkRegistration(email);
+    if (isRegistered.length !== 0) {
+      // 이미 가입된 경우
+      console.log("이미가입", isRegistered);
+      const [accessToken, is_admin] = await userService.oAuthLogin(email);
+      res
+        .cookie("accessToken", accessToken, {
+          httpOnly: true,
+          SameSite: "none",
+        })
+        .status(200)
+        .json({
+          is_admin: is_admin,
+          message: "로그인에 성공했습니다!",
+        });
+    } else {
+      // 해당 이메일로 가입 안된 경우
+      res.status(202).json({
+        email: email,
+        name: name,
+        message: "구글로 회원가입합니다!",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { login, signup, kakaoAuth, oAuthSignup, googleAuth };

@@ -72,7 +72,6 @@ class UserService {
         },
       }
     );
-    // console.log("여기1", response.data);
     const accessToken = response.data.access_token;
     const kakaoUser = await axios.post(
       "https://kapi.kakao.com/v2/user/me",
@@ -84,7 +83,6 @@ class UserService {
         },
       }
     );
-    console.log("여기2", kakaoUser.data);
     return [
       kakaoUser.data.id,
       kakaoUser.data.kakao_account.email,
@@ -93,7 +91,7 @@ class UserService {
   }
 
   // 카카오 가입
-  async kakaoSignUp(name, email, phoneNumber, selectedInterests) {
+  async oAuthSignUp(name, email, phoneNumber, selectedInterests) {
     const newUser = {
       name,
       email,
@@ -105,8 +103,8 @@ class UserService {
     return user;
   }
 
-  // 카카오 로그인
-  async kakaoLogin(email) {
+  // 소셜 로그인
+  async oAuthLogin(email) {
     let is_admin = false;
     const user = await User.findOne({ email });
 
@@ -126,6 +124,37 @@ class UserService {
     }
 
     return [accessToken, is_admin];
+  }
+
+  // 구글 인증
+  async googleAuth(code) {
+    const body = {
+      code: code,
+      grant_type: "authorization_code",
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: "http://localhost:3000/login/google",
+    };
+    const response = await axios.post(
+      "https://oauth2.googleapis.com/token",
+      body,
+      {
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
+        },
+      }
+    );
+    console.log("여기3", response.data);
+    const accessToken = response.data.access_token;
+    const googleUser = await axios.get(
+      "https://www.googleapis.com/userinfo/v2/me",
+      {
+        params: {
+          access_token: accessToken,
+        },
+      }
+    );
+    return [googleUser.data.id, googleUser.data.email, googleUser.data.name];
   }
 }
 

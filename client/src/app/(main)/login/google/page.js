@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 
-export default function KakaoAuth() {
+export default function GoogleAuth() {
   const [isSignup, setIsSignup] = useState(false);
   const [receivedName, setReceivedName] = useState("");
   const [receivedEmail, setReceivedEmail] = useState("");
@@ -25,7 +25,7 @@ export default function KakaoAuth() {
   useEffect(() => {
     async function sendCode() {
       const res = await axios.post(
-        "http://localhost:4000/api/users/auth/kakao/check",
+        "http://localhost:4000/api/users/auth/google/check",
         {
           code: code,
         },

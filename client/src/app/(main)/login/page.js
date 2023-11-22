@@ -2,7 +2,7 @@
 import "./page.scss";
 import React, { useState } from "react";
 import axios from "axios";
-import { KAKAO_AUTH_URL } from "./auth.js";
+import { KAKAO_AUTH_URL, GOOGLE_AUTH_URL } from "./auth.js";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -29,6 +29,10 @@ export default function Login() {
   const handleKakaoLogin = async (e) => {
     e.preventDefault();
     window.location.href = KAKAO_AUTH_URL;
+  };
+  const handleGoogleLogin = async (e) => {
+    e.preventDefault();
+    window.location.href = GOOGLE_AUTH_URL;
   };
   return (
     <div className="loginPage">
@@ -66,7 +70,7 @@ export default function Login() {
           <div className="kakaoText">카카오 로그인 </div>
         </button>
 
-        <button className="googleBtn">
+        <button className="googleBtn" onClick={handleGoogleLogin}>
           <div className="googleLogo">
             <img src="/googleBtn.svg" alt="google" />
           </div>
