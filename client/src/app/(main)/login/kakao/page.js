@@ -3,6 +3,7 @@ import "./page.scss";
 import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import Spinner from "../components/spinner.js";
 
 export default function KakaoAuth() {
   const [isSignup, setIsSignup] = useState(false);
@@ -225,5 +226,5 @@ export default function KakaoAuth() {
     );
   }
 
-  return <>{isSignup && <SignUp />}</>;
+  return <>{isSignup ? <SignUp /> : <Spinner />}</>;
 }
