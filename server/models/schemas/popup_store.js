@@ -2,16 +2,50 @@ const { Schema, SchemaTypes } = require("mongoose");
 
 const PopupStoreSchema = new Schema(
   {
-    name: String,
-    brand: String,
-    category: String,
-    address: String,
-    location: String,
-    summary: String,
-    description: String,
-    start_date: Date,
-    end_date: Date,
-    notice: String,
+    brand: {
+      type: String,
+      require: true,
+    },
+    name: {
+      type: String,
+      require: true,
+    },
+    category: {
+      type: String,
+      require: true,
+    },
+    address: {
+      type: String,
+      require: true,
+    },
+    location: {
+      type: String,
+      require: true,
+    },
+    summary: {
+      type: String,
+      require: true,
+    },
+    description: {
+      type: String,
+      require: true,
+    },
+    description: {
+      type: String,
+      require: true,
+    },
+    notice: {
+      type: String,
+      require: true,
+    },
+    start_date: {
+      type: Date,
+      require: true,
+    },
+    end_date: {
+      type: Date,
+      require: true,
+    },
     image: {
       type: SchemaTypes.ObjectId,
       ref: "Image",
