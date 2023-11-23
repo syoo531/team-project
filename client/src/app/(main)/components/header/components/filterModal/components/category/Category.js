@@ -75,31 +75,43 @@ const CATEGORY_LIST = [
   },
 ];
 
-export default function Category({ categorySelectList, handleCategorySelect }) {
+export default function Category({ selectValue, setSelectValue }) {
+  function selectCategory(targetValue) {
+    if (selectValue.category === targetValue) {
+      setSelectValue({ ...selectValue, category: null });
+      return;
+    }
+    setSelectValue({ ...selectValue, category: targetValue });
+  }
   return (
-    <div className="categoryListWrapper">
-      {CATEGORY_LIST.map((category) => {
-        return (
-          <div
-            key={category.id}
-            className={`categoryWrapper ${
-              categorySelectList.includes(category.categoryName)
-                ? "select"
-                : null
-            }`}
-            onClick={() => {
-              handleCategorySelect(category.categoryName);
-            }}
-          >
+    <div className="category">
+      <div className="categoryTitle">카테고리로 찾기</div>
+      <div className="categorySubTitle">
+        원하시는 구역을 선택하시면, <br />
+        해당 구역의 팝업스토어를 모두 확인하실 수 있습니다.
+      </div>
+      <div className="categoryListWrapper">
+        {CATEGORY_LIST.map((category) => {
+          return (
             <div
-              className="backgroundImage"
-              style={{ backgroundImage: `url('${category.image}')` }}
-            ></div>
-            <div className="blackBackground"></div>
-            <div className="categoryText"> {category.categoryName}</div>
-          </div>
-        );
-      })}
+              key={category.id}
+              className={`categoryWrapper ${
+                selectValue.category === category.categoryName ? "select" : null
+              }`}
+              onClick={() => {
+                selectCategory(category.categoryName);
+              }}
+            >
+              <div
+                className="backgroundImage"
+                style={{ backgroundImage: `url('${category.image}')` }}
+              ></div>
+              <div className="blackBackground"></div>
+              <div className="categoryText"> {category.categoryName}</div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

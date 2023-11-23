@@ -9,6 +9,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const popupStoreRouter = require("./routes/popupStoreRouter");
 const waitingRouter = require("./routes/waitingRouter");
 const reservationRouter = require("./routes/reservationRouter");
+const listRouter = require("./routes/listRouter");
 
 const cookieParser = require("cookie-parser");
 
@@ -30,6 +31,7 @@ app.use("/api/users", userRouter);
 app.use("/api/waiting", waitingRouter);
 app.use("/api/reservation", reservationRouter);
 app.use("/api/popupStore", popupStoreRouter);
+app.use("/api/list", listRouter);
 
 app.use(errorHandler); // 에러 처리 미들웨어
 

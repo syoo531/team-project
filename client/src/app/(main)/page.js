@@ -8,7 +8,7 @@ import "./Home.scss";
 export default function Home() {
   return (
     <div className="home">
-      <div className="video"></div>
+      <div className="video">ㅁㄴㅇ</div>
       <RollingBanner />
       <WeekPopUp />
       <Recommendation />

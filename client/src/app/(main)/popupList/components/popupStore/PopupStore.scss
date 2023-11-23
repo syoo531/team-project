@@ -1,0 +1,101 @@
+.popupStore {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+
+  .popupStoreImg {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+
+    .operationalStatus {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background-color: #0472ff;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 500;
+    }
+  }
+
+  .popupStoreInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .infoTop {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      .popupStoreBrand {
+        color: #5d5d5d;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .popupStoreName {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .popupStoreAddress {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .addressIcon {
+          color: #0472ff;
+        }
+
+        .addressText {
+          font-size: 14px;
+        }
+      }
+
+      .popupStorePeriod {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .periodIcon {
+          color: #0472ff;
+        }
+
+        .periodText {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .infoBottom {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding-bottom: 10px;
+
+      .standbyState {
+        padding: 5px 10px;
+        background-color: #313131;
+        color: #fff;
+        font-size: 12px;
+      }
+
+      .readMore {
+        font-size: 14px;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

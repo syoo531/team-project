@@ -14,10 +14,12 @@ export default function Header() {
 
   function openModal() {
     setVisible(true);
+    window.document.body.style.overflowY = "hidden";
   }
 
   function closeModal() {
     setVisible(false);
+    window.document.body.style.overflowY = "scroll";
   }
 
   return (

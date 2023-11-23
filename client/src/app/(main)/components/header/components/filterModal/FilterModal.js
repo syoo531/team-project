@@ -1,96 +1,149 @@
 "use client";
 import { useState } from "react";
-import ApplyFilter from "./components/applyFilter/ApplyFilter";
+import moment from "moment/moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import Area from "./components/area/Area";
 import Category from "./components/category/Category";
 import Period from "./components/period/Period";
 import "./FilterModal.scss";
+import { useRouter } from "next/navigation";
 
 const FILTER_TYPES = [
-  { id: 1, typeName: "Area" },
-  { id: 2, typeName: "Category" },
-  { id: 3, typeName: "Period" },
+  { id: 1, typeName: "구역" },
+  { id: 2, typeName: "카테고리" },
+  { id: 3, typeName: "날짜" },
 ];
+
+const SELECT_VALUE = {
+  area: null,
+  category: null,
+  date: null,
+};
 
 export default function FilterModal({ closeModal }) {
   const [currentId, setCurrentId] = useState(1);
-  const [areaSelectList, setAreaSelectList] = useState([]);
-  const [categorySelectList, setCategorySelectList] = useState([]);
+  const [selectValue, setSelectValue] = useState(SELECT_VALUE);
+  const router = useRouter();
 
   function handleChange(targetId) {
     setCurrentId(targetId);
   }
 
-  function handleAreaSelect(selectArea) {
-    if (areaSelectList.includes(selectArea)) {
-      setAreaSelectList(areaSelectList.filter((area) => area !== selectArea));
-      return;
-    }
-    setAreaSelectList([...areaSelectList, selectArea]);
-  }
-
-  function handleCategorySelect(selectCategory) {
-    if (categorySelectList.includes(selectCategory)) {
-      setCategorySelectList(
-        categorySelectList.filter((category) => category !== selectCategory)
-      );
-      return;
-    }
-    setCategorySelectList([...categorySelectList, selectCategory]);
+  async function filteringPopUpStore() {
+    useRouter();
   }
 
   return (
     <div className="filterModal">
-      <div className="filterNavigation">
-        {FILTER_TYPES.map((type) => {
-          return (
-            <div
-              key={type.id}
-              className="filterTypeWrapper"
-              onClick={() => {
-                handleChange(type.id);
-              }}
-            >
+      <div className="filterModalHeader">
+        <div className="filterText">필터</div>
+        <FontAwesomeIcon
+          className="closeBtn"
+          icon={faCircleXmark}
+          onClick={() => {
+            closeModal();
+          }}
+        />
+      </div>
+      <div className="filterModalMain">
+        <div className="filterNavWrapper">
+          <div className="filterNavTitle">필터 유형</div>
+          <div className="filterNavSubTitle">
+            내가 딱 원하는 팝업스토어를 찾아보세요.
+          </div>
+          <div className="filterListWrapper">
+            {FILTER_TYPES.map((type) => {
+              return (
+                <div
+                  key={type.id}
+                  className={`filterType ${
+                    currentId === type.id ? "clicked" : null
+                  }`}
+                  onClick={() => {
+                    handleChange(type.id);
+                  }}
+                >
+                  {type.typeName}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {currentId === 1 && (
+          <Area selectValue={selectValue} setSelectValue={setSelectValue} />
+        )}
+        {currentId === 2 && (
+          <Category selectValue={selectValue} setSelectValue={setSelectValue} />
+        )}
+        {currentId === 3 && (
+          <Period selectValue={selectValue} setSelectValue={setSelectValue} />
+        )}
+      </div>
+      <div className="filterModalFooter">
+        <div className="filteringWrapper">
+          <div className="filteringTitle">내가 적용한 필터 :</div>
+          {selectValue.area && (
+            <div className="areaFiltering">
+              <div className="appliedText">{selectValue.area}</div>
               <div
-                className={`dotText ${
-                  currentId === type.id ? "clicked" : null
-                }`}
+                className="removeBtn"
+                onClick={() => {
+                  setSelectValue({ ...selectValue, area: null });
+                }}
               >
-                •
-              </div>
-              <div
-                key={type.id}
-                className={`typeText ${
-                  currentId === type.id ? "clicked" : null
-                }`}
-              >
-                {type.typeName}
+                ✕
               </div>
             </div>
-          );
-        })}
-        <div className="filterTitle">어떤 주제에 관심 있어요?</div>
+          )}
+          {selectValue.category && (
+            <div className="categoryFiltering">
+              <div className="appliedText"> {selectValue.category}</div>
+              <div
+                className="removeBtn"
+                onClick={() => {
+                  setSelectValue({ ...selectValue, category: null });
+                }}
+              >
+                ✕
+              </div>
+            </div>
+          )}
+          {selectValue.date && (
+            <div className="dateFiltering">
+              <div className="appliedText">
+                {moment(selectValue.date).format("YYYY-MM-DD")}
+              </div>
+              <div
+                className="removeBtn"
+                onClick={() => {
+                  setSelectValue({ ...selectValue, date: null });
+                }}
+              >
+                ✕
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="buttonWrapper">
+          <div
+            className="resetBtn"
+            onClick={() => {
+              setSelectValue({
+                ...selectValue,
+                area: null,
+                category: null,
+                date: null,
+              });
+            }}
+          >
+            <FontAwesomeIcon icon={faRotateLeft} /> 초기화
+          </div>
+          <div className="viewBtn">적용하기</div>
+        </div>
       </div>
-      {currentId === 1 && (
-        <Area
-          areaSelectList={areaSelectList}
-          handleAreaSelect={handleAreaSelect}
-        />
-      )}
-      {currentId === 2 && (
-        <Category
-          categorySelectList={categorySelectList}
-          handleCategorySelect={handleCategorySelect}
-        />
-      )}
-      {currentId === 3 && <Period />}
-      <ApplyFilter
-        areaSelectList={areaSelectList}
-        handleAreaSelect={handleAreaSelect}
-        categorySelectList={categorySelectList}
-        handleCategorySelect={handleCategorySelect}
-        closeModal={closeModal}
-      />
     </div>
   );
 }
