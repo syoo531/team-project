@@ -1,9 +1,11 @@
 "use client";
 import "./page.scss";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
@@ -15,17 +17,16 @@ export default function PopUp(props) {
     const [popupData, setPopupData] = useState({});
     const startDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].start_date;
     const endDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].end_date;
-
     // start_date 변환
     const formattedStartDate = startDate ? new Date(startDate).toLocaleDateString() : "";
-
     // end_date 변환
     const formattedEndDate = endDate ? new Date(endDate).toLocaleDateString() : "";
     const popupFetch = async () => {
         try {
-            const response = await fetch("http://localhost:4000/popupstore");
-            const data = await response.json();
+            const response = await axios.get("http://localhost:4000/api/popupstore");
+            const data = response.data;
             setPopupData(data);
+            console.log(data);
         } catch (err) {
             console.log("error!", err);
         }
@@ -36,7 +37,7 @@ export default function PopUp(props) {
 
     return (
         <div className="PopUp">
-            <div>팝업스토어 id : {storeId}</div>
+            {/* <div>팝업스토어 id : {storeId}</div> */}
             <div className="popImgWrap">
                 <div className="mainImg">
                     <img
@@ -71,6 +72,8 @@ export default function PopUp(props) {
                 <h1>
                     {popupData.data && popupData.data[storeId] && popupData.data[storeId].name}
                     <a href="#">{popupData.data && popupData.data[storeId] && popupData.data[storeId].category}</a>
+                    <input type="checkbox" id={`detailFav${storeId}`} />
+                    <label htmlFor={`detailFav${storeId}`}></label>
                 </h1>
                 <b>
                     <FontAwesomeIcon className="icon" icon={faLocationDot} />
@@ -80,9 +83,60 @@ export default function PopUp(props) {
                     {formattedStartDate}~{formattedEndDate}
                 </p>
             </div>
+            <div className="popTime">
+                <h3>운영시간 안내</h3>
+                <ul>
+                    <li>월 11:00 ~ 18:00</li>
+                    <li>화 11:00 ~ 18:00</li>
+                    <li>수 11:00 ~ 18:00</li>
+                    <li>목 11:00 ~ 18:00</li>
+                    <li>금 11:00 ~ 18:00</li>
+                </ul>
+            </div>
             <div className="popInfo2">
                 <h3 className="popInfoSubTtile">팝업스토어 내용</h3>
                 <p>{popupData.data && popupData.data[storeId] && popupData.data[storeId].summary}</p>
+            </div>
+            <div className="popReview">
+                <h4>
+                    후기 <FontAwesomeIcon className="staricon" icon={faStar} style={{ color: "#e21680" }} />
+                    <span>0개</span>
+                </h4>
+                <div className="popReviewList">
+                    <div className="popReviewItem">
+                        <div className="reviewLogo">
+                            <h1>P</h1>
+                        </div>
+                        <div className="reviewName">김**</div>
+                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
+                        <div className="reviewDate">2023. 11. 23</div>
+                    </div>
+                    <div className="popReviewItem">
+                        <div className="reviewLogo">
+                            <h1>P</h1>
+                        </div>
+                        <div className="reviewName">김**</div>
+                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
+                        <div className="reviewDate">2023. 11. 23</div>
+                    </div>
+                    <div className="popReviewItem">
+                        <div className="reviewLogo">
+                            <h1>P</h1>
+                        </div>
+                        <div className="reviewName">김**</div>
+                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
+                        <div className="reviewDate">2023. 11. 23</div>
+                    </div>
+                    <div className="popReviewItem">
+                        <div className="reviewLogo">
+                            <h1>P</h1>
+                        </div>
+                        <div className="reviewName">김**</div>
+                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
+                        <div className="reviewDate">2023. 11. 23</div>
+                    </div>
+                </div>
+                <button type="button">후기 작성하기</button>
             </div>
             <div className="popLocation">
                 <h3>상세위치</h3>
@@ -92,9 +146,9 @@ export default function PopUp(props) {
             <div className="popWarning">
                 <h3>안내 및 주의사항</h3>
                 <ul>
-                    <li>1. 주의사항1</li>
-                    <li>2. 주의사항2</li>
-                    <li>3. 주의사항3</li>
+                    <li>* 주의사항1</li>
+                    <li>* 주의사항2</li>
+                    <li>* 주의사항3</li>
                 </ul>
             </div>
             <div className="reserveBtn">
