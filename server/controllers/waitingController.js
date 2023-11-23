@@ -29,16 +29,12 @@ const getWaiting = async (req, res, next) => {
 // popupStoreId에 대한 대기열 조회
 const getWaitingByPopupStore = async (req, res, next) => {
   try {
+    const { popupStoreId } = req.params;
     const waitingService = new WaitingService();
-    const popupStoreId = req.params.popup_store;
-    const getWaitingListByPopupStore =
-      await waitingService.getWaitingListByPopupStore(popupStoreId);
-    return res.status(400).json({
-      message: "현장대기 예약 조회 목록입니다.",
-      data: getWaitingListByPopupStore,
-    });
+    const users = await waitingService.getWaitingByPopupStore(popupStoreId);
+    res.status(200).json(users);
   } catch (error) {
-    next(error);
+    res.status(200).json({ error: "팝업스토어에 대한 대기리스트 조회 실패" });
   }
 };
 

@@ -13,7 +13,7 @@ const router = Router();
 
 router.post("/createWaiting", createWaiting);
 router.get("/getWaitingList", getWaiting);
-router.get("/getWaitingByPopupStore/:popup_store", getWaitingByPopupStore);
+router.get("/getWaitingByPopupStore/:popupStore", getWaitingByPopupStore);
 router.get("/waitingNumber", waitingNumber);
 router.get("/checkWaitingTeam", checkWaitingTeam);
 router.get("/checkWaitingTime", checkWaitingTime);

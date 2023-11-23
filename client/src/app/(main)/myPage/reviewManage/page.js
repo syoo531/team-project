@@ -5,12 +5,17 @@ import ReviewBox from "../components/reviewBox/ReviewBox";
 
 export default function ReviewManage() {
   return (
-    <div>
-      <MenuBar />
-      <ReviewBox />
-      <ReviewBox />
-      <ReviewBox />
-      <ReviewBox />
+    <div className="reviewManageContainer">
+      <div>
+        <MenuBar />
+      </div>
+      <div className="reviewManageBox">
+        <div className="reviewManageTitle">OOO님의 리뷰내역</div>
+        <ReviewBox />
+        <ReviewBox />
+        <ReviewBox />
+        <ReviewBox />
+      </div>
     </div>
   );
 }
