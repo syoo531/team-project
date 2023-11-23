@@ -23,13 +23,11 @@
   padding: 10px 8px;
 
   .delete-button {
-    @include admin-button-base-style;
-    color: white;
-    background-color: map-get($admin-button-colors, warningLight);
+    @include admin-button-base-style(red, white);
 
     &:hover {
-      color: rgb(251, 251, 251);
-      background-color: map-get($admin-button-colors, warningDark);
+      background: (0, 0, 0, 0.8);
+      transform: scale(1.05);
     }
   }
 }
@@ -88,38 +86,30 @@
     margin-left: 10px;
     padding-left: 10px;
     border-radius: 6px;
+    
+    // border: none;
+    // border-bottom: 1px solid #a5a5a5;
+    // border-radius: 0;
+    // outline: none; 
+  }
+
+  .address-input {
+    display: flex;
+    gap: 15px;
   }
 }
 
-.form__media-section {
-  .section-title {
-    padding-bottom: 10px;
-  }
-}
-
-.image-upload-wrapper {
-  border: 1px solid grey;
-  width: 250px;
-}
-
-.image-upload-custom-buttom {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-  background-color: blue;
-  width: 100px;
-  border-radius: 6px;
-
-  label {
-    position: absolute;
-    font-size: 15px;
-    background-color: red;
-  }
+.date-field {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 
   input {
-    left: 0;
-    top: 0;
-    opacity: 0;
-    background-color: grey;
+    max-width: 180px;
+    margin: 10px 15px 15px 15px;
+    // border: none;
+    // border-bottom: 1px solid #a5a5a5;
+    // outline: none; 
+    border-radius: 6px;
   }
 }
