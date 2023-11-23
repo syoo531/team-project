@@ -1,25 +1,36 @@
 const WaitingService = require("../services/waitingService");
 
-// message: "현장대기 예약 완료입니다."
+// 현장대기 접수, (팝업스토어 ID, 대기인원 -> 내 앞에 몇명인가)
 const createWaiting = async (req, res, next) => {
   try {
+    const { popup, people, user } = req.body;
+
     const waitingService = new WaitingService();
-    const waitingList = await waitingService.createWaiting(req.body);
+    const newWaiting = await waitingService.createWaiting(popup, people, user); // 새 waiting 만들고
+
+    //waiting_queue에 push하고
+
     return res
       .status(400)
-      .json({ message: "현장대기 예약 완료입니다.", data: waitingList });
+      .json({ message: "현장대기 예약 완료입니다.", data: newWaiting });
   } catch (error) {
     next(error);
   }
 };
 
-const getWaiting = async (req, res, next) => {
+// 현장대기 현황 조회, (팝업스토어 ID -> 웨이팅 큐)
+const getWaitingStatus = async (req, res, next) => {
   try {
-    const waitingService = new WaitingService();
-    const getWaitingList = await waitingService.getWaiting(req.body);
-    return res.status(400).json({
+    console.log("여기22", req.headers.Authorization);
+
+    // const { email } = req.query;
+    // console.log("여기22", email);
+    // const waitingService = new WaitingService();
+    // const waiting_queue = await waitingService.getWaitingStatus(email);
+
+    return res.status(200).json({
       message: "현장대기 예약 조회 목록입니다.",
-      data: getWaitingList,
+      data: null,
     });
   } catch (error) {
     next(error);
@@ -79,7 +90,7 @@ const completeWaiting = async (req, res, next) => {
 
 module.exports = {
   createWaiting,
-  getWaiting,
+  getWaitingStatus,
   getWaitingByPopupStore,
   waitingNumber,
   checkWaitingTeam,

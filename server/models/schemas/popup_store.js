@@ -50,6 +50,13 @@ const PopupStoreSchema = new Schema(
       type: SchemaTypes.ObjectId,
       ref: "Image",
     },
+    waiting_queue: {
+      type: Array,
+    },
+    waiting_number: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

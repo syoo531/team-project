@@ -1,12 +1,37 @@
-import "./mypage.scss";
-import MyPageHome from "./myPageHome/page";
-import ReservationList from "./reservationList/page";
+"use client";
+import "./page.scss";
+import Navibar from "./components/navibar/navibar";
+import Waiting from "./components/waiting/waiting";
+import Reservation from "./components/reservation/reservation";
+import Review from "./components/review/review";
+import UserInfo from "./components/userInfo/userInfo";
+import { useState } from "react";
 
-// MyPage Path : http://localhost:3000/myPage
 export default function MyPage() {
+  const [currentContent, setCurrentContent] = useState(0);
+
+  const handleMenu = (idx) => {
+    setCurrentContent(idx);
+  };
+
   return (
-    <div className="Container">
-      <MyPageHome />
+    <div className="mypageContainer">
+      <Navibar handleMenu={handleMenu} currentContent={currentContent} />
+      <div className="mypageContent">
+        <div className="contentWrapper">
+          {currentContent === 0 ? (
+            <Waiting />
+          ) : currentContent === 1 ? (
+            <Reservation />
+          ) : currentContent === 2 ? (
+            <Review />
+          ) : currentContent === 3 ? (
+            <UserInfo />
+          ) : (
+            ""
+          )}
+        </div>
+      </div>
     </div>
   );
 }

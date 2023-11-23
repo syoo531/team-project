@@ -12,7 +12,7 @@ const waitingSchema = new Schema(
       type: SchemaTypes.ObjectId,
       ref: "User",
     },
-    complete_waiting: {
+    is_enter: {
       type: Boolean,
       default: false,
     },

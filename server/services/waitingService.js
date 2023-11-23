@@ -1,33 +1,56 @@
-const { Waiting } = require("../models");
+const { Waiting, PopupStore, User } = require("../models");
 // const mongoose = require("mongoose");
 
 const completeCounter = 0;
 const checkWaitingTeam = 0;
 
 class WaitingService {
-  async createWaiting(date, people, popup_store, user, complete_waiting) {
-    // const parsedWaitingQueue = waiting_queue ? JSON.parse(waiting_queue) : [];
-
-    const newWaitingListData = {
-      date: new Date(), // 전달된 날짜 문자열을 날짜 객체로 변환
-      // waiting_queue: parsedWaitingQueue, // 문자열로 전달된 배열을 파싱
+  async createWaiting(popup, people, user) {
+    const newWaitingData = {
+      date: new Date(),
       people,
-      popup_store: "6559272a6e93f614f57c589a",
-      user: "6555b59c94f41fc12277b519",
-      complete_waiting,
+      popup_store: popup,
+      user,
     };
+    const newWaiting = await Waiting.create(newWaitingData); // 새로운 웨이팅 정보 만듬
+    const popupData = await PopupStore.findOne({ _id: popup });
+    const beforeMe = popupData.waiting_queue.length; // 내 앞에 몇명인지 체크
+    const pushWaitingQueue = await PopupStore.updateOne(
+      // waiting_queue에 push
+      { _id: popup },
+      {
+        $push: {
+          waiting_queue: newWaiting._id,
+        },
+      }
+    );
 
-    const waitingList = await Waiting.create(newWaitingListData);
-
-    console.log("Create Waiting Data");
-    return waitingList;
+    console.log("여기44", beforeMe);
+    return beforeMe;
   }
 
-  // 전체 대기 목록 조회
-  async getWaiting() {
-    const getWaitingList = await Waiting.find();
-    console.log("Get Waiting Data By Id");
-    return getWaitingList;
+  // 현장대기 현황 조회
+  async getWaitingStatus(email) {
+    // 1. email로 유저 objectID 찾고
+    // 2. 유저 objectId로 waiting을 찾고
+    // 3. waiting의 objectID로 popupstore의 waiting_queue를 가져와서
+    // 4. queue에서 내가 몇번째인지 확인
+    // 5. 현장대기 걸어둔 팝업스토어가 다수이면 배열로 만들어서 리턴
+
+    const user = await User.findOne({ email });
+
+    const waiting = await Waiting.find({ user });
+
+    let result = [];
+    for (let v of waiting) {
+      const popup = v.popup_store;
+      const popupStore = await PopupStore.findOne({ _id: popup });
+
+      const idx = popupStore.waiting_queue.indexOf(v._id);
+
+      result.push([popupStore.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+    }
+    return result;
   }
 
   // 업체 관리자 페이지에서

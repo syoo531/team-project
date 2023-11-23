@@ -1,0 +1,14 @@
+.mypageContainer {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  .mypageContent {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .contentWrapper {
+      width: 80%;
+    }
+  }
+}
