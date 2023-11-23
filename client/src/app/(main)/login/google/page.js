@@ -33,6 +33,8 @@ export default function GoogleAuth() {
         { withCredentials: true }
       );
       if (res.status === 200) {
+        const accessToken = res.data.accessToken;
+        localStorage.setItem("accessToken", accessToken);
         window.location.href = "/";
       }
       if (res.status === 202) {

@@ -21,12 +21,10 @@ const createWaiting = async (req, res, next) => {
 // 현장대기 현황 조회, (팝업스토어 ID -> 웨이팅 큐)
 const getWaitingStatus = async (req, res, next) => {
   try {
-    console.log("여기22", req.headers.Authorization);
+    const email = req.decoded.user.email;
 
-    // const { email } = req.query;
-    // console.log("여기22", email);
-    // const waitingService = new WaitingService();
-    // const waiting_queue = await waitingService.getWaitingStatus(email);
+    const waitingService = new WaitingService();
+    const waiting_queue = await waitingService.getWaitingStatus(email);
 
     return res.status(200).json({
       message: "현장대기 예약 조회 목록입니다.",

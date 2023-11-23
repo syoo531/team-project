@@ -1,5 +1,6 @@
 import "./waiting.scss";
 import instance from "../../../../../utils/instance";
+
 import { useEffect } from "react";
 
 export default function Waiting() {

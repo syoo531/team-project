@@ -25,31 +25,40 @@ class WaitingService {
       }
     );
 
-    console.log("여기44", beforeMe);
     return beforeMe;
   }
 
   // 현장대기 현황 조회
   async getWaitingStatus(email) {
-    // 1. email로 유저 objectID 찾고
-    // 2. 유저 objectId로 waiting을 찾고
-    // 3. waiting의 objectID로 popupstore의 waiting_queue를 가져와서
-    // 4. queue에서 내가 몇번째인지 확인
-    // 5. 현장대기 걸어둔 팝업스토어가 다수이면 배열로 만들어서 리턴
+    const user = await User.findOne({ email }).select("_id");
+    console.log("여기11", user);
 
-    const user = await User.findOne({ email });
-
-    const waiting = await Waiting.find({ user });
+    const waiting = await Waiting.find({ user, is_enter: false }).select(
+      "popup_store"
+    );
+    console.log("여기22", waiting);
 
     let result = [];
     for (let v of waiting) {
       const popup = v.popup_store;
-      const popupStore = await PopupStore.findOne({ _id: popup });
+      const popup_info = await PopupStore.findOne({ _id: popup }).select(
+        "name"
+      );
+      const popup_waiting = await Waiting.find({
+        popup_store: popup,
+        is_enter: false,
+      }).sort({ createdAt: 1 });
 
-      const idx = popupStore.waiting_queue.indexOf(v._id);
+      let idx;
+      for (let i = 0; i < popup_waiting.length; i++) {
+        if (popup_waiting[i].user.toString() === user._id.toString()) {
+          idx = i;
+        }
+      }
 
-      result.push([popupStore.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+      result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
     }
+    console.log("여기33", result);
     return result;
   }
 

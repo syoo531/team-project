@@ -17,7 +17,8 @@ export default function Login() {
         { withCredentials: true }
       );
       if (response.status === 200) {
-        console.log(response);
+        const accessToken = response.data.accessToken;
+        localStorage.setItem("accessToken", accessToken);
 
         window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
       }

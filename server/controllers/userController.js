@@ -1,4 +1,5 @@
 const UserService = require("../services/userService");
+const bcrypt = require("bcrypt");
 
 const login = async (req, res, next) => {
   try {
@@ -19,16 +20,11 @@ const login = async (req, res, next) => {
     }
     const [accessToken, is_admin] = loginResult;
     console.log(loginResult);
-    res
-      .cookie("accessToken", accessToken, {
-        httpOnly: true,
-        SameSite: "none",
-      })
-      .status(200)
-      .json({
-        is_admin: is_admin,
-        message: "로그인에 성공했습니다!",
-      });
+    res.status(200).json({
+      is_admin: is_admin,
+      accessToken: accessToken,
+      message: "로그인에 성공했습니다!",
+    });
   } catch (error) {
     next(error);
   }
@@ -74,16 +70,11 @@ const kakaoAuth = async (req, res, next) => {
       // 이미 가입된 경우
       console.log("이미가입", isRegistered);
       const [accessToken, is_admin] = await userService.oAuthLogin(email);
-      res
-        .cookie("accessToken", accessToken, {
-          httpOnly: true,
-          SameSite: "none",
-        })
-        .status(200)
-        .json({
-          is_admin: is_admin,
-          message: "로그인에 성공했습니다!",
-        });
+      res.status(200).json({
+        is_admin: is_admin,
+        accessToken: accessToken,
+        message: "로그인에 성공했습니다!",
+      });
     } else {
       // 해당 이메일로 가입 안된 경우
       res.status(202).json({
@@ -115,16 +106,11 @@ const oAuthSignup = async (req, res, next) => {
       throw new Error("서버 오류 입니다.");
     }
     const [accessToken, is_admin] = await userService.oAuthLogin(email);
-    res
-      .cookie("accessToken", accessToken, {
-        httpOnly: true,
-        SameSite: "none",
-      })
-      .status(200)
-      .json({
-        is_admin: is_admin,
-        message: "로그인에 성공했습니다!",
-      });
+    res.status(200).json({
+      is_admin: is_admin,
+      accessToken: accessToken,
+      message: "로그인에 성공했습니다!",
+    });
   } catch (err) {
     console.log(err);
   }
@@ -133,7 +119,6 @@ const oAuthSignup = async (req, res, next) => {
 const googleAuth = async (req, res, next) => {
   try {
     const code = req.body.code;
-    console.log("여기1", code);
     const userService = new UserService();
 
     const [google_id, email, name] = await userService.googleAuth(code);
@@ -143,16 +128,11 @@ const googleAuth = async (req, res, next) => {
       // 이미 가입된 경우
       console.log("이미가입", isRegistered);
       const [accessToken, is_admin] = await userService.oAuthLogin(email);
-      res
-        .cookie("accessToken", accessToken, {
-          httpOnly: true,
-          SameSite: "none",
-        })
-        .status(200)
-        .json({
-          is_admin: is_admin,
-          message: "로그인에 성공했습니다!",
-        });
+      res.status(200).json({
+        is_admin: is_admin,
+        accessToken: accessToken,
+        message: "로그인에 성공했습니다!",
+      });
     } else {
       // 해당 이메일로 가입 안된 경우
       res.status(202).json({
