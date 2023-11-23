@@ -15,6 +15,7 @@ export default function CreateStore() {
     brand: "",
     category: "",
     address: "",
+    zipcode: "",
     location: "",
     summary: "",
     description: "",
@@ -36,7 +37,7 @@ export default function CreateStore() {
       s3UploadMultipleImages(newImages),
       s3UploadSingleImage(mainImage),
     ]);
-    
+
     const updatedFormData = { ...formData, imageURL, mainURL };
 
     const { data } = await axios.post(

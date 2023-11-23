@@ -24,6 +24,7 @@ export default function UpdateStore({
     name: storeData?.name || "",
     brand: storeData?.brand || "",
     category: storeData?.category || "",
+    zipcode: storeData?.zipcode || "",
     address: storeData?.address || "",
     location: storeData?.location || "",
     summary: storeData?.summary || "",

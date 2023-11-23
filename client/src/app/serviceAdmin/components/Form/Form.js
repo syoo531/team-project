@@ -1,7 +1,7 @@
 "use client";
 
 import "./Form.scss";
-import { useState } from "react";
+import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import MediaUpload from "./MediaUpload/MediaUpload";
 import Postcode from "../Postcode/Postcode";
@@ -21,6 +21,11 @@ export default function Form({
   setMainImage,
 }) {
   const router = useRouter();
+
+  const handleCancel = () => {
+    router.push("/serviceAdmin");
+    router.refresh();
+  };
 
   //카테고리 selectbox options 정의
   const CATEGORY_OPTIONS = [
@@ -57,45 +62,51 @@ export default function Form({
         <div className="form__container">
           <form onSubmit={handleSubmit}>
             <section className="form__text-section">
-              <div>
+              <div className="field short-field">
                 <label>팝업스토어 이름</label>
                 <input
+                  placeholder="팝업스토어 이름"
                   type="text"
                   name="name"
                   value={formData?.name || ""}
                   onChange={handleChange}
                 />
               </div>
-              <div>
+              <div className="field short-field">
                 <label>브랜드 이름</label>
                 <input
+                  placeholder="브랜드 이름"
                   type="text"
                   name="brand"
                   value={formData?.brand || ""}
                   onChange={handleChange}
                 />
               </div>
-
-              <div className="date-field">
-                <label>기간</label>
-                <input
-                  className="date-input"
-                  type="date"
-                  name="start_date"
-                  value={formData?.start_date?.split("T")[0] || ""}
-                  onChange={handleChange}
-                />
-                <div> ~ </div>
-                <input
-                  className="date-input"
-                  type="date"
-                  name="end_date"
-                  value={formData?.end_date?.split("T")[0] || ""}
-                  onChange={handleChange}
-                />
+              <div className="address_field field short-field">
+                <label>주소 </label>
+                <div className="zipcode">
+                  <input
+                    className="zipcode-input"
+                    placeholder="우편번호"
+                    type="text"
+                    name="zipcode"
+                    onChange={handleChange}
+                    value={formData?.zipcode}
+                  />
+                  <Postcode setFormData={setFormData} />
+                </div>
+                <div className="address-input">
+                  <input
+                    placeholder="주소"
+                    type="text"
+                    name="address"
+                    onChange={handleChange}
+                    value={formData?.address}
+                  />
+                </div>
               </div>
 
-              <div className="category-selectbox__div">
+              <div className="category-selectbox__div field short-field">
                 <label>
                   카테고리
                   <select
@@ -116,22 +127,28 @@ export default function Form({
                 </label>
               </div>
 
-              <div className="address_search">
-                <label>주소 </label>
-                <div className="address-input">
-                  <Postcode setFormData={setFormData} />
-                  <input
-                    placeholder="주소"
-                    type="text"
-                    name="address"
-                    onChange={handleChange}
-                    value={formData?.address}
-                  />
-                </div>
+              <div className="date-field field short-field">
+                <label>이벤트 기간</label>
+                <input
+                  className="date-input"
+                  type="date"
+                  name="start_date"
+                  value={formData?.start_date?.split("T")[0] || ""}
+                  onChange={handleChange}
+                />
+                <label>~</label>
+                <input
+                  className="date-input"
+                  type="date"
+                  name="end_date"
+                  value={formData?.end_date?.split("T")[0] || ""}
+                  onChange={handleChange}
+                />
               </div>
-              <div>
+              <div className="field">
                 <label>소개</label>
                 <input
+                  placeholder="이벤트 소개"
                   className="form-summary"
                   type="text"
                   name="summary"
@@ -139,9 +156,10 @@ export default function Form({
                   onChange={handleChange}
                 />
               </div>
-              <div>
+              <div className="field">
                 <label>설명</label>
                 <textarea
+                  placeholder="이벤트 상세 설명"
                   className="form-description"
                   type="text"
                   name="description"
@@ -160,7 +178,7 @@ export default function Form({
               setMainImage={setMainImage}
             />
             <button type="submit">Submit</button>
-            <button type="button" onClick={() => router.push("/serviceAdmin")}>
+            <button type="button" onClick={handleCancel}>
               취소
             </button>
           </form>

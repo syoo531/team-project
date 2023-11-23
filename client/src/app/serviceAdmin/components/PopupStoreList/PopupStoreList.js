@@ -19,8 +19,6 @@ export default function PopupStoreList({ storeData: stores }) {
     }
   };
 
-  console.log(selectedStores)
-
   return (
     <div className="main__layout">
       <div className="main__header list__header">

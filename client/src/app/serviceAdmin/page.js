@@ -23,6 +23,8 @@ export default async function ServiceAdmin({ searchParams }) {
     searchParams.page || 1
   );
 
+  console.log(data)
+
   return (
     <>
       <PopupStoreList storeData={data} />
