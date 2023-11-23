@@ -2,10 +2,22 @@
 
 import "./Area.scss";
 
-export default function Area({ areaSelectList, handleAreaSelect }) {
+export default function Area({ selectValue, setSelectValue }) {
+  function selectArea(targetValue) {
+    if (selectValue.area === targetValue) {
+      setSelectValue({ ...selectValue, area: null });
+      return;
+    }
+    setSelectValue({ ...selectValue, area: targetValue });
+  }
+
   return (
     <div className="area">
-      <div className="areaTitle">어느 구역에 방문하실까요?</div>
+      <div className="areaTitle">구역으로 찾기</div>
+      <div className="areaSubTitle">
+        원하시는 구역을 선택하시면, <br />
+        해당 구역의 팝업스토어를 모두 확인하실 수 있습니다.
+      </div>
       <svg
         id="seoulMap"
         className="seoulMap"
@@ -15,10 +27,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Gangdong_gu"
           className={`region ${
-            areaSelectList.includes("강동구") ? "select" : null
+            selectValue.area === "강동구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("강동구");
+            selectArea("강동구");
           }}
         >
           <polygon
@@ -36,10 +48,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Songpa_gu"
           className={`region ${
-            areaSelectList.includes("송파구") ? "select" : null
+            selectValue.area === "송파구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("송파구");
+            selectArea("송파구");
           }}
         >
           <polygon
@@ -57,10 +69,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Gangnam_gu"
           className={`region ${
-            areaSelectList.includes("강남구") ? "select" : null
+            selectValue.area === "강남구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("강남구");
+            selectArea("강남구");
           }}
         >
           <polygon
@@ -78,10 +90,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Seocho_gu"
           className={`region ${
-            areaSelectList.includes("서초구") ? "select" : null
+            selectValue.area === "서초구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("서초구");
+            selectArea("서초구");
           }}
         >
           <polygon
@@ -103,10 +115,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Gwanak_gu"
           className={`region ${
-            areaSelectList.includes("관악구") ? "select" : null
+            selectValue.area === "관악구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("관악구");
+            selectArea("관악구");
           }}
         >
           <polygon
@@ -128,10 +140,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Dongjak_gu"
           className={`region ${
-            areaSelectList.includes("동작구") ? "select" : null
+            selectValue.area === "동작구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("동작구");
+            selectArea("동작구");
           }}
         >
           <polygon
@@ -149,10 +161,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Geumcheon_gu"
           className={`region ${
-            areaSelectList.includes("금천구") ? "select" : null
+            selectValue.area === "금천구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("금천구");
+            selectArea("금천구");
           }}
         >
           <polygon
@@ -170,10 +182,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Yeongdeungpo_gu"
           className={`region ${
-            areaSelectList.includes("영등포구") ? "select" : null
+            selectValue.area === "영등포구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("영등포구");
+            selectArea("영등포구");
           }}
         >
           <polygon
@@ -191,10 +203,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Guro_gu"
           className={`region ${
-            areaSelectList.includes("구로구") ? "select" : null
+            selectValue.area === "구로구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("구로구");
+            selectArea("구로구");
           }}
         >
           <polygon
@@ -212,10 +224,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Yangcheon_gu"
           className={`region ${
-            areaSelectList.includes("양천구") ? "select" : null
+            selectValue.area === "양천구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("양천구");
+            selectArea("양천구");
           }}
         >
           <polygon
@@ -229,10 +241,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Gangseo_gu"
           className={`region ${
-            areaSelectList.includes("강서구") ? "select" : null
+            selectValue.area === "강서구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("강서구");
+            selectArea("강서구");
           }}
         >
           <polygon
@@ -250,10 +262,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Gwangjin_gu"
           className={`region ${
-            areaSelectList.includes("광진구") ? "select" : null
+            selectValue.area === "광진구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("광진구");
+            selectArea("광진구");
           }}
         >
           <polygon
@@ -271,10 +283,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Jungnang_gu"
           className={`region ${
-            areaSelectList.includes("중랑구") ? "select" : null
+            selectValue.area === "중랑구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("중랑구");
+            selectArea("중랑구");
           }}
         >
           <polygon
@@ -292,10 +304,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Nowon_gu"
           className={`region ${
-            areaSelectList.includes("노원구") ? "select" : null
+            selectValue.area === "노원구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("노원구");
+            selectArea("노원구");
           }}
         >
           <polygon
@@ -321,10 +333,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Dobong_gu"
           className={`region ${
-            areaSelectList.includes("도봉구") ? "select" : null
+            selectValue.area === "도봉구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("도봉구");
+            selectArea("도봉구");
           }}
         >
           <polygon
@@ -338,10 +350,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Gangbuk_gu"
           className={`region ${
-            areaSelectList.includes("강북구") ? "select" : null
+            selectValue.area === "강북구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("강북구");
+            selectArea("강북구");
           }}
         >
           <polygon
@@ -355,10 +367,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Seongbuk_gu"
           className={`region ${
-            areaSelectList.includes("성북구") ? "select" : null
+            selectValue.area === "성북구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("성북구");
+            selectArea("성북구");
           }}
         >
           <polygon
@@ -372,10 +384,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Dongdaemun_gu"
           className={`region ${
-            areaSelectList.includes("동대문구") ? "select" : null
+            selectValue.area === "동대문구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("동대문구");
+            selectArea("동대문구");
           }}
         >
           <polygon
@@ -389,10 +401,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Seongdong_gu"
           className={`region ${
-            areaSelectList.includes("성동구") ? "select" : null
+            selectValue.area === "성동구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("성동구");
+            selectArea("성동구");
           }}
         >
           <polygon
@@ -406,10 +418,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Yongsan_gu"
           className={`region ${
-            areaSelectList.includes("용산구") ? "select" : null
+            selectValue.area === "용산구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("용산구");
+            selectArea("용산구");
           }}
         >
           <polygon
@@ -422,11 +434,9 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         </g>
         <g
           id="Jung_gu"
-          className={`region ${
-            areaSelectList.includes("중구") ? "select" : null
-          }`}
+          className={`region ${selectValue.area === "중구" ? "select" : null}`}
           onClick={() => {
-            handleAreaSelect("중구");
+            selectArea("중구");
           }}
         >
           <polygon
@@ -440,10 +450,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Jongro_gu"
           className={`region ${
-            areaSelectList.includes("종로구") ? "select" : null
+            selectValue.area === "종로구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("종로구");
+            selectArea("종로구");
           }}
         >
           <polygon
@@ -457,10 +467,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Seodaemun_gu"
           className={`region ${
-            areaSelectList.includes("서대문구") ? "select" : null
+            selectValue.area === "서대문구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("서대문구");
+            selectArea("서대문구");
           }}
         >
           <polygon
@@ -474,10 +484,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Eunpyeong_gu"
           className={`region ${
-            areaSelectList.includes("은평구") ? "select" : null
+            selectValue.area === "은평구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("은평구");
+            selectArea("은평구");
           }}
         >
           <polygon
@@ -491,10 +501,10 @@ export default function Area({ areaSelectList, handleAreaSelect }) {
         <g
           id="Mapo_gu"
           className={`region ${
-            areaSelectList.includes("마포구") ? "select" : null
+            selectValue.area === "마포구" ? "select" : null
           }`}
           onClick={() => {
-            handleAreaSelect("마포구");
+            selectArea("마포구");
           }}
         >
           <polygon
