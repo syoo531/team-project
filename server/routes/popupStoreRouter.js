@@ -5,14 +5,16 @@ const {
   getAllStores,
   updatePopupStore,
   deletePopupStore,
+  deleteImage,
 } = require("../controllers/popupStoreController");
 
 const router = Router();
 
-router.get("/", getAllStores);
 router.post("/", createPopupStore);
 router.get("/:id", getPopupStore);
 router.patch("/:id", updatePopupStore);
 router.delete("/:id", deletePopupStore);
+router.delete("/image/:id", deleteImage);
+router.get("/", getAllStores);
 
 module.exports = router;

@@ -1,76 +1,141 @@
 "use client";
 
 import "./MediaUpload.scss";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { faFileArrowUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { deleteImageS3 } from "../../imageUploader";
 
 export default function MediaUpload({
   setNewImages,
   newImages,
   existingImage,
   setExistingImage,
-  storeId,
+  mainImage,
+  setMainImage,
 }) {
-  const inputRefs = useRef({});
+  const inputRefs = useRef();
+  const mainInput = useRef();
 
   const handleUploadImage = (e) => {
-    // if (e.target.files[0])
-    setNewImages((cur) => ({
-      ...cur,
-      [e.target.name]: e.target.files[0],
-    }));
+    if (
+      existingImage?.length + newImages?.length + e.target.files?.length >=
+      5
+    ) {
+      alert("상세이미지 최대 4개까지 올릴 수 있습니다.");
+      return;
+    }
+    setNewImages((cur) => [...cur, ...e.target.files]);
   };
 
-  const inputFields = [
-    { name: "main_image_url", label: "메인 이미지" },
-    { name: "thumbnail_image_url", label: "썸네일 이미지" },
-    { name: "detail_image_url", label: "상세 이미지" },
-  ];
-
-  const renderImagePreview = (newImage, existingImage) => {
-    return (
-      <>
-        {newImage || existingImage ? (
-          <img
-            src={newImage ? URL.createObjectURL(newImage) : existingImage}
-            alt="이미지 미리보기"
-          />
-        ) : null}
-      </>
+  const deleteImage = (index) => {
+    const confirm = window.confirm(
+      "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?"
     );
+    if (confirm) {
+      const updatedImages = newImages.filter((_, i) => i !== index);
+      setNewImages(updatedImages);
+    }
+  };
+
+  const deleteFroms3 = async (img, id) => {
+    const confirm = window.confirm(
+      "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?"
+    );
+
+    if (confirm) {
+      await Promise.all([
+        deleteImageS3(img),
+        axios.delete(`http://localhost:4000/api/popupStore/image/${id}`),
+      ]);
+      setExistingImage((prev) => prev.filter((img) => img._id !== id));
+    }
+  };
+
+  const handleMainImage = (e) => {
+    setMainImage(e.target.files[0]);
   };
 
   return (
     <section className="form__media-section">
       <h2 style={{ marginBottom: "20px" }}>Media</h2>
       <div className="form__media-flex">
-        {inputFields.map((field) => (
-          <div key={field.name} className="image-upload-wrapper">
-            <div
-              className="image-upload-custom-buttom"
-              onClick={() => inputRefs.current[field.name].click()}
-            >
-              <FontAwesomeIcon icon={faFileArrowUp} beat />
-              <div>{field.label}</div>
-              <input
-                className="fileInput"
-                type="file"
-                accept="image/*"
-                name={field.name}
-                onChange={handleUploadImage}
-                ref={(input) => (inputRefs.current[field.name] = input)}
-              />
-            </div>
-            <div className="image-preview">
-              {renderImagePreview(
-                newImages?.[field.name],
-                existingImage?.[field.name]
-              )}
-            </div>
+        <div className="main-image-upload-wrapper">
+          <div
+            className="image-upload-custom-buttom"
+            onClick={() => mainInput.current.click()}
+          >
+            <FontAwesomeIcon icon={faFileArrowUp} />
+            <div>메인 이미지 업로드</div>
+            <input
+              className="fileInput"
+              type="file"
+              accept="image/*"
+              name="main"
+              onChange={handleMainImage}
+              ref={mainInput}
+            />
           </div>
-        ))}
+          <div className="image-preview">
+            {mainImage?.url ? (
+              <img src={mainImage.url} />
+            ) : mainImage instanceof Blob ? (
+              <img src={URL.createObjectURL(mainImage)} />
+            ) : null}
+          </div>
+        </div>
+
+        {/* 기존 이미지 */}
+        {Array.isArray(existingImage) &&
+          existingImage?.map((img) => (
+            <div key={img._id} className="image-upload-wrapper">
+              <div
+                className="image-upload-custom-buttom"
+                onClick={() => deleteFroms3(img.url, img._id)}
+              >
+                <FontAwesomeIcon icon={faTrashCan} />
+              </div>
+              <div className="image-preview">
+                <img key={img._id} src={img.url} />
+              </div>
+            </div>
+          ))}
+
+        {/* 새로운 이미지 */}
+        {Array.isArray(newImages) &&
+          newImages?.map((image, i) => (
+            <div key={i} className="image-upload-wrapper">
+              <div
+                className="image-upload-custom-buttom"
+                onClick={() => deleteImage(i)}
+              >
+                <FontAwesomeIcon icon={faTrashCan} />
+              </div>
+              <div className="image-preview">
+                <img key={i} src={URL.createObjectURL(image)} />
+              </div>
+            </div>
+          ))}
+
+        <div className="image-upload-wrapper">
+          <div
+            className="image-upload-custom-buttom"
+            onClick={() => inputRefs.current.click()}
+          >
+            <FontAwesomeIcon icon={faFileArrowUp} />
+            <div>상세이미지 업로드</div>
+            <input
+              className="fileInput"
+              type="file"
+              accept="image/*"
+              name="fileupload"
+              onChange={handleUploadImage}
+              ref={inputRefs}
+              multiple
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

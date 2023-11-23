@@ -17,6 +17,8 @@ export default function Form({
   newImages,
   existingImage,
   setExistingImage,
+  mainImage,
+  setMainImage,
 }) {
   const router = useRouter();
 
@@ -127,16 +129,6 @@ export default function Form({
                   />
                 </div>
               </div>
-
-              {/* <div>
-                <label>지역</label>
-                <input
-                  type="text"
-                  name="location"
-                  value={formData?.location || ""}
-                  onChange={handleChange}
-                />
-              </div> */}
               <div>
                 <label>소개</label>
                 <input
@@ -164,7 +156,8 @@ export default function Form({
               newImages={newImages}
               existingImage={existingImage}
               setExistingImage={setExistingImage}
-              storeId={storeId}
+              mainImage={mainImage}
+              setMainImage={setMainImage}
             />
             <button type="submit">Submit</button>
             <button type="button" onClick={() => router.push("/serviceAdmin")}>

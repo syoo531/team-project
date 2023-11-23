@@ -14,10 +14,22 @@
 .form__media-flex {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   gap: 13px;
+}
+
+.main-image-upload-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 300px;
+  border: 1px rgb(212, 212, 212) solid;
+  height: 300px;
+  border-radius: 7px;
 }
 
 .image-upload-wrapper {
@@ -48,10 +60,18 @@
   opacity: 0.9;
 }
 
-.image-upload-wrapper:hover .image-upload-custom-buttom {
-  background-color: rgba(128, 128, 128, 0.7);
+.main-image-upload-wrapper:hover .image-upload-custom-buttom {
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 50;
   transition: all 0.2s ease;
+  color: white;
+}
+
+.image-upload-wrapper:hover .image-upload-custom-buttom {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  transition: all 0.2s ease;
+  color: white;
 }
 
 .image-upload-custom-buttom input {
@@ -69,5 +89,6 @@
 }
 
 .image-preview:hover + .image-upload-custom-buttom {
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 50;
 }

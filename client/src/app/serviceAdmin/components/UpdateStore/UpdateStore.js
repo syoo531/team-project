@@ -3,11 +3,21 @@
 import "./UpdateStore.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { s3imageUploader, deleteAllS3 } from "../imageUploader";
+import {
+  s3UploadMultipleImages,
+  s3UploadSingleImage,
+  deleteAllS3,
+  deleteImageS3,
+} from "../imageUploader";
 import axios from "axios";
 import Form from "../Form/Form";
 
-export default function UpdateStore({ storeData, image, storeId }) {
+export default function UpdateStore({
+  storeData,
+  detailImg,
+  storeId,
+  mainImage: img,
+}) {
   const router = useRouter();
 
   const formIntialState = {
@@ -22,32 +32,35 @@ export default function UpdateStore({ storeData, image, storeId }) {
     end_date: storeData?.end_date || "",
   };
 
-  const imageInitialState = {
-    main_image_url: null,
-    thumbnail_image_url: null,
-    detail_image_url: null,
-  };
-
-  const existingImageState = {
-    main_image_url: image?.main_image_url || "",
-    thumbnail_image_url: image?.thumbnail_image_url || "",
-    detail_image_url: image?.detail_image_url || "",
-  };
-
   const [formData, setFormData] = useState(formIntialState);
-  const [newImages, setNewImages] = useState(imageInitialState);
+  const [newImages, setNewImages] = useState([]);
+  const [mainImage, setMainImage] = useState(img);
   const [error, setError] = useState({});
-  const [existingImage, setExistingImage] = useState(existingImageState);
+  const [existingImage, setExistingImage] = useState(detailImg);
 
-  const updatePopupStore = async (formData) => {
-    const newImageUrl = await s3imageUploader(newImages, existingImage);
-    console.log("updated image URLS", newImageUrl);
-    const updatedFormData = { ...formData, ...newImageUrl };
-    const { data } = await axios.patch(
-      `http://localhost:4000/api/popupStore/${storeId}`,
-      updatedFormData
-    );
-    console.log("store updated", data);
+  //팝업스토어 업데이트 > 이미지 변경 또는 추가시 s3에 저장
+  const updatePopupStore = async () => {
+    let updatedFormData = { ...formData };
+
+    try {
+      if (mainImage instanceof File) {
+        await deleteImageS3(img.url);
+        const newMain = await s3UploadSingleImage(mainImage);
+        updatedFormData = { ...updatedFormData, newMain };
+      }
+
+      if (newImages.length > 0) {
+        const newImageUrl = await s3UploadMultipleImages(newImages);
+        updatedFormData = { ...updatedFormData, newImageUrl };
+      }
+
+      await axios.patch(
+        `http://localhost:4000/api/popupStore/${storeId}`,
+        updatedFormData
+      );
+    } catch (error) {
+      console.error("Error updating store:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -62,26 +75,16 @@ export default function UpdateStore({ storeData, image, storeId }) {
   };
 
   const handleDelete = async () => {
+    const result = window.confirm("삭제하시겠습니까?");
+    if (!result) return;
+
     try {
-      const result = window.confirm("삭제하시겠습니까?");
-      if (!result) return;
-
-      const {
-        data: { image },
-      } = await axios.get(`http://localhost:4000/api/popupStore/${storeId}`);
-
-      const imageArray = [
-        image.main_image_url,
-        image.thumbnail_image_url,
-        image.detail_image_url,
-      ].filter((v) => v !== undefined && v !== null);
-
-      //S3와 몽고DB 데이터 한번에 삭제
-      const res = await Promise.all([
-        deleteAllS3(imageArray),
+      //S3와 몽고DB 데이터 삭제
+      await Promise.all([
+        deleteAllS3(existingImage),
+        deleteImageS3(mainImage.url),
         axios.delete(`http://localhost:4000/api/popupStore/${storeId}`),
       ]);
-      console.log(res);
       router.push("/serviceAdmin");
       router.refresh();
     } catch (err) {
@@ -102,7 +105,6 @@ export default function UpdateStore({ storeData, image, storeId }) {
       <Form
         formData={formData}
         setFormData={setFormData}
-        image={image}
         storeId={storeId}
         handleChange={handleChange}
         handleDelete={handleDelete}
@@ -111,6 +113,8 @@ export default function UpdateStore({ storeData, image, storeId }) {
         newImages={newImages}
         existingImage={existingImage}
         setExistingImage={setExistingImage}
+        mainImage={mainImage}
+        setMainImage={setMainImage}
       />
     </div>
   );

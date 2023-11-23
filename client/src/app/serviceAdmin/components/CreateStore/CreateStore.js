@@ -3,7 +3,7 @@
 import "./CreateStore.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { s3imageUploader } from "../imageUploader";
+import { s3UploadMultipleImages, s3UploadSingleImage } from "../imageUploader";
 import axios from "axios";
 import Form from "../Form/Form.js";
 
@@ -22,28 +22,28 @@ export default function CreateStore() {
     end_date: "",
   };
 
-  const imageInitialState = {
-    main_image_url: null,
-    thumbnail_image_url: null,
-    detail_image_url: null,
-  };
-
   const [formData, setFormData] = useState(formIntialState);
-  const [newImages, setNewImages] = useState(imageInitialState);
+  const [newImages, setNewImages] = useState([]);
+  const [mainImage, setMainImage] = useState(null);
   const [error, setError] = useState({});
 
   const handleComplete = (data) => {
     setPopup(!popup);
   };
 
-  const createPopupStore = async (formData) => {
-    const imageURL = await s3imageUploader(newImages, false);
-    const updatedFormData = { ...formData, ...imageURL };
+  const createPopupStore = async () => {
+    const [imageURL, mainURL] = await Promise.all([
+      s3UploadMultipleImages(newImages),
+      s3UploadSingleImage(mainImage),
+    ]);
+    
+    const updatedFormData = { ...formData, imageURL, mainURL };
+
     const { data } = await axios.post(
       `http://localhost:4000/api/popupStore`,
       updatedFormData
     );
-    console.log("store created", data);
+    console.log(data);
   };
 
   const handleChange = (e) => {
@@ -57,7 +57,7 @@ export default function CreateStore() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createPopupStore(formData);
+      await createPopupStore();
       router.push("/serviceAdmin");
       router.refresh();
     } catch (error) {
@@ -75,6 +75,8 @@ export default function CreateStore() {
         setNewImages={setNewImages}
         handleComplete={handleComplete}
         newImages={newImages}
+        mainImage={mainImage}
+        setMainImage={setMainImage}
       />
     </div>
   );
