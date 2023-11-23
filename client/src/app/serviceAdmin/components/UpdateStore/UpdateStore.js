@@ -101,6 +101,7 @@ export default function UpdateStore({ storeData, image, storeId }) {
     <div>
       <Form
         formData={formData}
+        setFormData={setFormData}
         image={image}
         storeId={storeId}
         handleChange={handleChange}

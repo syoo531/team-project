@@ -32,6 +32,10 @@ export default function CreateStore() {
   const [newImages, setNewImages] = useState(imageInitialState);
   const [error, setError] = useState({});
 
+  const handleComplete = (data) => {
+    setPopup(!popup);
+  };
+
   const createPopupStore = async (formData) => {
     const imageURL = await s3imageUploader(newImages, false);
     const updatedFormData = { ...formData, ...imageURL };
@@ -69,6 +73,7 @@ export default function CreateStore() {
         setFormData={setFormData}
         handleSubmit={handleSubmit}
         setNewImages={setNewImages}
+        handleComplete={handleComplete}
         newImages={newImages}
       />
     </div>

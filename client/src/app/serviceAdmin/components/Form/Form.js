@@ -1,11 +1,14 @@
 "use client";
 
 import "./Form.scss";
-import MediaUpload from "./MediaUpload/MediaUpload";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import MediaUpload from "./MediaUpload/MediaUpload";
+import Postcode from "../Postcode/Postcode";
 
 export default function Form({
   formData,
+  setFormData,
   storeId,
   handleChange,
   handleDelete,
@@ -52,9 +55,7 @@ export default function Form({
         <div className="form__container">
           <form onSubmit={handleSubmit}>
             <section className="form__text-section">
-
-
-            <div>
+              <div>
                 <label>팝업스토어 이름</label>
                 <input
                   type="text"
@@ -72,7 +73,6 @@ export default function Form({
                   onChange={handleChange}
                 />
               </div>
-
 
               <div className="date-field">
                 <label>기간</label>
@@ -113,18 +113,22 @@ export default function Form({
                   </select>
                 </label>
               </div>
-              
 
-              <div>
-                <label>주소</label>
-                <input
-                  type="text"
-                  name="address"
-                  value={formData?.address || ""}
-                  onChange={handleChange}
-                />
+              <div className="address_search">
+                <label>주소 </label>
+                <div className="address-input">
+                  <Postcode setFormData={setFormData} />
+                  <input
+                    placeholder="주소"
+                    type="text"
+                    name="address"
+                    onChange={handleChange}
+                    value={formData?.address}
+                  />
+                </div>
               </div>
-              <div>
+
+              {/* <div>
                 <label>지역</label>
                 <input
                   type="text"
@@ -132,7 +136,7 @@ export default function Form({
                   value={formData?.location || ""}
                   onChange={handleChange}
                 />
-              </div>
+              </div> */}
               <div>
                 <label>소개</label>
                 <input

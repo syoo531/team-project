@@ -92,6 +92,11 @@
     // border-radius: 0;
     // outline: none; 
   }
+
+  .address-input {
+    display: flex;
+    gap: 15px;
+  }
 }
 
 .date-field {

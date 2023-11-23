@@ -27,7 +27,6 @@ export default function MediaUpload({
     { name: "main_image_url", label: "메인 이미지" },
     { name: "thumbnail_image_url", label: "썸네일 이미지" },
     { name: "detail_image_url", label: "상세 이미지" },
-    { name: "detail2_image_url", label: "상세 이미지" },
   ];
 
   const renderImagePreview = (newImage, existingImage) => {
