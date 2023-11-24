@@ -4,7 +4,6 @@ import axios from "axios";
 import "./reviewModal.scss";
 
 const ReviewModal = ({ closeModal, handleReviewSubmit, postId }) => {
-    // const thisId = postId;
     const [reviewContent, setReviewContent] = useState("");
     const handleContentChange = (event) => {
         setReviewContent(event.target.value);
