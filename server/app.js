@@ -10,6 +10,7 @@ const popupStoreRouter = require("./routes/popupStoreRouter");
 const waitingRouter = require("./routes/waitingRouter");
 const reservationRouter = require("./routes/reservationRouter");
 const listRouter = require("./routes/listRouter");
+const searchRouter = require("./routes/searchRouter");
 
 const cookieParser = require("cookie-parser");
 
@@ -32,6 +33,7 @@ app.use("/api/waiting", waitingRouter);
 app.use("/api/reservation", reservationRouter);
 app.use("/api/popupStore", popupStoreRouter);
 app.use("/api/list", listRouter);
+app.use("/api/search", searchRouter);
 
 app.use(errorHandler); // 에러 처리 미들웨어
 

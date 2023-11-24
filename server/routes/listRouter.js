@@ -3,6 +3,6 @@ const listController = require("../controllers/listController");
 
 const router = Router();
 
-router.get("/", listController.getPopUpList);
+router.get("/search", listController.getPopUpList);
 
 module.exports = router;
