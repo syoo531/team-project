@@ -40,8 +40,14 @@ const getWaitingStatus = async (req, res, next) => {
 const getWaitingListByCorpAdmin = async (req, res, next) => {
   try {
     const { popupStoreId } = req.query;
-    console.log("popupStoreId: ", popupStoreId);
+    const email = req.decoded.user.email;
+
     const waitingService = new WaitingService();
+    const validate = await waitingService.validateAdmin(email, popupStoreId);
+    console.log("validate: ", validate);
+    if (!validate) {
+      throw new Error("해당 팝업스토어 현장 대기 조회 권한이 없습니다.");
+    }
     const users = await waitingService.getWaitingByPopupStore(popupStoreId);
     res.status(200).json(users);
   } catch (error) {
@@ -49,8 +55,28 @@ const getWaitingListByCorpAdmin = async (req, res, next) => {
   }
 };
 
+const enterWaitingList = async (req, res, next) => {
+  try {
+    const { popupStoreId, userId } = req.body;
+    const email = req.decoded.user.email;
+
+    const waitingService = new WaitingService();
+    const validate = await waitingService.validateAdmin(email, popupStoreId);
+    console.log("validate: ", validate);
+    if (!validate) {
+      throw new Error("해당 팝업스토어 현장 대기 조회 권한이 없습니다.");
+    }
+    const enterCheck = await waitingService.enterCheck(popupStoreId, userId);
+    console.log("enterCheck: ", enterCheck);
+    res.status(200).json({ message: "입장 완료되었습니다." });
+  } catch (error) {
+    res.status(400).json({ error: "입장 처리 실패하였습니다." });
+  }
+};
+
 module.exports = {
   createWaiting,
   getWaitingStatus,
   getWaitingListByCorpAdmin,
+  enterWaitingList,
 };

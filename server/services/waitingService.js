@@ -70,7 +70,37 @@ class WaitingService {
       .sort({ createdAt: 1 })
       .populate("user");
 
+    if (!waitingByPopupStore) {
+      throw new Error("팝업스토어 현장대기 조회를 실패했습니다.");
+    }
+
     return waitingByPopupStore;
+  }
+
+  async validateAdmin(email, popupStoreId) {
+    const isAdminUser = await User.findOne({ email }).select("admin_corp");
+    console.log("isAdminUser: ", isAdminUser);
+    console.log("popupStoreId: ", popupStoreId);
+
+    if (
+      isAdminUser.admin_corp === popupStoreId &&
+      isAdminUser.admin_corp !== undefined
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async enterCheck(popupStoreId, userId) {
+    const waitingList = await Waiting.findOneAndUpdate(
+      {
+        popup_store: popupStoreId,
+        is_enter: true,
+        user: userId,
+      },
+      { is_enter: false }
+    );
   }
 }
 

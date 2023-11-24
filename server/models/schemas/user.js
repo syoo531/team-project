@@ -24,6 +24,9 @@ const UserSchema = new Schema(
       type: Number,
       required: true,
     },
+    admin_corp: {
+      type: String,
+    },
     deleted_at: {
       type: Date,
     },
