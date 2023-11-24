@@ -28,10 +28,6 @@ export default function CreateStore() {
   const [mainImage, setMainImage] = useState(null);
   const [error, setError] = useState({});
 
-  const handleComplete = (data) => {
-    setPopup(!popup);
-  };
-
   const createPopupStore = async () => {
     const [imageURL, mainURL] = await Promise.all([
       s3UploadMultipleImages(newImages),
@@ -40,11 +36,7 @@ export default function CreateStore() {
 
     const updatedFormData = { ...formData, imageURL, mainURL };
 
-    const { data } = await axios.post(
-      `http://localhost:4000/api/popupStore`,
-      updatedFormData
-    );
-    console.log(data);
+    await axios.post(`http://localhost:4000/api/popupStore`, updatedFormData);
   };
 
   const handleChange = (e) => {
@@ -66,16 +58,20 @@ export default function CreateStore() {
     }
   };
 
+  const handleComplete = (data) => {
+    setPopup(!popup);
+  };
+
   return (
     <div>
       <Form
         formData={formData}
-        handleChange={handleChange}
         setFormData={setFormData}
+        handleChange={handleChange}
         handleSubmit={handleSubmit}
-        setNewImages={setNewImages}
         handleComplete={handleComplete}
         newImages={newImages}
+        setNewImages={setNewImages}
         mainImage={mainImage}
         setMainImage={setMainImage}
       />

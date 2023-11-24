@@ -1,7 +1,6 @@
 "use client";
 
 import "./Form.scss";
-import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import MediaUpload from "./MediaUpload/MediaUpload";
 import Postcode from "../Postcode/Postcode";
@@ -48,15 +47,21 @@ export default function Form({
     <div className="main-content__layout">
       <div className="main-content__container">
         <div className="main__header form__header">
-          <h1>팝업스토어 수정</h1>
-          <div className="action__menu">
-            <button
-              className="delete-button"
-              onClick={() => handleDelete(storeId)}
-            >
-              팝업스토어 삭제
-            </button>
-          </div>
+          {storeId ? (
+            <>
+              <h1>팝업스토어 수정</h1>
+              <div className="action__menu">
+                <button
+                  className="delete-button"
+                  onClick={() => handleDelete(storeId)}
+                >
+                  팝업스토어 삭제
+                </button>
+              </div>
+            </>
+          ) : (
+            <h1>팝업스토어 등록</h1>
+          )}
         </div>
 
         <div className="form__container">

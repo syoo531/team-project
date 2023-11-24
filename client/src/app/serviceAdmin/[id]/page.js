@@ -13,13 +13,13 @@ async function getData(id) {
 
 export default async function ServiceAdmin({ params }) {
   const storeData = await getData(params.id);
-  console.log(storeData);
+
   return (
     <>
       <UpdateStore
         storeData={storeData}
-        mainImage={storeData.mainImage}
         detailImg={storeData.images}
+        mainImage={storeData.mainImage}
         storeId={params.id}
       />
     </>

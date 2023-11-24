@@ -5,18 +5,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { deleteAllS3 } from "../imageUploader";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 export default function PopupStoreList({ storeData: stores }) {
   const router = useRouter();
 
-  const [selectedStores, setSelectedStores] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [filter, setFilter] = useState("");
 
-  const handleCheckbox = (storeId) => {
-    if (selectedStores.includes(storeId)) {
-      setSelectedStores((prev) => prev.filter((id) => id !== storeId));
-    } else {
-      setSelectedStores((prev) => [...prev, storeId]);
-    }
+  const handleSearch = () => {
+    router.push(`/serviceAdmin/search=${searchKeyword}`);
   };
 
   return (
@@ -31,13 +30,18 @@ export default function PopupStoreList({ storeData: stores }) {
           </button>
         </div>
       </div>
+
       <div className="list__container">
+        <div>
+          <input placeholder="검색" />
+          <button tyoe="button" onClick={handleSearch}>
+            검색
+          </button>
+          <FontAwesomeIcon icon={faFilter} />
+        </div>
         <table className="list-table">
           <thead>
             <tr>
-              <th>
-                <input type="checkbox" />
-              </th>
               <th>팝업스토어 이름</th>
               <th>브랜드 이름</th>
               <th>카테고리</th>
@@ -54,15 +58,6 @@ export default function PopupStoreList({ storeData: stores }) {
                   key={store._id}
                   onClick={() => router.push(`/serviceAdmin/${store._id}`)}
                 >
-                  <td>
-                    <input
-                      type="checkbox"
-                      value={store._id}
-                      onChange={() => {
-                        handleCheckbox(store._id);
-                      }}
-                    />
-                  </td>
                   <td>{store.name}</td>
                   <td>{store.brand}</td>
                   <td>{store.category}</td>

@@ -8,9 +8,9 @@ import { faFileArrowUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { deleteImageS3 } from "../../imageUploader";
 
 export default function MediaUpload({
-  setNewImages,
   newImages,
-  existingImage,
+  setNewImages,
+  existingImage = [],
   setExistingImage,
   mainImage,
   setMainImage,
@@ -19,17 +19,20 @@ export default function MediaUpload({
   const mainInput = useRef();
 
   const handleUploadImage = (e) => {
-    if (
-      existingImage?.length + newImages?.length + e.target.files?.length >=
-      5
-    ) {
-      alert("상세이미지 최대 4개까지 올릴 수 있습니다.");
+    const totalImages =
+      parseInt(existingImage.length || 0) +
+      parseInt(newImages.length || 0) +
+      parseInt(e.target.files.length || 0);
+
+    if (totalImages >= 5) {
+      alert("상세이미지 최대 5개까지 올릴 수 있습니다.");
       return;
+    } else {
+      setNewImages((cur) => [...cur, ...e.target.files]);
     }
-    setNewImages((cur) => [...cur, ...e.target.files]);
   };
 
-  const deleteImage = (index) => {
+  const removeNewImage = (index) => {
     const confirm = window.confirm(
       "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?"
     );
@@ -112,7 +115,7 @@ export default function MediaUpload({
               <div key={i} className="image-upload-wrapper">
                 <div
                   className="image-upload-custom-buttom"
-                  onClick={() => deleteImage(i)}
+                  onClick={() => removeNewImage(i)}
                 >
                   <FontAwesomeIcon icon={faTrashCan} />
                 </div>
