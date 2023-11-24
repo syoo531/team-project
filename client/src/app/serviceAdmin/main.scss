@@ -1,4 +1,4 @@
-@import "../../styles/adminStyles.scss";
+@import "../../adminStyles/adminStyles.scss";
 
 //layout.js 스타일
 .app-flex-container {
@@ -38,7 +38,6 @@
   text-decoration: none;
   white-space: nowrap;
 }
-
 
 //액션 버튼 스타일
 @mixin admin-action-button-style {

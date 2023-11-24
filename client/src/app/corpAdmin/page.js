@@ -1,65 +1,53 @@
-// 팝업스토어 업체 관리자 페이지
 "use client";
-import React, { useState } from "react";
-import Sidebar from "./components/sidebar/sidebar";
-import Waiting from "./components/waiting/waiting";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./main.scss";
-import Header from "./components/header/header";
-import CompletedWaiting from "./components/completeWaiting/completeWaiting";
-
-// 초기 예약 데이터
-const initialReservations = [
-  { id: 1, name: "홍길동", count: 2, phone: "010-3333-4444", time: "17:30" },
-  { id: 2, name: "홍길동", count: 2, phone: "010-3333-4444", time: "17:30" },
-  { id: 3, name: "홍길동", count: 2, phone: "010-3333-4444", time: "17:30" },
-];
 
 export default function CorpAdmin() {
-  const [reservations, setReservations] = useState(initialReservations); // 초기 예약 상태
-  const [completedList, setCompletedList] = useState([]); // 완료된 예약 목록 상태
-  const [currentTab, setCurrentTab] = useState("waiting"); // 'waiting' 또는 'completed'
+  const [reservations, setReservations] = useState([]);
 
-  // 예약 완료 처리 함수
-  const handleComplete = (id) => {
-    const updatedReservations = reservations.filter((r) => r.id !== id);
-    setReservations(updatedReservations);
-
-    const completed = reservations.find((r) => r.id === id);
-    if (completed) {
-      setCompletedList([
-        ...completedList,
-        { ...completed, status: "completed" },
-      ]);
-    }
-  };
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/api/reservation`)
+      .then((response) => {
+        setReservations(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching reservations:", error);
+      });
+  }, []);
 
   return (
-    <div className="container">
-      <Header />
-      <div className="main">
-        <Sidebar />
-        <div className="content">
-          <div className="tabs">
-            <button
-              className={`tab ${currentTab === "waiting" ? "active" : ""}`}
-              onClick={() => setCurrentTab("waiting")}
-            >
-              웨이팅중
-            </button>
-            <button
-              className={`tab ${currentTab === "completed" ? "active" : ""}`}
-              onClick={() => setCurrentTab("completed")}
-            >
-              완료
-            </button>
-          </div>
-          {currentTab === "waiting" && (
-            <Waiting reservations={reservations} onCompleted={handleComplete} />
-          )}
-          {currentTab === "completed" && (
-            <CompletedWaiting completedList={completedList} />
-          )}
-        </div>
+    <div className="mainLayout">
+      <div className="listTitle">
+        <h1>웨이팅 목록</h1>
+        <h1>사전예약 목록</h1>
+      </div>
+      <div className="listContainer">
+        <table className="listTable">
+          <thead>
+            <tr>
+              <th>No.</th>
+              <th>이름</th>
+              <th>총 인원</th>
+              <th>전화번호</th>
+              <th>예약날짜</th>
+              <th>예약시간</th>
+            </tr>
+          </thead>
+          <tbody>
+            {reservations.map((reservation, index) => (
+              <tr key={reservation._id}>
+                <td>{index + 1}</td>
+                <td>{reservation.user?.name}</td>
+                <td>{reservation.people}</td>
+                <td>{reservation.user?.phone_number}</td>
+                <td>{reservation.date.split("T")[0]}</td>
+                <td>{reservation.hour}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
