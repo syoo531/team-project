@@ -17,7 +17,7 @@ export default function RollingBanner() {
           아트, 뮤직, 미식, 패션, 뷰티, 캐릭터 등 <br />
           핫플레이스를 주도하는 다양한 팝업스토어를 만나보세요.
         </p>
-        <div className="viewBtn" onClick={() => router.push("/popupList")}>
+        <div className="viewBtn" onClick={() => router.push("/popupList/all")}>
           모두 보기
         </div>
       </div>
