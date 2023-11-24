@@ -31,10 +31,6 @@ export default function FilterModal({ closeModal }) {
     setCurrentId(targetId);
   }
 
-  async function filteringPopUpStore() {
-    useRouter();
-  }
-
   return (
     <div className="filterModal">
       <div className="filterModalHeader">
