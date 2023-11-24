@@ -36,6 +36,10 @@ table.list-table {
   border-radius: $admin-border-radius;
   border-collapse: collapse;
 
+  thead {
+    background: rgba(230, 227, 227, 0.647);
+  }
+
   th,
   td {
     padding: 10px 5px;

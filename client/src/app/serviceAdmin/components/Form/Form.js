@@ -22,7 +22,7 @@ export default function Form({
   const router = useRouter();
 
   const handleCancel = () => {
-    router.push("/serviceAdmin");
+    router.push("/serviceAdmin/popupstore");
     router.refresh();
   };
 

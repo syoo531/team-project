@@ -7,16 +7,10 @@ import { deleteAllS3 } from "../imageUploader";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import Search from "../Search/Search";
 
 export default function PopupStoreList({ storeData: stores }) {
   const router = useRouter();
-
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [filter, setFilter] = useState("");
-
-  const handleSearch = () => {
-    router.push(`/serviceAdmin/search=${searchKeyword}`);
-  };
 
   return (
     <div className="main__layout">
@@ -25,20 +19,14 @@ export default function PopupStoreList({ storeData: stores }) {
           <h1>팝업스토어 목록</h1>
         </div>
         <div className="action__menu">
-          <button onClick={() => router.push("/serviceAdmin/create")}>
+          <button onClick={() => router.push("/serviceAdmin/popupstore/create")}>
             신규등록!!
           </button>
         </div>
       </div>
-
+    
       <div className="list__container">
-        <div>
-          <input placeholder="검색" />
-          <button tyoe="button" onClick={handleSearch}>
-            검색
-          </button>
-          <FontAwesomeIcon icon={faFilter} />
-        </div>
+      <Search />
         <table className="list-table">
           <thead>
             <tr>
@@ -56,14 +44,14 @@ export default function PopupStoreList({ storeData: stores }) {
                 <tr
                   className="table-row"
                   key={store._id}
-                  onClick={() => router.push(`/serviceAdmin/${store._id}`)}
+                  onClick={() => router.push(`/serviceAdmin/popupstore/${store._id}`)}
                 >
                   <td>{store.name}</td>
                   <td>{store.brand}</td>
                   <td>{store.category}</td>
                   <td>{store.location}</td>
                   <td>{store.start_date && store?.start_date.split("T")[0]}</td>
-                  <td>{store.end_date && store?.start_date.split("T")[0]}</td>
+                  <td>{store.end_date && store?.end_date.split("T")[0]}</td>
                 </tr>
               ))}
           </tbody>

@@ -13,6 +13,8 @@ const s3client = new S3Client({
 });
 
 export const s3UploadSingleImage = async (image) => {
+  if (!image) return;
+
   const uploadParams = {
     Bucket: process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET,
     Key: `${Date.now()}-${image.name}`,

@@ -1,0 +1,41 @@
+.search__container {
+  margin-bottom: 15px;
+  padding: 10px 10px;
+
+  input,
+  select {
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px grey solid;
+  }
+
+  button {
+    border-radius: 6px;
+    border: 1px grey solid;
+    background-color: white;
+    height: 28px;
+  }
+}
+
+.search__main-search {
+  display: flex;
+  align-items: center;
+
+  .search-input {
+    width: 60%;
+  }
+}
+
+.search__filter {
+  margin-top: 10px;
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.date-input {
+  width: 50%;
+  border-radius: 6px;
+}

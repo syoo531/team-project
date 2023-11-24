@@ -35,17 +35,44 @@ class PopupService {
     return storeData;
   }
 
-  async getAllStores(page, limit) {
+  async getAllStores(page, limit, search, category, start_date, end_date) {
     const limitPerPage = limit || 10; //기본 10개로 제한
     const skipCount = (Number(page) - 1) * limitPerPage;
-    const totalStores = await PopupStore.countDocuments({});
 
-    const data = await PopupStore.find()
+    console.log(start_date, end_date);
+
+    let query = {};
+    if (search) {
+      query = {
+        $or: [
+          { name: { $regex: new RegExp(search, "i") } },
+          { brand: { $regex: new RegExp(search, "i") } },
+        ],
+      };
+    }
+
+    if (start_date) {
+      query.start_date = { $gte: new Date(start_date) };
+    }
+
+    if (end_date) {
+      query.end_date = { $lte: new Date(end_date) };
+    }
+
+    if (category) {
+      query = { ...query, category };
+    }
+    console.log("query", query);
+
+    const data = await PopupStore.find(query)
       .sort({ _id: -1 })
       .limit(limitPerPage)
       .skip(skipCount)
       .populate("mainImage")
       .populate("images");
+
+    const totalStores = await PopupStore.countDocuments(query);
+    console.log("total stores", totalStores);
 
     return {
       data,
