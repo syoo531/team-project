@@ -16,6 +16,34 @@ const createReview = async (req, res, next) => {
     }
 };
 
+//리뷰 수정
+const updateReview = async (req, res, next) => {
+    try {
+        const reviewService = new ReviewService();
+        const updatedReview = await reviewService.updateReview(req.params.id, req.body);
+        if (!updatedReview) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+        res.json(updatedReview);
+    } catch (err) {
+        next(err);
+    }
+};
+
+//리뷰 삭제
+const deleteReview = async (req, res, next) => {
+    try {
+        const reviewService = new ReviewService();
+        const deletedReview = await reviewService.deleteReview(req.params.id, req.body);
+        if (!deletedReview) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+        res.status(204).json({ message: "Review deleted" });
+    } catch (err) {
+        next(err);
+    }
+};
+
 //모든 리뷰 조회 GET
 const getAllReviews = async (req, res, next) => {
     try {
@@ -30,4 +58,6 @@ const getAllReviews = async (req, res, next) => {
 module.exports = {
     createReview,
     getAllReviews,
+    updateReview,
+    deleteReview,
 };

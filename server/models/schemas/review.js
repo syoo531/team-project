@@ -13,10 +13,10 @@ const ReviewSchema = new Schema(
             type: SchemaTypes.ObjectId,
             ref: "User",
         },
-        title: {
-            type: String,
-            required: true,
-        },
+        // title: {
+        //     type: String,
+        //     // required: true,
+        // },
         text: {
             type: String,
             required: true,

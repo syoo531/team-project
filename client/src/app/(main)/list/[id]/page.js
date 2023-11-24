@@ -1,8 +1,8 @@
 "use client";
 import "./page.scss";
 import axios from "axios";
+import ReviewModal from "./components/reviewModal/reviewModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -12,7 +12,6 @@ config.autoAddCss = false;
 
 // 팝업스토어 상세 페이지
 export default function PopUp(props) {
-    // const path = usePathname();
     const storeId = props.params.id;
     const [popupData, setPopupData] = useState({});
     const startDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].start_date;
@@ -21,6 +20,7 @@ export default function PopUp(props) {
     const formattedStartDate = startDate ? new Date(startDate).toLocaleDateString() : "";
     // end_date 변환
     const formattedEndDate = endDate ? new Date(endDate).toLocaleDateString() : "";
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const popupFetch = async () => {
         try {
             const response = await axios.get("http://localhost:4000/api/popupstore");
@@ -34,6 +34,21 @@ export default function PopUp(props) {
     useEffect(() => {
         popupFetch();
     }, []);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    // 리뷰 작성 완료 시 호출되는 함수
+    const handleReviewSubmit = (reviewContent) => {
+        // 여기서 리뷰를 서버에 전송하는 로직을 구현
+        console.log(`리뷰 내용: ${reviewContent}`);
+        closeModal();
+    };
 
     return (
         <div className="PopUp">
@@ -102,41 +117,9 @@ export default function PopUp(props) {
                     후기 <FontAwesomeIcon className="staricon" icon={faStar} style={{ color: "#e21680" }} />
                     <span>0개</span>
                 </h4>
-                <div className="popReviewList">
-                    <div className="popReviewItem">
-                        <div className="reviewLogo">
-                            <h1>P</h1>
-                        </div>
-                        <div className="reviewName">김**</div>
-                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
-                        <div className="reviewDate">2023. 11. 23</div>
-                    </div>
-                    <div className="popReviewItem">
-                        <div className="reviewLogo">
-                            <h1>P</h1>
-                        </div>
-                        <div className="reviewName">김**</div>
-                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
-                        <div className="reviewDate">2023. 11. 23</div>
-                    </div>
-                    <div className="popReviewItem">
-                        <div className="reviewLogo">
-                            <h1>P</h1>
-                        </div>
-                        <div className="reviewName">김**</div>
-                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
-                        <div className="reviewDate">2023. 11. 23</div>
-                    </div>
-                    <div className="popReviewItem">
-                        <div className="reviewLogo">
-                            <h1>P</h1>
-                        </div>
-                        <div className="reviewName">김**</div>
-                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
-                        <div className="reviewDate">2023. 11. 23</div>
-                    </div>
-                </div>
-                <button type="button">후기 작성하기</button>
+                <button type="button" onClick={openModal}>
+                    후기 작성하기
+                </button>
             </div>
             <div className="popLocation">
                 <h3>상세위치</h3>
@@ -154,6 +137,14 @@ export default function PopUp(props) {
             <div className="reserveBtn">
                 <button type="button">사전예약하기</button>
             </div>
+            {/* ReviewModal을 여기에 렌더링 */}
+            {isModalOpen && (
+                <ReviewModal
+                    closeModal={closeModal}
+                    handleReviewSubmit={handleReviewSubmit}
+                    postId={storeId} // 스토어의 ID를 전달
+                />
+            )}
         </div>
     );
 }
