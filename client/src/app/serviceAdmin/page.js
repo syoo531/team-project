@@ -1,6 +1,4 @@
-//import StoreForm from "./_components/StoreForm.js";
 import PopupStoreList from "./components/PopupStoreList/PopupStoreList";
-import Search from "./components/NavBar/NavBar";
 import Pagination from "./components/Pagination/Pagination";
 import { useRouter } from "next/navigation";
 

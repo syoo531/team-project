@@ -1,5 +1,3 @@
-import StoreForm from "../components/CreateStore/CreateStore";
-import FormEdit from "../components/UpdateStore/UpdateStore";
 import UpdateStore from "../components/UpdateStore/UpdateStore";
 
 async function getData(id) {
@@ -20,7 +18,8 @@ export default async function ServiceAdmin({ params }) {
     <>
       <UpdateStore
         storeData={storeData}
-        image={storeData.image}
+        detailImg={storeData.images}
+        mainImage={storeData.mainImage}
         storeId={params.id}
       />
     </>

@@ -12,33 +12,31 @@ const s3client = new S3Client({
   },
 });
 
-//이미지들을 객체로 받아 S3에 업로드 + 기존 이미지는 S3에서 삭제
-export const s3imageUploader = async (images, existingImage= false) => {
-  let imageURL = {};
-  let uploadPromises = [];
+export const s3UploadSingleImage = async (image) => {
+  const uploadParams = {
+    Bucket: process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET,
+    Key: `${Date.now()}-${image.name}`,
+    Body: image,
+    ContentType: image.type,
+  };
+  await s3client.send(new PutObjectCommand(uploadParams));
 
-  for (const [imageName, file] of Object.entries(images)) {
-    if (!file) continue;
+  return {
+    Key: uploadParams.Key,
+    url: `https://${process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET}.s3.ap-southeast-2.amazonaws.com/${uploadParams.Key}`,
+  };
+};
 
-    const uploadParams = {
-      Bucket: process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET,
-      Key: `${Date.now()}-${imageName}`,
-      Body: file,
-      ContentType: file.type,
-    };
+export const s3UploadMultipleImages = async (images) => {
+  let imageURLs = [];
 
-    uploadPromises.push(s3client.send(new PutObjectCommand(uploadParams)));
+  const uploadPromises = images.map(async (image) => {
+    const res = await s3UploadSingleImage(image);
+    imageURLs.push(res);
+  });
 
-    imageURL = {
-      ...imageURL,
-      [imageName]: `https://${process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET}.s3.ap-southeast-2.amazonaws.com/${uploadParams.Key}`,
-    };
-
-    if (existingImage[imageName])
-      uploadPromises.push(deleteImageS3(existingImage[imageName]));
-  }
   await Promise.all(uploadPromises);
-  return imageURL;
+  return imageURLs;
 };
 
 export const deleteImageS3 = async (imageUrl) => {
@@ -54,7 +52,7 @@ export const deleteImageS3 = async (imageUrl) => {
 
 export const deleteAllS3 = async (imageArray) => {
   const deletePromises = imageArray.map((image) => {
-    return deleteImageS3(image);
+    return deleteImageS3(image.url);
   });
   console.log("delete all array", deletePromises);
   const result = await Promise.all(deletePromises);

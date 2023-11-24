@@ -24,6 +24,7 @@ const Postcode = ({ scriptUrl, setFormData }) => {
       ...cur,
       address: fullAddress,
       location: data.sigungu,
+      zipcode: data.zonecode,
     }));
   };
 
