@@ -41,10 +41,10 @@ const ReviewModal = ({ closeModal, handleReviewSubmit, postId }) => {
                         onChange={handleContentChange}
                     ></textarea>
                 </div>
-                <button type="button" onClick={submitReview}>
+                <button type="button" className="reviewCompleteBtn" onClick={submitReview}>
                     작성완료
                 </button>
-                <button onClick={closeModal}>X</button>
+                <button type="button" className="reviewCloseBtn" onClick={closeModal}>X</button>
             </div>
         </div>
     );

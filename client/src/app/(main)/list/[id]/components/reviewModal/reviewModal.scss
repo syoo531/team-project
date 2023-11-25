@@ -11,20 +11,50 @@
     .modalContent {
         z-index: 3;
         position: fixed;
+        width: 70%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         padding: 50px;
-        background: #999;
+        border-radius: 5px;
+        background: #fff;
         h2 {
             display: block;
             text-align: center;
             font-size: 18px;
             font-weight: 600;
+            margin-bottom: 30px;
         }
         .reviewText {
             textarea {
+                resize: none;
+                width: 100%;
+                border: 1px solid #ddd;
+                padding: 15px;
+                box-sizing: border-box;
             }
+        }
+        .reviewCompleteBtn {
+            border: 0;
+            background: inherit;
+            text-align: center;
+            padding: 15px 0;
+            width: 100%;
+            font-size: 17px;
+            // border:1px solid #ddd;
+            border-radius: 10px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        .reviewCloseBtn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: inherit;
+            border: 0;
+            font-weight: bold;
+            font-size: 24px;
+            cursor: pointer;
         }
     }
 }
