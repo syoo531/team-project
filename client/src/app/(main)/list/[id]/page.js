@@ -12,29 +12,17 @@ config.autoAddCss = false;
 
 // 팝업스토어 상세 페이지
 export default function PopUp(props) {
-    const storeId = props.params.id;
     const [popupData, setPopupData] = useState({});
+    const [reviewData, setReviewData] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const storeId = props.params.id;
     const startDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].start_date;
     const endDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].end_date;
     // start_date 변환
     const formattedStartDate = startDate ? new Date(startDate).toLocaleDateString() : "";
     // end_date 변환
     const formattedEndDate = endDate ? new Date(endDate).toLocaleDateString() : "";
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const popupFetch = async () => {
-        try {
-            const response = await axios.get("http://localhost:4000/api/popupstore");
-            const data = response.data;
-            setPopupData(data);
-            console.log(data);
-        } catch (err) {
-            console.log("error!", err);
-        }
-    };
-    useEffect(() => {
-        popupFetch();
-    }, []);
-
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -45,10 +33,38 @@ export default function PopUp(props) {
 
     // 리뷰 작성 완료 시 호출되는 함수
     const handleReviewSubmit = (reviewContent) => {
-        // 여기서 리뷰를 서버에 전송하는 로직을 구현
-        console.log(`리뷰 내용: ${reviewContent}`);
+        // 리뷰 작성 완료 후 할 일 추가
+        console.log("Review content submitted:", reviewContent);
         closeModal();
     };
+
+    const fetchData = async () => {
+        try {
+            // 팝업스토어 데이터 가져오기
+            const popupResponse = await axios.get("http://localhost:4000/api/popupstore");
+            const popupData = popupResponse.data;
+            setPopupData(popupData);
+            console.log("Popup Data:", popupData);
+
+            const popupObjId = popupData.data[storeId]._id;
+            console.log("popupObjId :", popupObjId);
+
+            // 리뷰 데이터 가져오기
+            const reviewResponse = await axios.get("http://localhost:4000/api/review/allReview");
+            const reviewData = reviewResponse.data;
+            setReviewData(reviewData);
+            console.log("Review Data:", reviewData);
+
+            const reviewObjId = reviewData[storeId].popup_store._id;
+            console.log("reviewObjId :", reviewObjId);
+        } catch (err) {
+            console.log("Error fetching data:", err);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div className="PopUp">

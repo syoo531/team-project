@@ -16,7 +16,6 @@ const ReviewModal = ({ closeModal, handleReviewSubmit, postId }) => {
                 const response = await axios.post("http://localhost:4000/api/review/createReview", {
                     text: reviewContent,
                 });
-
                 // 리뷰 작성이 성공하면 부모 컴포넌트로 전달
                 handleReviewSubmit(postId, reviewContent);
                 closeModal();
