@@ -15,7 +15,7 @@ const validateToken = async (req, res, next) => {
         if (err) {
           throw new Error("엑세스 토큰이 유효하지 않습니다.");
         } else {
-          console.log("여기55", decoded);
+          // console.log("여기55", decoded);
           req.decoded = decoded;
           next();
         }
