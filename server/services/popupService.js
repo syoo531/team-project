@@ -35,11 +35,17 @@ class PopupService {
     return storeData;
   }
 
-  async getAllStores(page, limit, search, category, start_date, end_date) {
+  async getAllStores(
+    page,
+    limit,
+    search,
+    category,
+    start_date,
+    end_date,
+    checkClosed
+  ) {
     const limitPerPage = limit || 10; //기본 10개로 제한
     const skipCount = (Number(page) - 1) * limitPerPage;
-
-    console.log(start_date, end_date);
 
     let query = {};
     if (search) {
@@ -62,8 +68,16 @@ class PopupService {
     if (category) {
       query = { ...query, category };
     }
-    console.log("query", query);
 
+    if (checkClosed && checkClosed == "running") {
+      query.end_date = { $gte: new Date() };
+    }
+
+    if (checkClosed && checkClosed == "closed") {
+      query.end_date = { $lt: new Date() };
+    }
+
+    console.log(query);
     const data = await PopupStore.find(query)
       .sort({ _id: -1 })
       .limit(limitPerPage)

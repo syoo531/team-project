@@ -35,8 +35,9 @@ export default function UpdateStore({
   const [formData, setFormData] = useState(formIntialState);
   const [newImages, setNewImages] = useState([]);
   const [mainImage, setMainImage] = useState(img);
-  const [error, setError] = useState({});
   const [existingImage, setExistingImage] = useState(detailImg);
+  const [disableButton, setDisableButton] = useState(false);
+  const [error, setError] = useState({});
 
   //팝업스토어 업데이트 > 이미지 변경 또는 추가시 s3에 저장
   const updatePopupStore = async () => {
@@ -65,9 +66,11 @@ export default function UpdateStore({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setDisableButton(true);
+
     try {
       await updatePopupStore(formData);
-      router.push("/serviceAdmin");
+      router.push("/serviceAdmin/popupstore");
       router.refresh();
     } catch (error) {
       console.error("Error:", error);
@@ -75,8 +78,8 @@ export default function UpdateStore({
   };
 
   const handleDelete = async () => {
-    const result = window.confirm("삭제하시겠습니까?");
-    if (!result) return;
+    const confirm = window.confirm("삭제하시겠습니까?");
+    if (!confirm) return;
 
     try {
       //S3와 몽고DB 데이터 삭제
@@ -85,7 +88,7 @@ export default function UpdateStore({
         deleteImageS3(mainImage.url),
         axios.delete(`http://localhost:4000/api/popupStore/${storeId}`),
       ]);
-      router.push("/serviceAdmin");
+      router.push("/serviceAdmin/popupstore");
       router.refresh();
     } catch (err) {
       console.log(err);
@@ -115,6 +118,7 @@ export default function UpdateStore({
         setExistingImage={setExistingImage}
         mainImage={mainImage}
         setMainImage={setMainImage}
+        disableButton={disableButton}
       />
     </>
   );

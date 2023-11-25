@@ -38,7 +38,8 @@ const getPopupStore = async (req, res) => {
 //! GET ALL STORES
 const getAllStores = async (req, res) => {
   try {
-    const { page, limit, search, category, start_date, end_date } = req.query;
+    const { page, limit, search, category, start_date, end_date, checkClosed } =
+      req.query;
 
     const popupService = new PopupService();
     const data = await popupService.getAllStores(
@@ -47,7 +48,8 @@ const getAllStores = async (req, res) => {
       search,
       category,
       start_date,
-      end_date
+      end_date,
+      checkClosed
     );
     res.status(200).json(data);
   } catch (err) {

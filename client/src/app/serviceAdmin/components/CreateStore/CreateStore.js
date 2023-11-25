@@ -25,11 +25,10 @@ export default function CreateStore() {
   const [formData, setFormData] = useState(formIntialState);
   const [newImages, setNewImages] = useState([]);
   const [mainImage, setMainImage] = useState(null);
-  const [isPending, setIsPending] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
   const [error, setError] = useState({});
 
   const createPopupStore = async () => {
-    setIsPending(true);
     const [imageURL, mainURL] = await Promise.all([
       s3UploadMultipleImages(newImages),
       s3UploadSingleImage(mainImage),
@@ -37,7 +36,6 @@ export default function CreateStore() {
 
     const updatedFormData = { ...formData, imageURL, mainURL };
     await axios.post(`http://localhost:4000/api/popupStore`, updatedFormData);
-    setIsPending(false);
   };
 
   const handleChange = (e) => {
@@ -50,9 +48,9 @@ export default function CreateStore() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      if (isPending) return;
+    setDisableButton(true);
 
+    try {
       await createPopupStore();
       router.push("/serviceAdmin/popupstore");
       router.refresh();
@@ -72,6 +70,7 @@ export default function CreateStore() {
         setNewImages={setNewImages}
         mainImage={mainImage}
         setMainImage={setMainImage}
+        disableButton={disableButton}
       />
     </>
   );

@@ -19,6 +19,7 @@ export default function Form({
   setExistingImage,
   mainImage,
   setMainImage,
+  disableButton,
 }) {
   const router = useRouter();
 
@@ -94,24 +95,22 @@ export default function Form({
             </div>
 
             <div className="category-selectbox__div field short-field">
-              <label>
-                카테고리
-                <select
-                  className="category-selectbox"
-                  name="category"
-                  value={formData?.category}
-                  onChange={handleChange}
-                >
-                  <option value="" disabled hidden>
-                    선택
+              <label>카테고리</label>
+              <select
+                className="category-selectbox"
+                name="category"
+                value={formData?.category}
+                onChange={handleChange}
+              >
+                <option value="" disabled hidden>
+                  선택
+                </option>
+                {CATEGORY_OPTIONS.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
                   </option>
-                  {CATEGORY_OPTIONS.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </label>
+                ))}
+              </select>
             </div>
 
             <div className="date-field field short-field">
@@ -164,10 +163,14 @@ export default function Form({
             mainImage={mainImage}
             setMainImage={setMainImage}
           />
-          <button type="submit">Submit</button>
-          <button type="button" onClick={handleCancel}>
-            취소
-          </button>
+          <div className="form__buttons">
+            <button type="submit" disabled={disableButton}>
+              Submit
+            </button>
+            <button type="button" onClick={handleCancel}>
+              취소
+            </button>
+          </div>
         </form>
       </div>
     </div>

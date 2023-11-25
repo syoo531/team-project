@@ -12,6 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .action__menu {
@@ -21,7 +22,7 @@
     @include admin-button-base-style(red, white);
 
     &:hover {
-      background: (0, 0, 0, 0.8);
+      background: rgb(184, 2, 2);
       transform: scale(1.05);
     }
   }
@@ -29,21 +30,17 @@
 
 .form__container {
   font-size: 14px;
-  padding-bottom: 50px;
 }
 
 .form__text-section {
-  padding: 20px 20px;
+  padding: 20px;
   margin-bottom: 20px;
   background-color: $admin-card-background;
-
   border-radius: $admin-border-radius;
   box-shadow: $admin-box-shadow;
-}
 
-.form__text-section {
   .field {
-    padding-bottom: 10px;
+    padding-bottom: 15px;
   }
 
   .short-field {
@@ -52,47 +49,23 @@
 
   label {
     display: block;
-    padding: 5px 0px;
+    padding: 5px 0;
   }
 
-  input {
+  input,
+  textarea,
+  select {
     width: 100%;
-    height: 30px;
-    padding: 4px 8px;
+    height: 32px;
+    padding: 5px 9px;
     border-radius: 6px;
-    border: 1px grey solid;
+    border: 1px rgb(170, 169, 169) solid;
     font-weight: map-get($admin-font-weights, light);
   }
 
   textarea {
-    width: 100%;
-    height: 150px;
-    padding: 4px 6px;
-    margin-bottom: 8px;
-
-    border-radius: 6px;
+    height: 250px;
     resize: none;
-    font-weight: map-get($admin-font-weights, light);
-  }
-
-  .category-selectbox__div {
-    .category-selectbox {
-      width: 180px;
-      height: 30px;
-
-      padding-left: 10px;
-      margin-left: 26px;
-      border-radius: 6px;
-    }
-  }
-
-  .address_field {
-    margin-bottom: 10px;
-  }
-
-  .address-input {
-    display: flex;
-    gap: 15px;
   }
 
   .zipcode {
@@ -105,15 +78,34 @@
   }
 }
 
+.category-selectbox__div {
+  display: flex;
+  align-items: center;
+  padding-top: 15px;
+
+  .category-selectbox {
+    width: 180px;
+    height: 30px;
+    padding-left: 10px;
+    margin-left: 26px;
+  }
+}
+
 .date-field {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 5px;
+  padding-bottom: 20px;
 
   input {
     max-width: 180px;
     border-radius: 6px;
   }
+}
+
+.form__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }

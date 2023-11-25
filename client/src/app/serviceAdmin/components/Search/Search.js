@@ -1,88 +1,125 @@
 "use client";
 
 import "./Search.scss";
+import { CATEGORY_OPTIONS } from "../../utils/constants";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useDebounce } from "use-debounce";
 
 export default function Search() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [showFilter, setShowFilter] = useState(true);
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("");
-  const [start_date, setStart_Date] = useState("");
-  const [end_date, setEnd_Date] = useState("");
-  const [debounce] = useDebounce(searchKeyword, 500);
+  const initialQueryState = {
+    search: "",
+    category: "",
+    start_date: "",
+    end_date: "",
+    checkClosed: "",
+  };
 
+  const [query, setQuery] = useState(initialQueryState);
+  const [showDateSelector, setShowDateSelector] = useState(false);
+  const [debounce] = useDebounce(query.search, 500);
+
+  //검색시 url 쿼리스트링 업데이트 (router.query가 next/navigation에서 사라져서 URLSearchParams 사용)
   const createQueryString = (query) => {
     const params = new URLSearchParams(searchParams);
     for (const [name, value] of Object.entries(query)) {
       if (value !== "" && value !== undefined) {
         params.set(name, value);
       } else {
-        params.delete(name);
+        params.delete(name); //값이 비어있으면 제거
       }
     }
     return params.toString();
   };
 
   useEffect(() => {
-    const query = {
-      category: selectedFilter,
-      search: searchKeyword,
-      start_date,
-      end_date,
-    };
     router.push(`/serviceAdmin/popupstore?${createQueryString(query)}`);
-  }, [debounce, selectedFilter, start_date, end_date, router]);
+  }, [
+    debounce,
+    query.category,
+    query.start_date,
+    query.end_date,
+    query.checkClosed,
+    router,
+  ]);
 
-  const resetFilter = () => {};
+  const handleSearch = (e) => {
+    const { name, value } = e.target;
+    setQuery((prevQuery) => ({
+      ...prevQuery,
+      [name]: value,
+    }));
+  };
 
-  const handleShowFilter = () => {
-    setShowFilter((prev) => !prev);
+  //검색, 필터 초기화
+  const resetFilter = () => {
+    setQuery(initialQueryState);
+  };
+
+  const toggleDateSelector = () => {
+    setShowDateSelector((prev) => !prev);
   };
 
   return (
     <div className="search__container">
-      <div className="search__main-search">
-        <input
-          className="search-input"
-          placeholder="검색"
-          onChange={(e) => setSearchKeyword(e.target.value)}
-          value={searchKeyword}
-        />
-        <div>
-          <button onClick={handleShowFilter}>
-            <FontAwesomeIcon icon={faFilter} style={{ color: "#233453" }} />
-            검색 필터
-          </button>
-          <button onClick={resetFilter}>초기화</button>
+      <div className="search__main-search-container">
+        <div className="search-input-container">
+          <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
+          <input
+            className="search-input"
+            name="search"
+            placeholder="검색"
+            onChange={handleSearch}
+            value={query.search}
+          />
         </div>
+        <select onChange={handleSearch} name="category" value={query.category}>
+          <option value="">전체 카테고리</option>
+          {CATEGORY_OPTIONS.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+
+        <select
+          onChange={handleSearch}
+          name="checkClosed"
+          value={query.checkClosed}
+        >
+          <option value="">진행상태</option>
+          <option value="running">진행중</option>
+          <option value="closed">종료</option>
+        </select>
+
+        <button className="show-date-button" onClick={toggleDateSelector}>
+          기간조회
+        </button>
+        <button className="reset-button" onClick={resetFilter}>
+          초기화
+        </button>
       </div>
 
-      {showFilter && (
-        <div className="search__filter">
-          <select onChange={(e) => setSelectedFilter(e.target.value)}>
-            <option value="">카테고리</option>
-            <option value="뷰티">뷰티</option>
-            <option value="예술">예술</option>
-          </select>
-
+      {showDateSelector && (
+        <div className="date-selector-container">
+          <span>조회 기간</span>
           <input
-            placeholder="이벤트 시작 날짜"
             type="date"
-            value={start_date}
-            onChange={(e) => setStart_Date(e.target.value)}
+            name="start_date"
+            onChange={handleSearch}
+            value={query.start_date}
           />
-
+          <span>~</span>
           <input
             type="date"
-            onChange={(e) => setEnd_Date(e.target.value)}
-            value={end_date}
+            name="end_date"
+            onChange={handleSearch}
+            value={query.end_date}
           />
         </div>
       )}

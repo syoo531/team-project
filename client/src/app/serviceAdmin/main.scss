@@ -18,11 +18,6 @@
   }
 }
 
-//page.js 스타일
-.main__header {
-  padding: 20px 0px 10px 0px;
-}
-
 //버튼 스타일
 @mixin admin-button-base-style($background-color, $font-color) {
   background: $background-color;
