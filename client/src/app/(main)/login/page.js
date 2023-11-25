@@ -23,7 +23,8 @@ export default function Login() {
         window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
       }
     } catch (error) {
-      console.error(error); // 에러 처리
+      console.log(error);
+      alert("로그인에 실패하였습니다."); // 에러 처리
     }
   };
 

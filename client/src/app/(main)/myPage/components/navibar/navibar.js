@@ -2,7 +2,13 @@
 import "./navibar.scss";
 
 export default function Navibar({ handleMenu, currentContent }) {
-  const navibarMenu = ["현장대기", "사전예약", "리뷰관리", "회원정보"];
+  const navibarMenu = [
+    "현장대기",
+    "사전예약",
+    "리뷰관리",
+    "회원정보",
+    "비밀번호변경",
+  ];
 
   return (
     <div className="navibarContainer">

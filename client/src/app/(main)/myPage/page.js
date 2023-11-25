@@ -5,6 +5,7 @@ import Waiting from "./components/waiting/waiting";
 import Reservation from "./components/reservation/reservation";
 import Review from "./components/review/review";
 import UserInfo from "./components/userInfo/userInfo";
+import ChangePassword from "./components/changePassword/changePassword";
 import { useState } from "react";
 
 export default function MyPage() {
@@ -27,6 +28,8 @@ export default function MyPage() {
             <Review />
           ) : currentContent === 3 ? (
             <UserInfo />
+          ) : currentContent === 4 ? (
+            <ChangePassword />
           ) : (
             ""
           )}

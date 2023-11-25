@@ -25,22 +25,27 @@ export default function GoogleAuth() {
 
   useEffect(() => {
     async function sendCode() {
-      const res = await axios.post(
-        "http://localhost:4000/api/users/auth/google/check",
-        {
-          code: code,
-        },
-        { withCredentials: true }
-      );
-      if (res.status === 200) {
-        const accessToken = res.data.accessToken;
-        localStorage.setItem("accessToken", accessToken);
-        window.location.href = "/";
-      }
-      if (res.status === 202) {
-        setReceivedName(res.data.name);
-        setReceivedEmail(res.data.email);
-        setIsSignup(true);
+      try {
+        const res = await axios.post(
+          "http://localhost:4000/api/users/auth/google/check",
+          {
+            code: code,
+          },
+          { withCredentials: true }
+        );
+        if (res.status === 200) {
+          const accessToken = res.data.accessToken;
+          localStorage.setItem("accessToken", accessToken);
+          window.location.href = "/";
+        }
+        if (res.status === 202) {
+          setReceivedName(res.data.name);
+          setReceivedEmail(res.data.email);
+          setIsSignup(true);
+        }
+      } catch (error) {
+        console.log(error);
+        window.location.href = "/login";
       }
     }
     sendCode();
