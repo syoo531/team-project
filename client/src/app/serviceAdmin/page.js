@@ -1,7 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default async function Page({ params }) {
+export default function Page() {
   redirect("/serviceAdmin/popupstore");
-
-  return <></>;
 }

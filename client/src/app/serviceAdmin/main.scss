@@ -1,16 +1,20 @@
 @import "../../adminStyles/adminStyles.scss";
 
 //layout.js 스타일
-.app-flex-container {
-  display: flex;
-  align-items: stretch;
-  min-height: calc(100vh - 50px);
-  width: 100%;
-  background-color: $admin-background-color;
+.app {
+  height: 100vh;
 
-  main {
+  .app-flex-container {
+    display: flex;
+    align-items: stretch;
+    min-height: calc(100vh - 53px);
     width: 100%;
-    padding: 40px 30px;
+    background-color: $admin-background-color;
+
+    main {
+      width: 100%;
+      padding: 40px 30px;
+    }
   }
 }
 

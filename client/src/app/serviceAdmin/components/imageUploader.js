@@ -42,7 +42,10 @@ export const s3UploadMultipleImages = async (images) => {
 };
 
 export const deleteImageS3 = async (imageUrl) => {
-  console.log("url to delete", imageUrl);
+  if (!imageUrl) {
+    return Promise.resolve(true);
+  }
+
   const input = {
     Bucket: "mybucket-elice",
     Key: imageUrl.split("/").pop().toString(),
@@ -53,10 +56,13 @@ export const deleteImageS3 = async (imageUrl) => {
 };
 
 export const deleteAllS3 = async (imageArray) => {
+  if (imageArray.length == 0) {
+    return Promise.resolve(true);
+  }
+
   const deletePromises = imageArray.map((image) => {
     return deleteImageS3(image.url);
   });
-  console.log("delete all array", deletePromises);
   const result = await Promise.all(deletePromises);
   return result;
 };

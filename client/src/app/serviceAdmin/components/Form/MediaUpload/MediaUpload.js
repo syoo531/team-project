@@ -3,9 +3,9 @@
 import "./MediaUpload.scss";
 import { useRef } from "react";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileArrowUp, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { deleteImageS3 } from "../../imageUploader";
+import ImagePreview from "./ImagePreview";
+import CustomUploadButton from "./CustomUploadButton";
 
 export default function MediaUpload({
   newImages,
@@ -42,7 +42,7 @@ export default function MediaUpload({
     }
   };
 
-  const deleteFroms3 = async (img, id) => {
+  const deleteExistingImage = async (img, id) => {
     const confirm = window.confirm(
       "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?"
     );
@@ -56,30 +56,20 @@ export default function MediaUpload({
     }
   };
 
-  const handleMainImage = (e) => {
-    setMainImage(e.target.files[0]);
-  };
-
   return (
     <>
       <section className="form__media-section">
-        <h2 style={{ marginBottom: "20px" }}>메인 이미지</h2>
-        <div className="main-image-upload-wrapper">
-          <div
-            className="image-upload-custom-buttom"
+        <h2 className="media-title">메인 이미지</h2>
+        <div
+          className="image-upload-wrapper"
+          style={{ width: "200px", height: "200px" }}
+        >
+          <CustomUploadButton
             onClick={() => mainInput.current.click()}
-          >
-            <FontAwesomeIcon icon={faFileArrowUp} />
-            <div className="overlay-text">메인 이미지 업로드</div>
-            <input
-              className="fileInput"
-              type="file"
-              accept="image/*"
-              name="main"
-              onChange={handleMainImage}
-              ref={mainInput}
-            />
-          </div>
+            overlayText={"메인 이미지 업로드"}
+            onChange={(e) => setMainImage(e.target.files[0])}
+            refName={mainInput}
+          />
           <div className="image-preview">
             {mainImage?.url ? (
               <img src={mainImage.url} />
@@ -92,56 +82,37 @@ export default function MediaUpload({
 
       {/* 기존 이미지 */}
       <section className="form__media-section">
-        <h2 style={{ marginBottom: "20px" }}>상세 이미지</h2>
+        <h2 className="media-title">상세 이미지</h2>
         <div className="form__detail-media">
-          {Array.isArray(existingImage) &&
+          {existingImage?.length > 0 &&
             existingImage?.map((img) => (
-              <div key={img._id} className="image-upload-wrapper">
-                <div
-                  className="image-upload-custom-buttom"
-                  onClick={() => deleteFroms3(img.url, img._id)}
-                >
-                  <FontAwesomeIcon icon={faTrashCan} />
-                </div>
-                <div className="image-preview">
-                  <img key={img._id} src={img.url} />
-                </div>
-              </div>
+              <ImagePreview
+                key={img._id}
+                uniqueId={img._id}
+                deleteImage={() => deleteExistingImage(img.url, img._id)}
+                image={img.url}
+              />
             ))}
 
           {/* 새로운 이미지 */}
-          {Array.isArray(newImages) &&
-            newImages?.map((image, i) => (
-              <div key={i} className="image-upload-wrapper">
-                <div
-                  className="image-upload-custom-buttom"
-                  onClick={() => removeNewImage(i)}
-                >
-                  <FontAwesomeIcon icon={faTrashCan} />
-                </div>
-                <div className="image-preview">
-                  <img key={i} src={URL.createObjectURL(image)} />
-                </div>
-              </div>
+          {newImages?.length > 0 &&
+            newImages?.map((img, i) => (
+              <ImagePreview
+                key={i}
+                uniqueId={i}
+                deleteImage={() => removeNewImage(i)}
+                image={URL.createObjectURL(img)}
+              />
             ))}
 
           <div className="image-upload-wrapper">
-            <div
-              className="image-upload-custom-buttom"
+            <CustomUploadButton
               onClick={() => inputRefs.current.click()}
-            >
-              <FontAwesomeIcon icon={faFileArrowUp} />
-              <div className="overlay-text">상세이미지 업로드</div>
-              <input
-                className="fileInput"
-                type="file"
-                accept="image/*"
-                name="fileupload"
-                onChange={handleUploadImage}
-                ref={inputRefs}
-                multiple
-              />
-            </div>
+              overlayText={"상세이미지 업로드"}
+              onChange={handleUploadImage}
+              refName={inputRefs}
+              multiple
+            />
           </div>
         </div>
       </section>

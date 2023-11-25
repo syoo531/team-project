@@ -1,16 +1,11 @@
 @import "../../../../adminStyles/adminStyles.scss";
 @import "../../main.scss";
 
-.main-content__layout {
-  padding: 0px 50px;
-  max-width: 90%;
-  flex: 1 1;
-  box-sizing: border-box;
-}
-
 .main-content__container {
   max-width: 700px;
-  margin: 0 auto;
+  margin: 0 auto 0 calc(10%);
+  flex: 1 1;
+  box-sizing: border-box;
 }
 
 .form__header {
@@ -37,8 +32,7 @@
   padding-bottom: 50px;
 }
 
-.form__text-section,
-.form__media-section {
+.form__text-section {
   padding: 20px 20px;
   margin-bottom: 20px;
   background-color: $admin-card-background;
@@ -89,11 +83,6 @@
       padding-left: 10px;
       margin-left: 26px;
       border-radius: 6px;
-
-      // border: none;
-      // border-bottom: 1px solid #a5a5a5;
-      // border-radius: 0;
-      // outline: none;
     }
   }
 

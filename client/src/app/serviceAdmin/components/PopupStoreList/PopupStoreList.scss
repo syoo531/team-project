@@ -37,7 +37,7 @@ table.list-table {
   border-collapse: collapse;
 
   thead {
-    background: rgba(230, 227, 227, 0.647);
+    background: #d4e3f581;
   }
 
   th,
@@ -47,21 +47,20 @@ table.list-table {
   }
 
   th {
-    font-weight: map-get($admin-font-weights, "bold");
-    border-bottom: 1px rgb(201, 199, 199) solid;
+    font-weight: 500;
   }
 
   .table-row {
     &:hover {
       color: rgb(0, 0, 0);
-      background-color: #e4f3fd67;
+      background-color: #dae5f49c;
       cursor: pointer;
     }
   }
 
   td {
     border-top: 1px rgb(201, 199, 199) solid;
-    font-weight: map-get($admin-font-weights, "light");
+    font-weight: 300;
     text-align: center;
   }
 }

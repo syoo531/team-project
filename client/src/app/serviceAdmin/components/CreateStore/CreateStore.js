@@ -1,6 +1,5 @@
 "use client";
 
-import "./CreateStore.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { s3UploadMultipleImages, s3UploadSingleImage } from "../imageUploader";
@@ -26,17 +25,19 @@ export default function CreateStore() {
   const [formData, setFormData] = useState(formIntialState);
   const [newImages, setNewImages] = useState([]);
   const [mainImage, setMainImage] = useState(null);
+  const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState({});
 
   const createPopupStore = async () => {
+    setIsPending(true);
     const [imageURL, mainURL] = await Promise.all([
       s3UploadMultipleImages(newImages),
       s3UploadSingleImage(mainImage),
     ]);
 
     const updatedFormData = { ...formData, imageURL, mainURL };
-
     await axios.post(`http://localhost:4000/api/popupStore`, updatedFormData);
+    setIsPending(false);
   };
 
   const handleChange = (e) => {
@@ -50,31 +51,28 @@ export default function CreateStore() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (isPending) return;
+
       await createPopupStore();
-      router.push("/serviceAdmin");
+      router.push("/serviceAdmin/popupstore");
       router.refresh();
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  const handleComplete = (data) => {
-    setPopup(!popup);
-  };
-
   return (
-    <div>
+    <>
       <Form
         formData={formData}
         setFormData={setFormData}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        handleComplete={handleComplete}
         newImages={newImages}
         setNewImages={setNewImages}
         mainImage={mainImage}
         setMainImage={setMainImage}
       />
-    </div>
+    </>
   );
 }

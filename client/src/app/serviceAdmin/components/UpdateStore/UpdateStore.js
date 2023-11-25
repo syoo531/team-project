@@ -1,6 +1,5 @@
 "use client";
 
-import "./UpdateStore.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -102,7 +101,7 @@ export default function UpdateStore({
   };
 
   return (
-    <div>
+    <>
       <Form
         formData={formData}
         setFormData={setFormData}
@@ -117,6 +116,6 @@ export default function UpdateStore({
         mainImage={mainImage}
         setMainImage={setMainImage}
       />
-    </div>
+    </>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSearchParams } from "next/navigation";
 import "./Pagination.scss";
@@ -11,13 +10,17 @@ export default function Pagination({ totalPages, currentPage }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const updateQueryString = (pageNum) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", pageNum);
+    return params.toString();
+  };
+
   const changePage = (pageNum) => {
     if (pageNum > totalPages || pageNum < 1) return;
 
-    const params = new URLSearchParams(searchParams);
-    params.set("page", pageNum);
-    const updatedQueryString = params.toString();
-    router.push(`/serviceAdmin/popupstore?${updatedQueryString}`);
+    const queryString = updateQueryString(pageNum);
+    router.push(`/serviceAdmin/popupstore?${queryString}`);
   };
 
   return (

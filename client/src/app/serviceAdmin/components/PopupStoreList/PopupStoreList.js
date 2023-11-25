@@ -1,12 +1,7 @@
 "use client";
 
 import "./PopupStoreList.scss";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { deleteAllS3 } from "../imageUploader";
-import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import Search from "../Search/Search";
 
 export default function PopupStoreList({ storeData: stores }) {
@@ -20,7 +15,7 @@ export default function PopupStoreList({ storeData: stores }) {
         </div>
         <div className="action__menu">
           <button onClick={() => router.push("/serviceAdmin/popupstore/create")}>
-            신규등록!!
+            팝업스토어 등록
           </button>
         </div>
       </div>
