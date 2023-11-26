@@ -238,6 +238,9 @@ const changePassword = async (req, res, next) => {
       currentPassword,
       newPassword
     );
+    if (changedPasswordUser === "OAuth_user") {
+      throw new Error("소셜 가입 회원은 비밀번호 변경을 할 수 없습니다.");
+    }
     res
       .status(200)
       .json({ data: null, message: "비밀번호가 성공적으로 변경되었습니다." });

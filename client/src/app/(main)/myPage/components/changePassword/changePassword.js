@@ -1,7 +1,6 @@
 "use client";
 import "./changePassword.scss";
 import React, { useState } from "react";
-import axios from "axios";
 import instance from "@/utils/instance";
 
 export default function ChangePassword() {
@@ -64,6 +63,7 @@ export default function ChangePassword() {
         window.location.href = "/";
       }
     } catch (error) {
+      alert(`${error.response.data.message}`);
       console.error(error); // 에러 처리
     }
   };

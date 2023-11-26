@@ -35,25 +35,31 @@ class WaitingService {
     );
 
     let result = [];
-    for (let v of waiting) {
-      const popup = v.popup_store;
-      const popup_info = await PopupStore.findOne({ _id: popup }).select(
-        "name"
-      );
-      const popup_waiting = await Waiting.find({
-        popup_store: popup,
-        is_enter: false,
-      }).sort({ createdAt: 1 });
+    if (waiting.length !== 0) {
+      for (let v of waiting) {
+        const popup = v.popup_store;
+        console.log("여기11", popup);
+        const popup_info = await PopupStore.findOne({ _id: popup }).select(
+          "name"
+        );
+        console.log("여기22", popup_info);
 
-      let idx;
-      for (let i = 0; i < popup_waiting.length; i++) {
-        if (popup_waiting[i].user.toString() === user._id.toString()) {
-          idx = i;
+        const popup_waiting = await Waiting.find({
+          popup_store: popup,
+          is_enter: false,
+        }).sort({ createdAt: 1 });
+
+        let idx;
+        for (let i = 0; i < popup_waiting.length; i++) {
+          if (popup_waiting[i].user.toString() === user._id.toString()) {
+            idx = i;
+          }
         }
-      }
 
-      result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+        result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+      }
     }
+
     return result;
   }
 

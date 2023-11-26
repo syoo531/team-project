@@ -194,17 +194,21 @@ class UserService {
 
   async changePassword(email, currentPassword, newPassword) {
     const user = await User.findOne({ email });
-    const is_pass = await bcrypt.compare(currentPassword, user.password);
-    if (user && is_pass) {
-      const hashedPassword = await bcrypt.hash(newPassword, 10);
+    if (user.password) {
+      const is_pass = await bcrypt.compare(currentPassword, user.password);
+      if (user && is_pass) {
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-      const changedPasswordUser = await User.findOneAndUpdate(
-        { email },
-        {
-          password: hashedPassword,
-        }
-      );
-      return changedPasswordUser;
+        const changedPasswordUser = await User.findOneAndUpdate(
+          { email },
+          {
+            password: hashedPassword,
+          }
+        );
+        return changedPasswordUser;
+      }
+    } else {
+      return "OAuth_user";
     }
   }
 }
