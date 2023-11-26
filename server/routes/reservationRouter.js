@@ -16,6 +16,6 @@ router.get("/getReservationUser", getReservationsByPopupStoreId);
 router.get("/", getAllReservations);
 router.patch("/:id", updateReservation);
 router.delete("/:id", deleteReservation);
-router.patch("/complete", completeReservation);
+router.put("/complete", completeReservation);
 
 module.exports = router;

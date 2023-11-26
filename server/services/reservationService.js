@@ -62,17 +62,17 @@ class ReservationService {
 
   //예약 완료
   async completeReservation(popupStoreId, userId) {
-    return await Reservation.findOneAndUpdate(
+    console.log("여기66", popupStoreId, userId);
+    const reservation = await Reservation.findOneAndUpdate(
       {
         popup_store: popupStoreId,
         user: userId,
-        status: "예약중",
+        status: "대기중",
       },
-      {
-        status: "완료됨",
-      },
-      { new: true }
+      { status: "완료됨" }
     );
+    console.log("여기55", reservation);
+    return reservation;
   }
 
   // 예약 삭제

@@ -72,9 +72,10 @@ const getReservationsByPopupStoreId = async (req, res) => {
 // };
 
 //예약 완료
-async function completeReservation(req, res, next) {
+const completeReservation = async (req, res, next) => {
   try {
     const { popupStoreId, userId } = req.body;
+    console.log("여기44", popupStoreId, userId);
     const reservationService = new ReservationService();
     const completedReservation = await reservationService.completeReservation(
       popupStoreId,
@@ -87,7 +88,7 @@ async function completeReservation(req, res, next) {
   } catch (error) {
     next(error);
   }
-}
+};
 
 // 예약 수정
 const updateReservation = async (req, res, next) => {
