@@ -39,14 +39,17 @@ export default function UpdateStore({
   const [disableButton, setDisableButton] = useState(false);
   const [error, setError] = useState({});
 
-  //팝업스토어 업데이트 > 이미지 변경 또는 추가시 s3에 저장
+  //팝업스토어 업데이트
   const updatePopupStore = async () => {
     let updatedFormData = { ...formData };
 
     try {
+      //메인 이미지가 파일인 경우 기존 이미지 삭제 후 새로운 url를 받는다
       if (mainImage instanceof File) {
-        await deleteImageS3(img.url);
-        const newMain = await s3UploadSingleImage(mainImage);
+        const [newMain] = await Promise.all([
+          s3UploadSingleImage(mainImage),
+          deleteImageS3(img.url),
+        ]);
         updatedFormData = { ...updatedFormData, newMain };
       }
 
@@ -74,6 +77,7 @@ export default function UpdateStore({
       router.refresh();
     } catch (error) {
       console.error("Error:", error);
+      setDisableButton(false);
     }
   };
 

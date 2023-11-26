@@ -12,6 +12,7 @@ const s3client = new S3Client({
   },
 });
 
+//s3 이미지 1개 업로드
 export const s3UploadSingleImage = async (image) => {
   if (!image) return;
 
@@ -23,12 +24,14 @@ export const s3UploadSingleImage = async (image) => {
   };
   await s3client.send(new PutObjectCommand(uploadParams));
 
+  //몽고DB에 저장할 정보를 리턴한다
   return {
     Key: uploadParams.Key,
     url: `https://${process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET}.s3.ap-southeast-2.amazonaws.com/${uploadParams.Key}`,
   };
 };
 
+//s3 이미지 여러개 업로드
 export const s3UploadMultipleImages = async (images) => {
   let imageURLs = [];
 
@@ -41,6 +44,7 @@ export const s3UploadMultipleImages = async (images) => {
   return imageURLs;
 };
 
+//s3 이미지 1개 삭제
 export const deleteImageS3 = async (imageUrl) => {
   if (!imageUrl) {
     return Promise.resolve(true);
@@ -55,6 +59,7 @@ export const deleteImageS3 = async (imageUrl) => {
   return response;
 };
 
+//s3 이미지 여러개 삭제
 export const deleteAllS3 = async (imageArray) => {
   if (imageArray.length == 0) {
     return Promise.resolve(true);

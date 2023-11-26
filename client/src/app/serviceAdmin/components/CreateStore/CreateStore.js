@@ -56,6 +56,7 @@ export default function CreateStore() {
       router.refresh();
     } catch (error) {
       console.error("Error:", error);
+      setDisableButton(false);
     }
   };
 

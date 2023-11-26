@@ -24,7 +24,7 @@ export default function MediaUpload({
       parseInt(newImages.length || 0) +
       parseInt(e.target.files.length || 0);
 
-    if (totalImages >= 5) {
+    if (totalImages >= 6) {
       alert("상세이미지 최대 5개까지 올릴 수 있습니다.");
       return;
     } else {
@@ -32,6 +32,7 @@ export default function MediaUpload({
     }
   };
 
+  //새로 업로드한 이미지는 newImages state에서 제거
   const removeNewImage = (index) => {
     const confirm = window.confirm(
       "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?"
@@ -42,6 +43,7 @@ export default function MediaUpload({
     }
   };
 
+  //기존 이미지는 s3, 몽고DB에서 삭제
   const deleteExistingImage = async (img, id) => {
     const confirm = window.confirm(
       "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?"
@@ -94,7 +96,7 @@ export default function MediaUpload({
               />
             ))}
 
-          {/* 새로운 이미지 */}
+          {/* 새로 업로드한 이미지 */}
           {newImages?.length > 0 &&
             newImages?.map((img, i) => (
               <ImagePreview

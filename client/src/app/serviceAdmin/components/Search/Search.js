@@ -5,7 +5,7 @@ import { CATEGORY_OPTIONS } from "../../utils/constants";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useDebounce } from "use-debounce";
 
 export default function Search() {
@@ -54,6 +54,14 @@ export default function Search() {
       ...prevQuery,
       [name]: value,
     }));
+
+    if (name === "start_date" || name === "end_date") {
+      setQuery((cur) => ({ ...cur, checkClosed: "" }));
+    }
+
+    if (name === "checkClosed") {
+      setQuery((cur) => ({ ...cur, start_date: "", end_date: "" }));
+    }
   };
 
   //검색, 필터 초기화
