@@ -25,7 +25,7 @@ export default function corpAdminReservations() {
         //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
         // },
         params: {
-          popupStoreId: "655f56aaaca697ca092e1aec",
+          popupStoreId: "656246c6f8ee991dd36cf6bf",
         },
       })
 
@@ -50,15 +50,22 @@ export default function corpAdminReservations() {
     sortReservations(sortOrder);
   }, [currentTab]);
 
-  const handleComplete = (id) => {
+  const handleComplete = (reservationId, popupStoreId, userId) => {
     axios
-      .patch(`http://localhost:4000/api/reservation/${id}/complete`)
+      .put("http://localhost:4000/api/reservation/complete", {
+        popupStoreId: popupStoreId,
+        userId: userId,
+      })
       .then((response) => {
         if (response.status === 200 || response.status === 204) {
-          const newReservations = reservations.filter((r) => r._id !== id);
+          const newReservations = reservations.filter(
+            (r) => r._id !== reservationId
+          );
           setReservations(newReservations);
 
-          const completedReservation = reservations.find((r) => r._id === id);
+          const completedReservation = reservations.find(
+            (r) => r._id === reservationId
+          );
           if (completedReservation) {
             const newCompletedReservation = {
               ...completedReservation,
@@ -145,7 +152,7 @@ export default function corpAdminReservations() {
             <div key={reservation._id} className="reservationBox">
               <div className="reservationDetails">
                 <div>
-                  <span className="reservatioType">웨이팅</span>
+                  <span className="reservatioType">예약</span>
                   <span>
                     <FontAwesomeIcon icon={faUser} className="icon" />
                     {reservation.user?.name}
@@ -163,7 +170,15 @@ export default function corpAdminReservations() {
                   예약시간: {reservation.date.split("T")[0]} {reservation.hour}
                 </div>
                 <div className="buttonContainer">
-                  <button onClick={() => handleComplete(reservation._id)}>
+                  <button
+                    onClick={() =>
+                      handleComplete(
+                        reservation._id,
+                        reservation.popup_store,
+                        reservation.user._id
+                      )
+                    }
+                  >
                     <FontAwesomeIcon icon={faBullhorn} />
                     입장
                   </button>
@@ -177,7 +192,7 @@ export default function corpAdminReservations() {
           <div key={reservation._id} className="reservationBox">
             <div className="reservationDetails">
               <div>
-                <span className="reservatioType">웨이팅</span>
+                <span className="reservatioType">예약</span>
                 <span>
                   <FontAwesomeIcon icon={faUser} className="icon" />
                   {reservation.user?.name}

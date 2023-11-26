@@ -64,6 +64,7 @@ const enterReservation = async (req, res, next) => {
     next(error);
   }
 };
+};
 
 // 예약 수정
 const updateReservation = async (req, res, next) => {
