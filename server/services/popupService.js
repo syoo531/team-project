@@ -35,15 +35,9 @@ class PopupService {
     return storeData;
   }
 
-  async getAllStores(
-    page,
-    limit,
-    search,
-    category,
-    start_date,
-    end_date,
-    checkClosed
-  ) {
+  async getAllStores(reqQuery) {
+    const { page, limit, search, category, start_date, end_date, checkClosed } =
+      reqQuery;
     const limitPerPage = limit || 10; //기본 10개로 제한
     const skipCount = (Number(page) - 1) * limitPerPage;
 
@@ -70,6 +64,7 @@ class PopupService {
     }
 
     if (checkClosed && checkClosed == "running") {
+      query.start_date = { $lte: new Date() };
       query.end_date = { $gte: new Date() };
     }
 
@@ -86,7 +81,6 @@ class PopupService {
       .populate("images");
 
     const totalStores = await PopupStore.countDocuments(query);
-    console.log("total stores", totalStores);
 
     return {
       data,
