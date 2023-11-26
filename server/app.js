@@ -19,10 +19,10 @@ connectDB();
 const app = express();
 
 app.use(
-  cors({
-    origin: "http://localhost:3000",
-    credentials: true,
-  })
+    cors({
+        origin: "http://localhost:3000",
+        credentials: true,
+    })
 );
 // app.use(cors());
 app.use(express.json());
@@ -34,12 +34,13 @@ app.use("/api/waiting", waitingRouter);
 app.use("/api/reservation", reservationRouter);
 app.use("/api/popupStore", popupStoreRouter);
 app.use("/api/list", listRouter);
+app.use("/api/review", reviewRouter);
 
 app.use(errorHandler); // 에러 처리 미들웨어
 
 mongoose.connection.once("open", () => {
-  console.log("Connected to MongoDB");
-  app.listen(4000, () => {
-    console.log(`Server running on port 4000`);
-  });
+    console.log("Connected to MongoDB");
+    app.listen(4000, () => {
+        console.log(`Server running on port 4000`);
+    });
 });

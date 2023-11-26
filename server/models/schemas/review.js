@@ -2,9 +2,6 @@ const { Schema, SchemaTypes } = require("mongoose");
 
 const ReviewSchema = new Schema(
     {
-        id: {
-            type: SchemaTypes.ObjectId,
-        },
         popup_store: {
             type: SchemaTypes.ObjectId,
             ref: "PopupStore",
@@ -13,13 +10,12 @@ const ReviewSchema = new Schema(
             type: SchemaTypes.ObjectId,
             ref: "User",
         },
-        title: {
+        name: {
             type: String,
-            required: true,
         },
         text: {
             type: String,
-            required: true,
+            // required: true,
         },
         image: {
             type: SchemaTypes.ObjectId,

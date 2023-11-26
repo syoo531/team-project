@@ -29,10 +29,12 @@ class WaitingService {
   // 현장대기 현황 조회
   async getWaitingStatus(email) {
     const user = await User.findOne({ email }).select("_id");
+    // console.log("여기11", user);
 
     const waiting = await Waiting.find({ user, is_enter: false }).select(
       "popup_store"
     );
+    // console.log("여기22", waiting);
 
     let result = [];
     if (waiting.length !== 0) {
@@ -56,10 +58,9 @@ class WaitingService {
           }
         }
 
-        result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
-      }
+      result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
     }
-
+    // console.log("여기33", result);
     return result;
   }
 

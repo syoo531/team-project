@@ -1,8 +1,8 @@
 "use client";
 import "./page.scss";
 import axios from "axios";
+import ReviewModal from "./components/reviewModal/reviewModal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -12,27 +12,58 @@ config.autoAddCss = false;
 
 // 팝업스토어 상세 페이지
 export default function PopUp(props) {
-    // const path = usePathname();
-    const storeId = props.params.id;
     const [popupData, setPopupData] = useState({});
+    const [reviewData, setReviewData] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const storeId = props.params.id;
     const startDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].start_date;
     const endDate = popupData.data && popupData.data[storeId] && popupData.data[storeId].end_date;
     // start_date 변환
     const formattedStartDate = startDate ? new Date(startDate).toLocaleDateString() : "";
     // end_date 변환
     const formattedEndDate = endDate ? new Date(endDate).toLocaleDateString() : "";
-    const popupFetch = async () => {
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    // 리뷰 작성 완료 시 호출되는 함수
+    const handleReviewSubmit = (reviewContent) => {
+        // 리뷰 작성 완료 후 할 일 추가
+        console.log("Review content submitted:", reviewContent);
+        closeModal();
+    };
+
+    const fetchData = async () => {
         try {
-            const response = await axios.get("http://localhost:4000/api/popupstore");
-            const data = response.data;
-            setPopupData(data);
-            console.log(data);
+            // 팝업스토어 데이터 가져오기
+            const popupResponse = await axios.get("http://localhost:4000/api/popupstore");
+            const popupData = popupResponse.data;
+            setPopupData(popupData);
+            console.log("Popup Data:", popupData);
+
+            const popupObjId = popupData.data[storeId]._id;
+            console.log("popupObjId :", popupObjId);
+
+            // 리뷰 데이터 가져오기
+            const reviewResponse = await axios.get("http://localhost:4000/api/review/allReview");
+            const reviewData = reviewResponse.data;
+            setReviewData(reviewData);
+            console.log("Review Data:", reviewData);
+
+            const reviewObjId = reviewData[storeId].popup_store._id;
+            console.log("reviewObjId :", reviewObjId);
         } catch (err) {
-            console.log("error!", err);
+            console.log("Error fetching data:", err);
         }
     };
+
     useEffect(() => {
-        popupFetch();
+        fetchData();
     }, []);
 
     return (
@@ -102,41 +133,9 @@ export default function PopUp(props) {
                     후기 <FontAwesomeIcon className="staricon" icon={faStar} style={{ color: "#e21680" }} />
                     <span>0개</span>
                 </h4>
-                <div className="popReviewList">
-                    <div className="popReviewItem">
-                        <div className="reviewLogo">
-                            <h1>P</h1>
-                        </div>
-                        <div className="reviewName">김**</div>
-                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
-                        <div className="reviewDate">2023. 11. 23</div>
-                    </div>
-                    <div className="popReviewItem">
-                        <div className="reviewLogo">
-                            <h1>P</h1>
-                        </div>
-                        <div className="reviewName">김**</div>
-                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
-                        <div className="reviewDate">2023. 11. 23</div>
-                    </div>
-                    <div className="popReviewItem">
-                        <div className="reviewLogo">
-                            <h1>P</h1>
-                        </div>
-                        <div className="reviewName">김**</div>
-                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
-                        <div className="reviewDate">2023. 11. 23</div>
-                    </div>
-                    <div className="popReviewItem">
-                        <div className="reviewLogo">
-                            <h1>P</h1>
-                        </div>
-                        <div className="reviewName">김**</div>
-                        <p className="reviewContent">다녀왔는데 완전 재밌었어요 !!</p>
-                        <div className="reviewDate">2023. 11. 23</div>
-                    </div>
-                </div>
-                <button type="button">후기 작성하기</button>
+                <button type="button" onClick={openModal}>
+                    후기 작성하기
+                </button>
             </div>
             <div className="popLocation">
                 <h3>상세위치</h3>
@@ -154,6 +153,14 @@ export default function PopUp(props) {
             <div className="reserveBtn">
                 <button type="button">사전예약하기</button>
             </div>
+            {/* ReviewModal을 여기에 렌더링 */}
+            {isModalOpen && (
+                <ReviewModal
+                    closeModal={closeModal}
+                    handleReviewSubmit={handleReviewSubmit}
+                    postId={storeId} // 스토어의 ID를 전달
+                />
+            )}
         </div>
     );
 }
