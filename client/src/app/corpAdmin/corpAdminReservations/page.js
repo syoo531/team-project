@@ -2,19 +2,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faUsers,
+  faPhone,
+  faBullhorn,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import "../main.scss";
 
 export default function corpAdminReservations() {
   const [currentTab, setCurrentTab] = useState("대기중");
   const [reservations, setReservations] = useState([]);
   const [completedList, setCompletedList] = useState([]);
-  const [sortOrder, setSortOrder] = useState("name");
-  const [originalCompletedList, setOriginalCompletedList] = useState([]);
+  const [sortOrder, setSortOrder] = useState("default");
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/reservation`)
+      .get(`http://localhost:4000/api/reservation/getReservationUser`, {
+        // headers: {
+        //   Authorization:
+        //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
+        // },
+        params: {
+          popupStoreId: "655f56aaaca697ca092e1aec",
+        },
+      })
+
       .then((response) => {
         console.log("Loaded reservations:", response.data);
         const waitingReservations = response.data.filter(
@@ -26,7 +40,6 @@ export default function corpAdminReservations() {
 
         setReservations(waitingReservations);
         setCompletedList(completedReservations);
-        setOriginalCompletedList(completedReservations); // 완료된 예약 목록의 초기 상태 저장
       })
       .catch((error) => {
         console.error("There was an error!", error);
@@ -38,17 +51,26 @@ export default function corpAdminReservations() {
   }, [currentTab]);
 
   const handleComplete = (id) => {
-    const newReservations = reservations.filter((r) => r._id !== id);
-    setReservations(newReservations);
+    axios
+      .patch(`http://localhost:4000/api/reservation/${id}/complete`)
+      .then((response) => {
+        if (response.status === 200 || response.status === 204) {
+          const newReservations = reservations.filter((r) => r._id !== id);
+          setReservations(newReservations);
 
-    const completedReservation = reservations.find((r) => r._id === id);
-    if (completedReservation) {
-      const newCompletedReservation = {
-        ...completedReservation,
-        status: "완료됨",
-      };
-      setCompletedList((prev) => [...prev, newCompletedReservation]);
-    }
+          const completedReservation = reservations.find((r) => r._id === id);
+          if (completedReservation) {
+            const newCompletedReservation = {
+              ...completedReservation,
+              status: "완료됨",
+            };
+            setCompletedList((prev) => [...prev, newCompletedReservation]);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error("Error completing reservation:", error);
+      });
   };
 
   const handleSortChange = (e) => {
@@ -75,6 +97,11 @@ export default function corpAdminReservations() {
           (a, b) => a.people - b.people
         );
         break;
+      case "default":
+        sortedReservations = [...listToSort];
+        break;
+      default:
+        sortedReservations = [...listToSort];
     }
 
     if (currentTab === "대기중") {
@@ -88,11 +115,7 @@ export default function corpAdminReservations() {
     <div className="reservationContainer">
       <div className="reservationHeader">
         <h1>사전예약 현황</h1>
-        <select value={sortOrder} onChange={handleSortChange}>
-          <option value="name">이름</option>
-          <option value="date">날짜</option>
-          <option value="people">총인원</option>
-        </select>
+
         <div className="tabs">
           <button
             className={`tab ${currentTab === "대기중" ? "active" : ""}`}
@@ -108,23 +131,40 @@ export default function corpAdminReservations() {
           </button>
         </div>
       </div>
+      <div className="reservationSelectBox">
+        <select value={sortOrder} onChange={handleSortChange}>
+          <option value="default">정렬</option>
+          <option value="name">이름</option>
+          <option value="date">날짜</option>
+          <option value="people">총인원</option>
+        </select>
+      </div>
       <div className="reservationList">
         {currentTab === "대기중" &&
           reservations.map((reservation) => (
             <div key={reservation._id} className="reservationBox">
               <div className="reservationDetails">
                 <div>
-                  <span>예약</span>
-                  <span>{reservation.user?.name}</span>
-                  <span>{reservation.people}명</span>
-                  <span>{reservation.user?.phone_number}</span>
+                  <span className="reservatioType">웨이팅</span>
+                  <span>
+                    <FontAwesomeIcon icon={faUser} className="icon" />
+                    {reservation.user?.name}
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faUsers} className="icon" />
+                    {reservation.people}명
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faPhone} className="icon" />
+                    {reservation.user?.phone_number}
+                  </span>
                 </div>
                 <div className="reservationTime">
                   예약시간: {reservation.date.split("T")[0]} {reservation.hour}
                 </div>
                 <div className="buttonContainer">
                   <button onClick={() => handleComplete(reservation._id)}>
-                    <FontAwesomeIcon icon={faCheck} />
+                    <FontAwesomeIcon icon={faBullhorn} />
                     입장
                   </button>
                 </div>
@@ -137,10 +177,19 @@ export default function corpAdminReservations() {
           <div key={reservation._id} className="reservationBox">
             <div className="reservationDetails">
               <div>
-                <span>예약</span>
-                <span>{reservation.user?.name}</span>
-                <span>{reservation.people}명</span>
-                <span>{reservation.user?.phone_number}</span>
+                <span className="reservatioType">웨이팅</span>
+                <span>
+                  <FontAwesomeIcon icon={faUser} className="icon" />
+                  {reservation.user?.name}
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faUsers} className="icon" />
+                  {reservation.people}명
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faPhone} className="icon" />
+                  {reservation.user?.phone_number}
+                </span>
               </div>
               <div className="reservationTime">
                 예약시간: {reservation.date.split("T")[0]} {reservation.hour}

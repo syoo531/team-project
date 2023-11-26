@@ -3,7 +3,10 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarCheck, faClock } from "@fortawesome/free-regular-svg-icons";
+import {
+  faCalendarCheck,
+  faHourglassHalf,
+} from "@fortawesome/free-regular-svg-icons";
 import Sidebar from "@/adminStyles/sidebar/sidebar";
 
 export default function CorpAdminSidebar() {
@@ -11,7 +14,7 @@ export default function CorpAdminSidebar() {
     {
       href: "/corpAdmin/corpAdminWaitingList",
       label: "웨이팅 관리",
-      icon: <FontAwesomeIcon icon={faClock} />,
+      icon: <FontAwesomeIcon icon={faHourglassHalf} />,
     },
     {
       href: "/corpAdmin/corpAdminReservations",
