@@ -9,150 +9,177 @@
     display: flex;
     width: 100%;
     background-color: $admin-background-color;
+    color: $admin-font-color;
     flex: 1;
 
     .content {
       flex: 1;
       padding: 40px 30px;
-      .reservationContainer {
-        padding: 0px 232px;
+    }
 
-        .reservationHeader {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding-bottom: 36px;
+    .reservationSelectBox {
+      padding: 10px;
+
+      select {
+        border: none;
+        padding: 8px 4px;
+        background: none;
+        color: #666;
+        &:focus {
+          outline: none;
         }
+      }
+    }
+    .reservationHeader {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e3e6ed;
+      padding-bottom: 19px;
 
-        .tabs {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          gap: 10px;
+      .tabs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+
+        button {
+          padding: 6px 14px;
+          border: 1.5px solid #e3e6ed;
+          border-radius: 12px;
+          background-color: #fff;
+          transition: 0.5s;
+          font-weight: 600;
+          font-size: 12px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: #e3e6ed;
+          }
+        }
+        .active {
+          background-color: #e3e6ed;
+        }
+      }
+    }
+
+    .reservationContainer {
+      padding: 0px 232px;
+
+      .reservationBox {
+        padding: 36px 64px 28px 64px;
+        margin-bottom: 10px;
+        background: white;
+        border-radius: $admin-card-border-radius;
+        filter: $admin-card-filter;
+        backdrop-filter: $admin-card-backdrop-filter;
+
+        .reservationDetails {
+          margin-bottom: 5px;
+          .reservationType {
+            border: 2px solid #e3e6ed;
+            border-radius: 21px;
+            padding: 8px 12px;
+          }
+
+          span {
+            margin-left: 16px;
+            .icon {
+              font-size: 12px;
+              padding-right: 6px;
+            }
+          }
+
+          .buttonContainer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+          }
+
+          .completed {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0095ff;
+          }
+
+          .reservationTime {
+            margin-top: 20px;
+            font-size: 14px;
+            font-weight: 500;
+          }
+
           button {
-            padding: 10px 16px;
-            border: 2px solid #000;
-            border-radius: 12px;
-            background-color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border: 1px solid #0095ff;
+            border-radius: 10px;
+            background-color: #0095ff;
             transition: 0.5s;
-            color: #000;
+            color: #fff;
             font-weight: 600;
             font-size: 12px;
             cursor: pointer;
             &:hover {
-              background-color: #000;
-              color: #fff;
-            }
-          }
-          .active {
-            background-color: #000;
-            color: #fff;
-          }
-        }
-
-        .reservationBox {
-          padding: 36px 64px 28px 64px;
-          margin-bottom: 10px;
-          background: white;
-          border-radius: $admin-card-border-radius;
-          filter: $admin-card-filter;
-          backdrop-filter: $admin-card-backdrop-filter;
-
-          .reservationDetails {
-            margin-bottom: 5px;
-
-            span {
-              margin-right: 10px;
-              background: #f5f5f5;
-              border-radius: 8px;
-              padding: 8px 12px;
+              background: #fff;
               color: #666;
             }
-            .buttonContainer {
-              display: flex;
-              justify-content: flex-end;
-              gap: 8px;
-
-              .icon {
-                font-size: 12px;
-                color: #222;
-                padding-right: 4px;
-              }
-            }
-
-            .completed {
-              display: flex;
-              align-items: center;
-              gap: 8px;
-              color: #0095ff;
-            }
-
-            .reservationTime {
-              margin-top: 20px;
-              font-size: 14px;
-              font-weight: 500;
-            }
-
-            button {
-              display: flex;
-              align-items: center;
-              gap: 8px;
-              padding: 12px 16px;
-              border: 1px solid #0095ff;
-              border-radius: 10px;
-              background-color: #0095ff;
-              transition: 0.5s;
-              color: #fff;
-              font-weight: 600;
-              font-size: 12px;
-              cursor: pointer;
-              &:hover {
-                background: #fff;
-                color: #666;
-              }
-            }
           }
         }
       }
+    }
+    .mainLayout {
+      padding: 0px 50px;
+    }
 
-      .mainLayout {
-        padding: 0px 50px;
+    .listTitle {
+      padding: 20px 8px 24px;
+      select {
+        border: none;
+        background: none;
+        font-size: 16px;
+        font-weight: 700;
+        width: 10%;
+        cursor: pointer;
+        appearance: none;
+        color: $admin-font-color;
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+
+    .listContainer {
+      width: 100%;
+      padding: 7px 0px;
+      background-color: $admin-card-background;
+      border-radius: $admin-card-border-radius;
+      filter: $admin-card-filter;
+      backdrop-filter: $admin-card-backdrop-filter;
+    }
+
+    table.listTable {
+      width: 100%;
+      border-radius: $admin-border-radius;
+      border-collapse: collapse;
+
+      th,
+      td {
+        padding: 10px 5px;
+        font-size: 14px;
       }
 
-      .listTitle {
-        padding: 20px 0px 10px 0px;
+      th {
+        font-weight: map-get($admin-font-weights, "bold");
+        border-bottom: 1px rgb(201, 199, 199) solid;
       }
 
-      .listContainer {
-        width: 100%;
-        padding: 7px 0px;
-        background-color: $admin-card-background;
-        border-radius: $admin-card-border-radius;
-        filter: $admin-card-filter;
-        backdrop-filter: $admin-card-backdrop-filter;
-      }
-
-      table.listTable {
-        width: 100%;
-        border-radius: $admin-border-radius;
-        border-collapse: collapse;
-
-        th,
-        td {
-          padding: 10px 5px;
-          font-size: 14px;
-        }
-
-        th {
-          font-weight: map-get($admin-font-weights, "bold");
-          border-bottom: 1px rgb(201, 199, 199) solid;
-        }
-
-        td {
-          border-top: 1px rgb(201, 199, 199) solid;
-          font-weight: map-get($admin-font-weights, "light");
-          text-align: center;
-        }
+      td {
+        border-top: 1px rgb(201, 199, 199) solid;
+        font-weight: map-get($admin-font-weights, "light");
+        text-align: center;
       }
     }
   }

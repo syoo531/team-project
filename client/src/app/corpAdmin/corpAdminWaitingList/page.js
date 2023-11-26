@@ -2,9 +2,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
-// import Header from "../components/header/header";
-// import Sidebar from "../components/sidebar/sidebar";
+import {
+  faCheck,
+  faUsers,
+  faPhone,
+  faBullhorn,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import "../main.scss";
 
 export default function corpAdminWaitingList() {
@@ -14,17 +18,19 @@ export default function corpAdminWaitingList() {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/api/waiting`)
+      .get(`http://localhost:4000/api/waiting/getWaitingUser`, {
+        headers: {
+          Authorization:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
+        },
+        params: {
+          popupStoreId: "655f56aaaca697ca092e1aec",
+        },
+      })
       .then((response) => {
-        console.log("Loaded reservations:", response.data);
-        // 가정: 서버에서 'status' 속성을 통해 예약 상태를 받아온다.
-        const waitingReservations = response.data.filter(
-          (r) => r.status === "대기중"
-        );
-        const completedReservations = response.data.filter(
-          (r) => r.status === "완료됨"
-        );
-
+        console.log(response.data);
+        const waitingReservations = response.data.filter((r) => !r.is_enter);
+        const completedReservations = response.data.filter((r) => r.is_enter);
         setReservations(waitingReservations);
         setCompletedList(completedReservations);
       })
@@ -33,82 +39,115 @@ export default function corpAdminWaitingList() {
       });
   }, []);
 
-  const handleComplete = (id) => {
-    setReservations((prev) => prev.filter((r) => r._id !== id));
-    const completedReservation = reservations.find((r) => r._id === id);
-    if (completedReservation) {
-      setCompletedList((prev) => [
-        ...prev,
-        { ...completedReservation, status: "완료됨" },
-      ]);
-    }
+  const handleComplete = (reservation) => {
+    axios
+      .put(
+        `http://localhost:4000/api/waiting/enterWaitingList`,
+        {
+          popupStoreId: reservation.popup_store,
+          userId: reservation.user._id,
+        },
+        {
+          headers: {
+            Authorization:
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
+          },
+        }
+      )
+      .then((response) => {
+        if (response.status === 200 || response.status === 204) {
+          setReservations((prev) =>
+            prev.filter((r) => r._id !== reservation._id)
+          );
+          setCompletedList((prev) => [
+            ...prev,
+            { ...reservation, is_enter: true },
+          ]);
+        }
+      })
+
+      .catch((error) => {
+        console.error("Error updating entry:", error);
+      });
   };
 
   return (
-    <div>
-      <div className="tabs">
-        <button
-          className={`tab ${currentTab === "대기중" ? "active" : ""}`}
-          onClick={() => setCurrentTab("대기중")}
-        >
-          웨이팅중
-        </button>
-        <button
-          className={`tab ${currentTab === "완료됨" ? "active" : ""}`}
-          onClick={() => setCurrentTab("완료됨")}
-        >
-          완료
-        </button>
-      </div>
-      <h2>웨이팅 현황</h2>
-      <div className="reservationContainer">
-        <div className="reservationList">
-          {currentTab === "대기중" &&
-            reservations.map((reservation) => (
-              <div key={reservation._id} className="reservationBox">
-                <div className="reservationDetails">
-                  <div>
-                    <span>대기번호:{reservation._id}</span>
-                    <span>{reservation.user?.name}</span>
-                    <span>{reservation.people}명</span>
-                    <span>{reservation.user?.phone_number}</span>
-                  </div>
-                  <div className="reservationTime">
-                    예약시간: {reservation.date} {reservation.hour}
-                  </div>
-                  <div className="buttonContainer">
-                    <button onClick={() => handleComplete(reservation._id)}>
-                      <FontAwesomeIcon icon={faCheck} />
-                      입장
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
+    <div className="reservationContainer">
+      <div className="reservationHeader">
+        <h1>웨이팅 현황</h1>
+        <div className="tabs">
+          <button
+            className={`tab ${currentTab === "대기중" ? "active" : ""}`}
+            onClick={() => setCurrentTab("대기중")}
+          >
+            웨이팅중
+          </button>
+          <button
+            className={`tab ${currentTab === "완료됨" ? "active" : ""}`}
+            onClick={() => setCurrentTab("완료됨")}
+          >
+            완료
+          </button>
         </div>
-        {currentTab === "완료됨" &&
-          completedList.map((reservation) => (
+      </div>
+      <div className="reservationList">
+        {currentTab === "대기중" &&
+          reservations.map((reservation) => (
             <div key={reservation._id} className="reservationBox">
               <div className="reservationDetails">
                 <div>
-                  <span>예약</span>
-                  <span>{reservation.user?.name}</span>
-                  <span>{reservation.people}명</span>
-                  <span>{reservation.user?.phone_number}</span>
-                </div>
-                <div className="reservationTime">
-                  예약시간: {reservation.date} {reservation.hour}
+                  <span className="reservationType">웨이팅</span>
+                  <span>
+                    <FontAwesomeIcon icon={faUser} className="icon" />
+                    {reservation.user?.name}
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faUsers} className="icon" />
+                    {reservation.people}명
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faPhone} className="icon" />
+                    {reservation.user?.phone_number}
+                  </span>
                 </div>
                 <div className="buttonContainer">
-                  <div className="completed">
-                    <FontAwesomeIcon icon={faCheck} />
-                    완료됨
-                  </div>
+                  <button onClick={() => handleComplete(reservation)}>
+                    <FontAwesomeIcon icon={faBullhorn} />
+                    입장
+                  </button>
                 </div>
               </div>
             </div>
           ))}
       </div>
+      {currentTab === "완료됨" &&
+        completedList.map((reservation) => (
+          <div key={reservation._id} className="reservationBox">
+            <div className="reservationDetails">
+              <div>
+                <span className="reservationType">웨이팅</span>
+                <span>
+                  <FontAwesomeIcon icon={faUser} className="icon" />
+                  {reservation.user?.name}
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faUsers} className="icon" />
+                  {reservation.people}명
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faPhone} className="icon" />
+                  {reservation.user?.phone_number}
+                </span>
+              </div>
+              <div className="buttonContainer">
+                <div className="completed">
+                  <FontAwesomeIcon icon={faCheck} />
+                  완료됨
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
     </div>
   );
 }

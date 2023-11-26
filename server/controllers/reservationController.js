@@ -1,5 +1,4 @@
 const ReservationService = require("../services/reservationService");
-const { PopupStore, User } = require("../models");
 
 // 예약 생성
 const createReservation = async (req, res, next) => {
@@ -28,30 +27,67 @@ const getAllReservations = async (req, res, next) => {
 };
 
 // 특정 예약 조회
-const getReservationById = async (req, res, next) => {
+const getReservationsByPopupStoreId = async (req, res) => {
   try {
-    // 팝업 스토어와 사용자의 존재 여부를 먼저 확인
-    const popupStore = await PopupStore.findById(req.body.popup_store);
-    if (!popupStore) {
-      throw new Error("Popup store not found");
-    }
+    const { popupStoreId } = req.query;
+    console.log("popupStoreId:", req.query.popupStoreId);
 
-    const user = await User.findById(req.body.user);
-    if (!user) {
-      throw new Error("User not found");
-    }
     const reservationService = new ReservationService();
-    const reservation = await reservationService.getReservationById(
-      req.params.id
+    const users = await reservationService.getReservationsByPopupStoreId(
+      popupStoreId
     );
-    if (!reservation) {
-      return res.status(404).json({ message: "Reservation not found" });
-    }
-    res.json(reservation);
-  } catch (err) {
-    next(err);
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error in getReservationsByPopupStoreId:", error);
+    res
+      .status(500)
+      .json({ error: "팝업스토어에 대한 사전예약 리스트 조회 실패" });
   }
 };
+
+// const getReservationsByPopupStoreId = async (req, res) => {
+//   try {
+//     const { popupStoreId } = req.query;
+//     console.log("popupStoreId:", req.query.popupStoreId);
+//     const email = req.decoded.user.email;
+
+//     const reservationService = new ReservationService();
+//     const validate = await reservationService.validateAdmin(
+//       email,
+//       popupStoreId
+//     );
+//     console.log("validate: ", validate);
+//     if (!validate) {
+//       throw new Error("해당 팝업스토어 사전예약 조회 권한이 없습니다.");
+//     }
+//     const users = await reservationService.getReservationsByPopupStoreId(
+//       popupStoreId
+//     );
+//     res.status(200).json(users);
+//   } catch (error) {
+//     res
+//       .status(200)
+//       .json({ error: "팝업스토어에 대한 사전예약 리스트 조회 실패" });
+//   }
+// };
+
+//예약 완료
+async function completeReservation(req, res, next) {
+  try {
+    const { popupStoreId, userId } = req.body;
+    const reservationService = new ReservationService();
+    const completedReservation = await reservationService.completeReservation(
+      popupStoreId,
+      userId
+    );
+    if (!completedReservation) {
+      return res.status(404).json({ message: "Reservation not found" });
+    }
+    res.status(200).json({ message: "사전 예약이 완료되었습니다." });
+  } catch (error) {
+    next(error);
+  }
+}
 
 // 예약 수정
 const updateReservation = async (req, res, next) => {
@@ -87,26 +123,10 @@ const deleteReservation = async (req, res, next) => {
   }
 };
 
-//예약 완료
-const completeReservation = async (req, res, next) => {
-  try {
-    const reservationService = new ReservationService();
-    const updatedReservation = await reservationService.completeReservation(
-      req.params.id
-    );
-    if (!updatedReservation) {
-      return res.status(404).json({ message: "Reservation not found" });
-    }
-    res.status(200).json(updatedReservation);
-  } catch (err) {
-    next(err);
-  }
-};
-
 module.exports = {
   createReservation,
   getAllReservations,
-  getReservationById,
+  getReservationsByPopupStoreId,
   updateReservation,
   deleteReservation,
   completeReservation,
