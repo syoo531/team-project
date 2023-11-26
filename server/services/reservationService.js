@@ -1,4 +1,4 @@
-const { Reservation } = require("../models");
+const { Reservation, User } = require("../models");
 
 class ReservationService {
   // 예약 생성
@@ -37,42 +37,25 @@ class ReservationService {
   }
 
   // 특정 팝업스토어 예약 조회
-  async getReservationsByPopupStoreId(popupStoreId) {
+  async getReservationByCorpAdmin(popupStoreId) {
     return await Reservation.find({
       popup_store: popupStoreId,
-    })
-      .populate("popup_store")
-      .populate("user");
+    }).populate("user");
   }
 
-  // async validateAdmin(email, popupStoreId) {
-  //   const isAdminUser = await User.findOne({ email }).select("admin_corp");
-  //   console.log("isAdminUser: ", isAdminUser);
-  //   console.log("popupStoreId: ", popupStoreId);
-
-  //   if (
-  //     isAdminUser.admin_corp === popupStoreId &&
-  //     isAdminUser.admin_corp !== undefined
-  //   ) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   //예약 완료
-  async completeReservation(popupStoreId, userId) {
-    return await Reservation.findOneAndUpdate(
+  async enterReservation(popupStoreId, userId) {
+    console.log("여기66", popupStoreId, userId);
+    const reservation = await Reservation.findOneAndUpdate(
       {
         popup_store: popupStoreId,
         user: userId,
-        status: "예약중",
+        status: "대기중",
       },
-      {
-        status: "완료됨",
-      },
-      { new: true }
+      { status: "완료됨" }
     );
+    console.log("여기55", reservation);
+    return reservation;
   }
 
   // 예약 삭제
@@ -85,6 +68,30 @@ class ReservationService {
     return await Reservation.findByIdAndUpdate(id, data, { new: true })
       .populate("popup_store")
       .populate("user");
+  }
+
+  async getMyReservation(email) {
+    const user = await User.findOne({ email }).select("_id");
+    console.log("여기22", user);
+    const myReservation = await Reservation.find({ user });
+    console.log("여기33", myReservation);
+    return myReservation;
+  }
+
+  // 업체 관리자인지 확인
+  async validateAdmin(email, popupStoreId) {
+    const isAdminUser = await User.findOne({ email }).select("admin_corp");
+    console.log("isAdminUser: ", isAdminUser);
+    console.log("popupStoreId: ", popupStoreId);
+
+    if (
+      isAdminUser.admin_corp === popupStoreId &&
+      isAdminUser.admin_corp !== undefined
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

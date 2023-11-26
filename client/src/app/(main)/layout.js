@@ -5,10 +5,10 @@ import Header from "./components/header/Header";
 export default function HomeLayout({ children }) {
   return (
     <div>
-      <BandBanner />
-      <Header />
+      {/* <BandBanner /> */}
+      {/* <Header /> */}
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

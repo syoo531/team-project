@@ -27,16 +27,16 @@ const getAllReservations = async (req, res, next) => {
 };
 
 // 특정 예약 조회
-const getReservationsByPopupStoreId = async (req, res) => {
+const getReservationByCorpAdmin = async (req, res) => {
   try {
-    const { popupStoreId } = req.query;
-    console.log("popupStoreId:", req.query.popupStoreId);
+    const popupStoreId = req.corpAdminPopupId;
 
     const reservationService = new ReservationService();
-    const users = await reservationService.getReservationsByPopupStoreId(
+    const reservationList = await reservationService.getReservationByCorpAdmin(
       popupStoreId
     );
-    res.status(200).json(users);
+
+    res.status(200).json({ data: reservationList, message: "통신 성공" });
   } catch (error) {
     console.error("Error in getReservationsByPopupStoreId:", error);
     res
@@ -45,49 +45,25 @@ const getReservationsByPopupStoreId = async (req, res) => {
   }
 };
 
-// const getReservationsByPopupStoreId = async (req, res) => {
-//   try {
-//     const { popupStoreId } = req.query;
-//     console.log("popupStoreId:", req.query.popupStoreId);
-//     const email = req.decoded.user.email;
-
-//     const reservationService = new ReservationService();
-//     const validate = await reservationService.validateAdmin(
-//       email,
-//       popupStoreId
-//     );
-//     console.log("validate: ", validate);
-//     if (!validate) {
-//       throw new Error("해당 팝업스토어 사전예약 조회 권한이 없습니다.");
-//     }
-//     const users = await reservationService.getReservationsByPopupStoreId(
-//       popupStoreId
-//     );
-//     res.status(200).json(users);
-//   } catch (error) {
-//     res
-//       .status(200)
-//       .json({ error: "팝업스토어에 대한 사전예약 리스트 조회 실패" });
-//   }
-// };
-
 //예약 완료
-async function completeReservation(req, res, next) {
+const enterReservation = async (req, res, next) => {
   try {
-    const { popupStoreId, userId } = req.body;
+    const popupStoreId = req.corpAdminPopupId;
+    const { userId } = req.body;
+    console.log("여기44", popupStoreId, userId);
     const reservationService = new ReservationService();
-    const completedReservation = await reservationService.completeReservation(
+    const completedReservation = await reservationService.enterReservation(
       popupStoreId,
       userId
     );
     if (!completedReservation) {
       return res.status(404).json({ message: "Reservation not found" });
     }
-    res.status(200).json({ message: "사전 예약이 완료되었습니다." });
+    res.status(200).json({ message: "사전예약자 입장이 완료되었습니다." });
   } catch (error) {
     next(error);
   }
-}
+};
 
 // 예약 수정
 const updateReservation = async (req, res, next) => {
@@ -123,11 +99,19 @@ const deleteReservation = async (req, res, next) => {
   }
 };
 
+const getMyReservation = async (req, res, next) => {
+  const email = req.decoded.user.email;
+  const reservationService = new ReservationService();
+  const myReservation = await reservationService.getMyReservation(email);
+  res.status(200).json({ data: myReservation });
+};
+
 module.exports = {
   createReservation,
   getAllReservations,
-  getReservationsByPopupStoreId,
+  getReservationByCorpAdmin,
   updateReservation,
   deleteReservation,
-  completeReservation,
+  enterReservation,
+  getMyReservation,
 };
