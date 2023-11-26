@@ -92,6 +92,15 @@ export default function Form({
                   value={formData?.address}
                 />
               </div>
+              <div className="address-input">
+                <input
+                  placeholder="상세 주소"
+                  type="text"
+                  name="detail_address"
+                  onChange={handleChange}
+                  value={formData?.detail_address}
+                />
+              </div>
             </div>
 
             <div className="category-selectbox__div field short-field">

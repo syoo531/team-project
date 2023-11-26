@@ -78,12 +78,18 @@
   }
 }
 
+.address_field {
+  .address-input,
+  .zipcode {
+    padding-bottom: 10px;
+  }
+}
+
 .category-selectbox__div {
   display: flex;
   align-items: center;
-  padding-top: 10px;
 
-  .category-selectbox {
+  & .category-selectbox {
     width: 180px;
     height: 30px;
     padding-left: 10px;

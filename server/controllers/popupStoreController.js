@@ -1,5 +1,5 @@
 const { PopupStore } = require("../models");
-const { Image } = require("../models");
+const { User } = require("../models");
 const PopupService = require("../services/popupService");
 
 //! CREATE STORE
@@ -40,7 +40,7 @@ const getAllStores = async (req, res) => {
   try {
     const popupService = new PopupService();
     const data = await popupService.getAllStores(req.query);
-    
+
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -98,6 +98,40 @@ const deleteImage = async (req, res) => {
   }
 };
 
+//! 사용자 데이터 조회 (옮길예정)
+const getAllUsers = async (req, res) => {
+  try {
+    const { page, limit } = req.query;
+
+    const limitPerPage = limit || 10; //기본 10개로 제한
+    const skipCount = (Number(page) - 1) * limitPerPage;
+    const totalUsers = await User.countDocuments({});
+
+    const data = await User.find()
+      .sort({ _id: -1 })
+      .limit(limitPerPage)
+      .skip(skipCount);
+
+    const today = new Date().toDateString();
+    const newUserToday = await User.find({
+      createdAt: {
+        $gte: today,
+      },
+    });
+
+    res.status(200).json({
+      data,
+      newUserToday,
+      totalUsers,
+      currentPage: Number(page) || 1,
+      totalPages: Math.ceil(totalUsers / limitPerPage),
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log(err);
+  }
+};
+
 module.exports = {
   createPopupStore,
   getPopupStore,
@@ -105,4 +139,5 @@ module.exports = {
   updatePopupStore,
   deletePopupStore,
   deleteImage,
+  getAllUsers,
 };

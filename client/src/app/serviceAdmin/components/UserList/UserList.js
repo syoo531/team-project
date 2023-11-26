@@ -1,7 +1,7 @@
 "use client";
 import "./UserList.scss";
 
-export default function UserList({ users }) {
+export default function UserList({ userData }) {
   return (
     <div className="main__layout">
       <div className="main__header list__header">
@@ -22,14 +22,14 @@ export default function UserList({ users }) {
             </tr>
           </thead>
           <tbody>
-            {users && users.length > 0 ? (
-              users.map((user) => (
+            {userData && userData.length > 0 ? (
+              userData.map((user) => (
                 <tr className="table-row" key={user._id}>
                   <td>{user.name}</td>
                   <td>{user.phone_number}</td>
                   <td>{user.category}</td>
                   <td>{user.email}</td>
-                  <td>{user.created_at}</td>
+                  <td>{user.createdAt?.split("T")[0]}</td>
                 </tr>
               ))
             ) : (

@@ -58,12 +58,13 @@ class WaitingService {
           }
         }
 
-      result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+        result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+      }
+      // console.log("여기33", result);
+      return result;
     }
-    // console.log("여기33", result);
-    return result;
   }
-
+  
   // 업체 관리자 페이지에서
   // 특정 팝업 스토어 Id에 대한 웨이팅 리스트를 조회할 수 있다.
   async getWaitingByPopupStore(popup) {

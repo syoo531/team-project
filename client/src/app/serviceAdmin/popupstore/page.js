@@ -5,9 +5,23 @@ const API_URL = "http://localhost:4000/api/popupStore";
 
 async function getData(searchParams) {
   try {
-    const res = await fetch(`${API_URL}?${new URLSearchParams(searchParams)}`, {
+    const accessToken = localStorage.getItem("accessToken");
+    const headers = {
+      Authorization: accessToken,
+      "Content-Type": "application/json",
+    };
+    const url = `${API_URL}?${new URLSearchParams(searchParams)}`;
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers,
       cache: "no-store",
     });
+
+    // const res = await fetch(`${API_URL}?${new URLSearchParams(searchParams)}`, {
+    //   cache: "no-store",
+    // });
+
     return res.json();
   } catch (err) {
     console.log(err);
@@ -15,13 +29,18 @@ async function getData(searchParams) {
 }
 
 export default async function ServiceAdmin({ searchParams }) {
-  const { data, totalPages, currentPage, totalStores } =
-    await getData(searchParams);
+  const res = await getData(searchParams);
 
   return (
     <>
-      <PopupStoreList storeData={data} totalStores={totalStores} />
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <PopupStoreList
+        storeData={res?.data ? res.data : []}
+        totalStores={res?.totalStores ? res.totalStores : 0}
+      />
+      <Pagination
+        currentPage={res?.currentPage ? res?.currentPage : 1}
+        totalPages={res?.totalPages ? res?.totalPages : 1}
+      />
     </>
   );
 }
