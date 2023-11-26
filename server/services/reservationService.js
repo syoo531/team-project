@@ -51,13 +51,9 @@ class ReservationService {
         popup_store: popupStoreId,
         user: userId,
         status: "대기중",
-        status: "대기중",
       },
       { status: "완료됨" }
-      { status: "완료됨" }
     );
-    console.log("여기55", reservation);
-    return reservation;
     console.log("여기55", reservation);
     return reservation;
   }
