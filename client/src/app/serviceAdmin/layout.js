@@ -1,13 +1,13 @@
-import SideMenu from "./components/SideMenu/SideMenu";
-import NavBar from "./components/NavBar/NavBar";
+import ServiceAdminHeader from "./components/serviceAdminSidebar/serviceAdminHeader";
+import ServiceAdminSidebar from "./components/serviceAdminSidebar/serviceAdminSidebar";
 import "./main.scss";
 
 export default function RootLayout({ children }) {
   return (
     <div className="app">
-      <NavBar />
+      <ServiceAdminHeader />
       <div className="app-flex-container">
-        <SideMenu />
+        <ServiceAdminSidebar />
         <main>{children}</main>
       </div>
     </div>

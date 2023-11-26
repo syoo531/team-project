@@ -1,4 +1,4 @@
-import UpdateStore from "../components/UpdateStore/UpdateStore";
+import UpdateStore from "../../components/UpdateStore/UpdateStore";
 
 async function getData(id) {
   try {

@@ -1,6 +1,5 @@
 "use client";
 
-import "./CreateStore.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { s3UploadMultipleImages, s3UploadSingleImage } from "../imageUploader";
@@ -26,6 +25,7 @@ export default function CreateStore() {
   const [formData, setFormData] = useState(formIntialState);
   const [newImages, setNewImages] = useState([]);
   const [mainImage, setMainImage] = useState(null);
+  const [disableButton, setDisableButton] = useState(false);
   const [error, setError] = useState({});
 
   const createPopupStore = async () => {
@@ -35,7 +35,6 @@ export default function CreateStore() {
     ]);
 
     const updatedFormData = { ...formData, imageURL, mainURL };
-
     await axios.post(`http://localhost:4000/api/popupStore`, updatedFormData);
   };
 
@@ -49,32 +48,31 @@ export default function CreateStore() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setDisableButton(true);
+
     try {
       await createPopupStore();
-      router.push("/serviceAdmin");
+      router.push("/serviceAdmin/popupstore");
       router.refresh();
     } catch (error) {
       console.error("Error:", error);
+      setDisableButton(false);
     }
   };
 
-  const handleComplete = (data) => {
-    setPopup(!popup);
-  };
-
   return (
-    <div>
+    <>
       <Form
         formData={formData}
         setFormData={setFormData}
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        handleComplete={handleComplete}
         newImages={newImages}
         setNewImages={setNewImages}
         mainImage={mainImage}
         setMainImage={setMainImage}
+        disableButton={disableButton}
       />
-    </div>
+    </>
   );
 }

@@ -2,18 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 10px 0px;
   gap: 10px;
 
   button {
     border: none;
-    border-radius: 10px;
+    border-radius: 6px;
     text-align: center;
     background: none;
     cursor: pointer;
 
     &.active {
-      font-weight: 600;
-      background:rgba(0, 149, 255, 0.2);
+      font-weight: 700;
     }
 
     &:hover {

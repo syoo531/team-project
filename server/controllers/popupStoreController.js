@@ -38,11 +38,9 @@ const getPopupStore = async (req, res) => {
 //! GET ALL STORES
 const getAllStores = async (req, res) => {
   try {
-    const { page, limit } = req.query;
-
     const popupService = new PopupService();
-    const data = await popupService.getAllStores(page, limit);
-
+    const data = await popupService.getAllStores(req.query);
+    
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ error: err.message });
