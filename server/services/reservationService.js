@@ -45,7 +45,6 @@ class ReservationService {
 
   //예약 완료
   async enterReservation(popupStoreId, userId) {
-    console.log("여기66", popupStoreId, userId);
     const reservation = await Reservation.findOneAndUpdate(
       {
         popup_store: popupStoreId,
@@ -54,7 +53,6 @@ class ReservationService {
       },
       { status: "완료됨" }
     );
-    console.log("여기55", reservation);
     return reservation;
   }
 
@@ -72,9 +70,10 @@ class ReservationService {
 
   async getMyReservation(email) {
     const user = await User.findOne({ email }).select("_id");
-    console.log("여기22", user);
-    const myReservation = await Reservation.find({ user });
-    console.log("여기33", myReservation);
+    const myReservation = await Reservation.find({ user }).populate({
+      path: "popup_store",
+      select: "name",
+    });
     return myReservation;
   }
 

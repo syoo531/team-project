@@ -7,14 +7,15 @@ const {
   deletePopupStore,
   deleteImage,
 } = require("../controllers/popupStoreController");
+const validateServiceAdmin = require("../middlewares/validateServiceAdmin");
 
 const router = Router();
 
-router.post("/", createPopupStore);
+router.post("/", validateServiceAdmin, createPopupStore);
 router.get("/:id", getPopupStore);
-router.patch("/:id", updatePopupStore);
-router.delete("/:id", deletePopupStore);
-router.delete("/image/:id", deleteImage);
+router.patch("/:id", validateServiceAdmin, updatePopupStore);
+router.delete("/:id", validateServiceAdmin, deletePopupStore);
+router.delete("/image/:id", validateServiceAdmin, deleteImage);
 router.get("/", getAllStores);
 
 module.exports = router;

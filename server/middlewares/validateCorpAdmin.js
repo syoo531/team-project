@@ -17,7 +17,6 @@ const validateCorpAdmin = async (req, res, next) => {
         if (err) {
           throw new Error("엑세스 토큰이 유효하지 않습니다.");
         } else {
-          console.log("여기11", decoded.user.email);
           email = decoded.user.email;
           req.decoded = decoded;
         }
@@ -26,7 +25,6 @@ const validateCorpAdmin = async (req, res, next) => {
     // 1. 업체관리자인지(admin_role이 1인지 확인)
     // 2. admin_corp 의 value(팝업스토어의 ObjectID)를 찾아서 리턴.
     const user = await User.findOne({ email }).select("admin_role admin_corp");
-    console.log("여기22", user);
     if (user.admin_role === 1 && user.admin_corp) {
       req.corpAdminPopupId = user.admin_corp;
     }

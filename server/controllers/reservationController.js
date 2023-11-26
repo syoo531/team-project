@@ -50,7 +50,6 @@ const enterReservation = async (req, res, next) => {
   try {
     const popupStoreId = req.corpAdminPopupId;
     const { userId } = req.body;
-    console.log("여기44", popupStoreId, userId);
     const reservationService = new ReservationService();
     const completedReservation = await reservationService.enterReservation(
       popupStoreId,
@@ -103,6 +102,7 @@ const getMyReservation = async (req, res, next) => {
   const email = req.decoded.user.email;
   const reservationService = new ReservationService();
   const myReservation = await reservationService.getMyReservation(email);
+
   res.status(200).json({ data: myReservation });
 };
 

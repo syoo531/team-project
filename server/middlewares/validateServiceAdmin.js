@@ -17,7 +17,6 @@ const validateServiceAdmin = async (req, res, next) => {
         if (err) {
           throw new Error("엑세스 토큰이 유효하지 않습니다.");
         } else {
-          console.log("여기11", decoded.user.email);
           email = decoded.user.email;
         }
       }
@@ -25,7 +24,6 @@ const validateServiceAdmin = async (req, res, next) => {
     // 1. 서비스관리자인지(admin_role이 2인지 확인)
 
     const user = await User.findOne({ email }).select("admin_role");
-    console.log("여기22", user);
     if (user.admin_role === 2) {
       next();
     } else {
