@@ -8,6 +8,7 @@ async function getData(searchParams) {
     const res = await fetch(`${API_URL}?${new URLSearchParams(searchParams)}`, {
       cache: "no-store",
     });
+
     return res.json();
   } catch (err) {
     console.log(err);
@@ -15,13 +16,18 @@ async function getData(searchParams) {
 }
 
 export default async function ServiceAdmin({ searchParams }) {
-  const { data, totalPages, currentPage, totalStores } =
-    await getData(searchParams);
+  const res = await getData(searchParams);
 
   return (
     <>
-      <PopupStoreList storeData={data} totalStores={totalStores} />
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <PopupStoreList
+        storeData={res?.data ? res.data : []}
+        totalStores={res?.totalStores ? res.totalStores : 0}
+      />
+      <Pagination
+        currentPage={res?.currentPage ? res?.currentPage : 1}
+        totalPages={res?.totalPages ? res?.totalPages : 1}
+      />
     </>
   );
 }

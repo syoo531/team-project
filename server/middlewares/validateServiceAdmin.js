@@ -6,7 +6,7 @@ const validateServiceAdmin = async (req, res, next) => {
     const { authorization } = req.headers;
 
     if (!authorization) {
-      throw new Error("엑세스 토큰이 없습니다.");
+      next("엑세스 토큰이 없습니다.");
     }
     let email;
 

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useDebounce } from "use-debounce";
 
-export default function Search() {
+export default function Search({ userList }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -38,7 +38,11 @@ export default function Search() {
   };
 
   useEffect(() => {
-    router.push(`/serviceAdmin/popupstore?${createQueryString(query)}`);
+    if (userList) {
+      router.push(`/serviceAdmin/users?${createQueryString(query)}`);
+    } else {
+      router.push(`/serviceAdmin/popupstore?${createQueryString(query)}`);
+    }
   }, [
     debounce,
     query.category,
@@ -86,31 +90,40 @@ export default function Search() {
             value={query.search}
           />
         </div>
-        <select onChange={handleSearch} name="category" value={query.category}>
-          <option value="">전체 카테고리</option>
-          {CATEGORY_OPTIONS.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-        </select>
 
-        <select
-          onChange={handleSearch}
-          name="checkClosed"
-          value={query.checkClosed}
-        >
-          <option value="">진행상태</option>
-          <option value="running">진행중</option>
-          <option value="closed">종료</option>
-        </select>
+        {userList ? null : (
+          <>
+            <select
+              onChange={handleSearch}
+              name="category"
+              value={query.category}
+            >
+              <option value="">전체 카테고리</option>
+              {CATEGORY_OPTIONS.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
 
-        <button className="show-date-button" onClick={toggleDateSelector}>
-          기간조회
-        </button>
-        <button className="reset-button" onClick={resetFilter}>
-          초기화
-        </button>
+            <select
+              onChange={handleSearch}
+              name="checkClosed"
+              value={query.checkClosed}
+            >
+              <option value="">진행상태</option>
+              <option value="running">진행중</option>
+              <option value="closed">종료</option>
+            </select>
+
+            <button className="show-date-button" onClick={toggleDateSelector}>
+              기간조회
+            </button>
+            <button className="reset-button" onClick={resetFilter}>
+              초기화
+            </button>
+          </>
+        )}
       </div>
 
       {showDateSelector && (

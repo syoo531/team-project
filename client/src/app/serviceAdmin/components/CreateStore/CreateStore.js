@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { s3UploadMultipleImages, s3UploadSingleImage } from "../imageUploader";
-import axios from "axios";
 import Form from "../Form/Form.js";
+import instance from "@/utils/instance";
 
 export default function CreateStore() {
   const router = useRouter();
@@ -14,6 +14,7 @@ export default function CreateStore() {
     brand: "",
     category: "",
     address: "",
+    detail_address: "",
     zipcode: "",
     location: "",
     summary: "",
@@ -35,7 +36,7 @@ export default function CreateStore() {
     ]);
 
     const updatedFormData = { ...formData, imageURL, mainURL };
-    await axios.post(`http://localhost:4000/api/popupStore`, updatedFormData);
+    await instance.post(`/popupStore`, updatedFormData);
   };
 
   const handleChange = (e) => {

@@ -14,6 +14,9 @@ const PopupStoreSchema = new Schema(
     address: {
       type: String,
     },
+    detail_address: {
+      type: String,
+    },
     zipcode: {
       type: String,
     },

@@ -4,7 +4,7 @@ import "./PopupStoreList.scss";
 import { useRouter } from "next/navigation";
 import Search from "../Search/Search";
 
-export default function PopupStoreList({ storeData: stores, totalStores = 0 }) {
+export default function PopupStoreList({ storeData: stores=[], totalStores = 0 }) {
   const router = useRouter();
 
   return (

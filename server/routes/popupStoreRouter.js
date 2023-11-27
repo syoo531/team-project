@@ -6,11 +6,13 @@ const {
   updatePopupStore,
   deletePopupStore,
   deleteImage,
+  getAllUsers,
 } = require("../controllers/popupStoreController");
 const validateServiceAdmin = require("../middlewares/validateServiceAdmin");
 
 const router = Router();
 
+router.get("/users", validateServiceAdmin, getAllUsers);
 router.post("/", validateServiceAdmin, createPopupStore);
 router.get("/:id", getPopupStore);
 router.patch("/:id", validateServiceAdmin, updatePopupStore);
