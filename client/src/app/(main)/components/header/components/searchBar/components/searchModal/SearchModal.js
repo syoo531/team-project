@@ -71,7 +71,9 @@ export default function SearchModal({ searchModalClose }) {
       });
     }
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
-    router.push(`/popupList/search?keyword=${searchValue}`);
+    router.push(
+      `/popupList/search?pageNumber=1&limit=8&keyword=${searchValue}`
+    );
     setRecentSearchList([...recentSearches]);
     searchModalClose();
 
