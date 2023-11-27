@@ -13,14 +13,18 @@ export default function UserInfo() {
 
   useEffect(() => {
     async function getUserInfo() {
-      const response = await instance.get("/users/getUserInfo");
-      const userInfo = response.data.data;
-      setFormData({
-        name: userInfo.name,
-        email: userInfo.email,
-        phoneNumber: userInfo.phone_number,
-        selectedInterests: userInfo.category,
-      });
+      try {
+        const response = await instance.get("/users/getUserInfo");
+        const userInfo = response.data.data;
+        setFormData({
+          name: userInfo.name,
+          email: userInfo.email,
+          phoneNumber: userInfo.phone_number,
+          selectedInterests: userInfo.category,
+        });
+      } catch (error) {
+        console.error(error);
+      }
     }
     getUserInfo();
   }, []);

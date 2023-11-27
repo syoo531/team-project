@@ -1,7 +1,5 @@
 import "./reservationCard.scss";
 
-const img =
-  "https://user-images.githubusercontent.com/126956430/282671069-a09c630b-27dd-4089-9cdc-a2117ca9c132.png";
 //카드에 들어갈 정보
 // 1. 팝업스토어 이름(보내줄때 한번에 ) 2. 예약날자 3. 예약시간 4. 일행
 export default function reservationCard(data) {

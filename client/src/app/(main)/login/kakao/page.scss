@@ -118,6 +118,9 @@
             border: 0.8px solid #ccc;
             cursor: not-allowed;
           }
+          .signupBtn:hover {
+            cursor: pointer;
+          }
         }
       }
     }
@@ -248,6 +251,9 @@
           background: #ccc;
           border: 0.8px solid #ccc;
           cursor: not-allowed;
+        }
+        .signupBtn:hover {
+          cursor: pointer;
         }
       }
     }

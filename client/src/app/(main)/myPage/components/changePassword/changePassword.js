@@ -123,7 +123,7 @@ export default function ChangePassword() {
             </div>
 
             <button className="signupBtn" type="submit">
-              비밀번호 변경
+              비밀번호변경
             </button>
           </form>
         </div>

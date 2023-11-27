@@ -8,10 +8,14 @@ export default function Reservation() {
   const [myReservation, setMyReservation] = useState(undefined);
   useEffect(() => {
     async function getMyReservation() {
-      const res = await instance("/reservation/getMyReservation");
-      console.log("여기33", res.data.data);
-      const reservationList = res.data.data ? res.data.data : undefined;
-      setMyReservation(reservationList);
+      try {
+        const res = await instance("/reservation/getMyReservation");
+        console.log("여기33", res.data.data);
+        const reservationList = res.data.data ? res.data.data : undefined;
+        setMyReservation(reservationList);
+      } catch (error) {
+        console.error(error);
+      }
     }
     getMyReservation();
   }, []);

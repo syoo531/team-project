@@ -66,6 +66,9 @@
             line-height: normal;
             margin-top: 75px;
           }
+          .loginBtn:hover {
+            cursor: pointer;
+          }
         }
         .forgetPassword {
           display: flex;
@@ -109,6 +112,9 @@
           width: 100%;
         }
       }
+      .kakaoBtn:hover {
+        cursor: pointer;
+      }
       .googleBtn {
         width: 450px;
         height: 50px;
@@ -136,6 +142,9 @@
           position: absolute;
           width: 100%;
         }
+      }
+      .googleBtn:hover {
+        cursor: pointer;
       }
     }
   }
@@ -214,6 +223,9 @@
             line-height: normal;
             margin-top: 75px;
           }
+          .loginBtn:hover {
+            cursor: pointer;
+          }
         }
         .forgetPassword {
           display: flex;
@@ -258,6 +270,9 @@
           width: 100%;
         }
       }
+      .kakaoBtn:hover {
+        cursor: pointer;
+      }
       .googleBtn {
         width: 94%;
         height: 50px;
@@ -285,6 +300,9 @@
           position: absolute;
           width: 100%;
         }
+      }
+      .googleBtn:hover {
+        cursor: pointer;
       }
     }
   }

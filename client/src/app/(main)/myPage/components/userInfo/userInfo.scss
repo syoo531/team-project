@@ -101,10 +101,8 @@
           margin-top: 25px;
           transition: background 0.3s ease;
         }
-        .signupBtn:disabled {
-          background: #ccc;
-          border: 0.8px solid #ccc;
-          cursor: not-allowed;
+        .signupBtn:hover {
+          cursor: pointer;
         }
       }
       .signoutBtn {
@@ -119,6 +117,9 @@
         font-weight: 400;
         line-height: normal;
         margin-top: 15px;
+      }
+      .signoutBtn:hover {
+        cursor: pointer;
       }
     }
   }
@@ -146,6 +147,9 @@
       margin-top: 20px;
     }
     .signupInputContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       .signupForm {
         display: flex;
         flex-direction: column;
@@ -230,11 +234,25 @@
           margin-bottom: 10px;
           transition: background 0.3s ease;
         }
-        .signupBtn:disabled {
-          background: #ccc;
-          border: 0.8px solid #ccc;
-          cursor: not-allowed;
+        .signupBtn:hover {
+          cursor: pointer;
         }
+      }
+      .signoutBtn {
+        width: 94%;
+        height: 50px;
+        border: 0.8px solid rgba(0, 0, 0, 0.5);
+        background: #ffffff;
+        color: rgb(0, 0, 0);
+        font-family: Noto Sans KR;
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-top: 15px;
+      }
+      .signoutBtn:hover {
+        cursor: pointer;
       }
     }
   }
