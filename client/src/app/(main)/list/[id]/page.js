@@ -14,6 +14,7 @@ config.autoAddCss = false;
 export default function PopUp(props) {
     const [popupData, setPopupData] = useState({});
     const [reviewData, setReviewData] = useState({});
+    const [popupObjId, setPopupObjId] = useState(null); // useState 추가
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const storeId = props.params.id;
@@ -31,6 +32,14 @@ export default function PopUp(props) {
         setIsModalOpen(false);
     };
 
+    const [isImgWrapOpen, setImgWrapOpen] = useState(true);
+
+    const toggleImgWrap = () => {
+        setImgWrapOpen(!isImgWrapOpen);
+    };
+    // 이미지 랩이 열려있을 때와 닫혀있을 때에 따라 버튼 텍스트 설정
+    const buttonText = isImgWrapOpen ? "이미지 펼치기 ▼" : "이미지 접기 ▲";
+
     // 리뷰 작성 완료 시 호출되는 함수
     const handleReviewSubmit = (reviewContent) => {
         // 리뷰 작성 완료 후 할 일 추가
@@ -46,17 +55,14 @@ export default function PopUp(props) {
             setPopupData(popupData);
             console.log("Popup Data:", popupData);
 
-            const popupObjId = popupData.data[storeId]._id;
-            console.log("popupObjId :", popupObjId);
+            const currentPopupObjId = popupData.data && popupData.data[storeId] && popupData.data[storeId]._id;
+            setPopupObjId(currentPopupObjId); // popupObjId 업데이트
 
             // 리뷰 데이터 가져오기
-            const reviewResponse = await axios.get("http://localhost:4000/api/review/allReview");
+            const reviewResponse = await axios.get("http://localhost:4000/api/review");
             const reviewData = reviewResponse.data;
             setReviewData(reviewData);
             console.log("Review Data:", reviewData);
-
-            const reviewObjId = reviewData[storeId].popup_store._id;
-            console.log("reviewObjId :", reviewObjId);
         } catch (err) {
             console.log("Error fetching data:", err);
         }
@@ -72,28 +78,25 @@ export default function PopUp(props) {
             <div className="popImgWrap">
                 <div className="mainImg">
                     <img
-                        src={popupData.data && popupData.data[storeId] && popupData.data[storeId].image.main_image_url}
+                        src={
+                            popupData.data &&
+                            popupData.data[storeId] &&
+                            popupData.data[storeId].mainImage &&
+                            popupData.data[storeId].mainImage.url
+                        }
                         alt=""
                     />
                 </div>
                 <div className="subImg">
                     <div className="subImg1">
                         <img
-                            src={
-                                popupData.data &&
-                                popupData.data[storeId] &&
-                                popupData.data[storeId].image.thumbnail_image_url
-                            }
+                            src={popupData.data && popupData.data[storeId] && popupData.data[storeId].images?.[0]?.url}
                             alt=""
                         />
                     </div>
                     <div className="subImg2">
                         <img
-                            src={
-                                popupData.data &&
-                                popupData.data[storeId] &&
-                                popupData.data[storeId].image.detail_image_url
-                            }
+                            src={popupData.data && popupData.data[storeId] && popupData.data[storeId].images?.[1]?.url}
                             alt=""
                         />
                     </div>
@@ -126,13 +129,44 @@ export default function PopUp(props) {
             </div>
             <div className="popInfo2">
                 <h3 className="popInfoSubTtile">팝업스토어 내용</h3>
-                <p>{popupData.data && popupData.data[storeId] && popupData.data[storeId].summary}</p>
+                <p>{popupData.data && popupData.data[storeId] && popupData.data[storeId].description}</p>
             </div>
             <div className="popReview">
                 <h4>
-                    후기 <FontAwesomeIcon className="staricon" icon={faStar} style={{ color: "#e21680" }} />
-                    <span>0개</span>
+                    <h5>
+                        후기 <FontAwesomeIcon className="staricon" icon={faStar} style={{ color: "#e21680" }} />
+                        <span>2개</span>
+                    </h5>
+                    <a href="#">전체보기</a>
                 </h4>
+                <div className="popReviewList">
+                    <div className="popReviewListItem">
+                        <div className="top">
+                            {/* <h2>P</h2> */}
+                            <h3>김수환</h3>
+                            <h4>2023. 11. 24 방문</h4>
+                        </div>
+                        <div className="cont">
+                            <p>
+                                다녀왔는데 너무너무 재미있었어요 !!!다녀왔는데 너무너무 재미있었어요 !!!다녀왔는데
+                                너무너무 재미있었어요 !!!
+                            </p>
+                        </div>
+                        <button type="button" className="imgToggleBtn" onClick={toggleImgWrap}>
+                            {buttonText}
+                        </button>
+                        <div className="img">
+                            <div className={`img_wrap ${isImgWrapOpen ? "open" : "closed"}`}>
+                                <div className="img_wrap2">
+                                    <div className="img1">IMG</div>
+                                    <div className="img1">IMG</div>
+                                    <div className="img1">IMG</div>
+                                    {/* <div className="img1">IMG</div> */}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <button type="button" onClick={openModal}>
                     후기 작성하기
                 </button>
@@ -159,6 +193,7 @@ export default function PopUp(props) {
                     closeModal={closeModal}
                     handleReviewSubmit={handleReviewSubmit}
                     postId={storeId} // 스토어의 ID를 전달
+                    popupStoreId={popupObjId} // 팝업스토어 오브젝트id 전달
                 />
             )}
         </div>

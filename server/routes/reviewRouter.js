@@ -13,9 +13,10 @@ const validateToken = require("../middlewares/validateToken");
 const router = Router();
 
 router.post("/createReview", validateToken, createReview);
+router.post("/createReview", createReview);
 router.get("/", getAllReviews);
 router.get("/:id", getReviewById);
-router.patch("/:id", updateReview);
-router.delete("/:id", deleteReview);
+router.patch("/updateReview/:id", updateReview);
+router.delete("/deleteReview/:id", deleteReview);
 
 module.exports = router;

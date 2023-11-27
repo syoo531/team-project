@@ -17,7 +17,7 @@ class ReviewService {
         const newReviewData = {
             popup_store: popupName._id,
             user: userName._id,
-            name: "",
+            name: userName.name,
             text,
             // image,
         };
@@ -26,7 +26,7 @@ class ReviewService {
         return createdReview;
     }
 
-    //유저구분
+    // //유저구분
     async validateUser(email, popupStoreId) {
         try {
             const findUserId = await User.findOne({ email }).select("_id");
