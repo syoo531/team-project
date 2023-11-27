@@ -69,94 +69,106 @@
     display: flex;
     margin-bottom: 40px;
 
-    .moveToLeftRolling {
-      @include Rolling;
-      padding-right: 50px;
-      animation: moveLeftLoop 40s linear infinite;
-    }
+    &:hover {
+      .moveToLeftRolling {
+        animation-play-state: paused;
+      }
 
-    .moveToLeftRollingCopy {
-      @include Rolling;
-      padding-right: 50px;
-      animation: moveLeftLoop 40s linear infinite;
-    }
-
-    .stop {
-      animation-play-state: paused;
+      .moveToLeftRollingCopy {
+        animation-play-state: paused;
+      }
     }
   }
 
-  .rightRollingWrapper {
-    display: flex;
-    justify-content: flex-end;
+  .moveToLeftRolling {
+    @include Rolling;
+    padding-right: 50px;
+    animation: moveLeftLoop 40s linear infinite;
+  }
 
+  .moveToLeftRollingCopy {
+    @include Rolling;
+    padding-right: 50px;
+    animation: moveLeftLoop 40s linear infinite;
+  }
+}
+
+.rightRollingWrapper {
+  display: flex;
+  justify-content: flex-end;
+
+  &:hover {
     .moveToRightRolling {
-      @include Rolling;
-      padding-left: 50px;
-      animation: moveRightLoop 40s linear infinite;
+      animation-play-state: paused;
     }
 
     .moveToRightRollingCopy {
-      @include Rolling;
-      padding-left: 50px;
-      animation: moveRightLoop 40s linear infinite;
-    }
-
-    .stop {
       animation-play-state: paused;
     }
   }
 
-  .popUpImg {
-    position: relative;
-    width: 250px;
-    height: 250px;
+  .moveToRightRolling {
+    @include Rolling;
+    padding-left: 50px;
+    animation: moveRightLoop 40s linear infinite;
+  }
+
+  .moveToRightRollingCopy {
+    @include Rolling;
+    padding-left: 50px;
+    animation: moveRightLoop 40s linear infinite;
+  }
+}
+
+.popUpImg {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 12px;
+  background-image: url("https://user-images.githubusercontent.com/126956430/283732118-9504097d-9196-46e7-8cdd-cc903509b4a0.png");
+  background-size: cover;
+  background-position: center;
+  transition: 0.5s;
+
+  .blackBackGround {
+    position: absolute;
+    inset: 0;
     border-radius: 12px;
-    background-image: url("https://user-images.githubusercontent.com/126956430/283732118-9504097d-9196-46e7-8cdd-cc903509b4a0.png");
-    background-size: cover;
-    background-position: center;
+    background-color: #222;
+    opacity: 0;
     transition: 0.5s;
+  }
+
+  .readMoreBtn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px 20px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    opacity: 0;
+    transition: 0.5s;
+  }
+
+  &:nth-child(even) {
+    width: 220x;
+    height: 220px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(0.96);
 
     .blackBackGround {
-      position: absolute;
-      inset: 0;
-      border-radius: 12px;
-      background-color: #222;
-      opacity: 0;
-      transition: 0.5s;
+      opacity: 0.5;
     }
 
     .readMoreBtn {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 10px 20px;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #fff;
-      opacity: 0;
-      transition: 0.5s;
-    }
-
-    &:nth-child(even) {
-      width: 220x;
-      height: 220px;
-    }
-
-    &:hover {
-      cursor: pointer;
-      transform: scale(0.96);
-
-      .blackBackGround {
-        opacity: 0.5;
-      }
-
-      .readMoreBtn {
-        opacity: 1;
-      }
+      opacity: 1;
     }
   }
 }

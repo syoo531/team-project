@@ -74,8 +74,10 @@ export default function Footer() {
           })}
         </div>
         <div className="iconLinkWrapper">
-          {LINK.iconLink.map((icons) => {
-            return <FontAwesomeIcon className="icon" icon={icons} />;
+          {LINK.iconLink.map((icons, index) => {
+            return (
+              <FontAwesomeIcon key={index} className="icon" icon={icons} />
+            );
           })}
         </div>
       </div>

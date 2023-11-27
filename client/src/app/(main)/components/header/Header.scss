@@ -26,9 +26,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 50px;
-  height: 80px;
+  height: 100px;
   padding: 0 50px;
-  margin: 10px 0;
   background-color: #fff;
   z-index: 1;
 
@@ -41,67 +40,26 @@
     }
   }
 
-  .searchBarWrapper {
-    flex-basis: 500px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    height: 48px;
-    padding: 0px 20px;
-    border-radius: 50px;
-    background-color: #e8e8e8;
-    transition: 0.5s;
-    &.focused {
-      background-color: #323232;
-    }
-
-    label {
-      border: none;
-      background-color: transparent;
-      outline: none;
-      &:hover {
-        cursor: pointer;
-      }
-    }
-
-    input {
-      display: block;
-      height: 100%;
-      flex: 1 auto;
-      border: none;
-      background-color: transparent;
-      outline: none;
-      color: #ababab;
-      font-size: 16px;
-      letter-spacing: 1px;
-
-      &:hover {
-        cursor: pointer;
-      }
-
-      &::placeholder {
-        color: #ababab;
-        font-size: 12px;
-      }
-    }
-
-    .icon {
-      color: #ababab;
-      font-size: 18px;
-    }
-  }
-
   .btnWrapper {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 26px;
+    flex-basis: 278px;
 
     .loginBtn {
       @include authBtn;
     }
 
+    .myBtn {
+      @include authBtn;
+    }
+
     .signUpBtn {
+      @include authBtn;
+    }
+
+    .logoutBtn {
       @include authBtn;
     }
 

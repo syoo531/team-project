@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "../../../../utils/instance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +11,8 @@ import "./recommendation.scss";
 const popUpArr = new Array(8).fill(0);
 
 export default function Recommendation() {
+  const [user, setUser] = useState(null);
+  const [popupStores, setPopupStores] = useState([]);
   const [slide, setSlide] = useState(0);
   const [count, setCount] = useState(popUpArr.length);
 
@@ -27,10 +30,27 @@ export default function Recommendation() {
     }
   }
 
+  useEffect(() => {
+    (async function () {
+      try {
+        const token = localStorage.getItem("accessToken");
+        if (token) {
+          const response = await axios.get(`/popupList/recommend`);
+          if (response.status === 200) {
+            setUser(response.data.user);
+            setPopupStores(response.data.popupStores);
+          }
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
+
   return (
     <div className="recommendation">
       <div className="headerWrapper">
-        <div className="title">OOO님을 위한 추천 팝업스토어!</div>
+        <div className="title">{user?.name}님을 위한 추천 팝업스토어!</div>
         <div className="btnWrapper">
           <FontAwesomeIcon
             className="leftArrowIcon"
@@ -57,12 +77,13 @@ export default function Recommendation() {
         >
           {popUpArr.map((el, index) => (
             <div className="popUpWrapper" key={index}>
-              <div className="Mark">
-                POP
-                <br />
-                UP
+              <div className="recommedPopUpImg">
+                <div className="Mark">
+                  POP
+                  <br />
+                  UP
+                </div>
               </div>
-              <div className="popUpImg"></div>
               <div className="brand">NH 올원뱅크</div>
               <div className="popUpTitle">신선놀음 팝업스토어</div>
               <div className="locationWrapper">

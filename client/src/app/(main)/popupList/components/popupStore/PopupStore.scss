@@ -1,0 +1,194 @@
+@keyframes visible {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@mixin btnStyle {
+  padding: 10px 20px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #000;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.4s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+  }
+}
+
+.popupStore {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+
+  .modalBackground {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 0;
+  }
+
+  .addInterestModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 340px;
+    padding-top: 30px;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    background-color: #fff;
+    animation: visible 0.5s linear;
+    z-index: 1;
+
+    .smileIcon {
+      color: #0472ff;
+      font-size: 90px;
+      margin-bottom: 20px;
+    }
+
+    .successMessage {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .subText {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .modalBtnWrapper {
+      display: flex;
+      gap: 14px;
+
+      .listMoveBtn {
+        @include btnStyle;
+      }
+
+      .okBtn {
+        @include btnStyle;
+      }
+    }
+  }
+
+  .popupStoreImg {
+    position: relative;
+    width: 250px;
+    height: 250px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+
+    .operationalStatus {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background-color: #0472ff;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 500;
+    }
+  }
+
+  .popupStoreInfoWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .infoTop {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+
+      .brandBookmarkWrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .popupStoreBrand {
+          color: #5d5d5d;
+          font-size: 14px;
+          font-weight: 600;
+        }
+
+        .bookmarkIcon {
+          font-size: 24px;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+
+      .popupStoreName {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .popupStoreAddress {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .addressIcon {
+          color: #0472ff;
+        }
+
+        .addressText {
+          font-size: 14px;
+        }
+      }
+
+      .popupStorePeriod {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .periodIcon {
+          color: #0472ff;
+        }
+
+        .periodText {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .infoBottom {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      padding-bottom: 10px;
+
+      .standbyState {
+        padding: 5px 10px;
+        background-color: #313131;
+        color: #fff;
+        font-size: 12px;
+      }
+
+      .readMore {
+        font-size: 14px;
+        &:hover {
+          cursor: pointer;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

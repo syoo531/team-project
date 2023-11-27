@@ -1,0 +1,82 @@
+@import "../../../../../adminStyles/adminStyles.scss";
+@import "../../../main.scss";
+
+$customButtonRadius: 7px;
+$customButtonOverlayBg: rgba(0, 0, 0, 0.5);
+
+// Mixins
+@mixin flexCenter() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form__media-section {
+  padding: 20px 20px;
+  margin-bottom: 20px;
+  background-color: $admin-card-background;
+
+  border-radius: $admin-border-radius;
+  box-shadow: $admin-box-shadow;
+
+  .media-title {
+    margin-bottom: 20px;
+  }
+}
+
+.form__detail-media {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.image-upload-wrapper {
+  @include flexCenter;
+  position: relative;
+  width: 155px;
+  border: 1px rgb(212, 212, 212) solid;
+  height: 155px;
+  border-radius: 7px;
+}
+
+.image-upload-custom-buttom {
+  @include flexCenter;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 7px;
+  gap: 10px;
+  opacity: 0.9;
+
+  .overlay-text {
+    font-size: 12px;
+  }
+}
+
+.image-upload-wrapper:hover .image-upload-custom-buttom {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.image-upload-custom-buttom input {
+  display: none;
+}
+
+.image-preview {
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    object-fit: fill;
+    border-radius: 7px;
+  }
+}

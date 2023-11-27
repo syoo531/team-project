@@ -1,4 +1,4 @@
-const { Schema } = require("mongoose");
+const { Schema, SchemaTypes } = require("mongoose");
 
 const UserSchema = new Schema(
   {
@@ -11,7 +11,6 @@ const UserSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
     },
     phone_number: {
       type: String,
@@ -24,6 +23,10 @@ const UserSchema = new Schema(
     admin_role: {
       type: Number,
       required: true,
+    },
+    admin_corp: {
+      type: SchemaTypes.ObjectId,
+      ref: "PopupStore",
     },
     deleted_at: {
       type: Date,

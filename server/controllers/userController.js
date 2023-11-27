@@ -1,4 +1,5 @@
 const UserService = require("../services/userService");
+const bcrypt = require("bcrypt");
 
 const login = async (req, res, next) => {
   try {
@@ -9,26 +10,24 @@ const login = async (req, res, next) => {
     const userService = new UserService();
     const isRegistered = await userService.checkRegistration(email);
 
-    if (!isRegistered) {
-      throw new Error("이미 탈퇴한 회원 입니다!!!");
+    if (isRegistered === "unsigned_user") {
+      throw new Error("가입 정보가 없습니다.");
+    }
+    if (isRegistered === "signout_user") {
+      throw new Error("이미 탈퇴한 회원입니다.");
     }
 
-    const tokens = await userService.login(email, password);
-    if (!tokens) {
+    const loginResult = await userService.login(email, password);
+    if (!loginResult) {
       throw new Error("이메일 또는 비밀번호를 잘못 입력하셨습니다.");
     }
-    const [accessToken, is_admin] = tokens;
-    res
-      .cookie("accessToken", accessToken, {
-        // 쿠키 사인으로 해싱한다. secure
-        httpOnly: true, // 리프레시 토큰을 쿠키나 로컬스토리지가 아니라 글로벌스테이트(리덕스,리코일)에 저장한다
-        sameSite: "strict", // 세션: 서버 메모리에 저장, 토큰: 사용자에게 저장, MSA방식
-      }) // 토큰을 저장 1쿠키,2로컬스토리지,세션스토리지,클라이언트메모리
-      .status(200)
-      .json({
-        is_admin: is_admin,
-        message: "로그인에 성공했습니다!",
-      });
+    const [accessToken, is_admin] = loginResult;
+    console.log(loginResult);
+    res.status(200).json({
+      is_admin: is_admin,
+      accessToken: accessToken,
+      message: "로그인에 성공했습니다!",
+    });
   } catch (error) {
     next(error);
   }
@@ -44,8 +43,11 @@ const signup = async (req, res, next) => {
     const userService = new UserService();
     const isRegistered = await userService.checkRegistration(email);
 
-    if (isRegistered.length !== 0) {
+    if (isRegistered === "already_sign") {
       throw new Error("이미 가입된 이메일입니다!");
+    }
+    if (isRegistered === "signout_user") {
+      throw new Error("이미 탈퇴한 이메일입니다!");
     }
     const user = await userService.signUp(
       name,
@@ -63,4 +65,198 @@ const signup = async (req, res, next) => {
   }
 };
 
-module.exports = { login, signup };
+const kakaoAuth = async (req, res, next) => {
+  try {
+    const code = req.body.code;
+    const userService = new UserService();
+    const [kakao_id, email, name] = await userService.kakaoAuth(code);
+    console.log([kakao_id, email, name]); // [카카오회원번호, 이메일, 닉네임]
+    const isRegistered = await userService.checkRegistration(email);
+    if (isRegistered === "already_sign") {
+      // 이미 가입된 경우
+      console.log("이미가입", isRegistered);
+      const [accessToken, is_admin] = await userService.oAuthLogin(email);
+      res.status(200).json({
+        is_admin: is_admin,
+        accessToken: accessToken,
+        message: "로그인에 성공했습니다!",
+      });
+    }
+    if (isRegistered === "signout_user") {
+      // 탈퇴한 이메일인 경우
+      res.status(400).json({
+        message: "이미 탈퇴한 이메일입니다.",
+      });
+    }
+    if (isRegistered === "unsigned_user") {
+      // 해당 이메일로 가입 안된 경우
+      res.status(202).json({
+        email: email,
+        name: name,
+        message: "카카오로 회원가입합니다!",
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const oAuthSignup = async (req, res, next) => {
+  try {
+    const phoneNumber = req.body.phoneNumber;
+    const email = req.body.email;
+    const name = req.body.name;
+    const selectedInterests = req.body.selectedInterests;
+    const userService = new UserService();
+
+    const user = await userService.oAuthSignUp(
+      name,
+      email,
+      phoneNumber,
+      selectedInterests
+    );
+    if (!user) {
+      throw new Error("서버 오류 입니다.");
+    }
+    const [accessToken, is_admin] = await userService.oAuthLogin(email);
+    res.status(200).json({
+      is_admin: is_admin,
+      accessToken: accessToken,
+      message: "로그인에 성공했습니다!",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const googleAuth = async (req, res, next) => {
+  try {
+    const code = req.body.code;
+    const userService = new UserService();
+
+    const [google_id, email, name] = await userService.googleAuth(code);
+    console.log([google_id, email, name]); // [구글회원번호, 이메일, 이름]
+    const isRegistered = await userService.checkRegistration(email);
+    if (isRegistered === "signout_user") {
+      // 탈퇴한 경우
+
+      res.status(400).json({
+        message: "이미 탈퇴한 이메일입니다.",
+      });
+    }
+    if (isRegistered === "already_sign") {
+      // 이미 가입된 경우
+      console.log("이미가입", isRegistered);
+      const [accessToken, is_admin] = await userService.oAuthLogin(email);
+      res.status(200).json({
+        is_admin: is_admin,
+        accessToken: accessToken,
+        message: "로그인에 성공했습니다!",
+      });
+    }
+    if (isRegistered === "unsigned_user") {
+      // 해당 이메일로 가입 안된 경우
+      res.status(202).json({
+        email: email,
+        name: name,
+        message: "구글로 회원가입합니다!",
+      });
+    }
+  } catch (err) {
+    next(err);
+  }
+};
+
+// 유저 정보 받아오기
+const getUserInfo = async (req, res, next) => {
+  try {
+    const email = req.decoded.user.email;
+    const userService = new UserService();
+    const userInfo = await userService.getUserInfo(email);
+
+    res.status(200).json({
+      message: "가입정보 가져오기 성공",
+      data: userInfo,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// 유저 정보 수정
+const updateUserInfo = async (req, res, next) => {
+  try {
+    const email = req.decoded.user.email;
+    const { name, phoneNumber, selectedInterests } = req.body;
+    if (!name || !email || !phoneNumber || !selectedInterests) {
+      throw new Error("모든 정보가 필요합니다");
+    }
+    const userService = new UserService();
+    const userInfo = await userService.updateUserInfo(
+      email,
+      name,
+      phoneNumber,
+      selectedInterests
+    );
+
+    res.status(200).json({
+      message: "회원정보수정 성공",
+      data: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// 회원 탈퇴
+const signOut = async (req, res, next) => {
+  try {
+    const email = req.decoded.user.email;
+
+    const userService = new UserService();
+    const deletedUser = await userService.signOut(email);
+
+    res
+      .status(200)
+      .json({ data: deletedUser, message: "회원 탈퇴가 처리 되었습니다." });
+  } catch (err) {
+    next(err);
+  }
+};
+
+const changePassword = async (req, res, next) => {
+  try {
+    const email = req.decoded.user.email;
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      throw new Error("모든 정보가 필요합니다");
+    }
+
+    const userService = new UserService();
+    const changedPasswordUser = await userService.changePassword(
+      email,
+      currentPassword,
+      newPassword
+    );
+    if (changedPasswordUser === "OAuth_user") {
+      throw new Error("소셜 가입 회원은 비밀번호 변경을 할 수 없습니다.");
+    }
+    res
+      .status(200)
+      .json({ data: null, message: "비밀번호가 성공적으로 변경되었습니다." });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = {
+  login,
+  signup,
+  kakaoAuth,
+  oAuthSignup,
+  googleAuth,
+  getUserInfo,
+  updateUserInfo,
+  signOut,
+  changePassword,
+};

@@ -1,16 +1,149 @@
-.signupPage {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
+@media (min-width: 768px) {
+  .signupPage {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    .signupContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 100px;
+
+      .signupTitle {
+        display: flex;
+        width: 258px;
+        height: 134px;
+        flex-direction: column;
+        justify-content: center;
+        color: #000;
+        text-align: center;
+        font-family: Inter;
+        font-size: 35px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+        margin-top: 20px;
+      }
+      .signupInputContainer {
+        .signupForm {
+          display: flex;
+          flex-direction: column;
+          .signupInputElement {
+            width: 430px;
+            margin-bottom: 20px;
+            .signupText {
+              display: flex;
+              width: 123px;
+              height: 24px;
+              flex-direction: column;
+              justify-content: center;
+              color: #000;
+              font-family: Noto Sans KR;
+              font-size: 15px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+              margin-bottom: 10px;
+            }
+
+            .signupInput {
+              width: 430px;
+              height: 45px;
+              border: 0.8px solid rgba(0, 0, 0, 0.3);
+              background: #fff;
+              padding-left: 18px;
+              padding-bottom: 3px;
+              font-size: 13px;
+              margin-bottom: 17px;
+            }
+            .interests-container {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 10px;
+              margin-bottom: 17px;
+            }
+            .errorIntersts {
+              margin-bottom: 0px;
+            }
+
+            .interest-tag {
+              padding: 10px;
+              border: none;
+              border-radius: 20px;
+              background-color: #e0e0e0;
+              color: #000;
+              font-size: 14px;
+              cursor: pointer;
+              transition: all 0.3s ease;
+            }
+
+            .interest-tag.selected {
+              background-color: #007bff;
+              color: #fff;
+            }
+            .error {
+              border-color: red;
+              margin-bottom: 0px;
+            }
+
+            .errorText {
+              color: red;
+              font-size: 12px;
+            }
+          }
+          .checkboxContainer {
+            width: 94%;
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.6);
+            .checkboxTerms {
+              margin-bottom: 15px;
+            }
+          }
+          .signupBtn {
+            width: 430px;
+            height: 50px;
+            border: 0.8px solid rgba(0, 0, 0, 0.5);
+            background: #000;
+            color: white;
+            font-family: Noto Sans KR;
+            font-size: 17px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-top: 25px;
+            transition: background 0.3s ease;
+          }
+          .signupBtn:disabled {
+            background: #ccc;
+            border: 0.8px solid #ccc;
+            cursor: not-allowed;
+          }
+          .signupBtn:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .signupPage {
+    width: 100vw;
+
+    display: block;
+    justify-content: center;
+  }
   .signupContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 100px;
 
     .signupTitle {
       display: flex;
-      width: 258px;
+      width: 100%;
       height: 134px;
       flex-direction: column;
       justify-content: center;
@@ -27,12 +160,15 @@
       .signupForm {
         display: flex;
         flex-direction: column;
+        align-items: center;
         .signupInputElement {
-          width: 430px;
+          width: 94%;
+          margin-left: 5%;
+          margin-right: 5%;
           margin-bottom: 20px;
           .signupText {
             display: flex;
-            width: 123px;
+            width: 100%;
             height: 24px;
             flex-direction: column;
             justify-content: center;
@@ -46,7 +182,7 @@
           }
 
           .signupInput {
-            width: 430px;
+            width: 100%;
             height: 45px;
             border: 0.8px solid rgba(0, 0, 0, 0.3);
             background: #fff;
@@ -90,8 +226,16 @@
             font-size: 12px;
           }
         }
+        .checkboxContainer {
+          width: 94%;
+          font-size: 13px;
+          color: rgba(0, 0, 0, 0.6);
+          .checkboxTerms {
+            margin-bottom: 15px;
+          }
+        }
         .signupBtn {
-          width: 430px;
+          width: 94%;
           height: 50px;
           border: 0.8px solid #000;
           background: #000;
@@ -101,7 +245,17 @@
           font-style: normal;
           font-weight: 400;
           line-height: normal;
-          margin-top: 25px;
+          margin-top: 20px;
+          margin-bottom: 10px;
+          transition: background 0.3s ease;
+        }
+        .signupBtn:disabled {
+          background: #ccc;
+          border: 0.8px solid #ccc;
+          cursor: not-allowed;
+        }
+        .signupBtn:hover {
+          cursor: pointer;
         }
       }
     }

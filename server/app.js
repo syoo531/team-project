@@ -7,18 +7,37 @@ const connectDB = require("./config/DBConnection");
 const userRouter = require("./routes/userRouter");
 const errorHandler = require("./middlewares/errorHandler");
 const popupStoreRouter = require("./routes/popupStoreRouter");
+const waitingRouter = require("./routes/waitingRouter");
+const reservationRouter = require("./routes/reservationRouter");
+const popupListRouter = require("./routes/popupListRouter");
+const searchRouter = require("./routes/searchRouter");
+const reviewRouter = require("./routes/reviewRouter");
+const interestRouter = require("./routes/interestRouter");
+
 const cookieParser = require("cookie-parser");
 
 connectDB();
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/users", userRouter);
-app.use("/popupStore", popupStoreRouter);
+app.use("/api/waiting", waitingRouter);
+app.use("/api/reservation", reservationRouter);
+app.use("/api/popupStore", popupStoreRouter);
+app.use("/api/popupList", popupListRouter);
+app.use("/api/search", searchRouter);
+app.use("/api/interest", interestRouter);
+app.use("/api/review", reviewRouter);
 
 app.use(errorHandler); // 에러 처리 미들웨어
 

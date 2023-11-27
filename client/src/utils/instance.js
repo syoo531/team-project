@@ -1,17 +1,14 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: "http://localhost:4000/api",
   headers: { "Content-Type": "application/json" },
 });
 
 instance.interceptors.request.use(
   (config) => {
-    // 요청 전에 수행할 작업
-    if (config.url === "/") {
-      const accessToken = localStorage.getItem("accessToken");
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
+    const accessToken = localStorage.getItem("accessToken");
+    config.headers.Authorization = accessToken;
 
     return config;
   },

@@ -1,0 +1,198 @@
+@mixin appliedFilter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 16px;
+  border: 2px solid #000;
+  border-radius: 50px;
+}
+
+@keyframes openModal {
+  0% {
+    transform: translate(-50%, -110%);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+.filterModal {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 60%;
+  transform: translateX(-50%);
+  height: 700px;
+  border-radius: 14px;
+  background-color: #fff;
+  z-index: 3;
+  animation: openModal 0.5s ease;
+
+  .filterModalHeader {
+    position: relative;
+
+    .filterText {
+      padding: 22px 0;
+      border-bottom: 1px solid #c0c0c1;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+    }
+    .closeBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+      transition: 0.5s;
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  .filterModalMain {
+    overflow-y: auto;
+    height: 560px;
+
+    .filterNavWrapper {
+      padding: 40px;
+      border-bottom: 1px solid #c0c0c1;
+
+      .filterNavTitle {
+        margin-bottom: 8px;
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .filterNavSubTitle {
+        margin-bottom: 30px;
+        font-size: 16px;
+      }
+
+      .filterListWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 100px;
+
+        .filterType {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 64px;
+          flex: 1 auto;
+          font-size: 16px;
+          font-weight: 600;
+
+          &.clicked {
+            background-color: #0472ff;
+            color: #fff;
+          }
+
+          &:hover {
+            cursor: pointer;
+          }
+
+          &:first-child {
+            border-top: 1px solid #c0c0c1;
+            border-bottom: 1px solid #c0c0c1;
+            border-left: 1px solid #c0c0c1;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+          }
+
+          &:nth-child(2) {
+            border: 1px solid #c0c0c1;
+          }
+
+          &:nth-child(3) {
+            border-top: 1px solid #c0c0c1;
+            border-bottom: 1px solid #c0c0c1;
+            border-right: 1px solid #c0c0c1;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+          }
+        }
+      }
+    }
+  }
+  .filterModalFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 40px;
+    border-top: 1px solid #c0c0c1;
+
+    .filteringWrapper {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .filteringTitle {
+        color: #000;
+        font-size: 16px;
+      }
+      .areaFiltering {
+        @include appliedFilter;
+      }
+
+      .categoryFiltering {
+        @include appliedFilter;
+      }
+
+      .dateFiltering {
+        @include appliedFilter;
+      }
+
+      .appliedText {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .removeBtn {
+        font-size: 14px;
+        font-weight: 900;
+        color: #fc0320;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .buttonWrapper {
+      display: flex;
+      gap: 16px;
+
+      .resetBtn {
+        padding: 12px 22px;
+        border-radius: 10px;
+        background-color: #c0c0c1;
+        color: #fff;
+        font-size: 14px;
+        transition: 0.4s;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #000;
+        }
+      }
+
+      .viewBtn {
+        padding: 10px 22px;
+        border: 2px solid #000;
+        border-radius: 10px;
+        background-color: #000;
+        color: #fff;
+        font-size: 14px;
+        transition: 0.4s;
+
+        &:hover {
+          cursor: pointer;
+          background-color: #fff;
+          color: #000;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}

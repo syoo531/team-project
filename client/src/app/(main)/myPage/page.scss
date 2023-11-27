@@ -1,0 +1,39 @@
+@media (min-width: 768px) {
+  .mypageContainer {
+    width: 100%;
+    padding-bottom: 100px;
+
+    display: flex;
+    flex-direction: column;
+    .mypageContent {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .contentWrapper {
+        display: flex;
+        justify-content: center;
+        width: 80%;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .mypageContainer {
+    width: 100%;
+    padding-bottom: 100px;
+
+    display: flex;
+    flex-direction: column;
+    .mypageContent {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .contentWrapper {
+        display: flex;
+        justify-content: center;
+        width: 95%;
+      }
+    }
+  }
+}

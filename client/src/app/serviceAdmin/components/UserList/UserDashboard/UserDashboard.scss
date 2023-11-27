@@ -1,0 +1,26 @@
+@import "../../../../../adminStyles/adminStyles.scss";
+
+.dashboard__layout {
+  padding: 0px 50px;
+  margin-bottom: 20px;
+
+  .dashboard__container {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 15px 0px;
+    background-color: $admin-card-background;
+    border-radius: $admin-border-radius;
+    box-shadow: $admin-box-shadow;
+  }
+}
+
+.dashboard__card {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+
+  .card-icons {
+    padding: 20px 20px;
+  }
+}

@@ -1,0 +1,117 @@
+@import "../../../../adminStyles/adminStyles.scss";
+@import "../../main.scss";
+
+.main-content__container {
+  max-width: 700px;
+  margin: 0 auto 0 calc(10%);
+  flex: 1 1;
+  box-sizing: border-box;
+}
+
+.form__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.action__menu {
+  padding: 10px 8px;
+
+  .delete-button {
+    @include admin-button-base-style(red, white);
+
+    &:hover {
+      background: rgb(184, 2, 2);
+      transform: scale(1.05);
+    }
+  }
+}
+
+.form__container {
+  font-size: 14px;
+}
+
+.form__text-section {
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: $admin-card-background;
+  border-radius: $admin-border-radius;
+  box-shadow: $admin-box-shadow;
+
+  .field {
+    padding-bottom: 15px;
+  }
+
+  .short-field {
+    max-width: 467px;
+  }
+
+  label {
+    display: block;
+    padding: 5px 0;
+  }
+
+  input,
+  textarea,
+  select {
+    width: 100%;
+    height: 32px;
+    padding: 5px 9px;
+    border-radius: 6px;
+    border: 1px rgb(170, 169, 169) solid;
+    font-weight: map-get($admin-font-weights, light);
+  }
+
+  textarea {
+    height: 250px;
+    resize: none;
+  }
+
+  .zipcode {
+    width: 100%;
+
+    .zipcode-input {
+      width: auto;
+      margin-right: 10px;
+    }
+  }
+}
+
+.address_field {
+  .address-input,
+  .zipcode {
+    padding-bottom: 10px;
+  }
+}
+
+.category-selectbox__div {
+  display: flex;
+  align-items: center;
+
+  & .category-selectbox {
+    width: 180px;
+    height: 30px;
+    padding-left: 10px;
+    margin-left: 26px;
+  }
+}
+
+.date-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+
+  input {
+    max-width: 180px;
+    border-radius: 6px;
+  }
+}
+
+.form__buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}

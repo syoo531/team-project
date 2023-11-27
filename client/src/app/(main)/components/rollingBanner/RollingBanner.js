@@ -1,13 +1,28 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "../../../../utils/instance";
 import "./RollingBanner.scss";
 
-const popUpArr = new Array(6).fill(0);
-
 export default function RollingBanner() {
+  const [popupStores, setPopupStores] = useState([]);
   const router = useRouter();
-  const [isOperated, setIsOperated] = useState({ left: true, right: true });
+
+  const topArr = popupStores.slice(0, Math.ceil(popupStores.length / 2));
+  const bottomArr = popupStores.slice(Math.ceil(popupStores.length / 2));
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await axios.get(`/popupList`);
+        if (response.status === 200) {
+          setPopupStores(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
   return (
     <div className="rollingBanner">
@@ -17,21 +32,21 @@ export default function RollingBanner() {
           아트, 뮤직, 미식, 패션, 뷰티, 캐릭터 등 <br />
           핫플레이스를 주도하는 다양한 팝업스토어를 만나보세요.
         </p>
-        <div className="viewBtn" onClick={() => router.push("/list")}>
+        <div
+          className="viewBtn"
+          onClick={() => router.push("/popupList/all?pageNumber=1&limit=8")}
+        >
           모두 보기
         </div>
       </div>
       <div className="leftRollingWrapper">
-        <div className={`moveToLeftRolling ${isOperated.left ? null : "stop"}`}>
-          {popUpArr.map((el, index) => (
+        <div className="moveToLeftRolling">
+          {topArr.map((store) => (
             <div
-              key={index}
+              key={store._id}
               className="popUpImg"
-              onMouseEnter={() => {
-                setIsOperated({ ...isOperated, left: false });
-              }}
-              onMouseLeave={() => {
-                setIsOperated({ ...isOperated, left: true });
+              onClick={() => {
+                router.push(`/popupList/all/${store._id}`);
               }}
             >
               <div className="blackBackGround"></div>
@@ -39,18 +54,13 @@ export default function RollingBanner() {
             </div>
           ))}
         </div>
-        <div
-          className={`moveToLeftRollingCopy ${isOperated.left ? null : "stop"}`}
-        >
-          {popUpArr.map((el, index) => (
+        <div className="moveToLeftRollingCopy">
+          {topArr.map((store) => (
             <div
-              key={index}
+              key={store._id}
               className="popUpImg"
-              onMouseEnter={() => {
-                setIsOperated({ ...isOperated, left: false });
-              }}
-              onMouseLeave={() => {
-                setIsOperated({ ...isOperated, left: true });
+              onClick={() => {
+                router.push(`/popupList/all/${store._id}`);
               }}
             >
               <div className="blackBackGround"></div>
@@ -60,18 +70,13 @@ export default function RollingBanner() {
         </div>
       </div>
       <div className="rightRollingWrapper">
-        <div
-          className={`moveToRightRolling ${isOperated.right ? null : "stop"}`}
-        >
-          {popUpArr.map((el, index) => (
+        <div className="moveToRightRolling">
+          {bottomArr.map((store) => (
             <div
-              key={index}
+              key={store._id}
               className="popUpImg"
-              onMouseEnter={() => {
-                setIsOperated({ ...isOperated, right: false });
-              }}
-              onMouseLeave={() => {
-                setIsOperated({ ...isOperated, right: true });
+              onClick={() => {
+                router.push(`/popupList/all/${store._id}`);
               }}
             >
               <div className="blackBackGround"></div>
@@ -79,20 +84,13 @@ export default function RollingBanner() {
             </div>
           ))}
         </div>
-        <div
-          className={`moveToRightRollingCopy ${
-            isOperated.right ? null : "stop"
-          }`}
-        >
-          {popUpArr.map((el, index) => (
+        <div className="moveToRightRollingCopy">
+          {bottomArr.map((store) => (
             <div
-              key={index}
+              key={store._id}
               className="popUpImg"
-              onMouseEnter={() => {
-                setIsOperated({ ...isOperated, right: false });
-              }}
-              onMouseLeave={() => {
-                setIsOperated({ ...isOperated, right: true });
+              onClick={() => {
+                router.push(`/popupList/all/${store._id}`);
               }}
             >
               <div className="blackBackGround"></div>

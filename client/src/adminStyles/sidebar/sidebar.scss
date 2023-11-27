@@ -1,0 +1,46 @@
+@import "../adminStyles.scss";
+
+.sidebar {
+  flex-shrink: 0;
+  width: 200px;
+  background-color: $admin-sidbar-background;
+  filter: $admin-sidbar-filter;
+  backdrop-filter: $admin-sidbar-backdrop-filter;
+  border-top: 1px solid #31374a;
+  overflow: hidden;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    margin-top: 40px;
+
+    li {
+      height: 35px;
+      margin: 6px 16px;
+    }
+    a {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      color: #9fa6bc;
+      border-radius: 6px;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      padding-left: 16px;
+
+      &:hover {
+        background-color: $admin-sidbar-hover-background;
+        color: $admin-sidbar-hover-color;
+        border-radius: 10px;
+      }
+    }
+    .active {
+      color: #fff;
+      // font-weight: bold;
+    }
+  }
+}

@@ -8,12 +8,21 @@ import "./Home.scss";
 export default function Home() {
   return (
     <div className="home">
-      <div className="video"></div>
+      <div className="mainBannerWrapper">
+        <video
+          className="mainBanner"
+          src="/mainBanner3.mp4"
+          type="video/mp4"
+          autoPlay
+          muted
+          playsInline
+        ></video>
+      </div>
       <RollingBanner />
       <WeekPopUp />
-      <Recommendation />
-      <SeongsuPopUp />
       <EndSoon />
+      <SeongsuPopUp />
+      <Recommendation />
     </div>
   );
 }

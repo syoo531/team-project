@@ -1,0 +1,46 @@
+// 색상
+// $admin-background-color: #dedee0;
+$admin-background-color: #f5f7fa;
+$admin-sidbar-background: #222834;
+$admin-sidbar-hover-background: #31374a;
+$admin-sidbar-hover-color: #eff2f6;
+$admin-card-background: white;
+$admin-point-color: #0095ff;
+$admin-font-color: #31374a;
+
+$admin-theme-colors: (
+  "success": #28a745,
+  "info": #17a2b8,
+  "warning": #ffc107,
+);
+
+$admin-button-colors: (
+  "light": #cdced0,
+  "dark": #ababac,
+  "warningLight": #df3220,
+  "warningDark": #b6291a,
+);
+
+$admin-font-weights: (
+  "bold": 500,
+  "light": 300,
+);
+
+$admin-font-sizes: (
+  "small": 12px,
+  "normal": 18px,
+  "large": 24px,
+);
+
+//기타 스타일
+$admin-box-shadow:
+  rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+  rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+$admin-border-radius: 7px;
+$admin-card-border-radius: 10px;
+$admin-card-filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.15));
+$admin-card-backdrop-filter: blur(6px);
+
+$admin-sidbar-filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.1));
+$admin-sidbar-backdrop-filter: blur(6px);
+$admin-sidbar-hover-border-radius: 4px;

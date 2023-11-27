@@ -1,0 +1,16 @@
+@keyframes openModalBackGround {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.modalBackGround {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  animation: openModalBackGround 0.5s ease;
+  z-index: 2;
+}

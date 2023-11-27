@@ -12,37 +12,44 @@ const s3client = new S3Client({
   },
 });
 
-//이미지들을 객체로 받아 S3에 업로드 + 기존 이미지는 S3에서 삭제
-export const s3imageUploader = async (images, existingImage= false) => {
-  let imageURL = {};
-  let uploadPromises = [];
+//s3 이미지 1개 업로드
+export const s3UploadSingleImage = async (image) => {
+  if (!image) return;
 
-  for (const [imageName, file] of Object.entries(images)) {
-    if (!file) continue;
+  const uploadParams = {
+    Bucket: process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET,
+    Key: `${Date.now()}-${image.name}`,
+    Body: image,
+    ContentType: image.type,
+  };
+  await s3client.send(new PutObjectCommand(uploadParams));
 
-    const uploadParams = {
-      Bucket: process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET,
-      Key: `${Date.now()}-${imageName}`,
-      Body: file,
-      ContentType: file.type,
-    };
-
-    uploadPromises.push(s3client.send(new PutObjectCommand(uploadParams)));
-
-    imageURL = {
-      ...imageURL,
-      [imageName]: `https://${process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET}.s3.ap-southeast-2.amazonaws.com/${uploadParams.Key}`,
-    };
-
-    if (existingImage[imageName])
-      uploadPromises.push(deleteImageS3(existingImage[imageName]));
-  }
-  await Promise.all(uploadPromises);
-  return imageURL;
+  //몽고DB에 저장할 정보를 리턴한다
+  return {
+    Key: uploadParams.Key,
+    url: `https://${process.env.NEXT_PUBLIC_S3_UPLOAD_BUCKET}.s3.ap-southeast-2.amazonaws.com/${uploadParams.Key}`,
+  };
 };
 
+//s3 이미지 여러개 업로드
+export const s3UploadMultipleImages = async (images) => {
+  let imageURLs = [];
+
+  const uploadPromises = images.map(async (image) => {
+    const res = await s3UploadSingleImage(image);
+    imageURLs.push(res);
+  });
+
+  await Promise.all(uploadPromises);
+  return imageURLs;
+};
+
+//s3 이미지 1개 삭제
 export const deleteImageS3 = async (imageUrl) => {
-  console.log("url to delete", imageUrl);
+  if (!imageUrl) {
+    return Promise.resolve(true);
+  }
+
   const input = {
     Bucket: "mybucket-elice",
     Key: imageUrl.split("/").pop().toString(),
@@ -52,11 +59,15 @@ export const deleteImageS3 = async (imageUrl) => {
   return response;
 };
 
+//s3 이미지 여러개 삭제
 export const deleteAllS3 = async (imageArray) => {
+  if (imageArray.length == 0) {
+    return Promise.resolve(true);
+  }
+
   const deletePromises = imageArray.map((image) => {
-    return deleteImageS3(image);
+    return deleteImageS3(image.url);
   });
-  console.log("delete all array", deletePromises);
   const result = await Promise.all(deletePromises);
   return result;
 };

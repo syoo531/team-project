@@ -11,6 +11,10 @@ export default function Signup() {
     phoneNumber: "",
     selectedInterests: [],
   });
+  const [checkboxes, setCheckboxes] = useState({
+    terms: false,
+    over14: false,
+  });
 
   const interests = [
     "토이",
@@ -42,6 +46,13 @@ export default function Signup() {
     }
   };
 
+  const handleCheckboxChange = (e) => {
+    setCheckboxes({
+      ...checkboxes,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
   const checkEmailValid = (email) => {
     // 이메일 유효성 검사
     return email.includes("@");
@@ -66,6 +77,8 @@ export default function Signup() {
       [name]: value,
     });
   };
+
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [validCheck, setValidCheck] = useState({
     nameValid: true,
@@ -99,6 +112,13 @@ export default function Signup() {
         phoneNumberValid: isPhoneNumberValid,
         interestsValid: areInterestsValid,
       });
+      return;
+    }
+    if (password !== confirmPassword) {
+      setValidCheck((prevValidCheck) => ({
+        ...prevValidCheck,
+        passwordValid: false,
+      }));
       return;
     }
 
@@ -173,6 +193,24 @@ export default function Signup() {
               )}
             </div>
             <div className="signupInputElement">
+              <div className="signupText">비밀번호 확인</div>
+              <input
+                className={`signupInput ${
+                  !validCheck.passwordValid ? "error" : ""
+                }`}
+                type="password"
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="비밀번호를 한번 더 입력해주세요."
+              />
+              {/* 비밀번호 확인 에러 메시지 */}
+              {!validCheck.passwordValid && (
+                <div className="errorText">비밀번호가 일치하지 않습니다.</div>
+              )}
+            </div>
+
+            <div className="signupInputElement">
               <div className="signupText">휴대폰 번호</div>
               <input
                 className={`signupInput phoneNumber ${
@@ -223,8 +261,32 @@ export default function Signup() {
                 </div>
               )}
             </div>
+            <div className="checkboxContainer">
+              <div className="checkboxTerms">
+                <input
+                  type="checkbox"
+                  name="terms"
+                  checked={checkboxes.terms}
+                  onChange={handleCheckboxChange}
+                />{" "}
+                [필수] 이용 약관 및 개인정보 처리방침에 동의합니다.
+              </div>
+              <div>
+                <input
+                  type="checkbox"
+                  name="over14"
+                  checked={checkboxes.over14}
+                  onChange={handleCheckboxChange}
+                />{" "}
+                [필수] 만 14세 이상임을 확인하고 동의합니다.
+              </div>
+            </div>
 
-            <button className="signupBtn" type="submit">
+            <button
+              className="signupBtn"
+              type="submit"
+              disabled={!checkboxes.terms || !checkboxes.over14}
+            >
               회원가입
             </button>
           </form>

@@ -1,0 +1,259 @@
+@media (min-width: 768px) {
+  .userInfoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .signupTitle {
+      display: flex;
+      width: 258px;
+      height: 134px;
+      flex-direction: column;
+      justify-content: center;
+      color: #000;
+      text-align: center;
+      font-family: Inter;
+      font-size: 35px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: normal;
+      margin-top: 20px;
+    }
+    .signupInputContainer {
+      .signupForm {
+        display: flex;
+        flex-direction: column;
+        .signupInputElement {
+          width: 430px;
+          margin-bottom: 20px;
+          .signupText {
+            display: flex;
+
+            height: 24px;
+            flex-direction: column;
+            justify-content: center;
+            color: #000;
+            font-family: Noto Sans KR;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-bottom: 10px;
+          }
+
+          .signupInput {
+            width: 430px;
+            height: 45px;
+            border: 0.8px solid rgba(0, 0, 0, 0.3);
+            background: #fff;
+            padding-left: 18px;
+            padding-bottom: 3px;
+            font-size: 13px;
+            margin-bottom: 17px;
+          }
+          .interests-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 17px;
+          }
+          .errorIntersts {
+            margin-bottom: 0px;
+          }
+
+          .interest-tag {
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background-color: #e0e0e0;
+            color: #000;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          }
+
+          .interest-tag.selected {
+            background-color: #007bff;
+            color: #fff;
+          }
+          .error {
+            border-color: red;
+            margin-bottom: 0px;
+          }
+
+          .errorText {
+            color: red;
+            font-size: 12px;
+          }
+        }
+
+        .signupBtn {
+          width: 430px;
+          height: 50px;
+          border: 0.8px solid rgba(0, 0, 0, 0.5);
+          background: #000;
+          color: white;
+          font-family: Noto Sans KR;
+          font-size: 17px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          margin-top: 25px;
+          transition: background 0.3s ease;
+        }
+        .signupBtn:hover {
+          cursor: pointer;
+        }
+      }
+      .signoutBtn {
+        width: 430px;
+        height: 50px;
+        border: 0.8px solid rgba(0, 0, 0, 0.5);
+        background: #ffffff;
+        color: rgb(0, 0, 0);
+        font-family: Noto Sans KR;
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-top: 15px;
+      }
+      .signoutBtn:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .userInfoContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .signupTitle {
+      display: flex;
+      width: 100%;
+      height: 134px;
+      flex-direction: column;
+      justify-content: center;
+      color: #000;
+      text-align: center;
+      font-family: Inter;
+      font-size: 35px;
+      font-style: normal;
+      font-weight: 900;
+      line-height: normal;
+      margin-top: 20px;
+    }
+    .signupInputContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .signupForm {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .signupInputElement {
+          width: 94%;
+          margin-left: 5%;
+          margin-right: 5%;
+          margin-bottom: 20px;
+          .signupText {
+            display: flex;
+
+            height: 24px;
+            flex-direction: column;
+            justify-content: center;
+            color: #000;
+            font-family: Noto Sans KR;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            margin-bottom: 10px;
+          }
+
+          .signupInput {
+            width: 100%;
+            height: 45px;
+            border: 0.8px solid rgba(0, 0, 0, 0.3);
+            background: #fff;
+            padding-left: 18px;
+            padding-bottom: 3px;
+            font-size: 13px;
+            margin-bottom: 17px;
+          }
+          .interests-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 17px;
+          }
+          .errorIntersts {
+            margin-bottom: 0px;
+          }
+
+          .interest-tag {
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background-color: #e0e0e0;
+            color: #000;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+          }
+
+          .interest-tag.selected {
+            background-color: #007bff;
+            color: #fff;
+          }
+          .error {
+            border-color: red;
+            margin-bottom: 0px;
+          }
+
+          .errorText {
+            color: red;
+            font-size: 12px;
+          }
+        }
+        .signupBtn {
+          width: 94%;
+          height: 50px;
+          border: 0.8px solid #000;
+          background: #000;
+          color: white;
+          font-family: Noto Sans KR;
+          font-size: 17px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          margin-top: 20px;
+          margin-bottom: 10px;
+          transition: background 0.3s ease;
+        }
+        .signupBtn:hover {
+          cursor: pointer;
+        }
+      }
+      .signoutBtn {
+        width: 94%;
+        height: 50px;
+        border: 0.8px solid rgba(0, 0, 0, 0.5);
+        background: #ffffff;
+        color: rgb(0, 0, 0);
+        font-family: Noto Sans KR;
+        font-size: 17px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-top: 15px;
+      }
+      .signoutBtn:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}

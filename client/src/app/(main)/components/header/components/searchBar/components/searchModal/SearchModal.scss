@@ -1,0 +1,186 @@
+@keyframes openSearchModal {
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  100% {
+    opacity: 1;
+    height: 540px;
+  }
+}
+
+.searchModal {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  right: 0;
+  height: 540px;
+  padding: 50px;
+  background-color: #fff;
+  animation: openSearchModal 0.5s ease;
+  overflow: hidden;
+
+  .inputWrapper {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    margin: 0 auto 90px;
+    padding: 10px 20px;
+    border: 1px solid #8e8e8e;
+    border-radius: 12px;
+
+    .searchInput {
+      flex-basis: 50%;
+      height: 50px;
+      color: #222;
+      font-size: 22px;
+
+      &::placeholder {
+        color: #8e8e8e;
+        font-size: 22px;
+      }
+    }
+
+    .searchBtn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border: 2px solid #000;
+      border-radius: 10px;
+      background-color: #000;
+      color: #fff;
+      transition: 0.5s;
+      &:hover {
+        background-color: #fff;
+        color: #000;
+        cursor: pointer;
+      }
+
+      .searchIcon {
+        font-size: 16px;
+      }
+
+      .searchText {
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .searchWordWrapper {
+    display: flex;
+    justify-content: center;
+    gap: 130px;
+    padding: 0 100px;
+
+    .recentSearchWordWrapper {
+      flex-basis: 40%;
+
+      .recentSearchWordHeader {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #8e8e8e;
+
+        .recentSearchWordTitle {
+          font-size: 20px;
+          font-weight: 600;
+        }
+
+        .allRemoveBtn {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          color: #8e8e8e;
+          font-size: 14px;
+          transition: 0.3s;
+          &:hover {
+            cursor: pointer;
+            color: #fd021f;
+          }
+        }
+      }
+
+      .recentSearchWordList {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        .recentSearchWord {
+          display: flex;
+          justify-content: space-between;
+          &:hover {
+            cursor: pointer;
+          }
+
+          .searchWord {
+            font-size: 16px;
+          }
+
+          .dateBtnWrapper {
+            display: flex;
+            gap: 16px;
+
+            .searchDate {
+              color: #8e8e8e;
+            }
+
+            .removeBtn {
+              color: #8e8e8e;
+              transition: 0.3s;
+
+              &:hover {
+                cursor: pointer;
+                color: #fd021f;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .popularSearchWordWrapper {
+      flex-basis: 60%;
+
+      .popularSearchWordTitle {
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid #8e8e8e;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .popularSearchWordList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+
+        .popularSearchWord {
+          padding: 10px 20px;
+          border-radius: 40px;
+          background-color: #e8e8e8;
+          font-size: 14px;
+          transition: 0.3s;
+          &:hover {
+            cursor: pointer;
+            background-color: #0472ff;
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+
+  .closeBtn {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: #000;
+    font-size: 40px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

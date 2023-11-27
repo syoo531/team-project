@@ -1,0 +1,401 @@
+@import url(https://use.fontawesome.com/releases/v5.15.3/css/all.css);
+
+@mixin subT {
+    font-size: 18px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 13px;
+}
+
+@mixin container {
+    width: 100%;
+    max-width: 1130px;
+    padding: 0 15px;
+    display: block;
+    padding: 100px 0;
+    margin: 0 auto;
+}
+
+@mixin flex($a, $b) {
+    display: flex;
+    align-items: $a;
+    justify-content: $b;
+}
+
+@mixin nflex {
+    display: flex;
+    align-items: normal;
+    justify-content: normal;
+}
+
+@mixin cflex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.PopUp {
+    @include container;
+    .reserveBtn {
+        // position: fixed;
+        // left: 0;
+        // bottom: 0;
+        width: 100%;
+        @include cflex();
+        background: #fff;
+        padding: 50px 0;
+        box-sizing: border-box;
+
+        button {
+            cursor: pointer;
+            border: 0;
+            padding: 10px 30px;
+            box-sizing: border-box;
+            border-radius: 10px;
+            background: #e21680;
+            color: #fff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
+    .popImgWrap {
+        @include flex(flex-start, space-between);
+        // height: 60vh;
+        width: 100%;
+        margin-bottom: 60px;
+        .mainImg {
+            width: 50%;
+            height: 73vh;
+            img {
+                width: 100%;
+                border-radius: 15px;
+                display: block;
+                height: 100%;
+            }
+        }
+        .subImg {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 48%;
+            height: 73vh;
+            gap: 20px;
+            .subImg1 {
+                width: 100%;
+                height: 35vh;
+                position: relative;
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    object-fit: cover;
+                }
+            }
+            .subImg2 {
+                width: 100%;
+                height: 35vh;
+                position: relative;
+                img {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    object-fit: none;
+                }
+            }
+        }
+    }
+    .popInfo {
+        margin-bottom: 60px;
+        h1 {
+            display: block;
+            width: 100%;
+            font-weight: 500;
+            font-size: 24px;
+            padding: 15px 0;
+            border-bottom: 1px solid #333;
+            position: relative;
+            a {
+                color: #999;
+                font-size: 14px;
+                text-decoration: none;
+                margin-left: 15px;
+            }
+            input {
+                position: fixed;
+                left: -9999px;
+                + label {
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    transform: translatey(-50%, 0);
+                    &::before {
+                        display: block;
+                        content: "\f004";
+                        font-family: "Font Awesome 5 Free";
+                        font-weight: normal;
+                        font-size: 22px;
+                        cursor: pointer;
+                    }
+                }
+                &:checked {
+                    + label {
+                        &::before {
+                            display: block;
+                            content: "\f004";
+                            font-family: "Font Awesome 5 Free";
+                            font-weight: bold;
+                            font-size: 22px;
+                            color: #e21680;
+                        }
+                    }
+                }
+            }
+        }
+        b {
+            display: block;
+            padding: 10px 0 5px 0;
+            font-size: 14px;
+            font-weight: 500;
+            .icon {
+                margin-right: 5px;
+            }
+        }
+        p {
+            font-size: 14px;
+            font-weight: 500;
+        }
+    }
+    .popReview {
+        margin-bottom: 60px;
+        h4 {
+            font-weight: 500;
+            font-size: 18px;
+            position: relative;
+            h5 {
+                @include flex(center, normal);
+                .staricon {
+                    font-size: 14px;
+                    margin-left: 5px;
+                }
+                span {
+                    font-size: 16px;
+                }
+            }
+            a {
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: #999;
+                font-weight: 400;
+                font-size: 16px;
+                text-decoration: none;
+            }
+        }
+        .popReviewList {
+            @include flex(center, space-between);
+
+            .popReviewItem {
+                width: 24%;
+                border-radius: 10px;
+                padding: 15px;
+                box-sizing: border-box;
+                position: relative;
+                border: 1px solid #ddd;
+                margin: 15px 0;
+                .reviewLogo {
+                    border-radius: 100%;
+                    // background: #333;
+                    // background: #e21680;
+                    background: #0472ff;
+                    @include flex(center, center);
+                    box-sizing: border-box;
+                    width: 35px;
+                    height: 35px;
+                    position: absolute;
+                    top: 10px;
+                    left: 10px;
+                    h1 {
+                        color: #fff;
+                        font-size: 18px;
+                    }
+                }
+                .reviewName {
+                    padding-left: 40px;
+                    font-size: 14px;
+                    // padding-top: 5px;
+                }
+                .reviewContent {
+                    padding: 30px 0;
+                }
+                .reviewDate {
+                    font-size: 14px;
+                    @include flex(center, flex-end);
+                    color: #999;
+                    margin-top: 15px;
+                }
+            }
+        }
+        button {
+            width: 100%;
+            border: 1px solid #999;
+            background: #fff;
+            font-size: 16px;
+            color: #333;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            transition: 0.3s ease all;
+            cursor: pointer;
+            &:hover {
+                background: #0472ff;
+                color: #fff;
+                border-color: #0472ff;
+            }
+        }
+        .popReviewList {
+            display: block;
+            padding: 15px 0;
+            .popReviewListItem {
+                display: block;
+                padding: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                margin-bottom: 15px;
+                .top {
+                    @include flex(center, normal);
+                    h3 {
+                        font-size: 16px;
+                        font-weight: 500;
+                        margin-right: 10px;
+                    }
+                    h4 {
+                        font-size: 12px;
+                        font-weight: 500;
+                        color: #999;
+                    }
+                }
+                .cont {
+                    p {
+                        display: block;
+                        color: #333;
+                        padding: 10px 0;
+                        font-weight: 400;
+                    }
+                }
+                .imgToggleBtn {
+                    display: block;
+                    border: none;
+                    text-align: left;
+                    padding: 0;
+                    width: auto;
+                    transition: none;
+                    border-radius: 0;
+                    &:hover {
+                        background: inherit;
+                        color: #333;
+                    }
+                }
+                .img {
+                    .img1 {
+                        display: block;
+                        width: 24%;
+                        background: #999;
+                        padding: 100px 0;
+                        color: #fff;
+                        text-align: center;
+                        font-size: 24px;
+                        font-weight: 600;
+                    }
+                    .img_wrap2 {
+                        gap: 3%;
+                        padding-top: 15px;
+                        display: none;
+                    }
+                    .img_wrap.open {
+                        .img_wrap2 {
+                            display: none;
+                        }
+                    }
+
+                    .img_wrap.closed {
+                        .img_wrap2 {
+                            @include flex(center, normal);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .popInfo2 {
+        margin-bottom: 60px;
+        h3 {
+            @include subT;
+        }
+        p {
+            width: 100%;
+            padding: 15px 30px;
+            box-sizing: border-box;
+            color: #333;
+            font-size: 16px;
+            font-weight: 400;
+            border: 1px solid #ddd;
+            line-height: 160%;
+        }
+    }
+    .popLocation {
+        margin-bottom: 60px;
+        h3 {
+            font-size: 18px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 5px;
+        }
+        b {
+            font-size: 16px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .locationBox {
+            @include cflex;
+            width: 100%;
+            height: 50vh;
+            background: #999;
+            color: #333;
+            font-size: 36px;
+            font-weight: 600;
+        }
+    }
+    .popWarning {
+        h3 {
+            @include subT();
+        }
+        ul {
+            li {
+                display: block;
+                padding: 5px 0;
+            }
+        }
+    }
+    .popTime {
+        margin-bottom: 60px;
+        h3 {
+            @include subT();
+            margin-bottom: 5px;
+        }
+        ul {
+            li {
+                display: block;
+                padding: 5px 0 5px 10px;
+                font-size: 14px;
+            }
+        }
+    }
+}
