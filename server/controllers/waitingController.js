@@ -7,9 +7,15 @@ const createWaiting = async (req, res, next) => {
     const email = req.decoded.user.email;
 
     const waitingService = new WaitingService();
-    const beforeMe = await waitingService.createWaiting(popup, people, email); // 새 waiting 만들고
-
-    //waiting_queue에 push하고
+    const validateWaitingService = await waitingService.validateWaiting(
+      email,
+      popup
+    );
+    console.log("validateWaitingService: ", validateWaitingService);
+    if (!validateWaitingService) {
+      throw new Error("해당 팝업스토어에 이미 현장대기 완료했습니다.");
+    }
+    const beforeMe = await waitingService.createWaiting(popup, people, email);
 
     return res
       .status(400)
@@ -25,14 +31,57 @@ const getWaitingStatus = async (req, res, next) => {
     const email = req.decoded.user.email;
 
     const waitingService = new WaitingService();
-    const waiting_queue = await waitingService.getWaitingStatus(email);
+    const waitingStatus = await waitingService.getWaitingStatus(email);
 
     return res.status(200).json({
       message: "현장대기 예약 조회 목록입니다.",
-      data: null,
+      data: waitingStatus,
     });
   } catch (error) {
     next(error);
+  }
+};
+
+// 현장 대기 인원 수정
+const updateWaitingPeople = async (req, res, next) => {
+  try {
+    const { userId, popupStoreId, people } = req.body;
+    const waitingService = new WaitingService();
+    const updateWaitingPeople = await waitingService.updateWaitingPeople(
+      userId,
+      popupStoreId,
+      people
+    );
+
+    return res.status(200).json({
+      message: "해당 팝업스토어에 대한 현장 대기 인원 수정 완료했습니다.",
+    });
+  } catch (err) {
+    next(err);
+    res.status(400).json({
+      error: "해당 팝업스토어에 대한 현장 대기 인원 수정 실패했습니다.",
+    });
+  }
+};
+
+// 현장 대기 인원 삭제
+const deleteWaitingPeople = async (req, res, next) => {
+  try {
+    const { userId, popupStoreId } = req.body;
+    const waitingService = new WaitingService();
+    const deleteWaitingPeople = await waitingService.deleteWaitingPeople(
+      userId,
+      popupStoreId
+    );
+
+    return res.status(200).json({
+      message: "해당 팝업스토어에 대한 현장 대기 인원 삭제 완료했습니다.",
+    });
+  } catch (err) {
+    next(err);
+    res.status(400).json({
+      error: "해당 팝업스토어에 대한 현장 대기 인원 수정 실패했습니다.",
+    });
   }
 };
 
@@ -77,6 +126,8 @@ const enterWaitingList = async (req, res, next) => {
 module.exports = {
   createWaiting,
   getWaitingStatus,
+  updateWaitingPeople,
+  deleteWaitingPeople,
   getWaitingListByCorpAdmin,
   enterWaitingList,
 };
