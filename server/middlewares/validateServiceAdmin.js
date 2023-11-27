@@ -27,9 +27,10 @@ const validateServiceAdmin = async (req, res, next) => {
     if (user.admin_role === 2) {
       next();
     } else {
-      const err = new Error("서비스 관리자가 아닙니다.");
-      err.statusCode = 404;
-      throw err;
+      // const err = new Error("서비스 관리자가 아닙니다.");
+      // err.statusCode = 404;
+      // throw err;
+      res.status(404).json({ message: "서비스 관리자가 아닙니다." });
     }
   } catch (err) {
     console.log(err);
