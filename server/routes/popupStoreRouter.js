@@ -11,7 +11,7 @@ const {
 const validateServiceAdmin = require("../middlewares/validateServiceAdmin");
 
 const router = Router();
-
+//validateServiceAdmin
 router.get("/users", validateServiceAdmin, getAllUsers);
 router.post("/", validateServiceAdmin, createPopupStore);
 router.get("/:id", getPopupStore);
