@@ -176,13 +176,25 @@
         h4 {
             font-weight: 500;
             font-size: 18px;
-            @include flex(center, normal);
-            .staricon {
-                font-size: 14px;
-                margin-left: 5px;
+            position: relative;
+            h5 {
+                @include flex(center, normal);
+                .staricon {
+                    font-size: 14px;
+                    margin-left: 5px;
+                }
+                span {
+                    font-size: 16px;
+                }
             }
-            span {
+            a {
+                position: absolute;
+                top: 0;
+                right: 0;
+                color: #999;
+                font-weight: 400;
                 font-size: 16px;
+                text-decoration: none;
             }
         }
         .popReviewList {
@@ -247,6 +259,79 @@
                 border-color: #0472ff;
             }
         }
+        .popReviewList {
+            display: block;
+            padding: 15px 0;
+            .popReviewListItem {
+                display: block;
+                padding: 10px;
+                box-sizing: border-box;
+                border: 1px solid #ddd;
+                margin-bottom: 15px;
+                .top {
+                    @include flex(center, normal);
+                    h3 {
+                        font-size: 16px;
+                        font-weight: 500;
+                        margin-right: 10px;
+                    }
+                    h4 {
+                        font-size: 12px;
+                        font-weight: 500;
+                        color: #999;
+                    }
+                }
+                .cont {
+                    p {
+                        display: block;
+                        color: #333;
+                        padding: 10px 0;
+                        font-weight: 400;
+                    }
+                }
+                .imgToggleBtn {
+                    display: block;
+                    border: none;
+                    text-align: left;
+                    padding: 0;
+                    width: auto;
+                    transition: none;
+                    border-radius: 0;
+                    &:hover {
+                        background: inherit;
+                        color: #333;
+                    }
+                }
+                .img {
+                    .img1 {
+                        display: block;
+                        width: 24%;
+                        background: #999;
+                        padding: 100px 0;
+                        color: #fff;
+                        text-align: center;
+                        font-size: 24px;
+                        font-weight: 600;
+                    }
+                    .img_wrap2 {
+                        gap: 3%;
+                        padding-top: 15px;
+                        display: none;
+                    }
+                    .img_wrap.open {
+                        .img_wrap2 {
+                            display: none;
+                        }
+                    }
+
+                    .img_wrap.closed {
+                        .img_wrap2 {
+                            @include flex(center, normal);
+                        }
+                    }
+                }
+            }
+        }
     }
     .popInfo2 {
         margin-bottom: 60px;
@@ -254,13 +339,14 @@
             @include subT;
         }
         p {
-            @include cflex;
             width: 100%;
-            padding: 100px 0;
+            padding: 15px 30px;
+            box-sizing: border-box;
             color: #333;
-            font-size: 36px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 400;
             border: 1px solid #ddd;
+            line-height: 160%;
         }
     }
     .popLocation {

@@ -14,8 +14,10 @@ const createReview = async (req, res, next) => {
         const { text } = req.body;
         const email = req.decoded.user.email;
 
-        // console.log("req.decoded: ", req.decoded);  OK
-        // console.log("email: ", email); OK
+        console.log("req.decoded: ", req.decoded);
+        // OK;
+        console.log("email: ", email);
+        // OK;
 
         const reviewService = new ReviewService();
         const validateUser = await reviewService.validateUser(email, popupStoreId);
@@ -82,15 +84,10 @@ const getAllReviews = async (req, res, next) => {
 const getReviewById = async (req, res, next) => {
     try {
         // 팝업 스토어와 사용자의 존재 여부를 먼저 확인
-        const popupStore = await PopupStore.findById(req.body.popup_store);
-        if (!popupStore) {
-            throw new Error("Popup store not found");
-        }
+        // const popupStore = await PopupStore.findById(req.body.popup_store);
 
-        const user = await User.findById(req.body.user);
-        if (!user) {
-            throw new Error("User not found");
-        }
+        // const user = await User.findById(req.body.user);
+
         const reviewService = new ReviewService();
         const review = await reviewService.getReviewById(req.params.id);
         if (!review) {
