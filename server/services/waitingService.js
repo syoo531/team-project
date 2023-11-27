@@ -88,7 +88,8 @@ class WaitingService {
     console.log("popupStoreId: ", popupStoreId);
 
     if (
-      isAdminUser.admin_corp === popupStoreId &&
+      isAdminUser &&
+      isAdminUser.admin_corp.toString() === popupStoreId &&
       isAdminUser.admin_corp !== undefined
     ) {
       return true;
