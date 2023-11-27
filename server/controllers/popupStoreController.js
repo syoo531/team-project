@@ -101,13 +101,18 @@ const deleteImage = async (req, res) => {
 //! 사용자 데이터 조회 (옮길예정)
 const getAllUsers = async (req, res) => {
   try {
-    const { page, limit } = req.query;
+    const { page, limit, search } = req.query;
 
     const limitPerPage = limit || 10; //기본 10개로 제한
     const skipCount = (Number(page) - 1) * limitPerPage;
     const totalUsers = await User.countDocuments({});
 
-    const data = await User.find()
+    let query = {};
+    if (search) {
+      query.name = { $regex: new RegExp(search, "i") };
+    }
+
+    const data = await User.find(query)
       .sort({ _id: -1 })
       .limit(limitPerPage)
       .skip(skipCount);

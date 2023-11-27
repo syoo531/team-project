@@ -1,6 +1,8 @@
 "use client";
 import "./UserList.scss";
 
+import Search from "../Search/Search";
+
 export default function UserList({ userData }) {
   return (
     <div className="main__layout">
@@ -10,7 +12,8 @@ export default function UserList({ userData }) {
         </div>
       </div>
       <div className="list__container">
-        <p className="list__total">조회 결과: 총 n개</p>
+        <Search userList={true} />
+        <p className="list__total">조회 결과: 총 {userData?.length}개</p>
         <table className="list-table">
           <thead>
             <tr>
@@ -27,8 +30,8 @@ export default function UserList({ userData }) {
                 <tr className="table-row" key={user._id}>
                   <td>{user.name}</td>
                   <td>{user.phone_number}</td>
-                  <td>{user.category}</td>
                   <td>{user.email}</td>
+                  <td>{user.category}</td>
                   <td>{user.createdAt?.split("T")[0]}</td>
                 </tr>
               ))

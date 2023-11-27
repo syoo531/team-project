@@ -8,7 +8,7 @@ import {
   deleteAllS3,
   deleteImageS3,
 } from "../imageUploader";
-import axios from "axios";
+import instance from "@/utils/instance";
 import Form from "../Form/Form";
 
 export default function UpdateStore({
@@ -59,7 +59,7 @@ export default function UpdateStore({
         updatedFormData = { ...updatedFormData, newImageUrl };
       }
 
-      await axios.patch(
+      await instance.patch(
         `http://localhost:4000/api/popupStore/${storeId}`,
         updatedFormData
       );
@@ -91,12 +91,12 @@ export default function UpdateStore({
       await Promise.all([
         deleteAllS3(existingImage),
         deleteImageS3(mainImage.url),
-        axios.delete(`http://localhost:4000/api/popupStore/${storeId}`),
+        instance.delete(`http://localhost:4000/api/popupStore/${storeId}`),
       ]);
       router.push("/serviceAdmin/popupstore");
       router.refresh();
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

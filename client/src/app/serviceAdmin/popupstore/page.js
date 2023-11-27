@@ -5,22 +5,9 @@ const API_URL = "http://localhost:4000/api/popupStore";
 
 async function getData(searchParams) {
   try {
-    const accessToken = localStorage.getItem("accessToken");
-    const headers = {
-      Authorization: accessToken,
-      "Content-Type": "application/json",
-    };
-    const url = `${API_URL}?${new URLSearchParams(searchParams)}`;
-
-    const res = await fetch(url, {
-      method: "GET",
-      headers,
+    const res = await fetch(`${API_URL}?${new URLSearchParams(searchParams)}`, {
       cache: "no-store",
     });
-
-    // const res = await fetch(`${API_URL}?${new URLSearchParams(searchParams)}`, {
-    //   cache: "no-store",
-    // });
 
     return res.json();
   } catch (err) {

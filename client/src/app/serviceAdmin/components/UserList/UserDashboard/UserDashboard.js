@@ -9,24 +9,35 @@ import {
   faFire,
 } from "@fortawesome/free-solid-svg-icons";
 
-export default function UserDashboard({
-  data,
-  totalUsers = 0,
-  newUserToday = 0,
-}) {
+export default function UserDashboard({ data, totalUsers = 0, newUserToday }) {
   return (
-    <div className="dashboard__container">
-      <div>전체 사용자 {totalUsers}명</div>
-      <FontAwesomeIcon icon={faUsers} />
-
-      <div>오늘 가입한 사용자 {newUserToday.length}명</div>
-      <FontAwesomeIcon icon={faCalendarDay} />
-      {/* 
+    <div className="dashboard__layout">
+      <div className="dashboard__container">
+        <div className="dashboard__card">
+          <div>
+            <p>전체 사용자</p>
+            <h4>{totalUsers}명</h4>
+          </div>
+          <div className="card-icons">
+            <FontAwesomeIcon icon={faUsers} />
+          </div>
+        </div>
+        <div className="dashboard__card">
+          <div>
+            <p>오늘 가입한 사용자 </p>
+            <h4>{newUserToday?.length || 0}명</h4>
+          </div>
+          <div className="card-icons">
+            <FontAwesomeIcon icon={faCalendarDay} />
+          </div>
+        </div>
+        {/* 
       <div>새 사용자 수</div>
       <FontAwesomeIcon icon={faCalendarDays} />
 
       <div>인기 카테고리</div>
       <FontAwesomeIcon icon={faFire} /> */}
+      </div>
     </div>
   );
 }

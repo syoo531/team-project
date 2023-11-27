@@ -2,7 +2,7 @@
 
 import "./MediaUpload.scss";
 import { useRef } from "react";
-import axios from "axios";
+import instance from "@/utils/instance";
 import { deleteImageS3 } from "../../imageUploader";
 import ImagePreview from "./ImagePreview";
 import CustomUploadButton from "./CustomUploadButton";
@@ -52,7 +52,7 @@ export default function MediaUpload({
     if (confirm) {
       await Promise.all([
         deleteImageS3(img),
-        axios.delete(`http://localhost:4000/api/popupStore/image/${id}`),
+        instance.delete(`http://localhost:4000/api/popupStore/image/${id}`),
       ]);
       setExistingImage((prev) => prev.filter((img) => img._id !== id));
     }
