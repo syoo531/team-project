@@ -27,8 +27,19 @@ export default function FilterModal({ closeModal }) {
   const [selectValue, setSelectValue] = useState(SELECT_VALUE);
   const router = useRouter();
 
-  function handleChange(targetId) {
+  function filterTypeChange(targetId) {
     setCurrentId(targetId);
+  }
+
+  function handleFilter() {
+    router.push(
+      `/popupList/filter?pageNumber=1&limit=8${
+        selectValue.area ? `&area=${selectValue.area}` : ""
+      }${selectValue.category ? `&category=${selectValue.category}` : ""}${
+        selectValue.date ? `&date=${selectValue.date}` : ""
+      }`
+    );
+    closeModal();
   }
 
   return (
@@ -58,7 +69,7 @@ export default function FilterModal({ closeModal }) {
                     currentId === type.id ? "clicked" : null
                   }`}
                   onClick={() => {
-                    handleChange(type.id);
+                    filterTypeChange(type.id);
                   }}
                 >
                   {type.typeName}
@@ -137,7 +148,9 @@ export default function FilterModal({ closeModal }) {
           >
             <FontAwesomeIcon icon={faRotateLeft} /> 초기화
           </div>
-          <div className="viewBtn">적용하기</div>
+          <div className="viewBtn" onClick={handleFilter}>
+            적용하기
+          </div>
         </div>
       </div>
     </div>

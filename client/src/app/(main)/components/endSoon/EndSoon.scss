@@ -11,23 +11,18 @@
 }
 
 .EndSoon {
-  margin-bottom: 120px;
+  margin-bottom: 150px;
 
   .headerWrapper {
     padding: 0 50px;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
     margin-bottom: 50px;
 
     .title {
       font-size: 30px;
       font-weight: 600;
-
-      .smileIcon {
-        font-size: 40px;
-        color: #fd021f;
-      }
     }
 
     .btnWrapper {
@@ -52,120 +47,6 @@
       display: flex;
       justify-content: space-between;
       transition: 0.8s;
-
-      .popUpWrapper {
-        position: relative;
-        display: flex;
-        flex-direction: column;
-
-        flex-basis: calc(25%);
-        flex-shrink: 0;
-        padding-right: 50px;
-
-        .Mark {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: absolute;
-          top: 56px;
-          right: 62px;
-          width: 42px;
-          height: 42px;
-          border-radius: 50%;
-          background-color: #fd021f;
-          font-size: 10px;
-          font-weight: 700;
-          font-style: italic;
-          color: #fff;
-          text-align: center;
-          line-height: 1;
-        }
-
-        .remainingTime {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 10px 0;
-
-          .timeIcon {
-            font-size: 26px;
-            color: #fd021f;
-          }
-          .time {
-            font-weight: 600;
-          }
-        }
-
-        .popUpImg {
-          height: 300px;
-          margin-bottom: 14px;
-          border-radius: 12px;
-          background-image: url("https://user-images.githubusercontent.com/126956430/283727329-e1f8cf20-14e8-4720-9d1f-b337a89e4e1b.jpeg");
-          background-position: center;
-          background-size: cover;
-          &:hover {
-            cursor: pointer;
-          }
-        }
-
-        .brand {
-          align-self: flex-start;
-          margin-bottom: 6px;
-          padding: 5px 10px;
-          border-radius: 8px;
-          background-color: #000;
-          color: #fff;
-          font-size: 12px;
-          font-weight: 500;
-        }
-
-        .popUpTitle {
-          font-size: 18px;
-          font-weight: 600;
-          margin-bottom: 10px;
-        }
-
-        .locationWrapper {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-bottom: 10px;
-
-          .locationIcon {
-            font-size: 16px;
-            color: #0472ff;
-          }
-
-          .locationText {
-            font-size: 14px;
-          }
-        }
-
-        .dateWrapper {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          margin-bottom: 12px;
-
-          .dateIcon {
-            font-size: 16px;
-            color: #0472ff;
-          }
-
-          .dateText {
-            font-size: 14px;
-          }
-        }
-
-        .readMore {
-          font-size: 14px;
-
-          &:hover {
-            cursor: pointer;
-            text-decoration: underline;
-          }
-        }
-      }
     }
   }
 }

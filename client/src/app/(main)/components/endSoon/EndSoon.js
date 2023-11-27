@@ -1,18 +1,20 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "../../../../utils/instance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { faCalendar } from "@fortawesome/free-regular-svg-icons";
-import { faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import EndSoonPopupStore from "./components/endSoonPopupStore/EndSoonPopupStore";
 import "./EndSoon.scss";
 
 const popUpArr = new Array(8).fill(0);
 
 export default function EndSoon() {
+  const [popupStores, setPopupStores] = useState([]);
   const [slide, setSlide] = useState(0);
   const [count, setCount] = useState(popUpArr.length);
+
+  console.log(popupStores);
 
   function moveToLeft() {
     if (slide > 0) {
@@ -27,6 +29,19 @@ export default function EndSoon() {
       setCount((prev) => prev - 1);
     }
   }
+
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await axios.get(`/popupList/endSoon`);
+        if (response.status === 200) {
+          setPopupStores(response.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
   return (
     <div className="EndSoon">
@@ -57,32 +72,7 @@ export default function EndSoon() {
           }}
         >
           {popUpArr.map((el, index) => (
-            <div className="popUpWrapper" key={index}>
-              <div className="Mark">
-                END
-                <br />
-                SOON
-              </div>
-              <div className="remainingTime">
-                <FontAwesomeIcon className="timeIcon" icon={faStopwatch} beat />
-                <div className="time">종료까지 남은 시간 :</div>
-              </div>
-              <div className="popUpImg"></div>
-              <div className="brand">해태</div>
-              <div className="popUpTitle">쌍쌍바 팝업스토어</div>
-              <div className="locationWrapper">
-                <FontAwesomeIcon
-                  className="locationIcon"
-                  icon={faLocationDot}
-                />
-                <div className="locationText">서울 성동구 서울숲 4길 26-14</div>
-              </div>
-              <div className="dateWrapper">
-                <FontAwesomeIcon className="dateIcon" icon={faCalendar} />
-                <div className="dateText">2023.11.09 - 2023.12.22</div>
-              </div>
-              <div className="readMore">{"자세히 보기 >"}</div>
-            </div>
+            <EndSoonPopupStore key={index} />
           ))}
         </div>
       </div>
