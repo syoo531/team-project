@@ -33,15 +33,7 @@ export default function Waiting() {
   useEffect(() => {
     const axiosWaitingStatus = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/api/waiting/getWaitingStatus`,
-          {
-            headers: {
-              Authorization:
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDk5MzY1OSwiZXhwIjoxNzAxMDgwMDU5fQ.1If6p9F-ZkjctqjtLwDKfGkKF2uw_jiWImYXhlxvU0s",
-            },
-          }
-        );
+        const response = await instance.get(`/waiting/getWaitingStatus`);
 
         const waitingData = response.data;
 

@@ -21,7 +21,7 @@ export default function MyPage() {
       <div className="mypageContent">
         <div className="contentWrapper">
           {currentContent === 0 ? (
-            <Waiting />
+            ""
           ) : currentContent === 1 ? (
             <Reservation />
           ) : currentContent === 2 ? (
