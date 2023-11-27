@@ -43,7 +43,7 @@ app.use(errorHandler); // 에러 처리 미들웨어
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
-  app.listen(4000, () => {
-    console.log(`Server running on port 4000`);
+  app.listen(5000, () => {
+    console.log(`Server running on port 5000`);
   });
 });
