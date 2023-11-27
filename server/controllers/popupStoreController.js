@@ -103,38 +103,25 @@ const getAllUsers = async (req, res) => {
   try {
     const { page, limit, search } = req.query;
 
-    const limitPerPage = limit || 10; //기본 10개로 제한
-    const skipCount = (Number(page) - 1) * limitPerPage;
-    const totalUsers = await User.countDocuments({});
-
-    let query = {};
-    if (search) {
-      query.name = { $regex: new RegExp(search, "i") };
-    }
-
-    const data = await User.find(query)
-      .sort({ _id: -1 })
-      .limit(limitPerPage)
-      .skip(skipCount);
-
-    const today = new Date().toDateString();
-    const newUserToday = await User.find({
-      createdAt: {
-        $gte: today,
-      },
-    });
+    const popupService = new PopupService();
+    const { data, newUserToday, totalUsers, currentPage, totalPages } =
+      await popupService.getAllUsers(page, limit, search);
 
     res.status(200).json({
       data,
       newUserToday,
       totalUsers,
-      currentPage: Number(page) || 1,
-      totalPages: Math.ceil(totalUsers / limitPerPage),
+      currentPage,
+      totalPages,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
     console.log(err);
   }
+};
+
+const validateAdmin = async (req, res) => {
+  res.status(200).json({ message: "관리자 인증 성공" });
 };
 
 module.exports = {
@@ -145,4 +132,5 @@ module.exports = {
   deletePopupStore,
   deleteImage,
   getAllUsers,
+  validateAdmin,
 };

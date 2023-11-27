@@ -35,7 +35,7 @@ export default function Form({
             <h1>팝업스토어 수정</h1>
             <div className="action__menu">
               <button
-                className="delete-button"
+                className="delete-btn"
                 onClick={() => handleDelete(storeId)}
               >
                 팝업스토어 삭제
@@ -173,10 +173,14 @@ export default function Form({
             setMainImage={setMainImage}
           />
           <div className="form__buttons">
-            <button type="submit" disabled={disableButton}>
-              Submit
+            <button
+              className="submit-btn"
+              type="submit"
+              disabled={disableButton}
+            >
+              저장
             </button>
-            <button type="button" onClick={handleCancel}>
+            <button className="cancel-btn" type="button" onClick={handleCancel}>
               취소
             </button>
           </div>

@@ -18,6 +18,7 @@ export default function PopupStoreList({
         </div>
         <div className="action__menu">
           <button
+            className="create-store-btn"
             onClick={() => router.push("/serviceAdmin/popupstore/create")}
           >
             팝업스토어 등록
@@ -26,7 +27,9 @@ export default function PopupStoreList({
       </div>
       <div className="list__container">
         <Search />
-        <p className="list__total">조회 결과: 총 {totalStores}개</p>
+        <p className="list__total">
+          조회 결과: 총 {totalStores}개
+        </p>
         <table className="list-table">
           <thead>
             <tr>
@@ -42,7 +45,7 @@ export default function PopupStoreList({
             {stores && stores.length > 0 ? (
               stores?.map((store) => (
                 <tr
-                  className="table-row"
+                  className="table-row store-list"
                   key={store._id}
                   onClick={() =>
                     router.push(`/serviceAdmin/popupstore/${store._id}`)
