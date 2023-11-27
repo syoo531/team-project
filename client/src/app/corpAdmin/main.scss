@@ -84,10 +84,10 @@
 
           span {
             margin-left: 16px;
-            .icon {
-              font-size: 12px;
-              padding-right: 6px;
-            }
+          }
+          .icon {
+            font-size: 12px;
+            padding-right: 6px;
           }
 
           .buttonContainer {
@@ -104,7 +104,7 @@
           }
 
           .reservationTime {
-            margin-top: 20px;
+            margin: 20px 90px 0px;
             font-size: 14px;
             font-weight: 500;
           }
@@ -131,7 +131,7 @@
       }
     }
     .mainLayout {
-      padding: 0px 50px;
+      padding: 0px 128px;
     }
 
     .listTitle {
@@ -141,7 +141,7 @@
         background: none;
         font-size: 16px;
         font-weight: 700;
-        width: 10%;
+        width: 11%;
         cursor: pointer;
         appearance: none;
         color: $admin-font-color;

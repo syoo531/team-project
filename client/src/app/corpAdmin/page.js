@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import "./main.scss";
+import instance from "@/utils/instance";
 
 export default function CorpAdmin() {
   const [reservations, setReservations] = useState([]);
@@ -11,39 +11,39 @@ export default function CorpAdmin() {
   const [currentList, setCurrentList] = useState("waiting");
   useEffect(() => {
     // 사전 예약 목록 불러오기
-    axios
-      .get(`http://localhost:4000/api/reservation/getReservationUser`, {
-        // headers: {
-        //   Authorization:
-        //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
-        // },
+    instance
+      .get("/reservation/getReservationByCorpAdmin")
+      .then((response) => {
+        console.log("Reservations API Response:", response.data.data); // 사전 예약 목록 API 응답 확인
+        if (Array.isArray(response.data.data)) {
+          setReservations(response.data.data);
+        } else {
+          setReservations([]);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching reservations:", error);
+        setReservations([]);
+      });
+
+    // 웨이팅 목록 불러오기
+    instance
+      .get(`/waiting/getWaitingUser`, {
         params: {
           popupStoreId: "656246c6f8ee991dd36cf6bf",
         },
       })
       .then((response) => {
-        setReservations(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching reservations:", error);
-      });
-
-    // 웨이팅 목록 불러오기
-    axios
-      .get(`http://localhost:4000/api/waiting/getWaitingUser`, {
-        headers: {
-          Authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
-        },
-        params: {
-          popupStoreId: "655f56aaaca697ca092e1aec",
-        },
-      })
-      .then((response) => {
-        setWaitingList(response.data);
+        console.log("Waiting List API Response:", response.data);
+        if (Array.isArray(response.data)) {
+          setWaitingList(response.data);
+        } else {
+          setWaitingList([]);
+        }
       })
       .catch((error) => {
         console.error("Error fetching waiting list:", error);
+        setWaitingList([]);
       });
   }, []);
 
@@ -75,16 +75,17 @@ export default function CorpAdmin() {
             </tr>
           </thead>
           <tbody>
-            {listToShow.map((item, index) => (
-              <tr key={item._id}>
-                <td>{index + 1}</td>
-                <td>{item.user?.name}</td>
-                <td>{item.people}</td>
-                <td>{item.user?.phone_number}</td>
-                <td>{item.date.split("T")[0]}</td>
-                <td>{item.hour}</td>
-              </tr>
-            ))}
+            {Array.isArray(listToShow) &&
+              listToShow.map((item, index) => (
+                <tr key={item._id}>
+                  <td>{index + 1}</td>
+                  <td>{item.user?.name}</td>
+                  <td>{item.people}</td>
+                  <td>{item.user?.phone_number}</td>
+                  <td>{item.date.split("T")[0]}</td>
+                  <td>{item.hour}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -10,6 +9,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import "../main.scss";
+import instance from "@/utils/instance";
 
 export default function corpAdminWaitingList() {
   const [currentTab, setCurrentTab] = useState("대기중");
@@ -17,18 +17,14 @@ export default function corpAdminWaitingList() {
   const [completedList, setCompletedList] = useState([]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/api/waiting/getWaitingUser`, {
-        headers: {
-          Authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
-        },
+    instance
+      .get(`/waiting/getWaitingUser`, {
         params: {
-          popupStoreId: "655f56aaaca697ca092e1aec",
+          popupStoreId: "656246c6f8ee991dd36cf6bf",
         },
       })
       .then((response) => {
-        console.log(response.data);
+        console.log("Loaded reservations:", response.data);
         const waitingReservations = response.data.filter((r) => !r.is_enter);
         const completedReservations = response.data.filter((r) => r.is_enter);
         setReservations(waitingReservations);
@@ -40,20 +36,11 @@ export default function corpAdminWaitingList() {
   }, []);
 
   const handleComplete = (reservation) => {
-    axios
-      .put(
-        `http://localhost:4000/api/waiting/enterWaitingList`,
-        {
-          popupStoreId: reservation.popup_store,
-          userId: reservation.user._id,
-        },
-        {
-          headers: {
-            Authorization:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
-          },
-        }
-      )
+    instance
+      .put("/waiting/enterWaitingList", {
+        popupStoreId: reservation.popup_store,
+        userId: reservation.user._id,
+      })
       .then((response) => {
         if (response.status === 200 || response.status === 204) {
           setReservations((prev) =>

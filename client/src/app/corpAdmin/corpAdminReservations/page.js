@@ -1,15 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faClock } from "@fortawesome/free-regular-svg-icons";
 import {
   faCheck,
   faUsers,
   faPhone,
   faBullhorn,
   faUser,
+  faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import "../main.scss";
+import instance from "@/utils/instance";
 
 export default function corpAdminReservations() {
   const [currentTab, setCurrentTab] = useState("대기중");
@@ -18,23 +20,15 @@ export default function corpAdminReservations() {
   const [sortOrder, setSortOrder] = useState("default");
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/api/reservation/getReservationUser`, {
-        // headers: {
-        //   Authorization:
-        //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE",
-        // },
-        params: {
-          popupStoreId: "656246c6f8ee991dd36cf6bf",
-        },
-      })
-
+    instance
+      .get("/reservation/getReservationByCorpAdmin")
       .then((response) => {
-        console.log("Loaded reservations:", response.data);
-        const waitingReservations = response.data.filter(
+        console.log("Loaded reservations:", response.data.data);
+        const actualData = response.data.data;
+        const waitingReservations = actualData.filter(
           (r) => r.status === "대기중"
         );
-        const completedReservations = response.data.filter(
+        const completedReservations = actualData.filter(
           (r) => r.status === "완료됨"
         );
 
@@ -51,12 +45,13 @@ export default function corpAdminReservations() {
   }, [currentTab]);
 
   const handleComplete = (reservationId, popupStoreId, userId) => {
-    axios
-      .put("http://localhost:4000/api/reservation/complete", {
-        popupStoreId: popupStoreId,
+    instance
+      .put("/reservation/enterReservation", {
+        corpAdminPopupId: popupStoreId,
         userId: userId,
       })
       .then((response) => {
+        console.log("Handle complete response:", response);
         if (response.status === 200 || response.status === 204) {
           const newReservations = reservations.filter(
             (r) => r._id !== reservationId
@@ -151,22 +146,22 @@ export default function corpAdminReservations() {
           reservations.map((reservation) => (
             <div key={reservation._id} className="reservationBox">
               <div className="reservationDetails">
-                <div>
-                  <span className="reservatioType">예약</span>
-                  <span>
-                    <FontAwesomeIcon icon={faUser} className="icon" />
-                    {reservation.user?.name}
-                  </span>
-                  <span>
-                    <FontAwesomeIcon icon={faUsers} className="icon" />
-                    {reservation.people}명
-                  </span>
-                  <span>
-                    <FontAwesomeIcon icon={faPhone} className="icon" />
-                    {reservation.user?.phone_number}
-                  </span>
-                </div>
+                <span className="reservationType">예약</span>
+                <span>
+                  <FontAwesomeIcon icon={faUser} className="icon" />
+                  {reservation.user?.name}
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faUsers} className="icon" />
+                  {reservation.people}명
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faPhone} className="icon" />
+                  {reservation.user?.phone_number}
+                </span>
+
                 <div className="reservationTime">
+                  <FontAwesomeIcon icon={faClock} className="icon" />
                   예약시간: {reservation.date.split("T")[0]} {reservation.hour}
                 </div>
                 <div className="buttonContainer">
@@ -207,6 +202,7 @@ export default function corpAdminReservations() {
                 </span>
               </div>
               <div className="reservationTime">
+                <FontAwesomeIcon icon={faClock} />
                 예약시간: {reservation.date.split("T")[0]} {reservation.hour}
               </div>
               <div className="buttonContainer">
