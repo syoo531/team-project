@@ -49,7 +49,7 @@ export default function UpdateStore({
       if (mainImage instanceof File) {
         const [newMain] = await Promise.all([
           s3UploadSingleImage(mainImage),
-          deleteImageS3(img.url),
+          deleteImageS3(img?.url),
         ]);
         updatedFormData = { ...updatedFormData, newMain };
       }
