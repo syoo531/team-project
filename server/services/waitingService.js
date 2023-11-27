@@ -58,14 +58,31 @@ class WaitingService {
           }
         }
 
-      result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+        result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+      }
+      // console.log("여기33", result);
+      return result;
     }
-    // console.log("여기33", result);
-    return result;
+  }
+
+  // 현장 대기 인원수를 수정
+  async updateWaitingPeople(userId, popupStoreId, people) {
+    const waitingPeople = await Waiting.findOne({
+      user: userId,
+      popup_store: popupStoreId,
+    }).updateOne({ people: people });
+  }
+
+  // 현장 대기를 취소
+  async deleteWaitingPeople(userId, popupStoreId) {
+    const waitingPeople = await Waiting.deleteOne({
+      user: userId,
+      popup_store: popupStoreId,
+    }).deleteOne();
   }
 
   // 업체 관리자 페이지에서
-  // 특정 팝업 스토어 Id에 대한 웨이팅 리스트를 조회할 수 있다.
+  // 특정 팝업 스토어 Id에 대한 웨이팅 리스트를 조회
   async getWaitingByPopupStore(popup) {
     const waitingByPopupStore = await Waiting.find({
       popup_store: popup,
@@ -81,6 +98,23 @@ class WaitingService {
     return waitingByPopupStore;
   }
 
+  // 같은 팝업스토어에 현장대기 하려고 하는지 확인
+  async validateWaiting(email, popup) {
+    try {
+      const isFindUser = Waiting.findOne({ email, popup });
+      console.log("isFindUser: ", isFindUser);
+
+      if (!isFindUser) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // 팝업스토어 admin인지 검사
   async validateAdmin(email, popupStoreId) {
     const isAdminUser = await User.findOne({ email }).select("admin_corp");
     console.log("isAdminUser: ", isAdminUser);
@@ -96,6 +130,7 @@ class WaitingService {
     }
   }
 
+  // 팝업스토어에 입장했는지 검사
   async enterCheck(popupStoreId, userId) {
     const waitingList = await Waiting.findOneAndUpdate(
       {

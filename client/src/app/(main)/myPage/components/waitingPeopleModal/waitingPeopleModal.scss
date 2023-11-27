@@ -1,0 +1,20 @@
+.updateWaitingContainer {
+  width: 300px;
+  padding: 30px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .closeButton {
+    margin-left: 200px;
+  }
+  .waitingText {
+    padding: 50px;
+    text-align: center;
+  }
+
+  .updatePeopleContainer {
+    display: flex;
+    text-align: center;
+  }
+}
