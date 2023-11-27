@@ -11,4 +11,21 @@ async function addInterestPopupStore({ userEmail, popupStoreId }) {
   return interestPopupStore;
 }
 
-module.exports = { addInterestPopupStore };
+async function getInterestPopupStore({ userEmail }) {
+  const user = await User.findOne({ email: userEmail }).select("_id");
+
+  const interestPopupStore = await Interest.find({
+    user: user._id,
+  }).populate({
+    path: "popup_store",
+    select: ["name", "mainImage"],
+    populate: {
+      path: "mainImage",
+      select: ["url"],
+    },
+  });
+
+  return interestPopupStore;
+}
+
+module.exports = { addInterestPopupStore, getInterestPopupStore };

@@ -11,7 +11,7 @@ export default function reservationCard(data) {
     <div className="reservationCardContainer">
       <div className="Card">
         <div className="imgWrapper">
-          <img src="https://user-images.githubusercontent.com/126956430/283725713-f0f5bc90-335b-4ea6-addb-b395a154f685.png" />
+          <img src={`${data.popup_store.mainImage.url}`} />
         </div>
         <div className="dataWrapper">
           <div className="popupName">{data.popup_store.name}</div>

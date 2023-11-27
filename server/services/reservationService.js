@@ -72,7 +72,11 @@ class ReservationService {
     const user = await User.findOne({ email }).select("_id");
     const myReservation = await Reservation.find({ user }).populate({
       path: "popup_store",
-      select: "name",
+      select: ["name", "mainImage"],
+      populate: {
+        path: "mainImage",
+        select: ["url"],
+      },
     });
     return myReservation;
   }

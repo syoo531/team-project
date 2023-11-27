@@ -17,4 +17,20 @@ async function addInterestPopupStore(req, res) {
   }
 }
 
-module.exports = { addInterestPopupStore };
+async function getInterestPopupStore(req, res) {
+  const { popupStoreId } = req.body;
+  const userEmail = req.decoded.user.email;
+
+  console.log(popupStoreId);
+  console.log(userEmail);
+  try {
+    const result = await interestService.getInterestPopupStore({
+      userEmail,
+    });
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: "failed" });
+  }
+}
+
+module.exports = { addInterestPopupStore, getInterestPopupStore };
