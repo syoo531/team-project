@@ -2,11 +2,11 @@
 const { Router } = require("express");
 
 const {
-    createReview,
-    getAllReviews,
-    updateReview,
-    deleteReview,
-    getReviewById,
+  createReview,
+  getAllReviews,
+  updateReview,
+  deleteReview,
+  getReviewById,
 } = require("../controllers/reviewController");
 const validateToken = require("../middlewares/validateToken");
 

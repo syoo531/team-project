@@ -1,0 +1,12 @@
+.reviewCard {
+  border: 1px solid black;
+  width: 500px;
+  margin-top: 50px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+
+  .reviewButton {
+    margin-left: auto;
+  }
+}

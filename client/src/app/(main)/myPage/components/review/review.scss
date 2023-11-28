@@ -1,0 +1,14 @@
+.reviewCardContainer {
+  width: 1000px;
+  flex-direction: column;
+  .reviewTitle {
+    font-size: 20px;
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+  }
+  .reviewCardWrapper {
+    display: flex;
+    justify-content: center;
+  }
+}

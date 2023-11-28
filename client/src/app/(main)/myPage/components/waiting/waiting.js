@@ -1,10 +1,10 @@
 import "./waiting.scss";
 import PeopleModal from "../waitingPeopleModal/waitingPeopleModal";
 import CancelModal from "../cancleWaitingModal/cancleWaitingModal";
-import instance from "../../../../../utils/instance";
+// import instance from "../../../../../utils/instance";
+import instance from "@/utils/instance";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 export default function Waiting() {
   // 1. useState 작성
@@ -33,7 +33,7 @@ export default function Waiting() {
   useEffect(() => {
     const axiosWaitingStatus = async () => {
       try {
-        const response = await instance.get(`/waiting/getWaitingStatus`);
+        const response = await instance(`/waiting/getWaitingStatus`);
 
         const waitingData = response.data;
 
@@ -63,25 +63,33 @@ export default function Waiting() {
 
   return (
     <div className="waitingContainer">
-      <div className="popUpStoreName">{waitingData.data[0][0]}</div>
-      <div className="waitingTimeContainer">
-        <div className="waitingInfoWrapper">
-          <div className="waitingTeamText">대기중</div>
-          <div className="waitingTimeText">{waitingData.data[0][1]}팀</div>
+      {waitingData.data.map((item, outerIndex) => (
+        <div key={outerIndex}>
+          {item.map((innerItem, innerIndex) => (
+            <div key={innerIndex} className="popUpStoreName">
+              {innerItem}
+            </div>
+          ))}
+          <div className="waitingTimeContainer">
+            <div className="waitingInfoWrapper">
+              <div className="waitingTeamText">대기중</div>
+              <div className="waitingTimeText">{item[1]}팀</div>
+            </div>
+          </div>
+          <div className="waitingInfoButton">
+            <button className="waitingButtonText" onClick={openPeopleModal}>
+              웨이팅 정보 수정
+            </button>
+          </div>
+          <PeopleModal isOpen={peopleModal} onClose={closePeopleModal} />
+          <div className="waitingInfoButton">
+            <button className="waitingButtonText" onClick={openCancelModal}>
+              웨이팅 취소
+            </button>
+          </div>
+          <CancelModal isOpen={cancelModal} onClose={closeCancelModal} />
         </div>
-      </div>
-      <div className="waitingInfoButton">
-        <button className="waitingButtonText" onClick={openPeopleModal}>
-          웨이팅 정보 수정
-        </button>
-      </div>
-      <PeopleModal isOpen={peopleModal} onClose={closePeopleModal} />
-      <div className="waitingInfoButton">
-        <button className="waitingButtonText" onClick={openCancelModal}>
-          웨이팅 취소
-        </button>
-      </div>
-      <CancelModal isOpen={cancelModal} onClose={closeCancelModal} />
+      ))}
     </div>
   );
 }
