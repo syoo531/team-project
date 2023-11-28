@@ -7,14 +7,10 @@ import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import EndSoonPopupStore from "./components/endSoonPopupStore/EndSoonPopupStore";
 import "./EndSoon.scss";
 
-const popUpArr = new Array(8).fill(0);
-
 export default function EndSoon() {
   const [popupStores, setPopupStores] = useState([]);
   const [slide, setSlide] = useState(0);
-  const [count, setCount] = useState(popUpArr.length);
-
-  console.log(popupStores);
+  const [count, setCount] = useState(0);
 
   function moveToLeft() {
     if (slide > 0) {
@@ -36,6 +32,7 @@ export default function EndSoon() {
         const response = await axios.get(`/popupList/endSoon`);
         if (response.status === 200) {
           setPopupStores(response.data);
+          setCount(response.data.length);
         }
       } catch (err) {
         console.log(err);
@@ -71,8 +68,8 @@ export default function EndSoon() {
             transform: `translate(-${slide}%)`,
           }}
         >
-          {popUpArr.map((el, index) => (
-            <EndSoonPopupStore key={index} />
+          {popupStores.map((store) => (
+            <EndSoonPopupStore key={store._id} store={store} />
           ))}
         </div>
       </div>

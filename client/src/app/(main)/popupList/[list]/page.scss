@@ -55,7 +55,9 @@
   .popupListWrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    row-gap: 50px;
+    row-gap: 70px;
+    place-items: center;
+    padding: 0 80px;
     margin-bottom: 100px;
   }
 
