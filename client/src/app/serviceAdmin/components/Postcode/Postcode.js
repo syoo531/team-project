@@ -34,7 +34,7 @@ const Postcode = ({ scriptUrl, setFormData }) => {
 
   return (
     <button
-      className="button__postcode-popup"
+      className="btn-postcode-popup"
       type="button"
       onClick={handleClick}
     >

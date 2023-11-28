@@ -40,7 +40,9 @@ class ReservationService {
   async getReservationByCorpAdmin(popupStoreId) {
     return await Reservation.find({
       popup_store: popupStoreId,
-    }).populate("user");
+    })
+      .populate("user")
+      .populate("popup_store");
   }
 
   //예약 완료
@@ -72,7 +74,11 @@ class ReservationService {
     const user = await User.findOne({ email }).select("_id");
     const myReservation = await Reservation.find({ user }).populate({
       path: "popup_store",
-      select: "name",
+      select: ["name", "mainImage"],
+      populate: {
+        path: "mainImage",
+        select: ["url"],
+      },
     });
     return myReservation;
   }

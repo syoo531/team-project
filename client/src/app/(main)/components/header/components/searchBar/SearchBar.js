@@ -34,7 +34,7 @@ export default function SearchBar() {
       </label>
       <input
         id="search"
-        placeholder="Search in Pop-Up Store..."
+        placeholder="검색하실 키워드를 입력해주세요."
         readOnly
         onClick={searchModalOpen}
       />

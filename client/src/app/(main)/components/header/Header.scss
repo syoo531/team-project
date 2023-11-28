@@ -40,6 +40,10 @@
     }
   }
 
+  .hamburgerBtn {
+    display: none;
+  }
+
   .btnWrapper {
     display: flex;
     justify-content: flex-end;
@@ -99,4 +103,26 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 1160px) {
+  .header {
+    height: 80px;
+
+    .logo {
+      width: 160px;
+    }
+
+    .hamburgerBtn {
+      display: block;
+      font-size: 28px;
+    }
+
+    .btnWrapper {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
 }

@@ -2,7 +2,7 @@
 @import "../../main.scss";
 
 .search__container {
-  padding: 10px 10px 35px 10px;
+  padding: 10px 10px 30px 10px;
   width: 100%;
 
   input,
@@ -20,6 +20,17 @@
   display: flex;
   align-items: center;
   gap: 10px;
+
+  .reset-button {
+    @include admin-search-button-style;
+    margin-left: auto;
+    min-width: 55px;
+  }
+
+  .show-date-button {
+    @include admin-search-button-style;
+    min-width: 70px;
+  }
 }
 
 .search-input-container {
@@ -38,10 +49,6 @@
     padding-left: 30px;
     width: 100%;
   }
-}
-
-.reset-button {
-  margin-left: auto;
 }
 
 .date-selector-container {

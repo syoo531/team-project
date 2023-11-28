@@ -56,7 +56,6 @@ class WaitingService {
 
         result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
       }
-      // console.log("여기33", result);
       return result;
     }
   }
@@ -85,7 +84,8 @@ class WaitingService {
       is_enter: false,
     })
       .sort({ createdAt: 1 })
-      .populate("user");
+      .populate("user")
+      .populate("popup_store");
 
     if (!waitingByPopupStore) {
       throw new Error("팝업스토어 현장대기 조회를 실패했습니다.");
@@ -118,7 +118,7 @@ class WaitingService {
 
     if (
       isAdminUser &&
-      isAdminUser.admin_corp.toString() === popupStoreId &&
+      isAdminUser.admin_corp === popupStoreId &&
       isAdminUser.admin_corp !== undefined
     ) {
       return true;
@@ -128,15 +128,16 @@ class WaitingService {
   }
 
   // 팝업스토어에 입장했는지 검사
-  async enterCheck(popupStoreId, userId) {
+  async enterWaitingList(popupStoreId, userId) {
     const waitingList = await Waiting.findOneAndUpdate(
       {
         popup_store: popupStoreId,
-        is_enter: true,
+        is_enter: false,
         user: userId,
       },
-      { is_enter: false }
+      { is_enter: true }
     );
+    return waitingList;
   }
 }
 

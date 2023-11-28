@@ -9,8 +9,7 @@ export default function Reservation() {
   useEffect(() => {
     async function getMyReservation() {
       try {
-        const res = await instance("/reservation/getMyReservation");
-        console.log("여기33", res.data.data);
+        const res = await instance.get("/reservation/getMyReservation");
         const reservationList = res.data.data ? res.data.data : undefined;
         setMyReservation(reservationList);
       } catch (error) {

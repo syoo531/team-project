@@ -3,6 +3,7 @@ import "./page.scss";
 import Navibar from "./components/navibar/navibar";
 import Waiting from "./components/waiting/waiting";
 import Reservation from "./components/reservation/reservation";
+import Interest from "./components/myInterest/myInterest";
 import Review from "./components/review/review";
 import UserInfo from "./components/userInfo/userInfo";
 import ChangePassword from "./components/changePassword/changePassword";
@@ -21,14 +22,16 @@ export default function MyPage() {
       <div className="mypageContent">
         <div className="contentWrapper">
           {currentContent === 0 ? (
-            ""
+            <Waiting />
           ) : currentContent === 1 ? (
             <Reservation />
           ) : currentContent === 2 ? (
-            <Review />
+            <Interest />
           ) : currentContent === 3 ? (
-            <UserInfo />
+            <Review />
           ) : currentContent === 4 ? (
+            <UserInfo />
+          ) : currentContent === 5 ? (
             <ChangePassword />
           ) : (
             ""

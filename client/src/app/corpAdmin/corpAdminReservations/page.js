@@ -20,9 +20,11 @@ export default function corpAdminReservations() {
   const [sortOrder, setSortOrder] = useState("default");
 
   useEffect(() => {
-    instance
-      .get("/reservation/getReservationByCorpAdmin")
-      .then((response) => {
+    const fetchReservations = async () => {
+      try {
+        const response = await instance.get(
+          "/reservation/getReservationByCorpAdmin"
+        );
         console.log("Loaded reservations:", response.data.data);
         const actualData = response.data.data;
         const waitingReservations = actualData.filter(
@@ -34,45 +36,46 @@ export default function corpAdminReservations() {
 
         setReservations(waitingReservations);
         setCompletedList(completedReservations);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("There was an error!", error);
-      });
+      }
+    };
+
+    fetchReservations();
   }, []);
 
   useEffect(() => {
     sortReservations(sortOrder);
   }, [currentTab]);
 
-  const handleComplete = (reservationId, popupStoreId, userId) => {
-    instance
-      .put("/reservation/enterReservation", {
+  const handleComplete = async (reservationId, popupStoreId, userId) => {
+    try {
+      const response = await instance.put("/reservation/enterReservation", {
         corpAdminPopupId: popupStoreId,
         userId: userId,
-      })
-      .then((response) => {
-        console.log("Handle complete response:", response);
-        if (response.status === 200 || response.status === 204) {
-          const newReservations = reservations.filter(
-            (r) => r._id !== reservationId
-          );
-          setReservations(newReservations);
-
-          const completedReservation = reservations.find(
-            (r) => r._id === reservationId
-          );
-          if (completedReservation) {
-            const newCompletedReservation = {
-              ...completedReservation,
-              status: "완료됨",
-            };
-            setCompletedList((prev) => [...prev, newCompletedReservation]);
-          }
-        }
-      })
-      .catch((error) => {
-        console.error("Error completing reservation:", error);
       });
+
+      console.log("Handle complete response:", response);
+      if (response.status === 200 || response.status === 204) {
+        const newReservations = reservations.filter(
+          (r) => r._id !== reservationId
+        );
+        setReservations(newReservations);
+
+        const completedReservation = reservations.find(
+          (r) => r._id === reservationId
+        );
+        if (completedReservation) {
+          const newCompletedReservation = {
+            ...completedReservation,
+            status: "완료됨",
+          };
+          setCompletedList((prev) => [...prev, newCompletedReservation]);
+        }
+      }
+    } catch (error) {
+      console.error("Error completing reservation:", error);
+    }
   };
 
   const handleSortChange = (e) => {
@@ -117,7 +120,6 @@ export default function corpAdminReservations() {
     <div className="reservationContainer">
       <div className="reservationHeader">
         <h1>사전예약 현황</h1>
-
         <div className="tabs">
           <button
             className={`tab ${currentTab === "대기중" ? "active" : ""}`}
@@ -142,7 +144,7 @@ export default function corpAdminReservations() {
         </select>
       </div>
       <div className="reservationList">
-        {currentTab === "대기중" &&
+        {currentTab === "대기중" && reservations.length > 0 ? (
           reservations.map((reservation) => (
             <div key={reservation._id} className="reservationBox">
               <div className="reservationDetails">
@@ -180,9 +182,12 @@ export default function corpAdminReservations() {
                 </div>
               </div>
             </div>
-          ))}
+          ))
+        ) : currentTab === "대기중" ? (
+          <div className="emptyListMessage">사전예약 목록 내용이 없습니다.</div>
+        ) : null}
       </div>
-      {currentTab === "완료됨" &&
+      {currentTab === "완료됨" && completedList.length > 0 ? (
         completedList.map((reservation) => (
           <div key={reservation._id} className="reservationBox">
             <div className="reservationDetails">
@@ -213,7 +218,10 @@ export default function corpAdminReservations() {
               </div>
             </div>
           </div>
-        ))}
+        ))
+      ) : currentTab === "완료됨" ? (
+        <div className="emptyListMessage">완료된 목록 내용이 없습니다.</div>
+      ) : null}
     </div>
   );
 }

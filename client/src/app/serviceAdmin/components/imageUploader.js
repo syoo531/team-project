@@ -56,6 +56,7 @@ export const deleteImageS3 = async (imageUrl) => {
   };
   const command = new DeleteObjectCommand(input);
   const response = await s3client.send(command);
+  console.log("response from s3", response);
   return response;
 };
 
@@ -68,6 +69,7 @@ export const deleteAllS3 = async (imageArray) => {
   const deletePromises = imageArray.map((image) => {
     return deleteImageS3(image.url);
   });
+  console.log("deletePromises", deletePromises);
   const result = await Promise.all(deletePromises);
   return result;
 };

@@ -1,4 +1,4 @@
-const { PopupStore, Image } = require("../models");
+const { PopupStore, Image, User } = require("../models");
 
 class PopupService {
   async createPopupStore(bodyData) {
@@ -137,13 +137,45 @@ class PopupService {
   async deleteImage(id) {
     await Image.findByIdAndDelete(id);
 
-    //팝업스토어 이미지 배열에서 해당 이미지 삭제 (이미지 도큐먼트가 삭제되어도 배열에서는 삭제가 안됨)
+    //팝업스토어 이미지 배열에서 특정 이미지 삭제 (이미지 도큐먼트가 삭제되어도 배열에서는 삭제가 안됨)
     const popupStore = await PopupStore.findOneAndUpdate(
       { images: id },
       { $pull: { images: id } },
       { new: true }
     );
     return popupStore;
+  }
+
+  async getAllUsers(page, limit, search) {
+    const limitPerPage = limit || 10; //기본 10개로 제한
+    const skipCount = (Number(page) - 1) * limitPerPage;
+    const totalUsers = await User.countDocuments({});
+
+    let query = {};
+    if (search) {
+      query.name = { $regex: new RegExp(search, "i") };
+    }
+
+    const data = await User.find(query)
+      .sort({ _id: -1 })
+      .limit(limitPerPage)
+      .skip(skipCount);
+
+    //오늘 가입한 사용자 수 (보류)
+    const today = new Date().toDateString();
+    const newUserToday = await User.find({
+      createdAt: {
+        $gte: today,
+      },
+    });
+
+    return {
+      data,
+      newUserToday,
+      totalUsers,
+      currentPage: Number(page) || 1,
+      totalPages: Math.ceil(totalUsers / limitPerPage),
+    };
   }
 }
 

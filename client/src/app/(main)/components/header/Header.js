@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "./components/searchBar/SearchBar";
 import ModalBackGround from "./components/modalBackGround/modalBackGround";
 import FilterModal from "./components/filterModal/FilterModal";
@@ -43,6 +44,7 @@ export default function Header() {
         onClick={() => router.push("/")}
       />
       <SearchBar />
+      <FontAwesomeIcon className="hamburgerBtn" icon={faBars} />
       <div className="btnWrapper">
         {loading ? null : !token ? (
           <div
@@ -73,6 +75,7 @@ export default function Header() {
             onClick={() => {
               localStorage.removeItem("accessToken");
               setToken(null);
+              window.location.reload("/");
             }}
           >
             로그아웃

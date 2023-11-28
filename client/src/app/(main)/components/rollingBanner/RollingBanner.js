@@ -45,6 +45,7 @@ export default function RollingBanner() {
             <div
               key={store._id}
               className="popUpImg"
+              style={{ backgroundImage: `url(${store.mainImage.url})` }}
               onClick={() => {
                 router.push(`/popupList/all/${store._id}`);
               }}
@@ -59,6 +60,7 @@ export default function RollingBanner() {
             <div
               key={store._id}
               className="popUpImg"
+              style={{ backgroundImage: `url(${store.mainImage.url})` }}
               onClick={() => {
                 router.push(`/popupList/all/${store._id}`);
               }}
@@ -75,6 +77,7 @@ export default function RollingBanner() {
             <div
               key={store._id}
               className="popUpImg"
+              style={{ backgroundImage: `url(${store.mainImage.url})` }}
               onClick={() => {
                 router.push(`/popupList/all/${store._id}`);
               }}
@@ -89,6 +92,7 @@ export default function RollingBanner() {
             <div
               key={store._id}
               className="popUpImg"
+              style={{ backgroundImage: `url(${store.mainImage.url})` }}
               onClick={() => {
                 router.push(`/popupList/all/${store._id}`);
               }}
