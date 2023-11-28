@@ -18,6 +18,7 @@ export default function Interest() {
       }
     }
     getMyInterest();
+    console.log("여기", myInterest);
   }, []);
 
   return (

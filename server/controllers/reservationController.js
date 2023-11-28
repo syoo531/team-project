@@ -1,4 +1,10 @@
 const ReservationService = require("../services/reservationService");
+const {
+  NotFoundError,
+  BadRequestError,
+  InternalServerError,
+  ConflictError,
+} = require("../config/customError");
 
 // 예약 생성
 const createReservation = async (req, res, next) => {
@@ -20,6 +26,10 @@ const getAllReservations = async (req, res, next) => {
   try {
     const reservationService = new ReservationService();
     const reservations = await reservationService.getAllReservations();
+    if (!reservations) {
+      throw new NotFoundError("조회되는 예약이 없습니다!");
+    }
+
     res.json(reservations);
   } catch (err) {
     next(err);
@@ -35,17 +45,17 @@ const getReservationByCorpAdmin = async (req, res) => {
     const reservationList = await reservationService.getReservationByCorpAdmin(
       popupStoreId
     );
+    if (!reservationList) {
+      throw new NotFoundError("조회되는 예약이 없습니다!");
+    }
 
     res.status(200).json({ data: reservationList, message: "통신 성공" });
   } catch (error) {
-    console.error("Error in getReservationsByPopupStoreId:", error);
-    res
-      .status(500)
-      .json({ error: "팝업스토어에 대한 사전예약 리스트 조회 실패" });
+    next(error);
   }
 };
 
-//예약 완료
+//사전예약 입장 완료
 const enterReservation = async (req, res, next) => {
   try {
     const popupStoreId = req.corpAdminPopupId;
@@ -56,7 +66,7 @@ const enterReservation = async (req, res, next) => {
       userId
     );
     if (!completedReservation) {
-      return res.status(404).json({ message: "Reservation not found" });
+      throw new InternalServerError("입장 처리가 실패하였습니다.");
     }
     res.status(200).json({ message: "사전예약자 입장이 완료되었습니다." });
   } catch (error) {
@@ -73,9 +83,9 @@ const updateReservation = async (req, res, next) => {
       req.body
     );
     if (!updatedReservation) {
-      return res.status(404).json({ message: "Reservation not found" });
+      throw new NotFoundError("조회되는 예약이 없습니다!");
     }
-    res.json(updatedReservation);
+    res.status(200).json(updatedReservation);
   } catch (err) {
     next(err);
   }
@@ -90,7 +100,7 @@ const deleteReservation = async (req, res, next) => {
       req.body
     );
     if (!deletedReservation) {
-      return res.status(404).json({ message: "Reservation not found" });
+      throw new NotFoundError("조회되는 예약이 없습니다!");
     }
     res.status(200).json({ message: "Reservation deleted" });
   } catch (err) {
@@ -99,11 +109,18 @@ const deleteReservation = async (req, res, next) => {
 };
 
 const getMyReservation = async (req, res, next) => {
-  const email = req.decoded.user.email;
-  const reservationService = new ReservationService();
-  const myReservation = await reservationService.getMyReservation(email);
+  try {
+    const email = req.decoded.user.email;
+    const reservationService = new ReservationService();
+    const myReservation = await reservationService.getMyReservation(email);
+    if (!myReservation) {
+      throw new NotFoundError("조회되는 예약이 없습니다!");
+    }
 
-  res.status(200).json({ data: myReservation });
+    res.status(200).json({ data: myReservation });
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {
