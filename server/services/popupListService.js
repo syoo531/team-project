@@ -20,7 +20,9 @@ async function endSoonPopUpList() {
     },
   };
 
-  const popupStores = await PopupStore.find(query);
+  const popupStores = await PopupStore.find(query)
+    .populate("mainImage")
+    .populate("images");
 
   return popupStores;
 }
@@ -30,22 +32,36 @@ async function recommendPopUpList(email) {
 
   const popupStores = await PopupStore.find({
     category: { $in: user[0].category },
-  });
+  })
+    .populate("mainImage")
+    .populate("images");
 
   return { user: user[0], popupStores };
 }
 
 async function pagingPopUpList({ pageNumber, limit }) {
-  const skip = (pageNumber - 1) * limit;
-  const popupStores = await PopupStore.find().skip(skip).limit(limit);
+  const skip = (Number(pageNumber) - 1) * Number(limit);
+  const popupStores = await PopupStore.find()
+    .skip(skip)
+    .limit(Number(limit))
+    .populate("mainImage")
+    .populate("images");
   const documents = await PopupStore.countDocuments();
-  const totalPages = Math.ceil(documents / limit);
+  const totalPages = Math.ceil(documents / Number(limit));
 
   return { totalPages, popupStores };
 }
 
+async function getPopUpStore(id) {
+  const popupStore = await PopupStore.find({ _id: id })
+    .populate("mainImage")
+    .populate("images");
+
+  return popupStore[0];
+}
+
 async function searchPopUpList({ pageNumber, limit, keyword }) {
-  const skip = (pageNumber - 1) * limit;
+  const skip = (Number(pageNumber) - 1) * Number(limit);
   const query = [
     { brand: { $regex: keyword, $options: "i" } },
     { name: { $regex: keyword, $options: "i" } },
@@ -57,15 +73,17 @@ async function searchPopUpList({ pageNumber, limit, keyword }) {
     $or: query,
   })
     .skip(skip)
-    .limit(limit);
+    .limit(Number(limit))
+    .populate("mainImage")
+    .populate("images");
 
   const documents = await PopupStore.countDocuments({
     $or: query,
   });
 
-  const totalPages = Math.ceil(documents / limit);
+  const totalPages = Math.ceil(documents / Number(limit));
 
-  return { totalPages, popupStores };
+  return { totalPages, popupStores, documents };
 }
 
 async function filterPopUpList({ pageNumber, limit, area, category, date }) {
@@ -85,11 +103,18 @@ async function filterPopUpList({ pageNumber, limit, area, category, date }) {
     query.end_date = { $gte: selectDate };
   }
 
-  const skip = (pageNumber - 1) * limit;
-  const popupStores = await PopupStore.find(query).skip(skip).limit(limit);
-  const totalPages = Math.ceil(popupStores.length / limit);
+  const skip = (Number(pageNumber) - 1) * Number(limit);
+  const popupStores = await PopupStore.find(query)
+    .skip(skip)
+    .limit(Number(limit))
+    .populate("mainImage")
+    .populate("images");
 
-  return { totalPages, popupStores };
+  const documents = await PopupStore.countDocuments(query);
+
+  const totalPages = Math.ceil(documents / Number(limit));
+
+  return { totalPages, popupStores, documents };
 }
 
 module.exports = {
@@ -97,6 +122,7 @@ module.exports = {
   endSoonPopUpList,
   recommendPopUpList,
   pagingPopUpList,
+  getPopUpStore,
   searchPopUpList,
   filterPopUpList,
 };

@@ -6,4 +6,12 @@ const router = Router();
 
 router.post("/", validateToken, interestController.addInterestPopupStore);
 
+router.get("/:id", validateToken, interestController.getInterestPopupStore);
+
+router.delete(
+  "/:id",
+  validateToken,
+  interestController.deleteInterestPopupStore
+);
+
 module.exports = router;

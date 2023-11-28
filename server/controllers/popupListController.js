@@ -10,7 +10,6 @@ async function getAllPopUpList(req, res) {
 }
 
 async function endSoonPopUpList(req, res) {
-  console.log("end");
   try {
     const result = await popupListService.endSoonPopUpList();
     res.status(200).json(result);
@@ -39,6 +38,17 @@ async function pagingPopUpList(req, res) {
   }
 }
 
+async function getPopUpStore(req, res) {
+  const { id } = req.params;
+  console.log(1);
+  try {
+    const result = await popupListService.getPopUpStore(id);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: "failed" });
+  }
+}
+
 async function searchPopUpList(req, res) {
   try {
     const result = await popupListService.searchPopUpList(req.query);
@@ -60,6 +70,7 @@ async function filterPopUpList(req, res) {
 module.exports = {
   getAllPopUpList,
   pagingPopUpList,
+  getPopUpStore,
   searchPopUpList,
   filterPopUpList,
   endSoonPopUpList,
