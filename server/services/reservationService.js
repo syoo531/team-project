@@ -40,7 +40,9 @@ class ReservationService {
   async getReservationByCorpAdmin(popupStoreId) {
     return await Reservation.find({
       popup_store: popupStoreId,
-    }).populate("user");
+    })
+      .populate("user")
+      .populate("popup_store");
   }
 
   //예약 완료

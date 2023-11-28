@@ -86,18 +86,12 @@ const deleteWaitingPeople = async (req, res, next) => {
 };
 
 // 업체 관리자 페이지에서 waitingList 조회
-const getWaitingListByCorpAdmin = async (req, res, next) => {
+const getWaitingListByCorpAdmin = async (req, res) => {
   try {
-    const { popupStoreId } = req.query;
-    const email = req.decoded.user.email;
+    const popupstoreId = req.corpAdminPopupId;
 
     const waitingService = new WaitingService();
-    const validate = await waitingService.validateAdmin(email, popupStoreId);
-    console.log("validate: ", validate);
-    if (!validate) {
-      throw new Error("해당 팝업스토어 현장 대기 조회 권한이 없습니다.");
-    }
-    const users = await waitingService.getWaitingByPopupStore(popupStoreId);
+    const users = await waitingService.getWaitingByPopupStore(popupstoreId);
     res.status(200).json(users);
   } catch (error) {
     res.status(200).json({ error: "팝업스토어에 대한 대기리스트 조회 실패" });
@@ -106,20 +100,31 @@ const getWaitingListByCorpAdmin = async (req, res, next) => {
 
 const enterWaitingList = async (req, res, next) => {
   try {
-    const { popupStoreId, userId } = req.body;
-    const email = req.decoded.user.email;
+    const popupStoreId = req.corpAdminPopupId;
+    const { userId } = req.body;
+
+    console.log("Received request with:", {
+      corpAdminPopupId: popupStoreId,
+      userId: userId,
+    });
 
     const waitingService = new WaitingService();
-    const validate = await waitingService.validateAdmin(email, popupStoreId);
-    console.log("validate: ", validate);
-    if (!validate) {
-      throw new Error("해당 팝업스토어 현장 대기 조회 권한이 없습니다.");
+    const completedWaiting = await waitingService.enterWaitingList(
+      popupStoreId,
+      userId
+    );
+
+    console.log("Completed waiting:", completedWaiting);
+
+    if (!completedWaiting) {
+      console.log("No waiting found for:", { popupStoreId, userId });
+      return res.status(404).json({ message: "Waiting not found" });
     }
-    const enterCheck = await waitingService.enterCheck(popupStoreId, userId);
-    console.log("enterCheck: ", enterCheck);
-    res.status(200).json({ message: "입장 완료되었습니다." });
+
+    res.status(200).json({ message: "현장대기자 입장이 완료되었습니다." });
   } catch (error) {
-    res.status(400).json({ error: "입장 처리 실패하였습니다." });
+    console.error("Error in enterWaitingList:", error);
+    next(error);
   }
 };
 
