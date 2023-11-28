@@ -6,11 +6,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarCheck,
   faHourglassHalf,
+  faRectangleList,
 } from "@fortawesome/free-regular-svg-icons";
 import Sidebar from "@/adminStyles/sidebar/sidebar";
 
 export default function CorpAdminSidebar() {
   const links = [
+    {
+      href: "/corpAdmin",
+      label: "전체 목록",
+      icon: <FontAwesomeIcon icon={faRectangleList} />,
+    },
     {
       href: "/corpAdmin/corpAdminWaitingList",
       label: "웨이팅 관리",

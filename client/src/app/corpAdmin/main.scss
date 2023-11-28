@@ -18,18 +18,22 @@
     }
 
     .reservationSelectBox {
-      padding: 10px;
+      padding: 10px 10px 20px;
 
       select {
         border: none;
+        margin-left: 4px;
+        border-radius: 25px;
         padding: 8px 4px;
         background: none;
-        color: #666;
+        color: #525b75;
+        font-weight: 500;
         &:focus {
           outline: none;
         }
       }
     }
+
     .reservationHeader {
       display: flex;
       justify-content: space-between;
@@ -135,16 +139,31 @@
     }
 
     .listTitle {
-      padding: 20px 8px 24px;
-      select {
-        border: none;
-        background: none;
-        font-size: 16px;
+      padding: 20px 8px 36px;
+      display: flex;
+      align-items: center;
+      gap: 35px;
+
+      .popupStoreName {
         font-weight: 700;
-        width: 11%;
+
+        .faStoreIcon {
+          margin-right: 4px;
+          color: #0095ff;
+        }
+      }
+
+      select {
+        border-radius: 16px;
+        padding: 5px;
+        height: 40px;
+        border: 3px solid #e3e6ed;
+        background: none;
+        font-size: 13px;
         cursor: pointer;
-        appearance: none;
+        font-weight: 600;
         color: $admin-font-color;
+
         &:focus {
           outline: none;
         }
@@ -181,6 +200,12 @@
         font-weight: map-get($admin-font-weights, "light");
         text-align: center;
       }
+    }
+    .emptyListMessage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100px;
     }
   }
 }
