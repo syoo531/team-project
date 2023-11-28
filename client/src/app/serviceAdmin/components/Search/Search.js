@@ -82,15 +82,16 @@ export default function Search({ userList }) {
       <div className="search__main-search-container">
         <div className="search-input-container">
           <FontAwesomeIcon icon={faMagnifyingGlass} className="search-icon" />
-          <input
-            className="search-input"
-            name="search"
-            placeholder="검색"
-            onChange={handleSearch}
-            value={query.search}
-          />
+          <div>
+            <input
+              className="search-input"
+              name="search"
+              placeholder={userList ? "사용자 이름 검색" : "검색"}
+              onChange={handleSearch}
+              value={query.search}
+            />
+          </div>
         </div>
-
         {userList ? null : (
           <>
             <select

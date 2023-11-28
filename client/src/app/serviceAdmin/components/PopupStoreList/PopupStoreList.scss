@@ -1,76 +1,9 @@
-@import "../../../../adminStyles/adminStyles.scss";
 @import "../../main.scss";
 
-.main__layout {
-  padding: 0px 50px;
-}
-
-.list__header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
 .action__menu {
-  padding: 10px 8px;
+  padding: 0px 8px;
 
-  button {
+  .create-store-btn {
     @include admin-button-base-style(#0095ff, white);
-    &:hover {
-      background: (0, 0, 0, 0.8);
-      transform: scale(1.05);
-    }
-  }
-}
-
-.list__container {
-  width: 100%;
-  padding: 7px 0px;
-  background-color: $admin-card-background;
-  border-radius: $admin-border-radius;
-  box-shadow: $admin-box-shadow;
-
-  .list__total {
-    font-size: 12px;
-    padding: 0px 10px 0px 10px;
-  }
-}
-
-table.list-table {
-  width: 100%;
-  border-radius: $admin-border-radius;
-  border-collapse: collapse;
-
-  th,
-  td {
-    padding: 10px 5px;
-    font-size: 14px;
-  }
-
-  th {
-    font-weight: 500;
-  }
-
-  .store-name-col {
-    width: 40%;
-  }
-
-  .brand-name-col {
-    width: 12%;
-  }
-
-  .table-row {
-    &:hover {
-      color: rgb(0, 0, 0);
-      background-color: #dae5f49c;
-      cursor: pointer;
-    }
-  }
-
-  td {
-    border-top: 1px rgb(201, 199, 199) solid;
-    font-weight: 300;
-    text-align: center;
   }
 }

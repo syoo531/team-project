@@ -35,7 +35,7 @@ export default function Form({
             <h1>팝업스토어 수정</h1>
             <div className="action__menu">
               <button
-                className="delete-button"
+                className="delete-btn"
                 onClick={() => handleDelete(storeId)}
               >
                 팝업스토어 삭제
@@ -56,7 +56,7 @@ export default function Form({
                 placeholder="팝업스토어 이름"
                 type="text"
                 name="name"
-                value={formData?.name}
+                value={formData?.name || ""}
                 onChange={handleChange}
               />
             </div>
@@ -66,7 +66,7 @@ export default function Form({
                 placeholder="브랜드 이름"
                 type="text"
                 name="brand"
-                value={formData?.brand}
+                value={formData?.brand || ""}
                 onChange={handleChange}
               />
             </div>
@@ -79,7 +79,7 @@ export default function Form({
                   type="text"
                   name="zipcode"
                   onChange={handleChange}
-                  value={formData?.zipcode}
+                  value={formData?.zipcode || ""}
                 />
                 <Postcode setFormData={setFormData} />
               </div>
@@ -89,7 +89,7 @@ export default function Form({
                   type="text"
                   name="address"
                   onChange={handleChange}
-                  value={formData?.address}
+                  value={formData?.address || ""}
                 />
               </div>
               <div className="address-input">
@@ -98,7 +98,7 @@ export default function Form({
                   type="text"
                   name="detail_address"
                   onChange={handleChange}
-                  value={formData?.detail_address}
+                  value={formData?.detail_address || ""}
                 />
               </div>
             </div>
@@ -108,7 +108,7 @@ export default function Form({
               <select
                 className="category-selectbox"
                 name="category"
-                value={formData?.category}
+                value={formData?.category || ""}
                 onChange={handleChange}
               >
                 <option value="" disabled hidden>
@@ -147,7 +147,7 @@ export default function Form({
                 className="form-summary"
                 type="text"
                 name="summary"
-                value={formData?.summary}
+                value={formData?.summary || ""}
                 onChange={handleChange}
               />
             </div>
@@ -158,7 +158,7 @@ export default function Form({
                 className="form-description"
                 type="text"
                 name="description"
-                value={formData?.description}
+                value={formData?.description || ""}
                 onChange={handleChange}
               />
             </div>
@@ -173,10 +173,14 @@ export default function Form({
             setMainImage={setMainImage}
           />
           <div className="form__buttons">
-            <button type="submit" disabled={disableButton}>
-              Submit
+            <button
+              className="submit-btn"
+              type="submit"
+              disabled={disableButton}
+            >
+              저장
             </button>
-            <button type="button" onClick={handleCancel}>
+            <button className="cancel-btn" type="button" onClick={handleCancel}>
               취소
             </button>
           </div>

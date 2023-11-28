@@ -1,17 +1,17 @@
 "use client";
-import "./UserList.scss";
 
 import Search from "../Search/Search";
+import Chip from "./Chip";
 
 export default function UserList({ userData }) {
   return (
     <div className="main__layout">
       <div className="main__header list__header">
         <div className="main-title">
-          <h1>유저 목록</h1>
+          <h1>사용자 목록</h1>
         </div>
       </div>
-      <div className="list__container">
+      <div className="list__container user-list">
         <Search userList={true} />
         <p className="list__total">조회 결과: 총 {userData?.length}개</p>
         <table className="list-table">
@@ -19,8 +19,8 @@ export default function UserList({ userData }) {
             <tr>
               <th>사용자 이름</th>
               <th>전화번호</th>
-              <th>사용자 이메일 주소</th>
-              <th>관심 카테고리</th>
+              <th className="email-col">사용자 이메일 주소</th>
+              <th className="category-list-col">관심 카테고리</th>
               <th>가입일</th>
             </tr>
           </thead>
@@ -31,7 +31,11 @@ export default function UserList({ userData }) {
                   <td>{user.name}</td>
                   <td>{user.phone_number}</td>
                   <td>{user.email}</td>
-                  <td>{user.category}</td>
+                  <td>
+                    {user.category.map((chip, i) => (
+                      <Chip category={chip} key={i} />
+                    ))}
+                  </td>
                   <td>{user.createdAt?.split("T")[0]}</td>
                 </tr>
               ))
