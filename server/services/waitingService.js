@@ -97,7 +97,8 @@ class WaitingService {
   // 같은 팝업스토어에 현장대기 하려고 하는지 확인
   async validateWaiting(email, popup) {
     try {
-      const isFindUser = Waiting.findOne({ email, popup });
+      const user = await User.findOne({ email }).select("_id");
+      const isFindUser = await Waiting.findOne({ user, popup_store: popup });
       console.log("isFindUser: ", isFindUser);
 
       if (!isFindUser) {

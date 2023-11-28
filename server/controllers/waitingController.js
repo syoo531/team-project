@@ -1,17 +1,23 @@
 const WaitingService = require("../services/waitingService");
+const {
+  NotFoundError,
+  BadRequestError,
+  InternalServerError,
+  ConflictError,
+} = require("../config/customError");
 
 // 현장대기 접수, (팝업스토어 ID, 대기인원, AccessToken 필요 -> 내 앞에 몇명인가)
 const createWaiting = async (req, res, next) => {
   try {
     const { popup, people } = req.body;
     const email = req.decoded.user.email;
+    console.log("여기33", email);
 
     const waitingService = new WaitingService();
     const validateWaitingService = await waitingService.validateWaiting(
       email,
       popup
     );
-    console.log("validateWaitingService: ", validateWaitingService);
     if (!validateWaitingService) {
       throw new Error("해당 팝업스토어에 이미 현장대기 완료했습니다.");
     }
@@ -32,6 +38,10 @@ const getWaitingStatus = async (req, res, next) => {
 
     const waitingService = new WaitingService();
     const waitingStatus = await waitingService.getWaitingStatus(email);
+    console.log("여기22", waitingStatus);
+    if (!waitingStatus) {
+      throw new NotFoundError("조회되는 대기가 없습니다!");
+    }
 
     return res.status(200).json({
       message: "현장대기 예약 조회 목록입니다.",
