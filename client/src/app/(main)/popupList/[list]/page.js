@@ -7,8 +7,9 @@ import "./page.scss";
 
 export default function PopupList() {
   const [pages, setPages] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [popupStores, setPopupStores] = useState([]);
+  const [documents, setDocuments] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -26,6 +27,7 @@ export default function PopupList() {
   }
 
   function changePage(currentPage) {
+    console.log(currentPage);
     const queryParams = new URLSearchParams(searchParams.toString());
     queryParams.set("pageNumber", currentPage);
     const queryString = queryParams.toString();
@@ -41,19 +43,20 @@ export default function PopupList() {
         );
 
         if (response.status === 200) {
-          const { totalPages, popupStores } = response.data;
+          const { totalPages, popupStores, documents } = response.data;
           const pages = Array.from(
             { length: totalPages },
             (_, index) => index + 1
           );
           setPopupStores(popupStores);
           setPages(pages);
+          setDocuments(documents);
         }
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [searchKeyword, areaValue, categoryValue, dateValue]);
+  }, [pathname, searchParams, currentPage]);
 
   return (
     <div className="popupList">
@@ -61,7 +64,7 @@ export default function PopupList() {
         <div className="popupListBanner"></div>
       ) : pathname === "/popupList/search" ? (
         <div className="searchResult">
-          '{searchKeyword}' 검색 결과 총 {popupStores.length}개의 팝업스토어를
+          '{searchKeyword}' 검색 결과 총 {documents}개의 팝업스토어를
           찾았습니다.
         </div>
       ) : (
@@ -69,7 +72,7 @@ export default function PopupList() {
           {`${areaValue ? `'${areaValue}' ` : ""}${
             categoryValue ? `'${categoryValue}' ` : ""
           }${dateValue ? `'${dateFormat(dateValue)}' ` : ""}`}
-          필터링 결과 총 {popupStores.length}
+          필터링 결과 총 {documents}
           개의 팝업스토어를 찾았습니다.
         </div>
       )}
@@ -89,23 +92,16 @@ export default function PopupList() {
         </div>
       ) : (
         <div className="popupListWrapper">
-          <PopupStore />
-          <PopupStore />
-          <PopupStore />
-          <PopupStore />
-          <PopupStore />
-          <PopupStore />
-          <PopupStore />
-          <PopupStore />
-          <PopupStore />
-          <PopupStore />
+          {popupStores.map((store) => {
+            return <PopupStore key={store._id} store={store} />;
+          })}
         </div>
       )}
       <div className="pageNumberWrapper">
-        {pages.map((pageNumber, index) => {
+        {pages.map((pageNumber) => {
           return (
             <div
-              key={index}
+              key={pageNumber}
               className={`pageNumber ${
                 currentPage === pageNumber ? "clicked" : null
               }`}

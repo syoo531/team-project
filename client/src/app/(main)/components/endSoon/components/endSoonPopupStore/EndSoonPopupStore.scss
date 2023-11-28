@@ -34,8 +34,10 @@
     background-image: url("https://user-images.githubusercontent.com/126956430/283727329-e1f8cf20-14e8-4720-9d1f-b337a89e4e1b.jpeg");
     background-position: center;
     background-size: cover;
+    transition: 0.4s;
     &:hover {
       cursor: pointer;
+      transform: scale(0.96);
     }
 
     .Mark {

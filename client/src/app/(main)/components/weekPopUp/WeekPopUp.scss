@@ -23,6 +23,22 @@
       line-height: 1.5;
       text-align: center;
     }
+
+    .viewBtn {
+      padding: 16px 30px;
+      border: 2px solid #000;
+      border-radius: 50px;
+      background-color: #000;
+      color: #fff;
+      transition: 0.5s;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #fff;
+        color: #000;
+        font-weight: 500;
+      }
+    }
   }
 
   .popUpListWrapper {
@@ -36,7 +52,6 @@
       flex: 1 auto;
       height: 500px;
       border-radius: 14px;
-      background-image: url("https://user-images.githubusercontent.com/126956430/283694190-ebe089bd-b062-403e-932b-b98c645bc66e.png");
       background-position: center;
       background-size: cover;
 
