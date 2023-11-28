@@ -15,12 +15,14 @@ const ReviewSchema = new Schema(
         },
         text: {
             type: String,
-            // required: true,
+            required: true,
         },
-        image: {
-            type: SchemaTypes.ObjectId,
-            ref: "Image",
-        },
+        image: [
+            {
+                Key: String, // Adjust the type based on your needs
+                url: String,
+            },
+        ],
         created_at: {
             type: Date,
             default: Date.now,

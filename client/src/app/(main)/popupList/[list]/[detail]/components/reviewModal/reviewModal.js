@@ -2,33 +2,40 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./reviewModal.scss";
+import instance from "@/utils/instance";
+import { s3UploadMultipleImages } from "../../../../../../serviceAdmin/components/imageUploader"; // 경로를 실제 파일 위치에 맞게 수정해주세요.
 
-const ReviewModal = ({ closeModal, handleReviewSubmit, postId }) => {
-    // const myToken =
-    //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoiWUVFVU4gTEVFIiwiZW1haWwiOiJhbXkwMDA4MDlAZ21haWwuY29tIn0sImlhdCI6MTcwMDkwNjU5OSwiZXhwIjoxNzAwOTkyOTk5fQ.jY7Crie-uuk-T19FVSe9x8zN2Nr0OaYmVXQJcydwObE";
+const ReviewModal = ({ closeModal, handleReviewSubmit, popupStoreId }) => {
+    console.log("modal popupStoreId :", popupStoreId);
     const [reviewContent, setReviewContent] = useState("");
+    const [selectedImages, setSelectedImages] = useState([]);
     const handleContentChange = (event) => {
         setReviewContent(event.target.value);
     };
+    const handleImageChange = (event) => {
+        const files = event.target.files;
+        const filesArray = Array.from(files);
+        setSelectedImages((prevImages) => [...prevImages, ...filesArray]);
+    };
+
+    const handleRemoveImage = (index) => {
+        setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    };
+
     const submitReview = async () => {
         try {
-            console.log("액시오스 요청 전");
-            const response = await axios.post(
-                "http://localhost:4000/api/review/createReview",
-                { text: reviewContent } // text 속성을 body 속성으로 변경
-                // {
-                //     headers: {
-                //         Authorization: `Bearer ${myToken}`,
-                //         // 여기서 'Bearer'는 토큰 타입에 따라 다를 수 있습니다. 서버에 따라 다를 수 있으니 확인이 필요합니다.
-                //     },
-                // }
-            );
-            console.log("액시오스 요청 후");
-            handleReviewSubmit(postId, reviewContent);
+            const imageData = await s3UploadMultipleImages(selectedImages);
+
+            const response = await instance.post("/review/createReview", {
+                text: reviewContent,
+                image: imageData,
+                popupStoreId,
+            });
+            handleReviewSubmit(reviewContent, imageData);
+            setIsReviewSubmitted(true);
             closeModal();
         } catch (error) {
             console.error("리뷰 작성에 실패했습니다.", error);
-            // 실패 시에 대한 처리를 추가할 수 있습니다.
         }
     };
 
@@ -47,6 +54,18 @@ const ReviewModal = ({ closeModal, handleReviewSubmit, postId }) => {
                         onChange={handleContentChange}
                     ></textarea>
                 </div>
+                <div className="selectedImgWrap">
+                    {selectedImages.map((image, index) => (
+                        <div key={index} className="selected-image">
+                            <img src={URL.createObjectURL(image)} alt={`Selected ${index + 1}`} />
+                            <button type="button" onClick={() => handleRemoveImage(index)}>
+                                X
+                            </button>
+                        </div>
+                    ))}
+                </div>
+                <input type="file" name="images" id="images" multiple onChange={handleImageChange} />
+                {/* 이미지 선택 기능 추가 */}
                 <button type="button" className="reviewCompleteBtn" onClick={submitReview}>
                     작성완료
                 </button>
