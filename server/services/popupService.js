@@ -135,7 +135,8 @@ class PopupService {
   }
 
   async deleteImage(id) {
-    await Image.findByIdAndDelete(id);
+    const deletedImage = await Image.findByIdAndDelete(id);
+    console.log(deletedImage);
 
     //팝업스토어 이미지 배열에서 특정 이미지 삭제 (이미지 도큐먼트가 삭제되어도 배열에서는 삭제가 안됨)
     const popupStore = await PopupStore.findOneAndUpdate(
@@ -143,6 +144,8 @@ class PopupService {
       { $pull: { images: id } },
       { new: true }
     );
+
+    console.log(popupStore);
     return popupStore;
   }
 
