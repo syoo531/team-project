@@ -2,18 +2,17 @@
 const { Router } = require("express");
 
 const {
-    createReview,
-    getAllReviews,
-    updateReview,
-    deleteReview,
-    getReviewById,
+  createReview,
+  getAllReviews,
+  updateReview,
+  deleteReview,
+  getReviewById,
 } = require("../controllers/reviewController");
 const validateToken = require("../middlewares/validateToken");
 
 const router = Router();
 
 router.post("/createReview", validateToken, createReview);
-router.post("/createReview", createReview);
 router.get("/", getAllReviews);
 router.get("/:id", getReviewById);
 router.patch("/updateReview/:id", updateReview);

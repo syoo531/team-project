@@ -88,7 +88,7 @@ const deleteWaitingPeople = async (req, res, next) => {
 // 업체 관리자 페이지에서 waitingList 조회
 const getWaitingListByCorpAdmin = async (req, res, next) => {
   try {
-    const { popupStoreId } = req.query;
+    const { popupStoreId } = req.body;
     const email = req.decoded.user.email;
 
     const waitingService = new WaitingService();
