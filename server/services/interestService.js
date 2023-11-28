@@ -1,7 +1,7 @@
 const { User } = require("../models/index");
 const { Interest } = require("../models/index");
 
-async function getMyInterestPopupStore({ id, userEmail }) {
+async function getInterestPopupStore({ id, userEmail }) {
   const user = await User.find({ email: userEmail });
   const interest = await Interest.find({ popup_store: id, user: user[0]._id });
   return interest;
@@ -17,7 +17,7 @@ async function addInterestPopupStore({ userEmail, popupStoreId }) {
   return interestPopupStore;
 }
 
-async function getInterestPopupStore({ userEmail }) {
+async function getMyInterestPopupStore({ userEmail }) {
   const user = await User.findOne({ email: userEmail }).select("_id");
 
   const interestPopupStore = await Interest.find({

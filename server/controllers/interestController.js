@@ -1,11 +1,11 @@
 const interestService = require("../services/interestService");
 
-async function getMyInterestPopupStore(req, res) {
+async function getInterestPopupStore(req, res) {
   const { id } = req.params;
   const userEmail = req.decoded.user.email;
 
   try {
-    const result = await interestService.getMyInterestPopupStore({
+    const result = await interestService.getInterestPopupStore({
       id,
       userEmail,
     });
@@ -46,14 +46,12 @@ async function deleteInterestPopupStore(req, res) {
   }
 }
 
-async function getInterestPopupStore(req, res) {
-  const { popupStoreId } = req.body;
+async function getMyInterestPopupStore(req, res) {
   const userEmail = req.decoded.user.email;
 
-  console.log(popupStoreId);
   console.log(userEmail);
   try {
-    const result = await interestService.getInterestPopupStore({
+    const result = await interestService.getMyInterestPopupStore({
       userEmail,
     });
     res.status(200).json(result);

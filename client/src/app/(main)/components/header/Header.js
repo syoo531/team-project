@@ -56,7 +56,7 @@ export default function Header() {
             로그인
           </div>
         ) : (
-          <div className="myBtn" onClick={() => router.push("/myPage")}>
+          <div className="myBtn" onClick={() => router.push("/mypage")}>
             마이페이지
           </div>
         )}
