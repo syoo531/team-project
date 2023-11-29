@@ -108,6 +108,23 @@ const getReviewById = async (req, res, next) => {
   }
 };
 
+//특정 팝업스토어에 대한 리뷰 조회
+const getReviewByPopupstore = async (req, res, next) => {
+  try {
+    const { page, limit } = req.query;
+
+    const reviewService = new ReviewService();
+    const popupStoreReview = await reviewService.getReviewByPopupstore(
+      req.params.id,
+      page,
+      limit
+    );
+    res.status(200).json(popupStoreReview);
+  } catch (err) {
+    next(err);
+  }
+};
+
 // 내 리뷰 조회
 const getMyReview = async (req, res, next) => {
   try {
@@ -130,5 +147,6 @@ module.exports = {
   updateReview,
   deleteReview,
   getReviewById,
+  getReviewByPopupstore,
   getMyReview,
 };

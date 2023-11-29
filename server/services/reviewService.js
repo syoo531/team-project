@@ -13,11 +13,41 @@ class ReviewService {
         user: findUserId,
         popup_store: popupStoreId,
       });
+  // //유저구분
+  async validateUser(email, popupStoreId) {
+    try {
+      const findUserId = await User.findOne({ email }).select("_id");
+      const reservationUserId = await Reservation.findOne({
+        user: findUserId,
+        popup_store: popupStoreId,
+      });
+      const waitingUserId = await Waiting.findOne({
+        user: findUserId,
+        popup_store: popupStoreId,
+      });
 
       console.log("findUserId: ", findUserId);
       console.log("reservationUserId :", reservationUserId);
       console.log("waitingUserId :", waitingUserId);
+      console.log("findUserId: ", findUserId);
+      console.log("reservationUserId :", reservationUserId);
+      console.log("waitingUserId :", waitingUserId);
 
+      //reservationUserId에도없고 waitingUserId에도 존재하지 않을때
+      // 하나라도 id를 찾았을때
+      if (!reservationUserId && !waitingUserId) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  //리뷰 생성
+  async createReview({ email, popupStoreId, text, image }) {
+    const userName = await User.findOne({ email });
+    const popupName = await PopupStore.findOne({ _id: popupStoreId });
       //reservationUserId에도없고 waitingUserId에도 존재하지 않을때
       // 하나라도 id를 찾았을때
       if (!reservationUserId && !waitingUserId) {
@@ -47,7 +77,14 @@ class ReviewService {
     const createdReview = await Review.create(newReviewData);
     return createdReview;
   }
+    const createdReview = await Review.create(newReviewData);
+    return createdReview;
+  }
 
+  //모든 리뷰 조회
+  async getAllReviews() {
+    return await Review.find().populate("popup_store").populate("user");
+  }
   //모든 리뷰 조회
   async getAllReviews() {
     return await Review.find().populate("popup_store").populate("user");
@@ -94,7 +131,15 @@ class ReviewService {
     const review = await Review.findById(reviewId)
       .populate("popup_store")
       .populate("user");
+  // 특정 리뷰 조회
+  async getReviewById(reviewId) {
+    const review = await Review.findById(reviewId)
+      .populate("popup_store")
+      .populate("user");
 
+    if (!review) {
+      throw new Error("Review not found");
+    }
     if (!review) {
       throw new Error("Review not found");
     }
@@ -102,7 +147,24 @@ class ReviewService {
     return review;
   }
 
-  // 내 리뷰 조회
+  async getReviewByPopupstore(storeID, page, limit) {
+    const limitPerPage = limit || 5;
+    const skipCount = (Number(page) - 1) * limitPerPage;
+    const totalReviews = await Review.countDocuments({ popup_store: storeID });
+
+    const popupStoreReview = await Review.find({
+      popup_store: storeID,
+    })
+      .sort({ _id: -1 })
+      .limit(limitPerPage)
+      .skip(skipCount);
+
+    return {
+      reviewData: popupStoreReview,
+      totalPages: Math.ceil(totalReviews / limitPerPage),
+      currentPage: Number(page) || 1,
+    };
+  }
   async getMyReview(email) {
     console.log("여기33", email);
     const user = await User.findOne({ email }).select("_id");

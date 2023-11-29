@@ -47,14 +47,25 @@ export default function Page() {
           return;
         }
 
-        const res = await instance.get(`/popupstore/${params.id}`);
-
-        if (res.data) {
-          setFormData(res.data);
-          setExistingImage(res.data.images);
-          setMainImage(res.data?.mainImage);
+        const { data } = await instance.get(`/popupstore/${params.id}`);
+        if (data) {
+          setFormData(() => ({
+            name: data.name,
+            brand: data.brand,
+            category: data.category,
+            zipcode: data.zipcode,
+            address: data.address,
+            detail_address: data.detail_address,
+            location: data.location,
+            summary: data.summary,
+            description: data.description,
+            start_date: data.start_date,
+            end_date: data.end_date,
+            mainImage: data.mainImage,
+          }));
+          setExistingImage(data?.images);
+          setMainImage(data?.mainImage);
         }
-        console.log(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -65,6 +76,7 @@ export default function Page() {
   //팝업스토어 업데이트
   const updatePopupStore = async () => {
     let updatedFormData = { ...formData };
+    console.log("FIRST UPDATED FORMDATA", updatedFormData);
 
     try {
       //메인 이미지가 파일인 경우 기존 이미지 삭제 후 새로운 url를 받는다
@@ -77,11 +89,13 @@ export default function Page() {
       }
 
       if (newImages.length > 0) {
+        console.log("NEW IMAGES IF ");
         const newImageUrl = await s3UploadMultipleImages(newImages);
         updatedFormData = { ...updatedFormData, newImageUrl };
       }
 
       delete updatedFormData.mainImage;
+      console.log("formdata", updatedFormData);
       await instance.patch(`/popupStore/${params.id}`, updatedFormData);
     } catch (error) {
       console.error("Error updating store:", error);

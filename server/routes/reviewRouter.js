@@ -7,6 +7,7 @@ const {
   updateReview,
   deleteReview,
   getReviewById,
+  getReviewByPopupstore,
   getMyReview,
 } = require("../controllers/reviewController");
 const validateToken = require("../middlewares/validateToken");
@@ -19,5 +20,6 @@ router.get("/", getAllReviews);
 router.get("/:id", getReviewById);
 router.put("/updateReview", validateToken, updateReview);
 router.delete("/deleteReview/:id", validateToken, deleteReview);
+router.get("/byPopupstore/:id", getReviewByPopupstore);
 
 module.exports = router;
