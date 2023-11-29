@@ -1,7 +1,8 @@
 import PopupStoreList from "../components/PopupStoreList/PopupStoreList";
 import Pagination from "../components/Pagination/Pagination";
 
-const API_URL = "http://localhost:4000/api/popupStore";
+//const API_URL = "http://kdt-sw-6-team04.elicecoding.com/api/popupStore";
+const API_URL = "http://kdt-sw-6-team04.elicecoding.com/api/popupStore";
 
 async function getData(searchParams) {
   try {

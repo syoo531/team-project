@@ -13,18 +13,17 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+
+  h1 {
+    padding: 30px 0px 15px 0px;
+  }
 }
 
 .action__menu {
   padding: 10px 8px;
 
-  .delete-button {
+  .delete-btn {
     @include admin-button-base-style(red, white);
-
-    &:hover {
-      background: rgb(184, 2, 2);
-      transform: scale(1.05);
-    }
   }
 }
 
@@ -114,4 +113,14 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+.submit-btn {
+  @include admin-button-base-style(#0095ff, white);
+  min-width: 70px;
+}
+
+.cancel-btn {
+  @include admin-main-button-style;
+  min-width: 70px;
 }

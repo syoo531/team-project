@@ -23,6 +23,22 @@
       line-height: 1.5;
       text-align: center;
     }
+
+    .viewBtn {
+      padding: 16px 30px;
+      border: 2px solid #000;
+      border-radius: 50px;
+      background-color: #000;
+      color: #fff;
+      transition: 0.5s;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #fff;
+        color: #000;
+        font-weight: 500;
+      }
+    }
   }
 
   .popUpListWrapper {
@@ -36,7 +52,6 @@
       flex: 1 auto;
       height: 500px;
       border-radius: 14px;
-      background-image: url("https://user-images.githubusercontent.com/126956430/283694190-ebe089bd-b062-403e-932b-b98c645bc66e.png");
       background-position: center;
       background-size: cover;
 
@@ -86,6 +101,147 @@
             background-color: #fff;
             color: #000;
             font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .weekPopUp {
+    padding: 0 50px;
+    margin-bottom: 150px;
+
+    .titleWrapper {
+      .title {
+        font-size: 38px;
+      }
+
+      .subTitle {
+        font-size: 14px;
+      }
+
+      .viewBtn {
+        padding: 8px 18px;
+        font-size: 14px;
+      }
+    }
+
+    .popUpListWrapper {
+      flex-direction: column;
+
+      .popUpWrapper {
+        position: relative;
+        flex: 1 auto;
+        height: 500px;
+        border-radius: 14px;
+        background-position: center;
+        background-size: cover;
+
+        .backGround {
+          position: absolute;
+          inset: 0;
+          border-radius: 14px;
+          background-color: #000;
+          opacity: 0.4;
+        }
+
+        .contentWrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          position: absolute;
+          left: 40px;
+          bottom: 40px;
+          color: #fff;
+
+          .popUpBrand {
+            font-size: 30px;
+            font-weight: 700;
+          }
+
+          .popUpTitle {
+            font-size: 20px;
+          }
+
+          .popUpSummary {
+            width: 60%;
+            font-size: 14px;
+            margin-bottom: 10px;
+            line-height: 1.8;
+          }
+
+          .readMoreBtn {
+            align-self: flex-start;
+            padding: 16px 30px;
+            border: 2px solid #fff;
+            border-radius: 50px;
+            color: #fff;
+            transition: 0.5s;
+
+            &:hover {
+              cursor: pointer;
+              background-color: #fff;
+              color: #000;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .weekPopUp {
+    padding: 0;
+    margin-bottom: 150px;
+
+    .titleWrapper {
+      .title {
+        font-size: 30px;
+      }
+
+      .subTitle {
+        font-size: 12px;
+      }
+
+      .viewBtn {
+        padding: 8px 18px;
+        font-size: 14px;
+      }
+    }
+
+    .popUpListWrapper {
+      flex-direction: column;
+
+      .popUpWrapper {
+        height: 300px;
+        border-radius: 0;
+
+        .backGround {
+          border-radius: 0;
+        }
+
+        .contentWrapper {
+          left: 20px;
+
+          .popUpBrand {
+            font-size: 24px;
+          }
+
+          .popUpTitle {
+            font-size: 14px;
+          }
+
+          .popUpSummary {
+            font-size: 10px;
+          }
+
+          .readMoreBtn {
+            padding: 10px 20px;
+            font-size: 12px;
           }
         }
       }

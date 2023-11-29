@@ -30,6 +30,16 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="topWrapper">
+        <div className="customerCenterWrapper">
+          <div className="customerCenterNumber">고객센터 1588-8911</div>
+          {FOOTER_DATA.center.map((item, index) => {
+            return (
+              <div className="customerCenterItem" key={index}>
+                {item}
+              </div>
+            );
+          })}
+        </div>
         <div className="serviceWrapper">
           <div className="useGuideWrapper">
             <h3 className="useGuideTitle">이용안내</h3>
@@ -52,51 +62,49 @@ export default function Footer() {
             })}
           </div>
         </div>
-        <div className="customerCenterWrapper">
-          <div className="customerCenterNumber">고객센터 1588-8911</div>
-          {FOOTER_DATA.center.map((item, index) => {
-            return (
-              <div className="customerCenterItem" key={index}>
-                {item}
-              </div>
-            );
-          })}
-        </div>
       </div>
-      <div className="linkWrapper">
-        <div className="textLinkWrapper">
-          {LINK.textLink.map((text, index) => {
-            return (
-              <div className="textLink" key={index}>
-                {text}
-              </div>
-            );
-          })}
+      <div className="bottomWrapper">
+        <div className="flexStartWrapper">
+          <div className="textLinkWrapper">
+            {LINK.textLink.map((text, index) => {
+              return (
+                <div className="textLink" key={index}>
+                  {text}
+                </div>
+              );
+            })}
+          </div>
+          <div className="businessWrapper">
+            <div className="name">팝스팟 주식회사 • 대표 엘리스</div>
+            <div className="registrationNumber">
+              사업자 등록번호: 571-32-49912
+            </div>
+            <div className="businessType">
+              통신판매업: 제 2023-성수C-003921호
+            </div>
+          </div>
+          <div className="addressWrapper">
+            <div className="businessAddress">
+              사업장 소재지: 서울특별시 성동구 아차산로 17길 48 성수낙낙 2층
+              엘리스랩
+            </div>
+            <div className="hosting">호스팅 서비스: 네이버 클라우드 (주)</div>
+          </div>
         </div>
-        <div className="iconLinkWrapper">
-          {LINK.iconLink.map((icons, index) => {
-            return (
-              <FontAwesomeIcon key={index} className="icon" icon={icons} />
-            );
-          })}
+        <div className="flexEndWrapper">
+          <div className="iconLinkWrapper">
+            {LINK.iconLink.map((icons, index) => {
+              return (
+                <FontAwesomeIcon key={index} className="icon" icon={icons} />
+              );
+            })}
+          </div>
+          <img
+            className="logo"
+            src="https://user-images.githubusercontent.com/126956430/282671088-36fecca9-631c-4a3d-a73e-80047a312533.png"
+            alt="로고이미지"
+          />
         </div>
-      </div>
-      <div className="businessWrapper">
-        <div className="name">팝스팟 주식회사 • 대표 엘리스</div>
-        <div className="registrationNumber">사업자 등록번호: 571-32-49912</div>
-        <div className="businessType">통신판매업: 제 2023-성수C-003921호</div>
-      </div>
-      <div className="addressWrapper">
-        <div className="businessAddress">
-          사업장 소재지: 서울특별시 성동구 아차산로 17길 48 성수낙낙 2층
-          엘리스랩
-        </div>
-        <div className="hosting">호스팅 서비스: 네이버 클라우드 (주)</div>
-        <img
-          className="logo"
-          src="https://user-images.githubusercontent.com/126956430/282671088-36fecca9-631c-4a3d-a73e-80047a312533.png"
-          alt="로고이미지"
-        />
       </div>
     </footer>
   );

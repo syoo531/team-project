@@ -6,7 +6,7 @@ const validateServiceAdmin = async (req, res, next) => {
     const { authorization } = req.headers;
 
     if (!authorization) {
-      next("엑세스 토큰이 없습니다.");
+      throw new Error("엑세스 토큰이 없습니다.");
     }
     let email;
 
@@ -27,10 +27,13 @@ const validateServiceAdmin = async (req, res, next) => {
     if (user.admin_role === 2) {
       next();
     } else {
-      throw new Error("서비스 관리자가 아닙니다.");
+      const err = new Error("서비스 관리자가 아닙니다.");
+      err.statusCode = 404;
+      throw err;
+      //res.status(404).json({ message: "서비스 관리자가 아닙니다." });
     }
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 

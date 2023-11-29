@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "./components/searchBar/SearchBar";
 import ModalBackGround from "./components/modalBackGround/modalBackGround";
 import FilterModal from "./components/filterModal/FilterModal";
@@ -43,6 +45,10 @@ export default function Header() {
         onClick={() => router.push("/")}
       />
       <SearchBar />
+      <div className="mobileBtnWrapper">
+        <FontAwesomeIcon className="searchIcon" icon={faMagnifyingGlass} />
+        <FontAwesomeIcon className="hamburgerBtn" icon={faBars} />
+      </div>
       <div className="btnWrapper">
         {loading ? null : !token ? (
           <div
@@ -54,7 +60,7 @@ export default function Header() {
             로그인
           </div>
         ) : (
-          <div className="myBtn" onClick={() => router.push("/myPage")}>
+          <div className="myBtn" onClick={() => router.push("/mypage")}>
             마이페이지
           </div>
         )}
@@ -73,6 +79,7 @@ export default function Header() {
             onClick={() => {
               localStorage.removeItem("accessToken");
               setToken(null);
+              window.location.reload("/");
             }}
           >
             로그아웃

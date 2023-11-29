@@ -30,13 +30,17 @@ export default function CreateStore() {
   const [error, setError] = useState({});
 
   const createPopupStore = async () => {
-    const [imageURL, mainURL] = await Promise.all([
-      s3UploadMultipleImages(newImages),
-      s3UploadSingleImage(mainImage),
-    ]);
+    try {
+      const [imageURL, mainURL] = await Promise.all([
+        s3UploadMultipleImages(newImages),
+        s3UploadSingleImage(mainImage),
+      ]);
 
-    const updatedFormData = { ...formData, imageURL, mainURL };
-    await instance.post(`/popupStore`, updatedFormData);
+      const updatedFormData = { ...formData, imageURL, mainURL };
+      await instance.post(`/popupStore`, updatedFormData);
+    } catch (err) {
+      window.alert("서비스 관리자가 아닙니다.");
+    }
   };
 
   const handleChange = (e) => {

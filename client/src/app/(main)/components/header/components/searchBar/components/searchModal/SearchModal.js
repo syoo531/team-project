@@ -114,13 +114,13 @@ export default function SearchModal({ searchModalClose }) {
       <form className="inputWrapper">
         <input
           className="searchInput"
-          placeholder="Search in Pop-up Store"
+          placeholder="검색하실 키워드를 입력해주세요."
           value={searchValue}
           onChange={handleChange}
         />
         <button className="searchBtn">
           <FontAwesomeIcon className="searchIcon" icon={faMagnifyingGlass} />
-          <div className="searchText">Search</div>
+          <div className="searchText">검색</div>
         </button>
       </form>
       <div className="searchWordWrapper">
@@ -143,7 +143,9 @@ export default function SearchModal({ searchModalClose }) {
                   <div
                     className="searchWord"
                     onClick={() => {
-                      router.push(`/popupList/search?keyword=${word.word}`);
+                      router.push(
+                        `/popupList/search?pageNumber=1&limit=8&keyword=${word.word}`
+                      );
                       searchModalClose();
                     }}
                   >
@@ -174,7 +176,9 @@ export default function SearchModal({ searchModalClose }) {
                   key={search._id}
                   className="popularSearchWord"
                   onClick={() => {
-                    router.push(`/popupList/search?keyword=${search.keyword}`);
+                    router.push(
+                      `/popupList/search?pageNumber=1&limit=8&keyword=${search.keyword}`
+                    );
                     searchModalClose();
                   }}
                 >

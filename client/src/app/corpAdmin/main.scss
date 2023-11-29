@@ -1,186 +1,505 @@
 @import "../../adminStyles/adminStyles.scss";
 
-.container {
-  flex-direction: column;
-  display: flex;
-  height: 100vh;
+@media (max-width: 767px) {
+  .container {
+    flex-direction: column;
 
-  .main {
-    display: flex;
-    width: 100%;
-    background-color: $admin-background-color;
-    color: $admin-font-color;
-    flex: 1;
-
-    .content {
-      flex: 1;
-      padding: 40px 30px;
+    .main {
+      width: 100%;
+      color: $admin-font-color;
     }
 
-    .reservationSelectBox {
-      padding: 10px;
+    .fullscreenSidebar {
+      display: none;
+    }
 
-      select {
-        border: none;
-        padding: 8px 4px;
-        background: none;
-        color: #666;
-        &:focus {
-          outline: none;
+    .fullscreenSidebar {
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      position: fixed;
+    }
+
+    .fullscreenSidebar.active {
+      display: flex;
+    }
+  }
+
+  .content {
+    padding-top: 50px;
+    background-color: $admin-background-color;
+    min-height: 100vh;
+  }
+
+  .mainLayout {
+    padding: 50px 40px;
+  }
+
+  .reservationContainer {
+    padding: 50px 56px;
+
+    .reservationBox {
+      padding: 28px 0px;
+      margin-bottom: 10px;
+      background: white;
+      border-radius: 10px;
+      filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.15));
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+
+      .reservationContent {
+        display: grid;
+        justify-content: center;
+      }
+
+      .reservationType {
+        border: 2px solid #e3e6ed;
+        border-radius: 21px;
+        padding: 8px 12px;
+        text-align: center;
+        margin-bottom: 13px;
+      }
+
+      span {
+        margin-left: 16px;
+      }
+
+      .icon {
+        font-size: 12px;
+        padding-right: 6px;
+      }
+
+      .buttonContainer {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .completed {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #0095ff;
+      }
+
+      .reservationTime {
+        margin-left: 16px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border: 1px solid #0095ff;
+        border-radius: 10px;
+        background-color: #0095ff;
+        transition: 0.5s;
+        color: #fff;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
+          background: #fff;
+          color: #666;
         }
       }
     }
-    .reservationHeader {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #e3e6ed;
-      padding-bottom: 19px;
+  }
+  .reservationSelectBox {
+    padding: 10px 10px 20px;
 
-      .tabs {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
+    select {
+      border: none;
+      margin-left: 4px;
+      border-radius: 25px;
+      padding: 8px 4px;
+      background: none;
+      color: #525b75;
+      font-weight: 500;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .reservationHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e3e6ed;
+    padding-bottom: 19px;
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      button {
+        padding: 6px 14px;
+        border: 1.5px solid #e3e6ed;
+        border-radius: 12px;
+        background-color: #fff;
+        transition: 0.5s;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #e3e6ed;
+        }
+      }
+
+      .active {
+        background-color: #e3e6ed;
+      }
+    }
+  }
+
+  .listTitle {
+    padding: 20px 8px 20px;
+
+    .popupStoreName {
+      font-weight: 700;
+      margin-bottom: 16px;
+
+      .faStoreIcon {
+        margin-right: 4px;
+        color: #0095ff;
+      }
+    }
+
+    select {
+      border-radius: 16px;
+      padding: 5px;
+      height: 40px;
+      border: 3px solid #e3e6ed;
+      background: none;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 600;
+      color: $admin-font-color;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .listContainer {
+    width: 100%;
+    padding: 7px 0px;
+    background-color: $admin-card-background;
+    border-radius: $admin-card-border-radius;
+    filter: $admin-card-filter;
+    backdrop-filter: $admin-card-backdrop-filter;
+  }
+
+  table.listTable {
+    width: 100%;
+    border-radius: $admin-border-radius;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 10px 5px;
+      font-size: 12px;
+    }
+
+    th {
+      font-weight: map-get($admin-font-weights, "bold");
+      border-bottom: 1px rgb(201, 199, 199) solid;
+    }
+
+    td {
+      border-top: 1px rgb(201, 199, 199) solid;
+      font-weight: map-get($admin-font-weights, "light");
+      text-align: center;
+    }
+
+    .people {
+      width: 15%;
+    }
+
+    .date {
+      width: 1%;
+    }
+  }
+
+  .emptyListMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+
+  .closeIconContainer {
+    padding: 51px 0px 0px 200px;
+  }
+}
+
+.hamburgerIcon {
+  display: none;
+
+  @media (max-width: 768px) {
+    z-index: 999;
+    display: block;
+    margin: 16px 20px;
+    color: #fff;
+    position: absolute;
+    cursor: pointer;
+  }
+}
+
+.closeIcon {
+  display: none;
+
+  @media (max-width: 767px) {
+    display: block;
+    margin: 10px 20px;
+    color: #fff;
+    border: 1px solid;
+    padding: 8px 10px;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 768px) {
+  .closeIconContainer {
+    padding: 0px;
+  }
+  .container {
+    display: flex;
+    flex-direction: row;
+
+    .main {
+      width: 100%;
+      color: $admin-font-color;
+    }
+  }
+
+  .content {
+    padding: 50px 0px 0px 200px;
+    background-color: $admin-background-color;
+    min-height: 100vh;
+  }
+
+  .mainLayout {
+    padding: 20px 140px;
+  }
+
+  .reservationContainer {
+    padding: 50px 232px;
+
+    .reservationBox {
+      padding: 36px 64px 28px 64px;
+      margin-bottom: 10px;
+      background: white;
+      border-radius: $admin-card-border-radius;
+      filter: $admin-card-filter;
+      backdrop-filter: $admin-card-backdrop-filter;
+
+      .reservationDetails {
+        margin-bottom: 5px;
+
+        .reservationType {
+          border: 2px solid #e3e6ed;
+          border-radius: 21px;
+          padding: 8px 12px;
+        }
+
+        span {
+          margin-left: 16px;
+        }
+
+        .icon {
+          font-size: 12px;
+          padding-right: 6px;
+        }
+
+        .buttonContainer {
+          display: flex;
+          justify-content: flex-end;
+          gap: 8px;
+        }
+
+        .completed {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: #0095ff;
+        }
+
+        .reservationTime {
+          margin: 20px 90px 0px;
+          font-size: 14px;
+          font-weight: 500;
+        }
 
         button {
-          padding: 6px 14px;
-          border: 1.5px solid #e3e6ed;
-          border-radius: 12px;
-          background-color: #fff;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 12px;
+          border: 1px solid #0095ff;
+          border-radius: 10px;
+          background-color: #0095ff;
           transition: 0.5s;
+          color: #fff;
           font-weight: 600;
           font-size: 12px;
           cursor: pointer;
 
           &:hover {
-            background-color: #e3e6ed;
+            background: #fff;
+            color: #666;
           }
         }
-        .active {
+      }
+    }
+  }
+  .reservationSelectBox {
+    padding: 10px 10px 20px;
+
+    select {
+      border: none;
+      margin-left: 4px;
+      border-radius: 25px;
+      padding: 8px 4px;
+      background: none;
+      color: #525b75;
+      font-weight: 500;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .reservationHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e3e6ed;
+    padding-bottom: 19px;
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+
+      button {
+        padding: 6px 14px;
+        border: 1.5px solid #e3e6ed;
+        border-radius: 12px;
+        background-color: #fff;
+        transition: 0.5s;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+
+        &:hover {
           background-color: #e3e6ed;
         }
       }
-    }
 
-    .reservationContainer {
-      padding: 0px 232px;
-
-      .reservationBox {
-        padding: 36px 64px 28px 64px;
-        margin-bottom: 10px;
-        background: white;
-        border-radius: $admin-card-border-radius;
-        filter: $admin-card-filter;
-        backdrop-filter: $admin-card-backdrop-filter;
-
-        .reservationDetails {
-          margin-bottom: 5px;
-          .reservationType {
-            border: 2px solid #e3e6ed;
-            border-radius: 21px;
-            padding: 8px 12px;
-          }
-
-          span {
-            margin-left: 16px;
-          }
-          .icon {
-            font-size: 12px;
-            padding-right: 6px;
-          }
-
-          .buttonContainer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 8px;
-          }
-
-          .completed {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #0095ff;
-          }
-
-          .reservationTime {
-            margin: 20px 90px 0px;
-            font-size: 14px;
-            font-weight: 500;
-          }
-
-          button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 12px;
-            border: 1px solid #0095ff;
-            border-radius: 10px;
-            background-color: #0095ff;
-            transition: 0.5s;
-            color: #fff;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-            &:hover {
-              background: #fff;
-              color: #666;
-            }
-          }
-        }
+      .active {
+        background-color: #e3e6ed;
       }
     }
-    .mainLayout {
-      padding: 0px 128px;
-    }
+  }
 
-    .listTitle {
-      padding: 20px 8px 24px;
-      select {
-        border: none;
-        background: none;
-        font-size: 16px;
-        font-weight: 700;
-        width: 11%;
-        cursor: pointer;
-        appearance: none;
-        color: $admin-font-color;
-        &:focus {
-          outline: none;
-        }
+  .listTitle {
+    padding: 20px 8px 36px;
+    display: flex;
+    align-items: center;
+    gap: 35px;
+
+    .popupStoreName {
+      font-weight: 700;
+      display: flex;
+
+      .faStoreIcon {
+        margin-right: 4px;
+        color: #0095ff;
       }
     }
 
-    .listContainer {
-      width: 100%;
-      padding: 7px 0px;
-      background-color: $admin-card-background;
-      border-radius: $admin-card-border-radius;
-      filter: $admin-card-filter;
-      backdrop-filter: $admin-card-backdrop-filter;
-    }
+    select {
+      border-radius: 16px;
+      padding: 5px;
+      height: 40px;
+      border: 3px solid #e3e6ed;
+      background: none;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 600;
+      color: $admin-font-color;
 
-    table.listTable {
-      width: 100%;
-      border-radius: $admin-border-radius;
-      border-collapse: collapse;
-
-      th,
-      td {
-        padding: 10px 5px;
-        font-size: 14px;
-      }
-
-      th {
-        font-weight: map-get($admin-font-weights, "bold");
-        border-bottom: 1px rgb(201, 199, 199) solid;
-      }
-
-      td {
-        border-top: 1px rgb(201, 199, 199) solid;
-        font-weight: map-get($admin-font-weights, "light");
-        text-align: center;
+      &:focus {
+        outline: none;
       }
     }
+  }
+
+  .listContainer {
+    width: 100%;
+    padding: 7px 0px;
+    background-color: $admin-card-background;
+    border-radius: $admin-card-border-radius;
+    filter: $admin-card-filter;
+    backdrop-filter: $admin-card-backdrop-filter;
+  }
+
+  table.listTable {
+    width: 100%;
+    border-radius: $admin-border-radius;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 10px 5px;
+      font-size: 14px;
+    }
+
+    th {
+      font-weight: map-get($admin-font-weights, "bold");
+      border-bottom: 1px rgb(201, 199, 199) solid;
+    }
+
+    td {
+      border-top: 1px rgb(201, 199, 199) solid;
+      font-weight: map-get($admin-font-weights, "light");
+      text-align: center;
+    }
+  }
+
+  .emptyListMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+  }
+}
+
+@media (max-width: 1178px) {
+  .reservationContent {
+    display: grid;
+    justify-content: center;
+  }
+
+  .reservationType {
+    text-align: center;
+  }
+
+  .reservationTime {
+    margin-left: 16px;
+    font-size: 14px;
+    font-weight: 500;
   }
 }

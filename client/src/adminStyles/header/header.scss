@@ -4,17 +4,25 @@
   width: 100%;
   padding: 12px;
   background-color: #141824;
-
+  position: fixed;
+  z-index: 999;
   box-shadow:
     rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
     rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 
   .linkLogo {
-    padding: 0 28px;
+    margin: 0 28px;
     cursor: pointer;
   }
 
   .logo {
     width: 108px;
+  }
+
+  @media screen and (max-width: 767px) {
+    .linkLogo {
+      margin: 0 54px;
+      cursor: pointer;
+    }
   }
 }

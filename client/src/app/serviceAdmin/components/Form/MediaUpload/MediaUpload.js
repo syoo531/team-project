@@ -12,7 +12,7 @@ export default function MediaUpload({
   setNewImages,
   existingImage = [],
   setExistingImage,
-  mainImage,
+  mainImage = null,
   setMainImage,
 }) {
   const inputRefs = useRef();
@@ -52,7 +52,9 @@ export default function MediaUpload({
     if (confirm) {
       await Promise.all([
         deleteImageS3(img),
-        instance.delete(`http://localhost:4000/api/popupStore/image/${id}`),
+        instance.delete(
+          `http://kdt-sw-6-team04.elicecoding.com/api/popupStore/image/${id}`
+        ),
       ]);
       setExistingImage((prev) => prev.filter((img) => img._id !== id));
     }
@@ -92,7 +94,7 @@ export default function MediaUpload({
                 key={img._id}
                 uniqueId={img._id}
                 deleteImage={() => deleteExistingImage(img.url, img._id)}
-                image={img.url}
+                image={img?.url}
               />
             ))}
 

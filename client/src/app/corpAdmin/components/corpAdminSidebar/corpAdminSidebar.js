@@ -3,14 +3,21 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarCheck,
   faHourglassHalf,
+  faRectangleList,
 } from "@fortawesome/free-regular-svg-icons";
 import Sidebar from "@/adminStyles/sidebar/sidebar";
 
-export default function CorpAdminSidebar() {
+export default function CorpAdminSidebar({ setSidebarVisible, isMobileView }) {
   const links = [
+    {
+      href: "/corpAdmin",
+      label: "전체 목록",
+      icon: <FontAwesomeIcon icon={faRectangleList} />,
+    },
     {
       href: "/corpAdmin/corpAdminWaitingList",
       label: "웨이팅 관리",

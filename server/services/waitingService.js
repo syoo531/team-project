@@ -30,20 +30,26 @@ class WaitingService {
   async getWaitingStatus(email) {
     const user = await User.findOne({ email }).select("_id");
 
-    const waiting = await Waiting.find({ user, is_enter: false }).select(
-      "popup_store"
-    );
+    const waiting = await Waiting.find({ user, is_enter: false }).populate({
+      path: "popup_store",
+      select: ["name", "mainImage"],
+      populate: {
+        path: "mainImage",
+        select: ["url"],
+      },
+    });
+
+    console.log("여기44", waiting);
 
     let result = [];
     if (waiting.length !== 0) {
       for (let v of waiting) {
         const popup = v.popup_store;
-        const popup_info = await PopupStore.findOne({ _id: popup }).select(
-          "name"
-        );
+        const popup_name = popup.name;
+        const popup_image = popup.mainImage.url;
 
         const popup_waiting = await Waiting.find({
-          popup_store: popup,
+          popup_store: popup._id,
           is_enter: false,
         }).sort({ createdAt: 1 });
 
@@ -54,9 +60,8 @@ class WaitingService {
           }
         }
 
-        result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+        result.push([popup_name, idx, popup_image]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
       }
-      // console.log("여기33", result);
       return result;
     }
   }
@@ -70,9 +75,8 @@ class WaitingService {
   }
 
   // 현장 대기를 취소
-  async deleteWaitingPeople(userId, popupStoreId) {
+  async deleteWaitingPeople(popupStoreId) {
     const waitingPeople = await Waiting.deleteOne({
-      user: userId,
       popup_store: popupStoreId,
     }).deleteOne();
   }
@@ -85,7 +89,8 @@ class WaitingService {
       is_enter: false,
     })
       .sort({ createdAt: 1 })
-      .populate("user");
+      .populate("user")
+      .populate("popup_store");
 
     if (!waitingByPopupStore) {
       throw new Error("팝업스토어 현장대기 조회를 실패했습니다.");
@@ -97,7 +102,8 @@ class WaitingService {
   // 같은 팝업스토어에 현장대기 하려고 하는지 확인
   async validateWaiting(email, popup) {
     try {
-      const isFindUser = Waiting.findOne({ email, popup });
+      const user = await User.findOne({ email }).select("_id");
+      const isFindUser = await Waiting.findOne({ user, popup_store: popup });
       console.log("isFindUser: ", isFindUser);
 
       if (!isFindUser) {
@@ -118,7 +124,7 @@ class WaitingService {
 
     if (
       isAdminUser &&
-      isAdminUser.admin_corp.toString() === popupStoreId &&
+      isAdminUser.admin_corp === popupStoreId &&
       isAdminUser.admin_corp !== undefined
     ) {
       return true;
@@ -128,15 +134,16 @@ class WaitingService {
   }
 
   // 팝업스토어에 입장했는지 검사
-  async enterCheck(popupStoreId, userId) {
+  async enterWaitingList(popupStoreId, userId) {
     const waitingList = await Waiting.findOneAndUpdate(
       {
         popup_store: popupStoreId,
-        is_enter: true,
+        is_enter: false,
         user: userId,
       },
-      { is_enter: false }
+      { is_enter: true }
     );
+    return waitingList;
   }
 }
 

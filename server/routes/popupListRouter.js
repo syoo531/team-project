@@ -10,6 +10,8 @@ router.get("/endSoon", popupListController.endSoonPopUpList);
 
 router.get("/recommend", validateToken, popupListController.recommendPopUpList);
 
+router.get("/all/:id", popupListController.getPopUpStore);
+
 router.get("/all", popupListController.pagingPopUpList);
 
 router.get("/search", popupListController.searchPopUpList);

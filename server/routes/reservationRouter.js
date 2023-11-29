@@ -7,13 +7,14 @@ const {
   updateReservation,
   enterReservation,
   getMyReservation,
+  validateCorp,
 } = require("../controllers/reservationController");
 const validateToken = require("../middlewares/validateToken");
 const validateCorpAdmin = require("../middlewares/validateCorpAdmin");
 
 const router = Router();
 
-router.post("/", createReservation);
+router.post("/", validateToken, createReservation);
 router.get(
   "/getReservationByCorpAdmin",
   validateCorpAdmin,
@@ -24,5 +25,5 @@ router.get("/getMyReservation", validateToken, getMyReservation); // 내 사전�
 router.patch("/:id", updateReservation);
 router.delete("/:id", deleteReservation);
 router.put("/enterReservation", validateCorpAdmin, enterReservation);
-
+router.post("/validation", validateCorpAdmin, validateCorp);
 module.exports = router;
