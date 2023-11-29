@@ -6,17 +6,17 @@ import InterestCard from "./components/interestCard";
 
 export default function Interest() {
   const [myInterest, setMyInterest] = useState(undefined);
-  useEffect(() => {
-    async function getMyInterest() {
-      try {
-        const res = await instance.get("/interest");
+  const getMyInterest = async () => {
+    try {
+      const res = await instance.get("/interest");
 
-        const InterestList = res.data ? res.data : undefined;
-        setMyInterest(InterestList);
-      } catch (error) {
-        console.error(error);
-      }
+      const InterestList = res.data ? res.data : undefined;
+      setMyInterest(InterestList);
+    } catch (error) {
+      console.error(error);
     }
+  };
+  useEffect(() => {
     getMyInterest();
     console.log("여기", myInterest);
   }, []);
@@ -24,8 +24,12 @@ export default function Interest() {
   return (
     <div className="myInterestContainer">
       <div className="titleText">내 관심팝업</div>
-      <div className="InterestCardWrapper">
-        {myInterest ? myInterest.map((v) => InterestCard(v)) : ""}
+      <div>
+        <div className="InterestCardWrapper">
+          {myInterest ? myInterest.map((v) => {
+            return <InterestCard data={...v} onClick={getMyInterest} />
+          }) : ""}
+        </div>
       </div>
     </div>
   );

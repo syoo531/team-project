@@ -4,49 +4,34 @@ import instance from "@/utils/instance";
 import ReviewCard from "./components/reviewCard";
 
 export default function Review() {
-  const [reviewData, setReviewData] = useState({ message: "", data: [] });
-  const [reviewCard, setReviewCard] = useState(true);
+  const [reviewData, setReviewData] = useState(undefined);
+  const axiosReviewData = async () => {
+    try {
+      const response = await instance.get("/review/getMyReview");
+      const resData = response.data.data;
+      console.log("여기33", resData);
 
-  const onCloseCard = () => {
-    setReviewCard(false);
+      setReviewData(resData);
+    } catch (error) {
+      console.error("내 리뷰 데이터 조회를 실패하였습니다.", error);
+    }
   };
 
   useEffect(() => {
-    const axiosReviewData = async () => {
-      try {
-        const reviewId = "65617bd398aec7b2c407df97";
-        const response = await instance(`/review/${reviewId}`);
-
-        const reviewData = response.data;
-
-        // 내 리뷰 상태 업데이트
-        setReviewData(reviewData);
-
-        console.log(reviewData.data);
-      } catch (error) {
-        console.error("내 리뷰 데이터 조회를 실패하였습니다.", error);
-        setReviewData({ message: "", data: [] });
-      }
-    };
 
     axiosReviewData();
   }, []);
 
   return (
-    <div className="reviewCardContainer">
+    <div className="reviewContainer">
       <div className="reviewTitle">내 리뷰관리</div>
       <div>
         <div className="reviewCardWrapper">
-          <ReviewCard onClose={onCloseCard} />
-        </div>
-        <div className="reviewCardWrapper">
-          <ReviewCard />
-        </div>
-        <div className="reviewCardWrapper">
-          <ReviewCard />
-        </div>
-        <div className="reviewCardWrapper">
-          <ReviewCard />
+          {reviewData
+            ? reviewData.map((v) => {
+                return <ReviewCard data={...v} onSubmit={axiosReviewData}  />;
+              })
+            : ""}
         </div>
       </div>
     </div>

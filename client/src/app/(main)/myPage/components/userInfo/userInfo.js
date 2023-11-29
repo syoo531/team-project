@@ -11,21 +11,21 @@ export default function UserInfo() {
     selectedInterests: [],
   });
 
-  useEffect(() => {
-    async function getUserInfo() {
-      try {
-        const response = await instance.get("/users/getUserInfo");
-        const userInfo = response.data.data;
-        setFormData({
-          name: userInfo.name,
-          email: userInfo.email,
-          phoneNumber: userInfo.phone_number,
-          selectedInterests: userInfo.category,
-        });
-      } catch (error) {
-        console.error(error);
-      }
+  const getUserInfo = async () => {
+    try {
+      const response = await instance.get("/users/getUserInfo");
+      const userInfo = response.data.data;
+      setFormData({
+        name: userInfo.name,
+        email: userInfo.email,
+        phoneNumber: userInfo.phone_number,
+        selectedInterests: userInfo.category,
+      });
+    } catch (error) {
+      console.error(error);
     }
+  };
+  useEffect(() => {
     getUserInfo();
   }, []);
   const interests = [
@@ -103,7 +103,8 @@ export default function UserInfo() {
         selectedInterests,
       });
       if (response.status === 200) {
-        window.location.href = "/mypage";
+        alert("회원정보가 수정되었습니다.");
+        getUserInfo();
       }
     } catch (error) {
       console.error(error); // 에러 처리
@@ -115,6 +116,7 @@ export default function UserInfo() {
       try {
         const response = await instance.delete("/users/signout");
         if (response.status === 200) {
+          alert("회원탈퇴 되었습니다.");
           window.location.href = "/";
         }
       } catch (error) {

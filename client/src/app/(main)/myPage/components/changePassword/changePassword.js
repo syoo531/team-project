@@ -60,7 +60,12 @@ export default function ChangePassword() {
       });
       if (response.status === 200) {
         alert("비밀번호가 변경되었습니다.");
-        window.location.href = "/";
+
+        setFormData({
+          currentPassword: "",
+          newPassword: "",
+        });
+        setConfirmPassword("");
       }
     } catch (error) {
       alert(`${error.response.data.message}`);
@@ -83,6 +88,7 @@ export default function ChangePassword() {
                 name="currentPassword"
                 value={formData.currentPassword}
                 onChange={handleInputChange}
+                placeholder="소셜로그인 회원은 비밀번호 변경이 불가합니다."
               />
             </div>
             <div className="signupInputElement">

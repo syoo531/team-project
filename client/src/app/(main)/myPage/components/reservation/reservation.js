@@ -22,8 +22,10 @@ export default function Reservation() {
   return (
     <div className="myReservationContainer">
       <div className="titleText">내 사전예약</div>
-      <div className="reservationCardWrapper">
-        {myReservation ? myReservation.map((v) => reservationCard(v)) : ""}
+      <div>
+        <div className="reservationCardWrapper">
+          {myReservation ? myReservation.map((v) => reservationCard(v)) : ""}
+        </div>
       </div>
     </div>
   );

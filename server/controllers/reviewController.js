@@ -1,6 +1,11 @@
 //reviewController
 const ReviewService = require("../services/reviewService");
-const { PopupStore, User } = require("../models");
+const {
+  NotFoundError,
+  BadRequestError,
+  InternalServerError,
+  ConflictError,
+} = require("../config/customError");
 
 //리뷰 생성 POST
 const createReview = async (req, res, next) => {
@@ -35,16 +40,21 @@ const createReview = async (req, res, next) => {
 
 //리뷰 수정
 const updateReview = async (req, res, next) => {
+  const email = req.decoded.user.email;
+  const newReview = req.body.formData;
+  const reviewID = req.body.reviewID;
+
   try {
     const reviewService = new ReviewService();
     const updatedReview = await reviewService.updateReview(
-      req.params.id,
-      req.body
+      email,
+      reviewID,
+      newReview
     );
     if (!updatedReview) {
       return res.status(404).json({ message: "Review not found" });
     }
-    res.json(updatedReview);
+    res.status(200).json(updatedReview);
   } catch (err) {
     next(err);
   }
@@ -52,15 +62,21 @@ const updateReview = async (req, res, next) => {
 
 //리뷰 삭제
 const deleteReview = async (req, res, next) => {
+  const email = req.decoded.user.email;
+  const reviewID = req.params.id;
+  console.log("여기22", email);
+  console.log("여기33", reviewID);
+
   try {
     const reviewService = new ReviewService();
-    const deletedReview = await reviewService.deleteReview(
-      req.params.id,
-      req.body
-    );
-    if (!deletedReview) {
-      return res.status(404).json({ message: "Review not found" });
+    const deletedReview = await reviewService.deleteReview(email, reviewID);
+    if (deletedReview === "notFound") {
+      throw new NotFoundError("조회되는 리뷰가 없습니다.");
     }
+    if (deletedReview === "notMyReview") {
+      throw new NotFoundError("작성자가 다릅니다.");
+    }
+
     res.status(204).json({ message: "Review deleted" });
   } catch (err) {
     next(err);
@@ -92,10 +108,27 @@ const getReviewById = async (req, res, next) => {
   }
 };
 
+// 내 리뷰 조회
+const getMyReview = async (req, res, next) => {
+  try {
+    const email = req.decoded.user.email;
+    console.log("여기33", email);
+    const reviewService = new ReviewService();
+    const review = await reviewService.getMyReview(email);
+    if (!review) {
+      throw new NotFoundError("조회되는 리뷰가 없습니다!");
+    }
+    res.status(200).json({ data: review, message: "리뷰조회 성공" });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   createReview,
   getAllReviews,
   updateReview,
   deleteReview,
   getReviewById,
+  getMyReview,
 };
