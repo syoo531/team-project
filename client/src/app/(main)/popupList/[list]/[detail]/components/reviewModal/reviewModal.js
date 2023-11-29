@@ -22,11 +22,15 @@ const ReviewModal = ({ closeModal, handleReviewSubmit, popupStoreId, setIsReview
         setSelectedImages((prevImages) => prevImages.filter((_, i) => i !== index));
     };
 
-    //=================수정사항=================
     const submitReview = async () => {
         try {
             const imageData = await s3UploadMultipleImages(selectedImages);
             setIsReviewSubmitted(true); //! 순서 바꿈 > handleReviewSubmit 함수에서 false로 다시 바꿔줘서 리렌더링하게 함
+            if (selectedImages.length < 1) {
+                // 이미지가 1개 이상이어야 합니다.
+                window.alert("후기작성을 하기 위해서는 이미지가 1개 이상 있어야합니다.");
+                return;
+            }
 
             const response = await instance.post("/review/createReview", {
                 text: reviewContent,
@@ -39,7 +43,6 @@ const ReviewModal = ({ closeModal, handleReviewSubmit, popupStoreId, setIsReview
             window.alert("방문했던 팝업스토어에만 후기를 작성할수있습니다.");
         }
     };
-    //=============================================
 
     return (
         <div className="reviewModal">

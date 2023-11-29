@@ -96,11 +96,14 @@ export default function PopUp(props) {
             setPopupData(popupData);
             console.log(popupData);
 
+
+
+
+
+
             // 리뷰 데이터 가져오기 (최신순으로 데이터 받음)
             const reviewDataResponse = await instance.get(`review/byPopupstore/${storeId}`);
             const reviewData = reviewDataResponse.data;
-            console.log("특정 팝업스토어에 대한 전체 리뷰", reviewData.reviewData);
-            console.log("특정 팝업스토어에 대한 전체 리뷰2", reviewDataResponse.data);
             setReviewData(reviewData.reviewData?.slice(0, 4)); //! 리뷰 4개만 렌더링되게 slice 사용
         } catch (err) {
             console.log("Error fetching data:", err);
@@ -164,7 +167,7 @@ export default function PopUp(props) {
             </div>
             <div className="popInfo2">
                 <h3 className="popInfoSubTtile">팝업스토어 내용</h3>
-                <p>{popupData.description}</p>
+                <p>{popupData && popupData.description ? popupData.description.replaceAll("\r\n", "<br>") : ""}</p>
             </div>
             <div className="popReview">
                 <h4>
