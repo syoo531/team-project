@@ -89,12 +89,14 @@ class ReviewService {
     }
   }
 
-  // 특정 리뷰 조회
-  async getReviewById(reviewId) {
-    const review = await Review.findById(reviewId)
-      .populate("popup_store")
-      .populate("user");
+  //내 리뷰 조회
+  async getMyReview(email) {
+    console.log("여기33", email);
+    const user = await User.findOne({ email }).select("_id");
+    const myReview = await Review.find({ user }).populate("popup_store");
+    return myReview;
   }
+
   // 특정 리뷰 조회
   async getReviewById(reviewId) {
     const review = await Review.findById(reviewId)

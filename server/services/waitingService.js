@@ -30,20 +30,26 @@ class WaitingService {
   async getWaitingStatus(email) {
     const user = await User.findOne({ email }).select("_id");
 
-    const waiting = await Waiting.find({ user, is_enter: false }).select(
-      "popup_store"
-    );
+    const waiting = await Waiting.find({ user, is_enter: false }).populate({
+      path: "popup_store",
+      select: ["name", "mainImage"],
+      populate: {
+        path: "mainImage",
+        select: ["url"],
+      },
+    });
+
+    console.log("여기44", waiting);
 
     let result = [];
     if (waiting.length !== 0) {
       for (let v of waiting) {
         const popup = v.popup_store;
-        const popup_info = await PopupStore.findOne({ _id: popup }).select(
-          "name"
-        );
+        const popup_name = popup.name;
+        const popup_image = popup.mainImage.url;
 
         const popup_waiting = await Waiting.find({
-          popup_store: popup,
+          popup_store: popup._id,
           is_enter: false,
         }).sort({ createdAt: 1 });
 
@@ -54,7 +60,7 @@ class WaitingService {
           }
         }
 
-        result.push([popup_info.name, idx]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+        result.push([popup_name, idx, popup_image]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
       }
       return result;
     }
