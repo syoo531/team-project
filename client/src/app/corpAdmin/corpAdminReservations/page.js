@@ -148,23 +148,25 @@ export default function corpAdminReservations() {
           reservations.map((reservation) => (
             <div key={reservation._id} className="reservationBox">
               <div className="reservationDetails">
-                <span className="reservationType">예약</span>
-                <span>
-                  <FontAwesomeIcon icon={faUser} className="icon" />
-                  {reservation.user?.name}
-                </span>
-                <span>
-                  <FontAwesomeIcon icon={faUsers} className="icon" />
-                  {reservation.people}명
-                </span>
-                <span>
-                  <FontAwesomeIcon icon={faPhone} className="icon" />
-                  {reservation.user?.phone_number}
-                </span>
-
-                <div className="reservationTime">
-                  <FontAwesomeIcon icon={faClock} className="icon" />
-                  예약시간: {reservation.date.split("T")[0]} {reservation.hour}
+                <div className="reservationContent">
+                  <span className="reservationType">예약</span>
+                  <span>
+                    <FontAwesomeIcon icon={faUser} className="icon" />
+                    {reservation.user?.name}
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faUsers} className="icon" />
+                    {reservation.people}명
+                  </span>
+                  <span>
+                    <FontAwesomeIcon icon={faPhone} className="icon" />
+                    {reservation.user?.phone_number}
+                  </span>
+                  <div className="reservationTime">
+                    <FontAwesomeIcon icon={faClock} className="icon" />
+                    예약시간: {reservation.date.split("T")[0]}{" "}
+                    {reservation.hour}
+                  </div>
                 </div>
                 <div className="buttonContainer">
                   <button
@@ -191,8 +193,8 @@ export default function corpAdminReservations() {
         completedList.map((reservation) => (
           <div key={reservation._id} className="reservationBox">
             <div className="reservationDetails">
-              <div>
-                <span className="reservatioType">예약</span>
+              <div className="reservationContent">
+                <span className="reservationType">예약</span>
                 <span>
                   <FontAwesomeIcon icon={faUser} className="icon" />
                   {reservation.user?.name}
@@ -205,10 +207,10 @@ export default function corpAdminReservations() {
                   <FontAwesomeIcon icon={faPhone} className="icon" />
                   {reservation.user?.phone_number}
                 </span>
-              </div>
-              <div className="reservationTime">
-                <FontAwesomeIcon icon={faClock} />
-                예약시간: {reservation.date.split("T")[0]} {reservation.hour}
+                <div className="reservationTime">
+                  <FontAwesomeIcon icon={faClock} className="icon" />
+                  예약시간: {reservation.date.split("T")[0]} {reservation.hour}
+                </div>
               </div>
               <div className="buttonContainer">
                 <div className="completed">
