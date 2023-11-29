@@ -57,9 +57,12 @@ export default function CorpAdmin() {
       <div className="listTitle">
         {reservations.length > 0 && (
           <div className="popupStoreName">
-            <FontAwesomeIcon icon={faStore} className="faStoreIcon" />
-            팝업스토어 : {reservations[0].popup_store?.name} -
-            {reservations[0].popup_store?.brand}
+            <div>
+              <FontAwesomeIcon icon={faStore} className="faStoreIcon" />
+              팝업스토어 :{" "}
+            </div>
+            <div>{reservations[0].popup_store?.name}</div>
+            {/* <div>{reservations[0].popup_store?.brand}</div> */}
           </div>
         )}
         <select onChange={handleChangeList}>
@@ -74,10 +77,10 @@ export default function CorpAdmin() {
               <tr>
                 <th>No.</th>
                 <th>이름</th>
-                <th>총 인원</th>
+                <th className="people">총인원</th>
                 <th>전화번호</th>
-                <th>예약날짜</th>
-                <th>예약시간</th>
+                <th className="date">예약날짜</th>
+                {currentList === "reservation" && <th>예약시간</th>}
               </tr>
             </thead>
             <tbody>
@@ -87,16 +90,18 @@ export default function CorpAdmin() {
                   <td>{item.user?.name}</td>
                   <td>{item.people}</td>
                   <td>{item.user?.phone_number}</td>
-                  <td>{item.date.split("T")[0]}</td>
+                  <td>
+                    {typeof item.date === "string"
+                      ? item.date.split("T")[0]
+                      : "날짜 없음"}
+                  </td>
                   <td>{item.hour}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         ) : (
-          <div className="emptyListMessage">
-            목록이 비었습니다. 새로운 항목을 기다리고 있습니다!
-          </div>
+          <div className="emptyListMessage">목록이 비었습니다.</div>
         )}
       </div>
     </div>

@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import {
   faCalendarCheck,
   faHourglassHalf,
@@ -10,7 +11,7 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import Sidebar from "@/adminStyles/sidebar/sidebar";
 
-export default function CorpAdminSidebar() {
+export default function CorpAdminSidebar({ setSidebarVisible, isMobileView }) {
   const links = [
     {
       href: "/corpAdmin",

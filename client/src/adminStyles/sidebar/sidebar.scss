@@ -8,6 +8,10 @@
   backdrop-filter: $admin-sidbar-backdrop-filter;
   border-top: 1px solid #31374a;
   overflow: hidden;
+  position: fixed;
+  height: 100vh;
+  top: 50px;
+  z-index: 999;
 
   ul {
     margin: 0;

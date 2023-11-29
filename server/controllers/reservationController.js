@@ -123,6 +123,10 @@ const getMyReservation = async (req, res, next) => {
   }
 };
 
+const validateCorp = async (req, res) => {
+  res.status(200).json({ message: "관리자 인증 성공" });
+};
+
 module.exports = {
   createReservation,
   getAllReservations,
@@ -131,4 +135,5 @@ module.exports = {
   deleteReservation,
   enterReservation,
   getMyReservation,
+  validateCorp,
 };

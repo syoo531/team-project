@@ -126,7 +126,7 @@ export default function corpAdminWaitingList() {
           reservations.map((reservation) => (
             <div key={reservation._id} className="reservationBox">
               <div className="reservationDetails">
-                <div>
+                <div className="reservationContent">
                   <span className="reservationType">웨이팅</span>
                   <span>
                     <FontAwesomeIcon icon={faUser} className="icon" />
@@ -158,7 +158,7 @@ export default function corpAdminWaitingList() {
         completedList.map((reservation) => (
           <div key={reservation._id} className="reservationBox">
             <div className="reservationDetails">
-              <div>
+              <div className="reservationContent">
                 <span className="reservationType">웨이팅</span>
                 <span>
                   <FontAwesomeIcon icon={faUser} className="icon" />
