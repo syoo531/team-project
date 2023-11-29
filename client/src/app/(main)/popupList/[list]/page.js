@@ -9,7 +9,6 @@ export default function PopupList() {
   const [pages, setPages] = useState([]);
   const [popupStores, setPopupStores] = useState([]);
   const [documents, setDocuments] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -17,6 +16,7 @@ export default function PopupList() {
   const areaValue = searchParams.get("area");
   const categoryValue = searchParams.get("category");
   const dateValue = searchParams.get("date");
+  const pageNumberValue = searchParams.get("pageNumber");
 
   function dateFormat(date) {
     const selectDate = new Date(date);
@@ -27,12 +27,10 @@ export default function PopupList() {
   }
 
   function changePage(currentPage) {
-    console.log(currentPage);
     const queryParams = new URLSearchParams(searchParams.toString());
     queryParams.set("pageNumber", currentPage);
     const queryString = queryParams.toString();
     router.push(`${pathname}?${queryString}`);
-    setCurrentPage(currentPage);
   }
 
   useEffect(() => {
@@ -56,7 +54,7 @@ export default function PopupList() {
         console.log(err);
       }
     })();
-  }, [pathname, searchParams, currentPage]);
+  }, [pathname, searchParams, pageNumberValue]);
 
   return (
     <div className="popupList">
@@ -103,7 +101,7 @@ export default function PopupList() {
             <div
               key={pageNumber}
               className={`pageNumber ${
-                currentPage === pageNumber ? "clicked" : null
+                Number(pageNumberValue) === pageNumber ? "clicked" : null
               }`}
               onClick={() => {
                 changePage(pageNumber);

@@ -40,6 +40,10 @@
     }
   }
 
+  .searchIcon {
+    display: none;
+  }
+
   .hamburgerBtn {
     display: none;
   }
@@ -105,7 +109,7 @@
   }
 }
 
-@media screen and (max-width: 1160px) {
+@media screen and (max-width: 1300px) {
   .header {
     height: 80px;
 
@@ -113,9 +117,24 @@
       width: 160px;
     }
 
-    .hamburgerBtn {
+    .searchIcon {
       display: block;
       font-size: 28px;
+    }
+
+    .mobileBtnWrapper {
+      display: flex;
+      gap: 20px;
+
+      .searchIcon {
+        display: block;
+        font-size: 28px;
+      }
+
+      .hamburgerBtn {
+        display: block;
+        font-size: 28px;
+      }
     }
 
     .btnWrapper {

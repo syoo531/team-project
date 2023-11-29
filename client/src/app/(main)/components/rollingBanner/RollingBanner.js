@@ -8,6 +8,8 @@ export default function RollingBanner() {
   const [popupStores, setPopupStores] = useState([]);
   const router = useRouter();
 
+  console.log(popupStores);
+
   const topArr = popupStores.slice(0, Math.ceil(popupStores.length / 2));
   const bottomArr = popupStores.slice(Math.ceil(popupStores.length / 2));
 

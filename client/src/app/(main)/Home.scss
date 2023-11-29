@@ -17,19 +17,19 @@
 
     .titleWrapper {
       position: absolute;
-      left: 100px;
+      left: 140px;
       bottom: 140px;
 
       .mainBannerTitle {
         color: #fff;
-        font-size: 46px;
+        font-size: 44px;
         font-weight: 600;
         margin-bottom: 10px;
       }
 
       .mainBannerSubTitle {
         color: #fff;
-        font-size: 46px;
+        font-size: 44px;
         font-weight: 600;
         span {
           color: #0472ff;
@@ -38,9 +38,8 @@
     }
 
     .mainBanner {
-      width: 100%;
-      height: 1000px;
-      transform: translate(26%, -24%);
+      width: 80%;
+      transform: translate(50%, 10%);
     }
   }
   .popUpBtn {
