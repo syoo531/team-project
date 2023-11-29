@@ -62,7 +62,7 @@ const getWaitingStatus = async (req, res, next) => {
 
     const waitingService = new WaitingService();
     const waitingStatus = await waitingService.getWaitingStatus(email);
-    console.log("여기22", waitingStatus);
+    // console.log("여기22", waitingStatus);
     if (!waitingStatus) {
       throw new NotFoundError("조회되는 대기가 없습니다!");
     }
