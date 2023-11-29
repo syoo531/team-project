@@ -2,12 +2,12 @@
 
 //layout.js 스타일
 .app {
-  height: 100vh;
+  height: 100%;
 
   .app-flex-container {
     display: flex;
     align-items: stretch;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     background-color: $admin-background-color;
 
@@ -98,6 +98,7 @@
 
 .list__container {
   width: 100%;
+  height: 100%;
   padding: 7px 0px;
   background-color: $admin-card-background;
   border-radius: $admin-border-radius;
