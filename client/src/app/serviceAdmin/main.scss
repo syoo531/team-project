@@ -7,13 +7,13 @@
   .app-flex-container {
     display: flex;
     align-items: stretch;
-    min-height: calc(100vh - 53px);
+    height: 100vh;
     width: 100%;
     background-color: $admin-background-color;
 
     main {
       width: 100%;
-      padding: 51px 50px 51px 200px;
+      padding: 51px 0px 51px 200px;
     }
   }
 }
@@ -39,7 +39,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0px;
+    margin: 70px 0px 20px 0px;
   }
 }
 

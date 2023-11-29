@@ -35,7 +35,7 @@ export default function Page() {
 
   return (
     <>
-      <UserList userData={res?.data} />
+      <UserList userData={res?.data} totalUsers={res?.totalUsers || ""} />
       <Pagination currentPage={res?.currentPage} totalPages={res?.totalPages} />
     </>
   );

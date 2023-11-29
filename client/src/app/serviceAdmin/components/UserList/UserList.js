@@ -3,7 +3,7 @@
 import Search from "../Search/Search";
 import Chip from "./Chip";
 
-export default function UserList({ userData }) {
+export default function UserList({ userData, totalUsers }) {
   return (
     <div className="main__layout">
       <div className="main__header list__header">
@@ -13,7 +13,7 @@ export default function UserList({ userData }) {
       </div>
       <div className="list__container user-list">
         <Search userList={true} />
-        <p className="list__total">조회 결과: 총 {userData?.length}개</p>
+        <p className="list__total">조회 결과: 총 {totalUsers}개</p>
         <table className="list-table">
           <thead>
             <tr>
