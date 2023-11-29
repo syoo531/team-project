@@ -36,7 +36,7 @@ const ReservationModal = ({ closeModal, handleReservationSubmit, popupStoreId, s
             });
             closeModal();
             handleReservationSubmit(); // 여기서 함수를 호출합니다.
-            setIsReservationCompleted(true); // 사전예약이 완료되었음을 알리는 상태 업데이트
+
         } catch (error) {
             console.error("사전예약 작성에 실패하였습니다", error);
         }

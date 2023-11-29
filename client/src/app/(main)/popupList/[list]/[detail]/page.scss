@@ -360,6 +360,7 @@
             font-weight: 400;
             border: 1px solid #ddd;
             line-height: 160%;
+            white-space: pre-line;
         }
     }
     .popLocation {
@@ -397,6 +398,19 @@
                 font-size: 12px;
             }
         }
+    }
+    .endPopupStoreMsg {
+        display: block;
+        text-align: center;
+        width: 100%;
+        margin: 20px 0;
+        font-size: 24px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        box-sizing: border-box;
+        background: #ddd;
+        color: #555;
     }
     .popTime {
         margin-bottom: 60px;
@@ -760,6 +774,7 @@
                 font-weight: 400;
                 border: 1px solid #ddd;
                 line-height: 160%;
+                white-space: pre-line;
             }
         }
         .popLocation {

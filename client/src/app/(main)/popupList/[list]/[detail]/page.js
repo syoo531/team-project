@@ -23,6 +23,7 @@ export default function PopUp(props) {
     const [waitingModalOpen, setWaitingModalOpen] = useState(false); // 추가된 부분
     const [isReviewSubmitted, setIsReviewSubmitted] = useState(false);
     const [isReservationCompleted, setIsReservationCompleted] = useState(false); // 사전예약 했는지 안했는지 판단하기위한
+    const [isWaitingCompleted, setIsWaitingCompleted] = useState(false); // 사전예약 했는지 안했는지 판단하기위한
 
     const storeId = props.params.detail;
     console.log("storedId :", storeId);
@@ -60,10 +61,15 @@ export default function PopUp(props) {
     // 예약 작성 완료 시 호출되는 함수
     const handleReservationSubmit = () => {
         // 예약 작성 완료 후 할 일 추가
-        console.log("Reservation submitted");
         closeModal();
         setIsReservationCompleted(true); // 예약이 완료되었음을 상태에 반영
         window.alert("사전예약이 완료되었습니다!");
+    };
+    // 웨이팅 완료 시 호출되는 함수
+    const handleWaitingSubmit = () => {
+        closeModal();
+        setIsWaitingCompleted(true); // 예약이 완료되었음을 상태에 반영
+        window.alert("현장대기 접수가 완료되었습니다!");
     };
 
     // 각 리뷰의 이미지 랩 상태를 추적하는 상태
@@ -94,17 +100,15 @@ export default function PopUp(props) {
             const popupResponse = await instance.get(`/popupstore/${storeId}`);
             const popupData = popupResponse.data;
             setPopupData(popupData);
-            console.log(popupData);
-
-
-
-
-
+            const replaceDescription = popupData.description.replace(/\n/g, "\n");
+            setPopupData((data) => ({ ...data, description: replaceDescription }));
 
             // 리뷰 데이터 가져오기 (최신순으로 데이터 받음)
             const reviewDataResponse = await instance.get(`review/byPopupstore/${storeId}`);
             const reviewData = reviewDataResponse.data;
             setReviewData(reviewData.reviewData?.slice(0, 4)); //! 리뷰 4개만 렌더링되게 slice 사용
+            console.log("reviewData :", reviewData);
+            console.log("reviewData.totalReviews :", reviewData.totalReviews);
         } catch (err) {
             console.log("Error fetching data:", err);
         }
@@ -114,7 +118,8 @@ export default function PopUp(props) {
             fetchData();
         },
         [isReviewSubmitted],
-        [isReservationCompleted]
+        [isReservationCompleted],
+        [isWaitingCompleted]
     );
 
     // 현재 날짜와 시작, 끝 날짜를 비교하는 함수
@@ -143,9 +148,7 @@ export default function PopUp(props) {
             <div className="popInfo">
                 <h1>
                     {popupData.name}
-                    <a href="#">{popupData.category}</a>
-                    {/* <input type="checkbox" id={`detailFav${storeId}`} />
-                    <label htmlFor={`detailFav${storeId}`}></label> */}
+                    <a href="javascript:void(0)">{popupData.category}</a>
                 </h1>
                 <b>
                     <FontAwesomeIcon className="icon" icon={faLocationDot} />
@@ -167,13 +170,13 @@ export default function PopUp(props) {
             </div>
             <div className="popInfo2">
                 <h3 className="popInfoSubTtile">팝업스토어 내용</h3>
-                <p>{popupData && popupData.description ? popupData.description.replaceAll("\r\n", "<br>") : ""}</p>
+                <p>{popupData.description}</p>
             </div>
             <div className="popReview">
                 <h4>
                     <b>
                         후기 <FontAwesomeIcon className="staricon" icon={faStar} style={{ color: "#e21680" }} />
-                        <span>{reviewData.length}개</span>
+                        <span>{reviewData.totalReviews}개</span>
                     </b>
                     <Link href={`/popupList/all/${props.params.detail}/reviews`}>전체보기</Link>
                 </h4>
@@ -223,7 +226,6 @@ export default function PopUp(props) {
                 <b>
                     {popupData.address} {popupData.summary}
                 </b>
-                <div className="locationBox">지도표시</div>
             </div>
             <div className="popWarning">
                 <h3>안내 및 주의사항</h3>
@@ -251,7 +253,7 @@ export default function PopUp(props) {
                     </button>
                 </div>
             ) : (
-                <p className="endPopupStoreMsg">이미 끝난 팝업 스토어입니다.</p>
+                <p className="endPopupStoreMsg">종료된 팝업 스토어입니다.</p>
             )}
             {/* NewModal 렌더링 */}
             {reservationModalOpen && (
@@ -271,7 +273,13 @@ export default function PopUp(props) {
                 />
             )}
             {/* WaitingModal을 여기에 추가 */}
-            {waitingModalOpen && <WaitingModal closeModal={closeModal} />}
+            {waitingModalOpen && (
+                <WaitingModal
+                    closeModal={closeModal}
+                    popupStoreId={storeId}
+                    handleWaitingSubmit={handleWaitingSubmit}
+                />
+            )}
         </div>
     );
 }

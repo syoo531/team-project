@@ -3,21 +3,22 @@ import React, { useState } from "react";
 import "./waitingModal.scss";
 import instance from "@/utils/instance";
 
-const WaitingModal = ({ closeModal, popupStoreId }) => {
+const WaitingModal = ({ closeModal, popupStoreId, handleWaitingSubmit }) => {
     const waitingPopupStoreId = popupStoreId;
-    const [waitingDate, setWaitingDate] = useState("");
+    console.log("waitingPopupStoreId :", waitingPopupStoreId);
     const [waitingPeople, setWaitingPeople] = useState("");
 
     const submitWaiting = async () => {
         try {
             const response = await instance.post("/waiting/createWaiting", {
-                date: waitingDate,
                 people: waitingPeople,
-                popup_store: waitingPopupStoreId,
+                popup: waitingPopupStoreId,
             });
+            console.log("dd", response);
+            handleWaitingSubmit();
             closeModal();
         } catch (error) {
-            console.error("현장대기에 실패했습니다", error);
+            console.error("현장대기에 실패했습니다 여기?", error);
         }
     };
 
@@ -27,16 +28,6 @@ const WaitingModal = ({ closeModal, popupStoreId }) => {
             <div className="overlay" onClick={closeModal}></div>
             <div className="waitingContent">
                 <h2>팝업스토어 현장대기</h2>
-                <div className="waitingInput">
-                    <p>날짜</p>
-                    <input
-                        type="date"
-                        name="totalPeople"
-                        placeholder="날짜"
-                        value={waitingDate}
-                        onChange={(e) => setWaitingDate(e.target.value)}
-                    />
-                </div>
                 <div className="waitingInput">
                     <p>인원</p>
                     <input
@@ -48,7 +39,6 @@ const WaitingModal = ({ closeModal, popupStoreId }) => {
                         required
                     />
                 </div>
-
                 <button type="button" className="reviewCompleteBtn" onClick={submitWaiting}>
                     현장대기 등록하기
                 </button>
