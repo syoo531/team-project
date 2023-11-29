@@ -12,7 +12,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/users/login",
+        "http://kdt-sw-6-team04.elicecoding.com/api/users/login",
         { email, password },
         { withCredentials: true }
       );

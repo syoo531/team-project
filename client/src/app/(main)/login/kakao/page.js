@@ -27,7 +27,7 @@ export default function KakaoAuth() {
     async function sendCode() {
       try {
         const res = await axios.post(
-          "http://localhost:4000/api/users/auth/kakao/check",
+          "http://kdt-sw-6-team04.elicecoding.com/api/users/auth/kakao/check",
           {
             code: code,
           },
@@ -123,7 +123,7 @@ export default function KakaoAuth() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/users/auth/signup",
+        "http://kdt-sw-6-team04.elicecoding.com/api/users/auth/signup",
         {
           name: receivedName,
           email: receivedEmail,
