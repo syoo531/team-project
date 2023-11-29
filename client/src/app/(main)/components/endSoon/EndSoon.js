@@ -11,6 +11,7 @@ export default function EndSoon() {
   const [popupStores, setPopupStores] = useState([]);
   const [slide, setSlide] = useState(0);
   const [count, setCount] = useState(0);
+  console.log(popupStores);
 
   function moveToLeft() {
     if (slide > 0) {

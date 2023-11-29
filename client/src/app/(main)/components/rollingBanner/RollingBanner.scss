@@ -20,7 +20,7 @@
   align-items: center;
   flex-shrink: 0;
   display: flex;
-  gap: 50px;
+  gap: 70px;
 }
 
 .rollingBanner {
@@ -78,97 +78,224 @@
         animation-play-state: paused;
       }
     }
+
+    .moveToLeftRolling {
+      @include Rolling;
+      padding-right: 70px;
+      animation: moveLeftLoop 40s linear infinite;
+    }
+
+    .moveToLeftRollingCopy {
+      @include Rolling;
+      padding-right: 70px;
+      animation: moveLeftLoop 40s linear infinite;
+    }
   }
 
-  .moveToLeftRolling {
-    @include Rolling;
-    padding-right: 50px;
-    animation: moveLeftLoop 40s linear infinite;
-  }
+  .rightRollingWrapper {
+    display: flex;
+    justify-content: flex-end;
 
-  .moveToLeftRollingCopy {
-    @include Rolling;
-    padding-right: 50px;
-    animation: moveLeftLoop 40s linear infinite;
-  }
-}
+    &:hover {
+      .moveToRightRolling {
+        animation-play-state: paused;
+      }
 
-.rightRollingWrapper {
-  display: flex;
-  justify-content: flex-end;
+      .moveToRightRollingCopy {
+        animation-play-state: paused;
+      }
+    }
 
-  &:hover {
     .moveToRightRolling {
-      animation-play-state: paused;
+      @include Rolling;
+      padding-left: 70px;
+      animation: moveRightLoop 40s linear infinite;
     }
 
     .moveToRightRollingCopy {
-      animation-play-state: paused;
+      @include Rolling;
+      padding-left: 70px;
+      animation: moveRightLoop 40s linear infinite;
     }
   }
 
-  .moveToRightRolling {
-    @include Rolling;
-    padding-left: 50px;
-    animation: moveRightLoop 40s linear infinite;
-  }
-
-  .moveToRightRollingCopy {
-    @include Rolling;
-    padding-left: 50px;
-    animation: moveRightLoop 40s linear infinite;
-  }
-}
-
-.popUpImg {
-  position: relative;
-  width: 250px;
-  height: 250px;
-  border-radius: 12px;
-  background-image: url("https://user-images.githubusercontent.com/126956430/283732118-9504097d-9196-46e7-8cdd-cc903509b4a0.png");
-  background-size: cover;
-  background-position: center;
-  transition: 0.5s;
-
-  .blackBackGround {
-    position: absolute;
-    inset: 0;
+  .popUpImg {
+    position: relative;
+    width: 250px;
+    height: 250px;
     border-radius: 12px;
-    background-color: #222;
-    opacity: 0;
+    background-size: cover;
+    background-position: center;
     transition: 0.5s;
-  }
-
-  .readMoreBtn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 10px 20px;
-    border: 2px solid #fff;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #fff;
-    opacity: 0;
-    transition: 0.5s;
-  }
-
-  &:nth-child(even) {
-    width: 220x;
-    height: 220px;
-  }
-
-  &:hover {
-    cursor: pointer;
-    transform: scale(0.96);
 
     .blackBackGround {
-      opacity: 0.5;
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background-color: #222;
+      opacity: 0;
+      transition: 0.5s;
     }
 
     .readMoreBtn {
-      opacity: 1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px 20px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      opacity: 0;
+      transition: 0.5s;
+    }
+
+    &:nth-child(even) {
+      width: 220x;
+      height: 220px;
+    }
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(0.96);
+
+      .blackBackGround {
+        opacity: 0.5;
+      }
+
+      .readMoreBtn {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .rollingBanner {
+    .contentWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      text-align: center;
+      margin-bottom: 70px;
+
+      .title {
+        font-size: 38px;
+      }
+
+      .subTitle {
+        font-size: 14px;
+      }
+
+      .viewBtn {
+        padding: 8px 18px;
+        font-size: 14px;
+      }
+    }
+
+    .leftRollingWrapper {
+      .moveToLeftRolling {
+        gap: 50px;
+        padding-right: 50px;
+      }
+
+      .moveToLeftRollingCopy {
+        gap: 50px;
+        padding-right: 50px;
+      }
+    }
+
+    .rightRollingWrapper {
+      .moveToRightRolling {
+        gap: 50px;
+        padding-left: 50px;
+      }
+
+      .moveToRightRollingCopy {
+        gap: 50px;
+        padding-left: 50px;
+      }
+    }
+
+    .popUpImg {
+      width: 200px;
+      height: 200px;
+
+      .readMoreBtn {
+        font-size: 12px;
+      }
+
+      &:nth-child(even) {
+        width: 180px;
+        height: 180px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .rollingBanner {
+    .contentWrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      text-align: center;
+      margin-bottom: 70px;
+
+      .title {
+        font-size: 30px;
+      }
+
+      .subTitle {
+        font-size: 12px;
+      }
+
+      .viewBtn {
+        padding: 8px 18px;
+        font-size: 14px;
+      }
+    }
+
+    .leftRollingWrapper {
+      .moveToLeftRolling {
+        gap: 30px;
+        padding-right: 30px;
+      }
+
+      .moveToLeftRollingCopy {
+        gap: 30px;
+        padding-right: 30px;
+      }
+    }
+
+    .rightRollingWrapper {
+      .moveToRightRolling {
+        gap: 30px;
+        padding-left: 30px;
+      }
+
+      .moveToRightRollingCopy {
+        gap: 30px;
+        padding-left: 30px;
+      }
+    }
+
+    .popUpImg {
+      width: 180px;
+      height: 180px;
+
+      .readMoreBtn {
+        font-size: 12px;
+      }
+
+      &:nth-child(even) {
+        width: 160px;
+        height: 160px;
+      }
     }
   }
 }
