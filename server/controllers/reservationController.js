@@ -9,12 +9,19 @@ const {
 // 예약 생성
 const createReservation = async (req, res, next) => {
   try {
-    // 검증 후 예약 서비스를 통해 예약 생성
+    const { date, hour, people, popup_store } = req.body;
+    const email = req.decoded.user.email;
     const reservationService = new ReservationService();
-    const newReservation = await reservationService.createReservation(req.body);
+    const newReservation = await reservationService.createReservation({
+      date,
+      hour,
+      people,
+      popup_store,
+      email,
+    });
 
     // 생성된 예약 정보 응답
-    res.status(201).json(newReservation);
+    res.status(200).json(newReservation);
   } catch (err) {
     // 에러 처리
     next(err);

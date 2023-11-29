@@ -69,9 +69,8 @@ class WaitingService {
   }
 
   // 현장 대기를 취소
-  async deleteWaitingPeople(userId, popupStoreId) {
+  async deleteWaitingPeople(popupStoreId) {
     const waitingPeople = await Waiting.deleteOne({
-      user: userId,
       popup_store: popupStoreId,
     }).deleteOne();
   }

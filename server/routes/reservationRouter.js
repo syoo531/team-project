@@ -14,7 +14,7 @@ const validateCorpAdmin = require("../middlewares/validateCorpAdmin");
 
 const router = Router();
 
-router.post("/", createReservation);
+router.post("/", validateToken, createReservation);
 router.get(
   "/getReservationByCorpAdmin",
   validateCorpAdmin,

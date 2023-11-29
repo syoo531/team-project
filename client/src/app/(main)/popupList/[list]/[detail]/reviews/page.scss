@@ -1,0 +1,86 @@
+@mixin container {
+    width: 100%;
+    max-width: 1130px;
+    display: block;
+    padding: 100px 15px;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+@mixin flex($a, $b) {
+    display: flex;
+    align-items: $a;
+    justify-content: $b;
+}
+
+@mixin nflex {
+    display: flex;
+    align-items: normal;
+    justify-content: normal;
+}
+
+@mixin cflex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popReviewList {
+    @include container;
+    .popReviewListItem {
+        display: block;
+        padding: 15px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        margin-bottom: 15px;
+        .top {
+            @include flex(flex-end, normal);
+            h3 {
+                font-weight: 400;
+                font-size: 18px;
+            }
+            h4 {
+                font-weight: 400;
+                font-size: 16px;
+                color: #999;
+                margin-left: 5px;
+            }
+        }
+        .cont {
+            p {
+                display: block;
+                padding: 30px 0;
+            }
+        }
+        .img {
+            display: flex;
+            justify-content: normal;
+            gap: 2%;
+            flex-wrap: wrap;
+            img {
+                display: block;
+                width: 24%;
+            }
+        }
+    }
+}
+.pagination__container {
+    @include flex(center, center);
+    gap: 3%;
+    padding-bottom: 50px;
+    width: 100%;
+    .pageNum {
+        @include flex(center, center);
+        gap: 1%;
+        button {
+            background: inherit;
+            border:0;
+            font-size: 16px;
+            .active{
+                background: #999;
+            }
+        }
+    }
+    .arrow-icon {
+    }
+}
