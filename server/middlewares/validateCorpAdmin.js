@@ -27,10 +27,15 @@ const validateCorpAdmin = async (req, res, next) => {
     const user = await User.findOne({ email }).select("admin_role admin_corp");
     if (user.admin_role === 1 && user.admin_corp) {
       req.corpAdminPopupId = user.admin_corp;
+      next();
+    } else {
+      const err = new Error("서비스 관리자가 아닙니다.");
+      err.statusCode = 404;
+      throw err;
+      //res.status(404).json({ message: "서비스 관리자가 아닙니다." });
     }
-
-    next();
   } catch (err) {
+    next(err);
     console.log(err);
   }
 };
