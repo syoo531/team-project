@@ -18,7 +18,6 @@ export default function Review() {
   };
 
   useEffect(() => {
-
     axiosReviewData();
   }, []);
 
@@ -29,7 +28,7 @@ export default function Review() {
         <div className="reviewCardWrapper">
           {reviewData
             ? reviewData.map((v) => {
-                return <ReviewCard data={...v} onSubmit={axiosReviewData}  />;
+                return <ReviewCard data={v} onSubmit={axiosReviewData} />;
               })
             : ""}
         </div>
