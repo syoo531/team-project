@@ -6,7 +6,10 @@ const validateServiceAdmin = async (req, res, next) => {
     const { authorization } = req.headers;
 
     if (!authorization) {
-      throw new Error("엑세스 토큰이 없습니다.");
+      const err = new Error("엑세스 토큰이 없습니다.");
+      err.statusCode = 400;
+      throw err;
+      //throw new Error("엑세스 토큰이 없습니다.");
     }
     let email;
 
@@ -15,11 +18,14 @@ const validateServiceAdmin = async (req, res, next) => {
       process.env.ACCESS_TOKEN_SECERT,
       (err, decoded) => {
         if (err) {
-          throw new Error("엑세스 토큰이 유효하지 않습니다.");
+          const err = new Error("엑세스 토큰이 유효하지 않습니다.");
+          err.statusCode = 400;
+          throw err;
+          //throw new Error("엑세스 토큰이 유효하지 않습니다.");
         } else {
           email = decoded.user.email;
         }
-      },
+      }
     );
     // 1. 서비스관리자인지(admin_role이 2인지 확인)
 
@@ -28,9 +34,9 @@ const validateServiceAdmin = async (req, res, next) => {
       next();
     } else {
       const err = new Error("서비스 관리자가 아닙니다.");
-      err.statusCode = 404;
+      err.statusCode = 400;
       throw err;
-      //res.status(404).json({ message: "서비스 관리자가 아닙니다." });
+      //res.status(400).json({ message: "서비스 관리자가 아닙니다." });
     }
   } catch (err) {
     next(err);

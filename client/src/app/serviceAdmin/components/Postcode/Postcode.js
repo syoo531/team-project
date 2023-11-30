@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDaumPostcodePopup } from "react-daum-postcode";
 import "./Postcode.scss";
 
-const Postcode = ({ scriptUrl, setFormData }) => {
-  const open = useDaumPostcodePopup(scriptUrl);
+const Postcode = ({ setFormData }) => {
+  const open = useDaumPostcodePopup();
 
   const handleComplete = (data) => {
     let fullAddress = data.address;
