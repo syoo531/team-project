@@ -6,21 +6,8 @@
     opacity: 1;
   }
 }
-
-.searchBar {
+.searchBarContainer {
   flex-basis: 540px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  height: 48px;
-  padding: 0px 20px;
-  border-radius: 12px;
-  background-color: #e8e8e8;
-  transition: 0.5s;
-
-  &.active {
-    background-color: #000;
-  }
 
   .blackBackGround {
     position: fixed;
@@ -29,44 +16,61 @@
     animation: openModalBackGround 0.5s ease;
   }
 
-  label {
-    border: none;
-    background-color: transparent;
-    outline: none;
-    &:hover {
-      cursor: pointer;
-    }
-  }
+  .searchBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+    padding: 0px 20px;
+    border-radius: 12px;
+    background-color: #e8e8e8;
+    transition: 0.5s;
 
-  input {
-    display: block;
-    height: 100%;
-    flex: 1 auto;
-    border: none;
-    background-color: transparent;
-    outline: none;
-    color: #ababab;
-    font-size: 16px;
-    letter-spacing: 1px;
-
-    &:hover {
-      cursor: pointer;
+    &.active {
+      background-color: #000;
     }
 
-    &::placeholder {
+    label {
+      border: none;
+      background-color: transparent;
+      outline: none;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    input {
+      display: block;
+      height: 100%;
+      flex: 1 auto;
+      border: none;
+      background-color: transparent;
+      outline: none;
       color: #ababab;
-      font-size: 12px;
-    }
-  }
+      font-size: 16px;
+      letter-spacing: 1px;
 
-  .icon {
-    color: #ababab;
-    font-size: 18px;
+      &:hover {
+        cursor: pointer;
+      }
+
+      &::placeholder {
+        color: #ababab;
+        font-size: 12px;
+      }
+    }
+
+    .icon {
+      color: #ababab;
+      font-size: 18px;
+    }
   }
 }
 
-@media screen and (max-width: 768px) {
-  .searchBar {
-    display: none;
+@media screen and (max-width: 1080px) {
+  .searchBarContainer {
+    .searchBar {
+      display: none;
+    }
   }
 }

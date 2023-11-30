@@ -19,6 +19,7 @@
   background-color: #fff;
   animation: openSearchModal 0.5s ease;
   overflow: hidden;
+  z-index: 1;
 
   .inputWrapper {
     display: flex;
@@ -30,8 +31,10 @@
     border-radius: 12px;
 
     .searchInput {
-      flex-basis: 50%;
+      flex: 1 auto;
       height: 50px;
+      border: none;
+      outline: none;
       color: #222;
       font-size: 22px;
 
@@ -181,6 +184,165 @@
     font-size: 40px;
     &:hover {
       cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .searchModal {
+    top: 80px;
+  }
+}
+
+@media screen and (max-width: 1140px) {
+  .searchModal {
+    overflow-y: scroll;
+    padding: 50px 0;
+    top: 80px;
+
+    .inputWrapper {
+      width: 90%;
+      .searchInput {
+        font-size: 16px;
+
+        &::placeholder {
+          font-size: 16px;
+        }
+      }
+
+      .searchBtn {
+        padding: 8px 16px;
+
+        .searchIcon {
+          font-size: 12px;
+        }
+
+        .searchText {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .searchWordWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      padding: 0 30px;
+      .recentSearchWordWrapper {
+        .recentSearchWordHeader {
+          .recentSearchWordTitle {
+          }
+
+          .allRemoveBtn {
+          }
+        }
+
+        .recentSearchWordList {
+          .recentSearchWord {
+            .searchWord {
+            }
+
+            .dateBtnWrapper {
+              .searchDate {
+              }
+
+              .removeBtn {
+              }
+            }
+          }
+        }
+      }
+
+      .popularSearchWordWrapper {
+        .popularSearchWordTitle {
+        }
+
+        .popularSearchWordList {
+          .popularSearchWord {
+          }
+        }
+      }
+    }
+
+    .closeBtn {
+    }
+  }
+}
+
+@media screen and (max-width: 890px) {
+  .searchModal {
+    overflow-y: scroll;
+    top: 80px;
+
+    .inputWrapper {
+      padding: 8px 16px;
+
+      .searchInput {
+        font-size: 14px;
+        &::placeholder {
+          font-size: 14px;
+        }
+      }
+
+      .searchBtn {
+        .searchIcon {
+        }
+
+        .searchText {
+        }
+      }
+    }
+
+    .searchWordWrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+      .recentSearchWordWrapper {
+        .recentSearchWordHeader {
+          .recentSearchWordTitle {
+            font-size: 18px;
+          }
+
+          .allRemoveBtn {
+          }
+        }
+
+        .recentSearchWordList {
+          .recentSearchWord {
+            .searchWord {
+              font-size: 14px;
+            }
+
+            .dateBtnWrapper {
+              font-size: 14px;
+              .searchDate {
+              }
+
+              .removeBtn {
+              }
+            }
+          }
+        }
+      }
+
+      .popularSearchWordWrapper {
+        .popularSearchWordTitle {
+          font-size: 18px;
+        }
+
+        .popularSearchWordList {
+          .popularSearchWord {
+            padding: 6px 16px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    .closeBtn {
+      top: 10px;
+      right: 10px;
+      font-size: 30px;
     }
   }
 }

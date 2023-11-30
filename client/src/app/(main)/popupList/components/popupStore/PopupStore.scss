@@ -93,6 +93,7 @@
       position: relative;
       width: 250px;
       height: 250px;
+      flex-shrink: 0;
 
       .popupStoreImg {
         width: 100%;

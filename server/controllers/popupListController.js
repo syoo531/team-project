@@ -9,6 +9,15 @@ async function getAllPopUpList(req, res) {
   }
 }
 
+async function seongsuPopUpList(req, res) {
+  try {
+    const result = await popupListService.seongsuPopUpList();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: "failed" });
+  }
+}
+
 async function endSoonPopUpList(req, res) {
   try {
     const result = await popupListService.endSoonPopUpList();
@@ -73,6 +82,7 @@ module.exports = {
   getPopUpStore,
   searchPopUpList,
   filterPopUpList,
+  seongsuPopUpList,
   endSoonPopUpList,
   recommendPopUpList,
 };

@@ -8,10 +8,22 @@ async function getAllPopUpList() {
   return popupStores;
 }
 
+async function seongsuPopUpList() {
+  const currentDate = new Date();
+  const popupStores = await PopupStore.find({
+    address: { $regex: "성수", $options: "i" },
+    end_date: { $gt: currentDate },
+  })
+    .populate("mainImage")
+    .populate("images");
+
+  return popupStores;
+}
+
 async function endSoonPopUpList() {
   const currentDate = new Date();
   const threeDaysLater = new Date();
-  threeDaysLater.setDate(currentDate.getDate() + 3);
+  threeDaysLater.setDate(currentDate.getDate() + 5);
 
   const query = {
     end_date: {
@@ -119,6 +131,7 @@ async function filterPopUpList({ pageNumber, limit, area, category, date }) {
 
 module.exports = {
   getAllPopUpList,
+  seongsuPopUpList,
   endSoonPopUpList,
   recommendPopUpList,
   pagingPopUpList,

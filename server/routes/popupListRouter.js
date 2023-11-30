@@ -6,16 +6,18 @@ const router = Router();
 
 router.get("/", popupListController.getAllPopUpList);
 
-router.get("/endSoon", popupListController.endSoonPopUpList);
-
-router.get("/recommend", validateToken, popupListController.recommendPopUpList);
-
 router.get("/all/:id", popupListController.getPopUpStore);
 
 router.get("/all", popupListController.pagingPopUpList);
 
+router.get("/endSoon", popupListController.endSoonPopUpList);
+
+router.get("/seongsu", popupListController.seongsuPopUpList);
+
 router.get("/search", popupListController.searchPopUpList);
 
 router.get("/filter", popupListController.filterPopUpList);
+
+router.get("/recommend", validateToken, popupListController.recommendPopUpList);
 
 module.exports = router;
