@@ -72,6 +72,10 @@ class PopupService {
       query.end_date = { $lt: new Date() };
     }
 
+    if (checkClosed && checkClosed == "toOpen") {
+      query.start_date = { $gt: new Date() };
+    }
+
     console.log(query);
     const data = await PopupStore.find(query)
       .sort({ _id: -1 })

@@ -113,6 +113,7 @@ export default function Search({ userList }) {
               value={query.checkClosed}
             >
               <option value="">진행상태</option>
+              <option value="toOpen">오픈 전</option>
               <option value="running">진행중</option>
               <option value="closed">종료</option>
             </select>
