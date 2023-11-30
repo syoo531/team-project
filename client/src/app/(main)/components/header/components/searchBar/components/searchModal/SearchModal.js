@@ -50,12 +50,12 @@ export default function SearchModal({ searchModalClose }) {
     }
 
     const check = recentSearches.some(
-      (keyword) => keyword.word === searchValue
+      (keyword) => keyword.word === searchValue,
     );
 
     if (check) {
       const index = recentSearches.findIndex(
-        (keyword) => keyword.word === searchValue
+        (keyword) => keyword.word === searchValue,
       );
       recentSearches.splice(index, 1);
       recentSearches.unshift({
@@ -72,7 +72,7 @@ export default function SearchModal({ searchModalClose }) {
     }
     localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
     router.push(
-      `/popupList/search?pageNumber=1&limit=8&keyword=${searchValue}`
+      `/popupList/search?pageNumber=1&limit=8&keyword=${searchValue}`,
     );
     setRecentSearchList([...recentSearches]);
     searchModalClose();
@@ -144,7 +144,7 @@ export default function SearchModal({ searchModalClose }) {
                     className="searchWord"
                     onClick={() => {
                       router.push(
-                        `/popupList/search?pageNumber=1&limit=8&keyword=${word.word}`
+                        `/popupList/search?pageNumber=1&limit=8&keyword=${word.word}`,
                       );
                       searchModalClose();
                     }}
@@ -177,7 +177,7 @@ export default function SearchModal({ searchModalClose }) {
                   className="popularSearchWord"
                   onClick={() => {
                     router.push(
-                      `/popupList/search?pageNumber=1&limit=8&keyword=${search.keyword}`
+                      `/popupList/search?pageNumber=1&limit=8&keyword=${search.keyword}`,
                     );
                     searchModalClose();
                   }}

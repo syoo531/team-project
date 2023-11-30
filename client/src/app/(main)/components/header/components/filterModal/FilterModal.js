@@ -37,7 +37,7 @@ export default function FilterModal({ closeModal }) {
         selectValue.area ? `&area=${selectValue.area}` : ""
       }${selectValue.category ? `&category=${selectValue.category}` : ""}${
         selectValue.date ? `&date=${selectValue.date}` : ""
-      }`
+      }`,
     );
     closeModal();
   }

@@ -14,7 +14,7 @@ export default function Login() {
       const response = await axios.post(
         "http://kdt-sw-6-team04.elicecoding.com/api/users/login",
         { email, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (response.status === 200) {
         const accessToken = response.data.accessToken;

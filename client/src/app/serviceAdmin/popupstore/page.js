@@ -10,7 +10,11 @@ async function getData(searchParams) {
       cache: "no-store",
     });
 
-    return res.json();
+    if (!res) {
+      return {};
+    }
+
+    return {};
   } catch (err) {
     console.log(err);
   }
