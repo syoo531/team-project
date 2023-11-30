@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStore } from "@fortawesome/free-solid-svg-icons";
 import "./main.scss";
@@ -9,6 +10,30 @@ export default function CorpAdmin() {
   const [reservations, setReservations] = useState([]);
   const [waitingList, setWaitingList] = useState([]);
   const [currentList, setCurrentList] = useState("waiting");
+  const router = useRouter();
+  useEffect(() => {
+    const validateAdmin = async () => {
+      try {
+        const accessToken = localStorage.getItem("accessToken");
+        const res = await instance.post(`/reservation/validation`);
+
+        if (!accessToken || res.status !== 200) {
+          window.alert("권리자 권한이 없습니다");
+          router.push("/");
+          return;
+        }
+
+        if (accessToken || res.status === 200) {
+          router.push("/corpAdmin");
+          return;
+        }
+      } catch (error) {
+        window.alert("권리자 권한이 없습니다");
+        router.push("/");
+      }
+    };
+    validateAdmin();
+  }, []);
 
   // 사전 예약 목록 불러오기
   useEffect(() => {

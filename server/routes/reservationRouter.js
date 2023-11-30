@@ -14,6 +14,7 @@ const validateCorpAdmin = require("../middlewares/validateCorpAdmin");
 
 const router = Router();
 
+router.post("/validation", validateCorpAdmin, validateCorp);
 router.post("/", validateToken, createReservation);
 router.get(
   "/getReservationByCorpAdmin",
@@ -25,5 +26,5 @@ router.get("/getMyReservation", validateToken, getMyReservation); // 내 사전�
 router.patch("/:id", updateReservation);
 router.delete("/:id", deleteReservation);
 router.put("/enterReservation", validateCorpAdmin, enterReservation);
-router.post("/validation", validateCorpAdmin, validateCorp);
+
 module.exports = router;
