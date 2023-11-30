@@ -14,11 +14,13 @@ export default function ServiceAdmin() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await instance.get(
+        const response = await instance.get(
           `/popupstore?${searchParams.toString()}`
         );
 
-        setRes(data);
+        if (response.data) {
+          setRes(response.data);
+        }
       } catch (error) {
         console.error(error);
       }
