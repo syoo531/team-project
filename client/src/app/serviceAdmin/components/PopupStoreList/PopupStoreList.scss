@@ -1,8 +1,6 @@
 @import "../../main.scss";
 
 .action__menu {
-  padding: 0px 8px;
-
   .create-store-btn {
     @include admin-button-base-style(#0095ff, white);
   }
