@@ -49,7 +49,7 @@ const updateReview = async (req, res, next) => {
     const updatedReview = await reviewService.updateReview(
       email,
       reviewID,
-      newReview
+      newReview,
     );
     if (!updatedReview) {
       return res.status(404).json({ message: "Review not found" });
@@ -117,7 +117,7 @@ const getReviewByPopupstore = async (req, res, next) => {
     const popupStoreReview = await reviewService.getReviewByPopupstore(
       req.params.id,
       page,
-      limit
+      limit,
     );
     res.status(200).json(popupStoreReview);
   } catch (err) {

@@ -18,7 +18,7 @@ const reservationSchema = new Schema(
       ref: "User",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = reservationSchema;

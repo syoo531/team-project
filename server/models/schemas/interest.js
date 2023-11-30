@@ -13,7 +13,7 @@ const InterestSchema = new Schema(
       require: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = InterestSchema;

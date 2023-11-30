@@ -18,7 +18,7 @@ const validateToken = async (req, res, next) => {
           req.decoded = decoded;
           next();
         }
-      }
+      },
     );
   } catch (err) {
     console.log(err);

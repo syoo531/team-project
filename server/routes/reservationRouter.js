@@ -19,7 +19,7 @@ router.post("/", validateToken, createReservation);
 router.get(
   "/getReservationByCorpAdmin",
   validateCorpAdmin,
-  getReservationByCorpAdmin
+  getReservationByCorpAdmin,
 );
 router.get("/", getAllReservations);
 router.get("/getMyReservation", validateToken, getMyReservation); // 내 사전예약 불러오기

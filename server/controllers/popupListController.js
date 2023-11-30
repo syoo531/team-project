@@ -21,7 +21,7 @@ async function endSoonPopUpList(req, res) {
 async function recommendPopUpList(req, res) {
   try {
     const result = await popupListService.recommendPopUpList(
-      req.decoded.user.email
+      req.decoded.user.email,
     );
     res.status(200).json(result);
   } catch (err) {
