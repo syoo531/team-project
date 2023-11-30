@@ -36,7 +36,7 @@ class PopupService {
   }
 
   async getAllStores(reqQuery) {
-    const { page, limit, search, category, start_date, end_date, checkClosed } =
+    const { page, limit, search, category, start_date, end_date, status } =
       reqQuery;
     const limitPerPage = limit || 10; //기본 10개로 제한
     const skipCount = (Number(page) - 1) * limitPerPage;
@@ -63,16 +63,16 @@ class PopupService {
       query = { ...query, category };
     }
 
-    if (checkClosed && checkClosed == "running") {
+    if (status && status == "running") {
       query.start_date = { $lte: new Date() };
       query.end_date = { $gte: new Date() };
     }
 
-    if (checkClosed && checkClosed == "closed") {
+    if (status && status == "closed") {
       query.end_date = { $lt: new Date() };
     }
 
-    if (checkClosed && checkClosed == "toOpen") {
+    if (status && status == "scheduled") {
       query.start_date = { $gt: new Date() };
     }
 

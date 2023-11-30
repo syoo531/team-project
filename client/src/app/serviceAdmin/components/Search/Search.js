@@ -17,7 +17,7 @@ export default function Search({ userList }) {
     category: "",
     start_date: "",
     end_date: "",
-    checkClosed: "",
+    status: "",
   };
 
   const [query, setQuery] = useState(initialQueryState);
@@ -48,7 +48,7 @@ export default function Search({ userList }) {
     query.category,
     query.start_date,
     query.end_date,
-    query.checkClosed,
+    query.status,
     router,
   ]);
 
@@ -60,10 +60,10 @@ export default function Search({ userList }) {
     }));
 
     if (name === "start_date" || name === "end_date") {
-      setQuery((cur) => ({ ...cur, checkClosed: "" }));
+      setQuery((cur) => ({ ...cur, status: "" }));
     }
 
-    if (name === "checkClosed") {
+    if (name === "status") {
       setQuery((cur) => ({ ...cur, start_date: "", end_date: "" }));
     }
   };
@@ -107,14 +107,10 @@ export default function Search({ userList }) {
               ))}
             </select>
 
-            <select
-              onChange={handleSearch}
-              name="checkClosed"
-              value={query.checkClosed}
-            >
+            <select onChange={handleSearch} name="status" value={query.status}>
               <option value="">진행상태</option>
-              <option value="toOpen">오픈 전</option>
-              <option value="running">진행중</option>
+              <option value="scheduled">오픈 예정</option>
+              <option value="running">진행 중</option>
               <option value="closed">종료</option>
             </select>
 
