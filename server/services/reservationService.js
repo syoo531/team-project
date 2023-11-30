@@ -55,6 +55,7 @@ class ReservationService {
         status: "대기중",
       },
       { status: "완료됨" },
+      { new: true }
     );
     return reservation;
   }

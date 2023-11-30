@@ -26,6 +26,7 @@ export default function corpAdminWaitingList() {
         const completedReservations = response.data.filter((r) => r.is_enter);
         setReservations(waitingReservations);
         setCompletedList(completedReservations);
+        console.log("Initial completed reservations:", completedReservations);
       } catch (error) {
         console.error("There was an error!", error);
       }
@@ -38,19 +39,19 @@ export default function corpAdminWaitingList() {
     sortReservations(sortOrder);
   }, [currentTab]);
 
+  useEffect(() => {
+    console.log("Completed reservations:", completedList);
+  }, [completedList]);
+
   const handleComplete = async (reservation, popupStoreId, userId) => {
     try {
-      console.log("Sending request with:", {
-        corpAdminPopupId: popupStoreId,
-        userId: reservation.user._id,
-      });
       const response = await instance.put("/waiting/enterWaitingList", {
         corpAdminPopupId: popupStoreId,
         userId: reservation.user._id,
       });
       if (response.status === 200 || response.status === 204) {
         setReservations((prev) =>
-          prev.filter((r) => r._id !== reservation._id),
+          prev.filter((r) => r._id !== reservation._id)
         );
         setCompletedList((prev) => [
           ...prev,
@@ -73,12 +74,12 @@ export default function corpAdminWaitingList() {
     switch (order) {
       case "name":
         sortedReservations = [...listToSort].sort((a, b) =>
-          a.user?.name.localeCompare(b.user?.name),
+          a.user?.name.localeCompare(b.user?.name)
         );
         break;
       case "people":
         sortedReservations = [...listToSort].sort(
-          (a, b) => a.people - b.people,
+          (a, b) => a.people - b.people
         );
         break;
       case "default":

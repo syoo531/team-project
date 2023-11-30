@@ -105,7 +105,9 @@ export default function CorpAdmin() {
                 <th className="people">총인원</th>
                 <th>전화번호</th>
                 <th className="date">예약날짜</th>
-                {currentList === "reservation" && <th>예약시간</th>}
+                {currentList === "reservation" && (
+                  <th className="time">예약시간</th>
+                )}
               </tr>
             </thead>
             <tbody>
