@@ -11,6 +11,7 @@ import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import "./PopupStore.scss";
 
 export default function PopupStore({ store }) {
+  const [token, setToken] = useState(null);
   const [isAdded, setIsAdded] = useState(false);
   const [interestModal, setInterestModal] = useState(false);
   const [interestStatus, setInterestStatus] = useState("");
@@ -55,15 +56,24 @@ export default function PopupStore({ store }) {
   }
 
   useEffect(() => {
-    (async function () {
-      const response = await axios.get(`/interest/${store._id}`);
-      if (response.data.length !== 0) {
-        setIsAdded(true);
-      } else {
-        setIsAdded(false);
-      }
-    })();
+    if (typeof window !== "undefined") {
+      const accessToken = localStorage.getItem("accessToken");
+      setToken(accessToken);
+    }
   }, []);
+
+  useEffect(() => {
+    if (token) {
+      (async function () {
+        const response = await axios.get(`/interest/${store._id}`);
+        if (response.data.length !== 0) {
+          setIsAdded(true);
+        } else {
+          setIsAdded(false);
+        }
+      })();
+    }
+  }, [token]);
 
   return (
     <div className="popupStore">
@@ -125,7 +135,7 @@ export default function PopupStore({ store }) {
         <div className="imageWrapper">
           <div
             className="popupStoreImg"
-            style={{ backgroundImage: `url(${store.mainImage.url})` }}
+            style={{ backgroundImage: `url(${store?.mainImage?.url})` }}
             onClick={() => {
               router.push(`/popupList/all/${store._id}`);
             }}
@@ -135,6 +145,11 @@ export default function PopupStore({ store }) {
               className="heartIcon"
               icon={regularHeart}
               onClick={() => {
+                if (!token) {
+                  alert("로그인 후 이용하실 수 있습니다.");
+                  router.push("/login");
+                  return;
+                }
                 window.document.body.style.overflowY = "hidden";
                 addInterestPopupStore(store._id);
               }}
@@ -144,8 +159,10 @@ export default function PopupStore({ store }) {
               className="heartIcon"
               icon={solidHeart}
               onClick={() => {
-                window.document.body.style.overflowY = "hidden";
-                deleteInterestPopupStore(store._id);
+                if (token) {
+                  window.document.body.style.overflowY = "hidden";
+                  deleteInterestPopupStore(store._id);
+                }
               }}
             />
           )}

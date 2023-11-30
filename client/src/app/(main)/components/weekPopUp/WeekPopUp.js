@@ -4,7 +4,7 @@ import "./WeekPopUp.scss";
 
 const weeklyPopUpArr = [
   {
-    id: 1,
+    id: "6567fd97f9850bddb661d091",
     brand: "선양소주",
     title: "어른들의 놀이터: 선양 소주 팝업스토어",
     summary:
@@ -12,7 +12,7 @@ const weeklyPopUpArr = [
     url: "/images/weekly1.png",
   },
   {
-    id: 2,
+    id: "6567ff48f9850bddb661d0a4",
     brand: "NH올원뱅크",
     title: "금융에 대한 근심과 걱정이 사라지는 신선놀음 팝업스토어",
     summary:

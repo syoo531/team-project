@@ -152,3 +152,89 @@
     }
   }
 }
+
+@media screen and (max-width: 1300px) {
+  .recommendation {
+    .popUpListWrapper {
+      .slideWrapper {
+        .popUpWrapper {
+          flex-basis: calc(33.333%);
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .recommendation {
+    .headerWrapper {
+      padding: 0 30px;
+      .title {
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .btnWrapper {
+        .leftArrowIcon {
+          font-size: 30px;
+        }
+
+        .rightArrowIcon {
+          font-size: 30px;
+        }
+      }
+    }
+
+    .popUpListWrapper {
+      padding-left: 10px;
+
+      .slideWrapper {
+        .popUpWrapper {
+          flex-basis: calc(50%);
+          padding-right: 10px;
+
+          .recommendPopUpImg {
+            height: 200px;
+
+            .Mark {
+              width: 30px;
+              height: 30px;
+              font-size: 8px;
+            }
+          }
+          .brand {
+            font-size: 10px;
+          }
+
+          .popUpTitle {
+            font-size: 16px;
+          }
+
+          .locationWrapper {
+            .locationIcon {
+              font-size: 14px;
+            }
+
+            .locationText {
+              font-size: 12px;
+            }
+          }
+
+          .dateWrapper {
+            .dateIcon {
+              font-size: 14px;
+            }
+
+            .dateText {
+              font-size: 12px;
+            }
+          }
+
+          .readMore {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}

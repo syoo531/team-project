@@ -50,3 +50,29 @@
     }
   }
 }
+
+@media screen and (max-width: 750px) {
+  .EndSoon {
+    .headerWrapper {
+      padding: 0 30px;
+
+      .title {
+        font-size: 20px;
+      }
+
+      .btnWrapper {
+        .leftArrowIcon {
+          font-size: 30px;
+        }
+
+        .rightArrowIcon {
+          font-size: 30px;
+        }
+      }
+    }
+
+    .popUpListWrapper {
+      padding-left: 10px;
+    }
+  }
+}

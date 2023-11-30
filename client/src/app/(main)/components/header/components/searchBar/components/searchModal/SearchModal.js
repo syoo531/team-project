@@ -8,19 +8,6 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import "./SearchModal.scss";
 
-const POPULAR = [
-  "캡슐토이",
-  "테디베어",
-  "싱가포르",
-  "선양소주",
-  "신선놀음",
-  "쥬라기",
-  "노티드",
-  "푸바오",
-  "경기로운랜드",
-  "T1",
-];
-
 export default function SearchModal({ searchModalClose }) {
   const recentSearches =
     JSON.parse(localStorage.getItem("recentSearches")) || [];

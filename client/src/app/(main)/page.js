@@ -26,9 +26,9 @@ export default function Home() {
       </div>
       <RollingBanner />
       <WeekPopUp />
-      <Recommendation />
-      <SeongsuPopUp />
       <EndSoon />
+      <SeongsuPopUp />
+      <Recommendation />
     </div>
   );
 }
