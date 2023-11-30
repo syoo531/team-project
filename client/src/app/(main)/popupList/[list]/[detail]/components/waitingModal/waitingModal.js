@@ -18,7 +18,7 @@ const WaitingModal = ({ closeModal, popupStoreId, handleWaitingSubmit }) => {
       handleWaitingSubmit();
       closeModal();
     } catch (error) {
-      console.error("현장대기에 실패했습니다 여기?", error);
+      console.log(error);
     }
   };
 
