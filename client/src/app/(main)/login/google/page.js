@@ -36,7 +36,7 @@ export default function GoogleAuth() {
         if (res.status === 200) {
           const accessToken = res.data.accessToken;
           localStorage.setItem("accessToken", accessToken);
-          // window.location.href = "/";
+          window.location.href = "/";
         }
         if (res.status === 202) {
           setReceivedName(res.data.name);
@@ -45,7 +45,7 @@ export default function GoogleAuth() {
         }
       } catch (error) {
         console.log(error);
-        // window.location.href = "/login";
+        window.location.href = "/login";
       }
     }
     sendCode();
