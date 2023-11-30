@@ -35,7 +35,7 @@ export default function MediaUpload({
   //새로 업로드한 이미지는 newImages state에서 제거
   const removeNewImage = (index) => {
     const confirm = window.confirm(
-      "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?",
+      "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?"
     );
     if (confirm) {
       const updatedImages = newImages.filter((_, i) => i !== index);
@@ -46,14 +46,14 @@ export default function MediaUpload({
   //기존 이미지는 s3, 몽고DB에서 삭제
   const deleteExistingImage = async (img, id) => {
     const confirm = window.confirm(
-      "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?",
+      "이미지를 삭제 하시면 복구할 수 없습니다. 그래도 삭제하시겠습니까?"
     );
 
     if (confirm) {
       await Promise.all([
         deleteImageS3(img),
         instance.delete(
-          `http://kdt-sw-6-team04.elicecoding.com/api/popupStore/image/${id}`,
+          `http://kdt-sw-6-team04.elicecoding.com/api/popupStore/image/${id}`
         ),
       ]);
       setExistingImage((prev) => prev.filter((img) => img._id !== id));

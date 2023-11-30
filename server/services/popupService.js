@@ -142,7 +142,7 @@ class PopupService {
     const popupStore = await PopupStore.findOneAndUpdate(
       { images: id },
       { $pull: { images: id } },
-      { new: true }
+      { new: true },
     );
 
     console.log(popupStore);

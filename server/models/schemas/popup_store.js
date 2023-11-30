@@ -49,7 +49,7 @@ const PopupStoreSchema = new Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = PopupStoreSchema;

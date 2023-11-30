@@ -1,27 +1,32 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import PopupStoreList from "../components/PopupStoreList/PopupStoreList";
 import Pagination from "../components/Pagination/Pagination";
+import instance from "@/utils/instance";
 
-//const API_URL = "http://kdt-sw-6-team04.elicecoding.com/api/popupStore";
-const API_URL = "http://kdt-sw-6-team04.elicecoding.com/api/popupStore";
+export default function ServiceAdmin() {
+  const searchParams = useSearchParams();
 
-async function getData(searchParams) {
-  try {
-    const res = await fetch(`${API_URL}?${new URLSearchParams(searchParams)}`, {
-      cache: "no-store",
-    });
+  const [res, setRes] = useState();
 
-    if (!res) {
-      return {};
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await instance.get(
+          `/popupstore?${searchParams.toString()}`
+        );
 
-    return {};
-  } catch (err) {
-    console.log(err);
-  }
-}
-
-export default async function ServiceAdmin({ searchParams }) {
-  const res = await getData(searchParams);
+        if (response.data) {
+          setRes(response.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, [searchParams]);
 
   return (
     <>

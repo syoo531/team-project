@@ -17,7 +17,7 @@ const waitingSchema = new Schema(
       default: false,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = waitingSchema;

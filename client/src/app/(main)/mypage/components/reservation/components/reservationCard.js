@@ -3,8 +3,6 @@ import "./reservationCard.scss";
 //카드에 들어갈 정보
 // 1. 팝업스토어 이름(보내줄때 한번에 ) 2. 예약날자 3. 예약시간 4. 일행
 export default function reservationCard(data) {
-  console.log("여기33", data.popup_store._id);
-
   const handleClick = () => {
     window.location.href = `/popupList/all/${data.popup_store._id}`;
   };

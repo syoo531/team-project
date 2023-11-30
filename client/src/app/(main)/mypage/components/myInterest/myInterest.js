@@ -18,7 +18,6 @@ export default function Interest() {
   };
   useEffect(() => {
     getMyInterest();
-    console.log("여기", myInterest);
   }, []);
 
   return (

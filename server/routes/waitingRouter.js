@@ -1,12 +1,12 @@
 const { Router } = require("express");
 const {
-    getWaitingStatus,
-    createWaiting,
-    getPopupStoreId,
-    updateWaitingPeople,
-    deleteWaitingPeople,
-    getWaitingListByCorpAdmin,
-    enterWaitingList,
+  getWaitingStatus,
+  createWaiting,
+  getPopupStoreId,
+  updateWaitingPeople,
+  deleteWaitingPeople,
+  getWaitingListByCorpAdmin,
+  enterWaitingList,
 } = require("../controllers/waitingController");
 const validateToken = require("../middlewares/validateToken");
 const validateCorpAdmin = require("../middlewares/validateCorpAdmin");

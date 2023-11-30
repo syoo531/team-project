@@ -21,7 +21,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://http://kdt-sw-6-team04.elicecoding.com",
+    origin: "http://kdt-sw-6-team04.elicecoding.com",
     credentials: true,
   })
 );

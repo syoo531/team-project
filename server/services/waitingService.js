@@ -39,8 +39,6 @@ class WaitingService {
       },
     });
 
-    console.log("여기44", waiting);
-
     let result = [];
     if (waiting.length !== 0) {
       for (let v of waiting) {
@@ -141,7 +139,7 @@ class WaitingService {
         is_enter: false,
         user: userId,
       },
-      { is_enter: true }
+      { is_enter: true },
     );
     return waitingList;
   }

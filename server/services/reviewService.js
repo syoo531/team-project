@@ -91,7 +91,6 @@ class ReviewService {
 
   //내 리뷰 조회
   async getMyReview(email) {
-    console.log("여기33", email);
     const user = await User.findOne({ email }).select("_id");
     const myReview = await Review.find({ user }).populate("popup_store");
     return myReview;

@@ -19,7 +19,7 @@ const validateServiceAdmin = async (req, res, next) => {
         } else {
           email = decoded.user.email;
         }
-      }
+      },
     );
     // 1. 서비스관리자인지(admin_role이 2인지 확인)
 

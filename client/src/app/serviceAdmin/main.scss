@@ -2,18 +2,18 @@
 
 //layout.js 스타일
 .app {
-  height: 100vh;
+  height: 100%;
 
   .app-flex-container {
     display: flex;
     align-items: stretch;
-    min-height: calc(100vh - 53px);
+    min-height: 100vh;
     width: 100%;
     background-color: $admin-background-color;
 
     main {
       width: 100%;
-      padding: 51px 50px 51px 200px;
+      padding: 51px 0px 51px 200px;
     }
   }
 }
@@ -39,7 +39,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0px;
+    margin: 70px 0px 20px 0px;
   }
 }
 
@@ -98,6 +98,7 @@
 
 .list__container {
   width: 100%;
+  height: 100%;
   padding: 7px 0px;
   background-color: $admin-card-background;
   border-radius: $admin-border-radius;
@@ -116,7 +117,7 @@ table.list-table {
 
   th,
   td {
-    padding: 10px 5px;
+    padding: 12px 5px;
     font-size: 14px;
   }
 

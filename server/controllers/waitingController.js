@@ -10,18 +10,14 @@ const {
 
 // 현장대기 접수, (팝업스토어 ID, 대기인원, AccessToken 필요 -> 내 앞에 몇명인가)
 const createWaiting = async (req, res, next) => {
-  const { popup, people } = req.body;
-  const email = req.decoded.user.email;
-  console.log("여기33", email);
   try {
     const { popup, people } = req.body;
     const email = req.decoded.user.email;
-    console.log("여기33", email);
 
     const waitingService = new WaitingService();
     const validateWaitingService = await waitingService.validateWaiting(
       email,
-      popup
+      popup,
     );
     if (!validateWaitingService) {
       throw new Error("해당 팝업스토어에 이미 현장대기 완료했습니다.");
@@ -62,7 +58,6 @@ const getWaitingStatus = async (req, res, next) => {
 
     const waitingService = new WaitingService();
     const waitingStatus = await waitingService.getWaitingStatus(email);
-    // console.log("여기22", waitingStatus);
     if (!waitingStatus) {
       throw new NotFoundError("조회되는 대기가 없습니다!");
     }
@@ -84,7 +79,7 @@ const updateWaitingPeople = async (req, res, next) => {
     const updateWaitingPeople = await waitingService.updateWaitingPeople(
       userId,
       popupStoreId,
-      people
+      people,
     );
 
     return res.status(200).json({
@@ -103,9 +98,8 @@ const deleteWaitingPeople = async (req, res, next) => {
   try {
     const { popupStoreId } = req.query;
     const waitingService = new WaitingService();
-    const deleteWaitingPeople = await waitingService.deleteWaitingPeople(
-      popupStoreId
-    );
+    const deleteWaitingPeople =
+      await waitingService.deleteWaitingPeople(popupStoreId);
 
     return res.status(200).json({
       message: "해당 팝업스토어에 대한 현장 대기 인원 삭제 완료했습니다.",
@@ -144,7 +138,7 @@ const enterWaitingList = async (req, res, next) => {
     const waitingService = new WaitingService();
     const completedWaiting = await waitingService.enterWaitingList(
       popupStoreId,
-      userId
+      userId,
     );
 
     console.log("Completed waiting:", completedWaiting);

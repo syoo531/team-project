@@ -9,7 +9,6 @@ export default function Review() {
     try {
       const response = await instance.get("/review/getMyReview");
       const resData = response.data.data;
-      console.log("여기33", resData);
 
       setReviewData(resData);
     } catch (error) {

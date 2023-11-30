@@ -68,7 +68,7 @@ class UserService {
     const body = {
       grant_type: "authorization_code",
       client_id: process.env.KAKAO_REST_KEY,
-      redirect_uri: "http://http://kdt-sw-6-team04.elicecoding.com/login/kakao",
+      redirect_uri: "http://kdt-sw-6-team04.elicecoding.com/login/kakao",
       code: code,
     };
     const response = await axios.post(
@@ -141,8 +141,7 @@ class UserService {
       grant_type: "authorization_code",
       client_id: process.env.GOOGLE_CLIENT_ID,
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri:
-        "http://http://kdt-sw-6-team04.elicecoding.com/login/google",
+      redirect_uri: "http://kdt-sw-6-team04.elicecoding.com/login/google",
     };
     const response = await axios.post(
       "https://oauth2.googleapis.com/token",
@@ -153,6 +152,7 @@ class UserService {
         },
       }
     );
+
     const accessToken = response.data.access_token;
     const googleUser = await axios.get(
       "https://www.googleapis.com/userinfo/v2/me",
