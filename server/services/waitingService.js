@@ -139,7 +139,7 @@ class WaitingService {
         is_enter: false,
         user: userId,
       },
-      { is_enter: true }
+      { is_enter: true },
     );
     return waitingList;
   }
