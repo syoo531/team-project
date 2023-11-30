@@ -230,6 +230,10 @@
     .date {
       width: 1%;
     }
+
+    .time {
+      width: 1%;
+    }
   }
 
   .emptyListMessage {
@@ -307,6 +311,9 @@
 
       .reservationDetails {
         margin-bottom: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
         .reservationType {
           border: 2px solid #e3e6ed;
@@ -340,6 +347,12 @@
           margin: 20px 90px 0px;
           font-size: 14px;
           font-weight: 500;
+        }
+
+        @media screen and (max-width: 1232px) and (min-width: 768px) {
+          .reservationTime {
+            margin: 0px 16px;
+          }
         }
 
         button {
@@ -487,7 +500,36 @@
   }
 }
 
-@media (max-width: 1178px) {
+@media screen and (max-width: 1232px) and (min-width: 768px) {
+  @media (max-width: 910px) and (min-width: 768px) {
+    .reservationContainer {
+      padding: 50px 156px;
+    }
+  }
+  .reservationDetails {
+    flex-direction: column;
+    align-items: flex-start;
+
+    button {
+      justify-content: center;
+      margin-top: 13px;
+    }
+  }
+
+  .reservationContent > span {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .buttonContainer {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .buttonContainer > button {
+    width: 100%;
+  }
+
   .reservationContent {
     display: grid;
     justify-content: center;
@@ -497,9 +539,9 @@
     text-align: center;
   }
 
-  .reservationTime {
-    margin-left: 16px;
-    font-size: 14px;
-    font-weight: 500;
+  @media (max-width: 976px) and (min-width: 768px) {
+    .mainLayout {
+      padding: 50px 28px;
+    }
   }
 }

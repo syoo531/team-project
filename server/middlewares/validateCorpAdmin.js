@@ -20,17 +20,21 @@ const validateCorpAdmin = async (req, res, next) => {
           email = decoded.user.email;
           req.decoded = decoded;
         }
-      },
+      }
     );
     // 1. 업체관리자인지(admin_role이 1인지 확인)
     // 2. admin_corp 의 value(팝업스토어의 ObjectID)를 찾아서 리턴.
     const user = await User.findOne({ email }).select("admin_role admin_corp");
     if (user.admin_role === 1 && user.admin_corp) {
       req.corpAdminPopupId = user.admin_corp;
+      next();
+    } else {
+      const err = new Error("업체 관리자가 아닙니다.");
+      err.statusCode = 404;
+      throw err;
     }
-
-    next();
   } catch (err) {
+    next(err);
     console.log(err);
   }
 };

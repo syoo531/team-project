@@ -138,10 +138,11 @@ class WaitingService {
     const waitingList = await Waiting.findOneAndUpdate(
       {
         popup_store: popupStoreId,
-        is_enter: false,
         user: userId,
+        is_enter: false,
       },
       { is_enter: true },
+      { new: true }
     );
     return waitingList;
   }
