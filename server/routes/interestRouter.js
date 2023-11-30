@@ -12,7 +12,7 @@ router.get("/:id", validateToken, interestController.getInterestPopupStore);
 router.delete(
   "/:id",
   validateToken,
-  interestController.deleteInterestPopupStore
+  interestController.deleteInterestPopupStore,
 );
 
 module.exports = router;

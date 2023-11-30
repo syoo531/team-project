@@ -10,13 +10,9 @@ const {
 
 // 현장대기 접수, (팝업스토어 ID, 대기인원, AccessToken 필요 -> 내 앞에 몇명인가)
 const createWaiting = async (req, res, next) => {
-  const { popup, people } = req.body;
-  const email = req.decoded.user.email;
-  console.log("여기33", email);
   try {
     const { popup, people } = req.body;
     const email = req.decoded.user.email;
-    console.log("여기33", email);
 
     const waitingService = new WaitingService();
     const validateWaitingService = await waitingService.validateWaiting(
@@ -62,7 +58,6 @@ const getWaitingStatus = async (req, res, next) => {
 
     const waitingService = new WaitingService();
     const waitingStatus = await waitingService.getWaitingStatus(email);
-    console.log("여기22", waitingStatus);
     if (!waitingStatus) {
       throw new NotFoundError("조회되는 대기가 없습니다!");
     }

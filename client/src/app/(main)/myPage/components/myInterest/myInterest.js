@@ -18,7 +18,6 @@ export default function Interest() {
   };
   useEffect(() => {
     getMyInterest();
-    console.log("여기", myInterest);
   }, []);
 
   return (
@@ -26,9 +25,11 @@ export default function Interest() {
       <div className="titleText">내 관심팝업</div>
       <div>
         <div className="InterestCardWrapper">
-          {myInterest ? myInterest.map((v) => {
-            return <InterestCard data={...v} onClick={getMyInterest} />
-          }) : ""}
+          {myInterest
+            ? myInterest.map((v) => {
+                return <InterestCard data={v} onClick={getMyInterest} />;
+              })
+            : ""}
         </div>
       </div>
     </div>

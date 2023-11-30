@@ -21,7 +21,7 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const { data } = await instance.get(
-          `/popupstore/users?${searchParams.toString()}`
+          `/popupstore/users?${searchParams.toString()}`,
         );
         setRes(data);
       } catch (error) {
@@ -35,7 +35,7 @@ export default function Page() {
 
   return (
     <>
-      <UserList userData={res?.data} />
+      <UserList userData={res?.data} totalUsers={res?.totalUsers || ""} />
       <Pagination currentPage={res?.currentPage} totalPages={res?.totalPages} />
     </>
   );

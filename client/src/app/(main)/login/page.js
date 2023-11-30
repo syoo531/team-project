@@ -14,7 +14,7 @@ export default function Login() {
       const response = await axios.post(
         "http://localhost:4000/api/users/login",
         { email, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (response.status === 200) {
         const accessToken = response.data.accessToken;

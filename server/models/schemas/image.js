@@ -10,7 +10,7 @@ const ImageSchema = new Schema(
       ref: "PopupStore",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 module.exports = ImageSchema;

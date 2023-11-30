@@ -152,6 +152,7 @@ class UserService {
         },
       }
     );
+
     const accessToken = response.data.access_token;
     const googleUser = await axios.get(
       "https://www.googleapis.com/userinfo/v2/me",

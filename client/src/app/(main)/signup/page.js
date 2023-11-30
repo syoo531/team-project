@@ -125,7 +125,7 @@ export default function Signup() {
     try {
       const response = await axios.post(
         "http://localhost:4000/api/users/signup",
-        { name, email, password, phoneNumber, selectedInterests }
+        { name, email, password, phoneNumber, selectedInterests },
       );
       if (response.status === 200) {
         window.location.href = "/";

@@ -27,9 +27,7 @@ export default function PopupStoreList({
       </div>
       <div className="list__container">
         <Search />
-        <p className="list__total">
-          조회 결과: 총 {totalStores}개
-        </p>
+        <p className="list__total">조회 결과: 총 {totalStores}개</p>
         <table className="list-table">
           <thead>
             <tr>

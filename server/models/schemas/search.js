@@ -13,7 +13,7 @@ const SearchSchema = new Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 module.exports = SearchSchema;
