@@ -14,12 +14,12 @@ const createReview = async (req, res, next) => {
     const { text, image } = req.body;
     const email = req.decoded.user.email;
     const reviewService = new ReviewService();
-    const validateUser = await reviewService.validateUser(email, popupStoreId);
+    // const validateUser = await reviewService.validateUser(email, popupStoreId);
 
-    console.log("validateUser :", validateUser); // true
-    if (!validateUser) {
-      throw new Error("해당 팝업스토어의 리뷰를 쓸 권한이 없습니다.");
-    }
+    // console.log("validateUser :", validateUser); // true
+    // if (!validateUser) {
+    //   throw new Error("해당 팝업스토어의 리뷰를 쓸 권한이 없습니다.");
+    // }
 
     // console.log("controller userId: ", userId);
 

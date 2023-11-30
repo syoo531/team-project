@@ -20,11 +20,11 @@ class ReviewService {
 
       //reservationUserId에도없고 waitingUserId에도 존재하지 않을때
       // 하나라도 id를 찾았을때
-      if (!reservationUserId && !waitingUserId) {
-        return false;
-      } else {
-        return true;
-      }
+      // if (!reservationUserId && !waitingUserId) {
+      //   return false;
+      // } else {
+      //   return true;
+      // }
     } catch (err) {
       console.log(err);
     }
