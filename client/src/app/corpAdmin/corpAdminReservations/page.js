@@ -23,15 +23,15 @@ export default function corpAdminReservations() {
     const fetchReservations = async () => {
       try {
         const response = await instance.get(
-          "/reservation/getReservationByCorpAdmin"
+          "/reservation/getReservationByCorpAdmin",
         );
         console.log("Loaded reservations:", response.data.data);
         const actualData = response.data.data;
         const waitingReservations = actualData.filter(
-          (r) => r.status === "대기중"
+          (r) => r.status === "대기중",
         );
         const completedReservations = actualData.filter(
-          (r) => r.status === "완료됨"
+          (r) => r.status === "완료됨",
         );
 
         setReservations(waitingReservations);
@@ -58,12 +58,12 @@ export default function corpAdminReservations() {
       console.log("Handle complete response:", response);
       if (response.status === 200 || response.status === 204) {
         const newReservations = reservations.filter(
-          (r) => r._id !== reservationId
+          (r) => r._id !== reservationId,
         );
         setReservations(newReservations);
 
         const completedReservation = reservations.find(
-          (r) => r._id === reservationId
+          (r) => r._id === reservationId,
         );
         if (completedReservation) {
           const newCompletedReservation = {
@@ -89,17 +89,17 @@ export default function corpAdminReservations() {
     switch (order) {
       case "name":
         sortedReservations = [...listToSort].sort((a, b) =>
-          a.user?.name.localeCompare(b.user?.name)
+          a.user?.name.localeCompare(b.user?.name),
         );
         break;
       case "date":
         sortedReservations = [...listToSort].sort(
-          (a, b) => new Date(a.date) - new Date(b.date)
+          (a, b) => new Date(a.date) - new Date(b.date),
         );
         break;
       case "people":
         sortedReservations = [...listToSort].sort(
-          (a, b) => a.people - b.people
+          (a, b) => a.people - b.people,
         );
         break;
       case "default":
@@ -174,7 +174,7 @@ export default function corpAdminReservations() {
                       handleComplete(
                         reservation._id,
                         reservation.popup_store,
-                        reservation.user._id
+                        reservation.user._id,
                       )
                     }
                   >

@@ -21,7 +21,7 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const { data } = await instance.get(
-          `/popupstore/users?${searchParams.toString()}`
+          `/popupstore/users?${searchParams.toString()}`,
         );
         setRes(data);
       } catch (error) {

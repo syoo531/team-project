@@ -33,11 +33,7 @@ const Postcode = ({ scriptUrl, setFormData }) => {
   };
 
   return (
-    <button
-      className="btn-postcode-popup"
-      type="button"
-      onClick={handleClick}
-    >
+    <button className="btn-postcode-popup" type="button" onClick={handleClick}>
       주소 검색
     </button>
   );
