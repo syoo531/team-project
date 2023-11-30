@@ -15,7 +15,7 @@ export default function ServiceAdmin() {
     const fetchData = async () => {
       try {
         const response = await instance.get(
-          `/popupstore?${searchParams.toString()}`,
+          `/popupstore?${searchParams.toString()}`
         );
 
         if (response.data) {

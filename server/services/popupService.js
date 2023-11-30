@@ -138,11 +138,11 @@ class PopupService {
     const deletedImage = await Image.findByIdAndDelete(id);
     console.log(deletedImage);
 
-    //팝업스토어 이미지 배열에서 특정 이미지 삭제 (이미지 도큐먼트가 삭제되어도 배열에서는 삭제가 안됨)
+    //팝업스토어 이미지 배열에서 특정 이미지 삭제 (이미지 도큐먼트가 삭제되어도 배열에서는 삭제가 안되서 따로 pull해줘야함)
     const popupStore = await PopupStore.findOneAndUpdate(
       { images: id },
       { $pull: { images: id } },
-      { new: true },
+      { new: true }
     );
 
     console.log(popupStore);
@@ -164,7 +164,7 @@ class PopupService {
       .limit(limitPerPage)
       .skip(skipCount);
 
-    //오늘 가입한 사용자 수 (보류)
+    //오늘 가입한 사용자 수
     const today = new Date().toDateString();
     const newUserToday = await User.find({
       createdAt: {
