@@ -84,7 +84,6 @@ class WaitingService {
   async getWaitingByPopupStore(popup) {
     const waitingByPopupStore = await Waiting.find({
       popup_store: popup,
-      is_enter: false,
     })
       .sort({ createdAt: 1 })
       .populate("user")
