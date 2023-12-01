@@ -142,6 +142,28 @@ export default function PopupStore({ store }) {
               router.push(`/popupList/all/${store._id}`);
             }}
           ></div>
+
+          {endDiff < 0 && (
+            <div
+              className="closeImage"
+              onClick={() => {
+                router.push(`/popupList/all/${store._id}`);
+              }}
+            >
+              CLOSE
+            </div>
+          )}
+          {startDiff > 0 && (
+            <div
+              className="comingSoonImage"
+              onClick={() => {
+                router.push(`/popupList/all/${store._id}`);
+              }}
+            >
+              COMING
+              <br /> SOON
+            </div>
+          )}
           {!isAdded ? (
             <FontAwesomeIcon
               className="heartIcon"
@@ -167,27 +189,6 @@ export default function PopupStore({ store }) {
                 }
               }}
             />
-          )}
-          {endDiff < 0 && (
-            <div
-              className="closeImage"
-              onClick={() => {
-                router.push(`/popupList/all/${store._id}`);
-              }}
-            >
-              CLOSE
-            </div>
-          )}
-          {startDiff > 0 && (
-            <div
-              className="comingSoonImage"
-              onClick={() => {
-                router.push(`/popupList/all/${store._id}`);
-              }}
-            >
-              COMING
-              <br /> SOON
-            </div>
           )}
         </div>
         <div className="popupStoreInfoWrapper">
