@@ -28,8 +28,8 @@ class WaitingService {
 
   // 현장대기 현황 조회
   async getWaitingStatus(email) {
-    const user = await User.findOne({ email }).select("_id");
-
+    const user = await User.findOne({ email }).select("_id name");
+    const name = user.name;
     const waiting = await Waiting.find({ user, is_enter: false }).populate({
       path: "popup_store",
       select: ["name", "mainImage"],
@@ -45,6 +45,7 @@ class WaitingService {
         const popup = v.popup_store;
         const popup_name = popup.name;
         const popup_image = popup.mainImage.url;
+        const popup_id = popup._id;
 
         const popup_waiting = await Waiting.find({
           popup_store: popup._id,
@@ -58,7 +59,7 @@ class WaitingService {
           }
         }
 
-        result.push([popup_name, idx, popup_image]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
+        result.push([popup_name, idx, popup_image, name, popup_id]); // [대기 걸어둔 팝업스토어 이름, 내 앞에 몇명인지]
       }
       return result;
     }
@@ -73,10 +74,14 @@ class WaitingService {
   }
 
   // 현장 대기를 취소
-  async deleteWaitingPeople(popupStoreId) {
-    const waitingPeople = await Waiting.deleteOne({
-      popup_store: popupStoreId,
-    }).deleteOne();
+  async cancelWaiting(email, id) {
+    const user = await User.findOne({ email }).select("_id");
+
+    const canceledWaiting = await Waiting.deleteOne({
+      popup_store: id,
+      user: user,
+    });
+    return canceledWaiting;
   }
 
   // 업체 관리자 페이지에서

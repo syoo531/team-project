@@ -14,7 +14,7 @@ export default function Login() {
       const response = await axios.post(
         "http://localhost:4000/api/users/login",
         { email, password },
-        { withCredentials: true },
+        { withCredentials: true }
       );
       if (response.status === 200) {
         const accessToken = response.data.accessToken;
@@ -63,7 +63,6 @@ export default function Login() {
               로그인
             </button>
           </form>
-          <div className="forgetPassword">비밀번호를 잊으셨나요?</div>
         </div>
         <button className="kakaoBtn" onClick={handleKakaoLogin}>
           <div className="kakaoLogo">

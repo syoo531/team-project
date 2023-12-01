@@ -33,7 +33,7 @@
         width: 50%;
         display: flex;
         flex-direction: column;
-        align-items: right;
+        align-items: flex-end;
         .popupName {
           color: black;
           font-size: 20px;
@@ -42,29 +42,74 @@
           height: 60px;
           overflow: hidden;
         }
-        .nowEnter {
-          color: red;
-          font-weight: bold;
-          font-size: 15px;
-          text-align: right;
-          animation: blink 1s infinite;
-          margin-top: 30px;
-        }
-        .infrontMe {
+        .name {
+          margin-top: 20px;
+          height: 20px;
           color: #0472ff;
           font-weight: bold;
           font-size: 15px;
           text-align: right;
-
-          margin-top: 30px;
+          overflow: hidden;
+          margin-bottom: 5px;
         }
-        .team {
-          color: black;
-          font-size: 15px;
+        .nowEnter {
+          color: red;
+          font-weight: bold;
+          font-size: 20px;
           text-align: right;
+          animation: blink 1s infinite;
+        }
+        .info {
+          display: flex;
+          margin-top: 10px;
+          align-items: flex-end;
+          justify-content: flex-end;
+          width: 100%;
+          .infrontMe {
+            color: black;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: right;
+          }
+          .team {
+            margin-left: 10px;
+            color: black;
+            font-size: 20px;
+            text-align: right;
+            font-weight: bold;
+          }
+        }
+        .cancelBtn {
+          margin-top: 10px;
+          width: 90px;
+          height: 30px;
+          color: white;
+          background: linear-gradient(
+            45deg,
+            #ff0000,
+            rgb(255, 0, 195),
+            #ff4500
+          );
+          border: 0px solid white;
+          border-radius: 5px;
+          cursor: pointer;
+          background-size: 200% 200%;
+          animation: gradient 2s ease infinite;
         }
       }
     }
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -99,7 +144,7 @@
         width: 50%;
         display: flex;
         flex-direction: column;
-        align-items: right;
+        align-items: flex-end;
         .popupName {
           color: black;
           font-size: 20px;
@@ -108,26 +153,59 @@
           height: 60px;
           overflow: hidden;
         }
+        .name {
+          margin-top: 20px;
+          height: 20px;
+          color: #0472ff;
+          font-weight: bold;
+          font-size: 15px;
+          text-align: right;
+          overflow: hidden;
+          margin-bottom: 5px;
+        }
         .nowEnter {
           color: red;
           font-weight: bold;
-          font-size: 15px;
+          font-size: 20px;
           text-align: right;
           animation: blink 1s infinite;
-          margin-top: 30px;
         }
-        .infrontMe {
-          color: #0472ff;
-          font-size: 15px;
-          text-align: right;
-          font-weight: bold;
-
-          margin-top: 30px;
+        .info {
+          display: flex;
+          margin-top: 10px;
+          align-items: flex-end;
+          justify-content: flex-end;
+          width: 100%;
+          .infrontMe {
+            color: black;
+            font-weight: bold;
+            font-size: 15px;
+            text-align: right;
+          }
+          .team {
+            margin-left: 10px;
+            color: black;
+            font-size: 20px;
+            text-align: right;
+            font-weight: bold;
+          }
         }
-        .team {
-          color: black;
-          font-size: 15px;
-          text-align: right;
+        .cancelBtn {
+          margin-top: 10px;
+          width: 90px;
+          height: 30px;
+          color: white;
+          background: linear-gradient(
+            45deg,
+            #ff0000,
+            rgb(255, 0, 195),
+            #ff4500
+          );
+          border: 0px solid white;
+          border-radius: 5px;
+          cursor: pointer;
+          background-size: 200% 200%;
+          animation: gradient 2s ease infinite;
         }
       }
     }
