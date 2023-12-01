@@ -287,7 +287,7 @@ export default function PopUp(props) {
                 </p>
             </div>
             <div className="popTime">
-                <h3>운영시간 안내</h3>
+                <h3>■ 운영시간 안내</h3>
                 <ul>
                     <li>월 11:00 ~ 18:00</li>
                     <li>화 11:00 ~ 18:00</li>
@@ -297,7 +297,7 @@ export default function PopUp(props) {
                 </ul>
             </div>
             <div className="popInfo2">
-                <h3 className="popInfoSubTtile">팝업스토어 내용</h3>
+                <h3 className="popInfoSubTtile">■ 팝업스토어 내용</h3>
                 <p>{popupData.description}</p>
             </div>
             <div className="popReview">
@@ -361,13 +361,13 @@ export default function PopUp(props) {
                 </button>
             </div>
             <div className="popLocation">
-                <h3>상세위치</h3>
+                <h3>■ 상세위치</h3>
                 <b>
                     {popupData.address} {popupData.name}
                 </b>
             </div>
             <div className="popWarning">
-                <h3>안내 및 주의사항</h3>
+                <h3>■ 안내 및 주의사항</h3>
                 <ul>
                     <li>* 별도의 주차 장소가 없으니 대중교통과 주변 공용 주차장 이용 부탁 드립니다.</li>
                 </ul>
