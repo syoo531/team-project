@@ -49,9 +49,8 @@ const getReservationByCorpAdmin = async (req, res) => {
     const popupStoreId = req.corpAdminPopupId;
 
     const reservationService = new ReservationService();
-    const reservationList = await reservationService.getReservationByCorpAdmin(
-      popupStoreId
-    );
+    const reservationList =
+      await reservationService.getReservationByCorpAdmin(popupStoreId);
     if (!reservationList) {
       throw new NotFoundError("조회되는 예약이 없습니다!");
     }
@@ -70,7 +69,7 @@ const enterReservation = async (req, res, next) => {
     const reservationService = new ReservationService();
     const completedReservation = await reservationService.enterReservation(
       popupStoreId,
-      userId
+      userId,
     );
     if (!completedReservation) {
       throw new InternalServerError("입장 처리가 실패하였습니다.");
@@ -87,7 +86,7 @@ const updateReservation = async (req, res, next) => {
     const reservationService = new ReservationService();
     const updatedReservation = await reservationService.updateReservation(
       req.params.id,
-      req.body
+      req.body,
     );
     if (!updatedReservation) {
       throw new NotFoundError("조회되는 예약이 없습니다!");
@@ -106,7 +105,7 @@ const deleteReservation = async (req, res, next) => {
     const reservationService = new ReservationService();
     const deletedReservation = await reservationService.deleteReservation(
       email,
-      id
+      id,
     );
     if (!deletedReservation) {
       throw new NotFoundError("조회되는 예약이 없습니다!");

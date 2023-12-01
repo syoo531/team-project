@@ -13,7 +13,7 @@ export default function ReservationCard({ data, onDelete }) {
     const confirmDelete = window.confirm("사전예약을 취소하시겠습니까?");
     if (confirmDelete) {
       const res = await instance.delete(
-        `/reservation/deleteReservation/${popupStoreId}`
+        `/reservation/deleteReservation/${popupStoreId}`,
       );
       onDelete();
     }

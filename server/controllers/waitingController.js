@@ -17,7 +17,7 @@ const createWaiting = async (req, res, next) => {
     const waitingService = new WaitingService();
     const validateWaitingService = await waitingService.validateWaiting(
       email,
-      popup
+      popup,
     );
     if (!validateWaitingService) {
       throw new Error("해당 팝업스토어에 이미 현장대기 완료했습니다.");
@@ -79,7 +79,7 @@ const updateWaitingPeople = async (req, res, next) => {
     const updateWaitingPeople = await waitingService.updateWaitingPeople(
       userId,
       popupStoreId,
-      people
+      people,
     );
 
     return res.status(200).json({
@@ -140,7 +140,7 @@ const enterWaitingList = async (req, res, next) => {
     const waitingService = new WaitingService();
     const completedWaiting = await waitingService.enterWaitingList(
       popupStoreId,
-      userId
+      userId,
     );
 
     console.log("Completed waiting:", completedWaiting);

@@ -37,7 +37,7 @@ export default function FilterModal({ setFilterModal }) {
         selectValue.area ? `&area=${selectValue.area}` : ""
       }${selectValue.category ? `&category=${selectValue.category}` : ""}${
         selectValue.date ? `&date=${selectValue.date}` : ""
-      }`
+      }`,
     );
     window.document.body.style.overflowY = "scroll";
     setFilterModal(false);

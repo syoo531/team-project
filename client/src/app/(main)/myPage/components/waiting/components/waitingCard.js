@@ -10,7 +10,7 @@ export default function WaitingCard({ data, onDelete }) {
     const confirmDelete = window.confirm("현장대기를 취소하시겠습니까?");
     if (confirmDelete) {
       const res = await instance.delete(
-        `/waiting/cancelWaiting/${popupStoreId}`
+        `/waiting/cancelWaiting/${popupStoreId}`,
       );
       onDelete();
     }

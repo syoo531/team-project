@@ -144,7 +144,7 @@ class WaitingService {
         is_enter: false,
       },
       { is_enter: true },
-      { new: true }
+      { new: true },
     );
     return waitingList;
   }

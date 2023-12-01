@@ -45,7 +45,7 @@ export default function corpAdminWaitingList() {
       });
       if (response.status === 200 || response.status === 204) {
         setReservations((prev) =>
-          prev.filter((r) => r._id !== reservation._id)
+          prev.filter((r) => r._id !== reservation._id),
         );
         setCompletedList((prev) => [
           ...prev,
@@ -68,12 +68,12 @@ export default function corpAdminWaitingList() {
     switch (order) {
       case "name":
         sortedReservations = [...listToSort].sort((a, b) =>
-          a.user?.name.localeCompare(b.user?.name)
+          a.user?.name.localeCompare(b.user?.name),
         );
         break;
       case "people":
         sortedReservations = [...listToSort].sort(
-          (a, b) => a.people - b.people
+          (a, b) => a.people - b.people,
         );
         break;
       case "default":
