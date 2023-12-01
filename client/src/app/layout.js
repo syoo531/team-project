@@ -8,7 +8,7 @@ export const metadata = {
   title: "pop.spot!",
   description: "pop-up service",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/icon.ico",
   },
 };
 
