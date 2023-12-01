@@ -60,7 +60,7 @@ const signup = async (req, res, next) => {
       email,
       password,
       phoneNumber,
-      selectedInterests
+      selectedInterests,
     );
     if (!user) {
       throw new InternalServerError("서버 오류 입니다.");
@@ -117,7 +117,7 @@ const oAuthSignup = async (req, res, next) => {
       name,
       email,
       phoneNumber,
-      selectedInterests
+      selectedInterests,
     );
     if (!user) {
       throw new InternalServerError("서버 오류 입니다.");
@@ -200,7 +200,7 @@ const updateUserInfo = async (req, res, next) => {
       email,
       name,
       phoneNumber,
-      selectedInterests
+      selectedInterests,
     );
 
     res.status(200).json({
@@ -240,11 +240,11 @@ const changePassword = async (req, res, next) => {
     const changedPasswordUser = await userService.changePassword(
       email,
       currentPassword,
-      newPassword
+      newPassword,
     );
     if (changedPasswordUser === "OAuth_user") {
       throw new BadRequestError(
-        "소셜 가입 회원은 비밀번호 변경을 할 수 없습니다."
+        "소셜 가입 회원은 비밀번호 변경을 할 수 없습니다.",
       );
     }
     res

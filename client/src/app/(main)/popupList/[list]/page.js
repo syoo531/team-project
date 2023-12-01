@@ -43,14 +43,14 @@ export default function PopupList() {
     (async function () {
       try {
         const response = await axios.get(
-          `${pathname}?${searchParams.toString()}`
+          `${pathname}?${searchParams.toString()}`,
         );
 
         if (response.status === 200) {
           const { totalPages, popupStores, documents } = response.data;
           const pages = Array.from(
             { length: totalPages },
-            (_, index) => index + 1
+            (_, index) => index + 1,
           );
           setPopupStores(popupStores);
           setPages(pages);

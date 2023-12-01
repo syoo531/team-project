@@ -21,9 +21,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "http://kdt-sw-6-team04.elicecoding.com",
     credentials: true,
-  }),
+  })
 );
 // app.use(cors());
 app.use(express.json());
