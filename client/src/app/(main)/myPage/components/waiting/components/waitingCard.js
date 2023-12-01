@@ -15,9 +15,12 @@ export default function WaitingCard({ data, onDelete }) {
       onDelete();
     }
   };
+  const handleClick = () => {
+    window.location.href = `/popupList/all/${popupStoreId}`;
+  };
   return (
     <div className="waitingCardContainer">
-      <div className="waitingCard">
+      <div className="waitingCard" onClick={handleClick}>
         <div className="imgWrapper">
           <img src={`${data[2]}`} />
         </div>

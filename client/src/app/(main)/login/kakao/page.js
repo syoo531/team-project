@@ -95,12 +95,11 @@ export default function KakaoAuth() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setTimeout(() => {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }, 0);
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const [validCheck, setValidCheck] = useState({
@@ -157,11 +156,16 @@ export default function KakaoAuth() {
                   }`}
                   type="text"
                   name="phoneNumber"
+                  autoFocus
                   value={formData.phoneNumber}
                   onChange={(e) => {
                     const newValue = e.target.value;
                     if (!isNaN(newValue)) {
-                      handleInputChange(e);
+                      // handleInputChange(e);
+                      setFormData({
+                        ...formData,
+                        [phoneNumber]: e.target.value,
+                      });
                     }
                   }}
                   placeholder="- 없이 숫자만 입력"
