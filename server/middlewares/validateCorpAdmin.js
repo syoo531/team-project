@@ -20,7 +20,7 @@ const validateCorpAdmin = async (req, res, next) => {
           email = decoded.user.email;
           req.decoded = decoded;
         }
-      }
+      },
     );
     // 1. 업체관리자인지(admin_role이 1인지 확인)
     // 2. admin_corp 의 value(팝업스토어의 ObjectID)를 찾아서 리턴.

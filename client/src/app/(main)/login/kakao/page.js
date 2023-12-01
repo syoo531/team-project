@@ -31,7 +31,7 @@ export default function KakaoAuth() {
           {
             code: code,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
         if (res.status === 200) {
           const accessToken = res.data.accessToken;
@@ -131,7 +131,7 @@ export default function KakaoAuth() {
           email: receivedEmail,
           phoneNumber,
           selectedInterests,
-        }
+        },
       );
 
       if (response.status === 200) {

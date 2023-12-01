@@ -52,7 +52,7 @@ class UserService {
           },
         },
         process.env.ACCESS_TOKEN_SECERT,
-        { expiresIn: "14d" }
+        { expiresIn: "14d" },
       );
 
       is_admin = user.admin_role;
@@ -76,7 +76,7 @@ class UserService {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-      }
+      },
     );
     const accessToken = response.data.access_token;
     const kakaoUser = await axios.post(
@@ -87,7 +87,7 @@ class UserService {
           Authorization: `Bearer ${accessToken}`,
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-      }
+      },
     );
     return [
       kakaoUser.data.id,
@@ -122,7 +122,7 @@ class UserService {
         },
       },
       process.env.ACCESS_TOKEN_SECERT,
-      { expiresIn: "14d" }
+      { expiresIn: "14d" },
     );
 
     if (user.admin_role !== 0) {
@@ -148,7 +148,7 @@ class UserService {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-      }
+      },
     );
 
     const accessToken = response.data.access_token;
@@ -158,7 +158,7 @@ class UserService {
         params: {
           access_token: accessToken,
         },
-      }
+      },
     );
     return [googleUser.data.id, googleUser.data.email, googleUser.data.name];
   }
@@ -177,7 +177,7 @@ class UserService {
         name,
         phone_number: phoneNumber,
         category: selectedInterests,
-      }
+      },
     );
     return userInfo;
   }
@@ -186,7 +186,7 @@ class UserService {
   async signOut(email) {
     const deletedUser = await User.findOneAndUpdate(
       { email },
-      { deleted_at: new Date() }
+      { deleted_at: new Date() },
     );
     return deletedUser;
   }
@@ -202,7 +202,7 @@ class UserService {
           { email },
           {
             password: hashedPassword,
-          }
+          },
         );
         return changedPasswordUser;
       }

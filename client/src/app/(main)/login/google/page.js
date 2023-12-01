@@ -31,7 +31,7 @@ export default function GoogleAuth() {
           {
             code: code,
           },
-          { withCredentials: true }
+          { withCredentials: true },
         );
         if (res.status === 200) {
           const accessToken = res.data.accessToken;
@@ -131,7 +131,7 @@ export default function GoogleAuth() {
           email: receivedEmail,
           phoneNumber,
           selectedInterests,
-        }
+        },
       );
 
       if (response.status === 200) {

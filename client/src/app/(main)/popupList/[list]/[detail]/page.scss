@@ -1,929 +1,929 @@
 @import url(https://use.fontawesome.com/releases/v5.15.3/css/all.css);
 @keyframes visible {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @mixin btnStyle {
-    padding: 10px 20px;
-    border: 2px solid #000;
-    border-radius: 10px;
-    background-color: #000;
-    color: #fff;
-    font-size: 14px;
-    transition: 0.4s;
+  padding: 10px 20px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #000;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.4s;
 
-    &:hover {
-        cursor: pointer;
-        background-color: #fff;
-        color: #000;
-    }
+  &:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+  }
 }
 @mixin subT {
-    font-size: 18px;
-    font-weight: 500;
-    display: block;
-    margin-bottom: 13px;
+  font-size: 18px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 13px;
 }
 
 @mixin container {
-    width: 100%;
-    max-width: 1130px;
-    display: block;
-    padding: 100px 15px;
-    box-sizing: border-box;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 1130px;
+  display: block;
+  padding: 100px 15px;
+  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 @mixin flex($a, $b) {
-    display: flex;
-    align-items: $a;
-    justify-content: $b;
+  display: flex;
+  align-items: $a;
+  justify-content: $b;
 }
 
 @mixin nflex {
-    display: flex;
-    align-items: normal;
-    justify-content: normal;
+  display: flex;
+  align-items: normal;
+  justify-content: normal;
 }
 
 @mixin cflex {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .PopUp {
-    @include container;
-    .modalBackground {
-        position: fixed;
-        inset: 0;
-        background-color: rgba(0, 0, 0, 0.4);
-        z-index: 1;
+  @include container;
+  .modalBackground {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+
+  .addInterestModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 360px;
+    padding-top: 30px;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    background-color: #fff;
+    animation: visible 0.5s linear;
+    z-index: 1;
+
+    .smileIcon {
+      color: #0472ff;
+      font-size: 90px;
+      margin-bottom: 20px;
     }
 
-    .addInterestModal {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 500px;
-        height: 360px;
-        padding-top: 30px;
-        transform: translate(-50%, -50%);
-        border-radius: 12px;
-        background-color: #fff;
-        animation: visible 0.5s linear;
-        z-index: 1;
-
-        .smileIcon {
-            color: #0472ff;
-            font-size: 90px;
-            margin-bottom: 20px;
-        }
-
-        .interestModalMessage {
-            margin-bottom: 16px;
-            font-size: 24px;
-            font-weight: 500;
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        .subText {
-            font-size: 14px;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .modalBtnWrapper {
-            display: flex;
-            gap: 14px;
-
-            .listMoveBtn {
-                @include btnStyle;
-            }
-
-            .okBtn {
-                @include btnStyle;
-            }
-        }
+    .interestModalMessage {
+      margin-bottom: 16px;
+      font-size: 24px;
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.5;
     }
-    .reserveBtn {
-        width: 100%;
-        @include cflex();
+
+    .subText {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .modalBtnWrapper {
+      display: flex;
+      gap: 14px;
+
+      .listMoveBtn {
+        @include btnStyle;
+      }
+
+      .okBtn {
+        @include btnStyle;
+      }
+    }
+  }
+  .reserveBtn {
+    width: 100%;
+    @include cflex();
+    background: #fff;
+    padding: 50px 0;
+    box-sizing: border-box;
+
+    button {
+      cursor: pointer;
+      width: 100%;
+      border: 0;
+      padding: 15px 30px;
+      box-sizing: border-box;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      border: 1px solid white;
+      transition: 0.3s ease all;
+      max-width: 430px;
+      display: block;
+      margin: 0 auto;
+      background: #0472ff;
+      &:hover {
         background: #fff;
-        padding: 50px 0;
-        box-sizing: border-box;
-
-        button {
-            cursor: pointer;
-            width: 100%;
-            border: 0;
-            padding: 15px 30px;
-            box-sizing: border-box;
-            border-radius: 50px;
-            color: #fff;
-            font-size: 18px;
-            font-weight: 500;
-            border: 1px solid white;
-            transition: 0.3s ease all;
-            max-width: 430px;
-            display: block;
-            margin: 0 auto;
-            background: #0472ff;
-            &:hover {
-                background: #fff;
-                color: #0472ff;
-                border: 1px solid #0472ff;
-            }
-            &:disabled {
-                background: #999;
-                color: #fff;
-                border: none;
-                cursor: default;
-            }
-        }
+        color: #0472ff;
+        border: 1px solid #0472ff;
+      }
+      &:disabled {
+        background: #999;
+        color: #fff;
+        border: none;
+        cursor: default;
+      }
     }
-    .popImgWrap {
-        @include flex(flex-start, space-between);
-        // height: 60vh;
+  }
+  .popImgWrap {
+    @include flex(flex-start, space-between);
+    // height: 60vh;
+    width: 100%;
+    margin-bottom: 60px;
+    .mainImg {
+      width: 50%;
+      height: 73vh;
+      img {
         width: 100%;
-        margin-bottom: 60px;
-        .mainImg {
-            width: 50%;
-            height: 73vh;
-            img {
-                width: 100%;
-                border-radius: 15px;
-                display: block;
-                height: 100%;
-            }
-        }
-        .subImg {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 48%;
-            height: 73vh;
-            gap: 20px;
-            .subImg1 {
-                width: 100%;
-                height: 35vh;
-                position: relative;
-                img {
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    object-fit: cover;
-                    border-radius: 15px;
-                }
-            }
-            .subImg2 {
-                width: 100%;
-                height: 35vh;
-                position: relative;
-                img {
-                    display: block;
-                    width: 100%;
-                    height: 100%;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    object-fit: cover;
-                    border-radius: 15px;
-                }
-            }
-        }
-    }
-    .popInfo {
-        margin-bottom: 60px;
-        position: relative;
-        .heartIcon {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-        h1 {
-            display: block;
-            width: 100%;
-            font-weight: 500;
-            font-size: 24px;
-            padding: 15px 0;
-            border-bottom: 1px solid #333;
-            position: relative;
-            a {
-                color: #999;
-                font-size: 14px;
-                text-decoration: none;
-                margin-left: 15px;
-            }
-            input {
-                position: fixed;
-                left: -9999px;
-                + label {
-                    position: absolute;
-                    top: 50%;
-                    right: 0;
-                    transform: translatey(-50%, 0);
-                    &::before {
-                        display: block;
-                        content: "\f004";
-                        font-family: "Font Awesome 5 Free";
-                        font-weight: normal;
-                        font-size: 22px;
-                        cursor: pointer;
-                    }
-                }
-                &:checked {
-                    + label {
-                        &::before {
-                            display: block;
-                            content: "\f004";
-                            font-family: "Font Awesome 5 Free";
-                            font-weight: bold;
-                            font-size: 22px;
-                            color: #e21680;
-                        }
-                    }
-                }
-            }
-        }
-        b {
-            display: block;
-            padding: 10px 0 5px 0;
-            font-size: 14px;
-            font-weight: 500;
-            .icon {
-                margin-right: 5px;
-            }
-        }
-        p {
-            font-size: 14px;
-            font-weight: 500;
-        }
-    }
-    .popReview {
-        margin-bottom: 60px;
-        h4 {
-            font-weight: 500;
-            font-size: 18px;
-            position: relative;
-            b {
-                @include flex(center, normal);
-                .staricon {
-                    font-size: 14px;
-                    margin-left: 5px;
-                }
-                span {
-                    font-size: 16px;
-                }
-            }
-            a {
-                position: absolute;
-                top: 0;
-                right: 0;
-                color: #999;
-                font-weight: 400;
-                font-size: 16px;
-                text-decoration: none;
-            }
-        }
-        .popReviewList {
-            @include flex(center, space-between);
-
-            .popReviewItem {
-                width: 24%;
-                border-radius: 10px;
-                padding: 15px;
-                box-sizing: border-box;
-                position: relative;
-                border: 1px solid #ddd;
-                margin: 15px 0;
-                .reviewLogo {
-                    border-radius: 100%;
-                    // background: #333;
-                    // background: #e21680;
-                    background: #0472ff;
-                    @include flex(center, center);
-                    box-sizing: border-box;
-                    width: 35px;
-                    height: 35px;
-                    position: absolute;
-                    top: 10px;
-                    left: 10px;
-                    h1 {
-                        color: #fff;
-                        font-size: 18px;
-                    }
-                }
-                .reviewName {
-                    padding-left: 40px;
-                    font-size: 14px;
-                    // padding-top: 5px;
-                }
-                .reviewContent {
-                    padding: 30px 0;
-                }
-                .reviewDate {
-                    font-size: 14px;
-                    @include flex(center, flex-end);
-                    color: #999;
-                    margin-top: 15px;
-                }
-            }
-        }
-        button {
-            width: 100%;
-            border: 1px solid white;
-            background: #fff;
-            font-size: 16px;
-            text-align: center;
-            padding: 15px;
-            border-radius: 50px;
-            transition: 0.3s ease all;
-            max-width: 430px;
-            display: block;
-            margin: 0 auto;
-            cursor: pointer;
-            background: #0472ff;
-            color: #fff;
-            font-weight: 500;
-            font-size: 18px;
-            &:hover {
-                background: #fff;
-                color: #0472ff;
-                border: 1px solid #0472ff;
-            }
-        }
-        .popReviewList {
-            display: block;
-            padding: 15px 0;
-            .popReviewListItem {
-                display: block;
-                padding: 10px;
-                box-sizing: border-box;
-                border: 1px solid #ddd;
-                margin-bottom: 15px;
-                white-space: pre-line;
-                .top {
-                    @include flex(center, normal);
-                    h3 {
-                        font-size: 16px;
-                        font-weight: 500;
-                        margin-right: 10px;
-                    }
-                    h4 {
-                        font-size: 12px;
-                        font-weight: 500;
-                        color: #999;
-                    }
-                }
-                .cont {
-                    p {
-                        display: block;
-                        color: #333;
-                        padding: 10px 0;
-                        font-weight: 400;
-                    }
-                }
-                .imgToggleBtn {
-                    display: block;
-                    border: none;
-                    text-align: left;
-                    padding: 0;
-                    width: auto;
-                    transition: none;
-                    border-radius: 0;
-                    font-size: 12px;
-                    background: #fff;
-                    color: #333;
-                    &:hover {
-                        background: inherit;
-                        color: #333;
-                    }
-                }
-                .img {
-                    .img1 {
-                        display: block;
-                        width: 24%;
-                        img {
-                            display: block;
-                            width: 100%;
-                            height: 100%;
-                        }
-                    }
-                    .img_wrap2 {
-                        gap: 3%;
-                        padding-top: 15px;
-                        display: none;
-                    }
-                    .img_wrap.open {
-                        .img_wrap2 {
-                            display: flex;
-                            justify-content: normal;
-                            gap: 2%;
-                        }
-                    }
-
-                    .img_wrap.closed {
-                        .img_wrap2 {
-                            display: none;
-                        }
-                    }
-                }
-            }
-        }
-    }
-    .popInfo2 {
-        margin-bottom: 60px;
-        h3 {
-            @include subT;
-        }
-        p {
-            width: 100%;
-            padding: 15px 30px;
-            box-sizing: border-box;
-            color: #333;
-            font-size: 16px;
-            font-weight: 400;
-            border: 1px solid #ddd;
-            line-height: 160%;
-            white-space: pre-line;
-        }
-    }
-    .popLocation {
-        margin-bottom: 60px;
-        h3 {
-            font-size: 18px;
-            font-weight: 500;
-            display: block;
-            margin-bottom: 5px;
-        }
-        b {
-            font-size: 16px;
-            font-weight: 400;
-            display: block;
-            margin-bottom: 15px;
-        }
-        .locationBox {
-            @include cflex;
-            width: 100%;
-            height: 50vh;
-            background: #999;
-            color: #333;
-            font-size: 36px;
-            font-weight: 600;
-        }
-    }
-    .popWarning {
-        h3 {
-            @include subT();
-        }
-        ul {
-            li {
-                display: block;
-                padding: 5px 0;
-                font-size: 12px;
-            }
-        }
-    }
-    .endPopupStoreMsg {
+        border-radius: 15px;
         display: block;
-        text-align: center;
+        height: 100%;
+      }
+    }
+    .subImg {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 48%;
+      height: 73vh;
+      gap: 20px;
+      .subImg1 {
         width: 100%;
-        margin: 20px 0;
-        font-size: 24px;
-        border: 1px solid #ddd;
+        height: 35vh;
+        position: relative;
+        img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          object-fit: cover;
+          border-radius: 15px;
+        }
+      }
+      .subImg2 {
+        width: 100%;
+        height: 35vh;
+        position: relative;
+        img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          top: 0;
+          left: 0;
+          object-fit: cover;
+          border-radius: 15px;
+        }
+      }
+    }
+  }
+  .popInfo {
+    margin-bottom: 60px;
+    position: relative;
+    .heartIcon {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
+    h1 {
+      display: block;
+      width: 100%;
+      font-weight: 500;
+      font-size: 24px;
+      padding: 15px 0;
+      border-bottom: 1px solid #333;
+      position: relative;
+      a {
+        color: #999;
+        font-size: 14px;
+        text-decoration: none;
+        margin-left: 15px;
+      }
+      input {
+        position: fixed;
+        left: -9999px;
+        + label {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translatey(-50%, 0);
+          &::before {
+            display: block;
+            content: "\f004";
+            font-family: "Font Awesome 5 Free";
+            font-weight: normal;
+            font-size: 22px;
+            cursor: pointer;
+          }
+        }
+        &:checked {
+          + label {
+            &::before {
+              display: block;
+              content: "\f004";
+              font-family: "Font Awesome 5 Free";
+              font-weight: bold;
+              font-size: 22px;
+              color: #e21680;
+            }
+          }
+        }
+      }
+    }
+    b {
+      display: block;
+      padding: 10px 0 5px 0;
+      font-size: 14px;
+      font-weight: 500;
+      .icon {
+        margin-right: 5px;
+      }
+    }
+    p {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+  .popReview {
+    margin-bottom: 60px;
+    h4 {
+      font-weight: 500;
+      font-size: 18px;
+      position: relative;
+      b {
+        @include flex(center, normal);
+        .staricon {
+          font-size: 14px;
+          margin-left: 5px;
+        }
+        span {
+          font-size: 16px;
+        }
+      }
+      a {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: #999;
+        font-weight: 400;
+        font-size: 16px;
+        text-decoration: none;
+      }
+    }
+    .popReviewList {
+      @include flex(center, space-between);
+
+      .popReviewItem {
+        width: 24%;
         border-radius: 10px;
         padding: 15px;
         box-sizing: border-box;
-        background: #ddd;
-        color: #555;
-    }
-    .popTime {
-        margin-bottom: 60px;
-        h3 {
-            @include subT();
-            margin-bottom: 5px;
+        position: relative;
+        border: 1px solid #ddd;
+        margin: 15px 0;
+        .reviewLogo {
+          border-radius: 100%;
+          // background: #333;
+          // background: #e21680;
+          background: #0472ff;
+          @include flex(center, center);
+          box-sizing: border-box;
+          width: 35px;
+          height: 35px;
+          position: absolute;
+          top: 10px;
+          left: 10px;
+          h1 {
+            color: #fff;
+            font-size: 18px;
+          }
         }
-        ul {
-            li {
-                display: block;
-                padding: 5px 0 5px 10px;
-                font-size: 14px;
-                font-weight: 400;
+        .reviewName {
+          padding-left: 40px;
+          font-size: 14px;
+          // padding-top: 5px;
+        }
+        .reviewContent {
+          padding: 30px 0;
+        }
+        .reviewDate {
+          font-size: 14px;
+          @include flex(center, flex-end);
+          color: #999;
+          margin-top: 15px;
+        }
+      }
+    }
+    button {
+      width: 100%;
+      border: 1px solid white;
+      background: #fff;
+      font-size: 16px;
+      text-align: center;
+      padding: 15px;
+      border-radius: 50px;
+      transition: 0.3s ease all;
+      max-width: 430px;
+      display: block;
+      margin: 0 auto;
+      cursor: pointer;
+      background: #0472ff;
+      color: #fff;
+      font-weight: 500;
+      font-size: 18px;
+      &:hover {
+        background: #fff;
+        color: #0472ff;
+        border: 1px solid #0472ff;
+      }
+    }
+    .popReviewList {
+      display: block;
+      padding: 15px 0;
+      .popReviewListItem {
+        display: block;
+        padding: 10px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        margin-bottom: 15px;
+        white-space: pre-line;
+        .top {
+          @include flex(center, normal);
+          h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-right: 10px;
+          }
+          h4 {
+            font-size: 12px;
+            font-weight: 500;
+            color: #999;
+          }
+        }
+        .cont {
+          p {
+            display: block;
+            color: #333;
+            padding: 10px 0;
+            font-weight: 400;
+          }
+        }
+        .imgToggleBtn {
+          display: block;
+          border: none;
+          text-align: left;
+          padding: 0;
+          width: auto;
+          transition: none;
+          border-radius: 0;
+          font-size: 12px;
+          background: #fff;
+          color: #333;
+          &:hover {
+            background: inherit;
+            color: #333;
+          }
+        }
+        .img {
+          .img1 {
+            display: block;
+            width: 24%;
+            img {
+              display: block;
+              width: 100%;
+              height: 100%;
             }
+          }
+          .img_wrap2 {
+            gap: 3%;
+            padding-top: 15px;
+            display: none;
+          }
+          .img_wrap.open {
+            .img_wrap2 {
+              display: flex;
+              justify-content: normal;
+              gap: 2%;
+            }
+          }
+
+          .img_wrap.closed {
+            .img_wrap2 {
+              display: none;
+            }
+          }
         }
+      }
     }
+  }
+  .popInfo2 {
+    margin-bottom: 60px;
+    h3 {
+      @include subT;
+    }
+    p {
+      width: 100%;
+      padding: 15px 30px;
+      box-sizing: border-box;
+      color: #333;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid #ddd;
+      line-height: 160%;
+      white-space: pre-line;
+    }
+  }
+  .popLocation {
+    margin-bottom: 60px;
+    h3 {
+      font-size: 18px;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 5px;
+    }
+    b {
+      font-size: 16px;
+      font-weight: 400;
+      display: block;
+      margin-bottom: 15px;
+    }
+    .locationBox {
+      @include cflex;
+      width: 100%;
+      height: 50vh;
+      background: #999;
+      color: #333;
+      font-size: 36px;
+      font-weight: 600;
+    }
+  }
+  .popWarning {
+    h3 {
+      @include subT();
+    }
+    ul {
+      li {
+        display: block;
+        padding: 5px 0;
+        font-size: 12px;
+      }
+    }
+  }
+  .endPopupStoreMsg {
+    display: block;
+    text-align: center;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 24px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+    background: #ddd;
+    color: #555;
+  }
+  .popTime {
+    margin-bottom: 60px;
+    h3 {
+      @include subT();
+      margin-bottom: 5px;
+    }
+    ul {
+      li {
+        display: block;
+        padding: 5px 0 5px 10px;
+        font-size: 14px;
+        font-weight: 400;
+      }
+    }
+  }
 }
 
 @media (max-width: 767px) {
-    @mixin subT {
+  @mixin subT {
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 13px;
+  }
+  .PopUp {
+    width: 100%;
+    max-width: 1130px;
+    display: block;
+    padding: 30px 15px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    .reserveBtn {
+      width: 100%;
+      @include cflex();
+      background: #fff;
+      padding: 20px 0;
+      box-sizing: border-box;
+      button {
+        cursor: pointer;
+        width: 100%;
+        border: 0;
+        padding: 10px 30px;
+        box-sizing: border-box;
+        border-radius: 50px;
+        background: #0472ff;
+        color: #fff;
         font-size: 14px;
         font-weight: 500;
-        display: block;
-        margin-bottom: 13px;
+        border: 1px solid white;
+        transition: 0.3s ease all;
+        &:hover {
+          background: #fff;
+          color: #0472ff;
+          border: 1px solid #0472ff;
+        }
+        &:disabled {
+          background: #999;
+          color: #fff;
+          border: none;
+          cursor: default;
+        }
+      }
     }
-    .PopUp {
+    .popImgWrap {
+      display: block;
+      // height: 60vh;
+      width: 100%;
+      margin-bottom: 10px;
+      .mainImg {
         width: 100%;
-        max-width: 1130px;
-        display: block;
-        padding: 30px 15px;
-        box-sizing: border-box;
-        margin: 0 auto;
-        .reserveBtn {
-            width: 100%;
-            @include cflex();
-            background: #fff;
-            padding: 20px 0;
-            box-sizing: border-box;
-            button {
-                cursor: pointer;
-                width: 100%;
-                border: 0;
-                padding: 10px 30px;
-                box-sizing: border-box;
-                border-radius: 50px;
-                background: #0472ff;
-                color: #fff;
-                font-size: 14px;
-                font-weight: 500;
-                border: 1px solid white;
-                transition: 0.3s ease all;
-                &:hover {
-                    background: #fff;
-                    color: #0472ff;
-                    border: 1px solid #0472ff;
-                }
-                &:disabled {
-                    background: #999;
-                    color: #fff;
-                    border: none;
-                    cursor: default;
-                }
-            }
+        height: 40vh;
+        img {
+          width: 100%;
+          border-radius: 10px;
+          display: block;
+          height: 100%;
         }
-        .popImgWrap {
+      }
+      .subImg {
+        margin-top: 15px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        height: 22vh;
+        gap: 10px;
+        .subImg1 {
+          width: 50%;
+          height: 22vh;
+          position: relative;
+          img {
             display: block;
-            // height: 60vh;
             width: 100%;
-            margin-bottom: 10px;
-            .mainImg {
-                width: 100%;
-                height: 40vh;
-                img {
-                    width: 100%;
-                    border-radius: 10px;
-                    display: block;
-                    height: 100%;
-                }
-            }
-            .subImg {
-                margin-top: 15px;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                width: 100%;
-                height: 22vh;
-                gap: 10px;
-                .subImg1 {
-                    width: 50%;
-                    height: 22vh;
-                    position: relative;
-                    img {
-                        display: block;
-                        width: 100%;
-                        height: 100%;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        object-fit: cover;
-                    }
-                }
-                .subImg2 {
-                    width: 50%;
-                    height: 22vh;
-                    position: relative;
-                    img {
-                        display: block;
-                        width: 100%;
-                        height: 100%;
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        object-fit: cover;
-                    }
-                }
-            }
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+          }
         }
-        .popInfo {
-            margin-bottom: 30px;
-            h1 {
-                display: block;
-                width: 100%;
-                font-weight: 500;
-                font-size: 16px;
-                padding: 10px 0;
-                border-bottom: 1px solid #333;
-                position: relative;
-                a {
-                    color: #999;
-                    font-size: 14px;
-                    text-decoration: none;
-                    margin-left: 15px;
-                }
-                input {
-                    position: fixed;
-                    left: -9999px;
-                    + label {
-                        position: absolute;
-                        top: 50%;
-                        right: 0;
-                        transform: translatey(-50%, 0);
-                        &::before {
-                            display: block;
-                            content: "\f004";
-                            font-family: "Font Awesome 5 Free";
-                            font-weight: normal;
-                            font-size: 22px;
-                            cursor: pointer;
-                        }
-                    }
-                    &:checked {
-                        + label {
-                            &::before {
-                                display: block;
-                                content: "\f004";
-                                font-family: "Font Awesome 5 Free";
-                                font-weight: bold;
-                                font-size: 22px;
-                                color: #e21680;
-                            }
-                        }
-                    }
-                }
-            }
-            b {
-                display: block;
-                padding: 5px 0 5px 0;
-                font-size: 12px;
-                font-weight: 400;
-                .icon {
-                    margin-right: 5px;
-                }
-            }
-            p {
-                font-size: 12px;
-                font-weight: 400;
-            }
+        .subImg2 {
+          width: 50%;
+          height: 22vh;
+          position: relative;
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+          }
         }
-        .popReview {
-            margin-bottom: 30px;
-            h4 {
-                font-weight: 500;
-                font-size: 14px;
-                position: relative;
-                b {
-                    @include flex(center, normal);
-                    .staricon {
-                        font-size: 12px;
-                        margin-left: 5px;
-                    }
-                    span {
-                        font-size: 14px;
-                        margin-left: 2px;
-                    }
-                }
-                a {
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    color: #999;
-                    font-weight: 400;
-                    font-size: 14px;
-                    text-decoration: none;
-                }
-            }
-            .popReviewList {
-                @include flex(center, space-between);
-
-                .popReviewItem {
-                    width: 24%;
-                    border-radius: 10px;
-                    padding: 15px;
-                    box-sizing: border-box;
-                    position: relative;
-                    border: 1px solid #ddd;
-                    margin: 15px 0;
-                    .reviewLogo {
-                        border-radius: 100%;
-                        // background: #333;
-                        // background: #e21680;
-                        background: #0472ff;
-                        @include flex(center, center);
-                        box-sizing: border-box;
-                        width: 35px;
-                        height: 35px;
-                        position: absolute;
-                        top: 10px;
-                        left: 10px;
-                        h1 {
-                            color: #fff;
-                            font-size: 18px;
-                        }
-                    }
-                    .reviewName {
-                        padding-left: 40px;
-                        font-size: 14px;
-                        // padding-top: 5px;
-                    }
-                    .reviewContent {
-                        padding: 30px 0;
-                    }
-                    .reviewDate {
-                        font-size: 14px;
-                        @include flex(center, flex-end);
-                        color: #999;
-                        margin-top: 15px;
-                    }
-                }
-            }
-            button {
-                width: 100%;
-                border: 1px solid white;
-                font-size: 14px;
-                color: #fff;
-                text-align: center;
-                padding: 10px;
-                border-radius: 50px;
-                margin-top: 10px;
-                transition: 0.3s ease all;
-                cursor: pointer;
-                background: #0472ff;
-                &:hover {
-                    background: #fff;
-                    color: #0472ff;
-                    border: 1px solid #0472ff;
-                }
-            }
-            .popReviewList {
-                display: block;
-                padding: 15px 0;
-                .popReviewListItem {
-                    display: block;
-                    padding: 10px;
-                    box-sizing: border-box;
-                    border: 1px solid #ddd;
-                    margin-bottom: 15px;
-                    .top {
-                        @include flex(center, normal);
-                        h3 {
-                            font-size: 14px;
-                            font-weight: 500;
-                            margin-right: 10px;
-                        }
-                        h4 {
-                            font-size: 12px;
-                            font-weight: 400;
-                            color: #999;
-                        }
-                    }
-                    .cont {
-                        p {
-                            display: block;
-                            color: #333;
-                            padding: 10px 0;
-                            font-weight: 400;
-                            font-size: 14px;
-                        }
-                    }
-                    .imgToggleBtn {
-                        display: block;
-                        border: none;
-                        text-align: left;
-                        padding: 0;
-                        width: auto;
-                        transition: none;
-                        border-radius: 0;
-                        font-size: 12px;
-                        background: #fff;
-                        &:hover {
-                            background: inherit;
-                            color: #333;
-                        }
-                    }
-                    .img {
-                        .img1 {
-                            display: block;
-                            width: 49%;
-                            margin-top: 10px;
-                            img {
-                                display: block;
-                                width: 100%;
-                                height: 100%;
-                            }
-                        }
-                        .img_wrap2 {
-                            gap: 3%;
-                            padding-top: 15px;
-                            display: none;
-                        }
-                        .img_wrap.open {
-                            .img_wrap2 {
-                                display: flex;
-                                justify-content: space-between;
-                                flex-wrap: wrap;
-                            }
-                        }
-
-                        .img_wrap.closed {
-                            .img_wrap2 {
-                                display: none;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .popInfo2 {
-            margin-bottom: 30px;
-            h3 {
-                @include subT;
-            }
-            p {
-                width: 100%;
-                padding: 10px;
-                box-sizing: border-box;
-                color: #333;
-                font-size: 14px;
-                font-weight: 400;
-                border: 1px solid #ddd;
-                line-height: 160%;
-                white-space: pre-line;
-            }
-        }
-        .popLocation {
-            margin-bottom: 30px;
-            h3 {
-                font-size: 16px;
-                font-weight: 500;
-                display: block;
-                margin-bottom: 5px;
-            }
-            b {
-                font-size: 14px;
-                font-weight: 400;
-                display: block;
-                margin-bottom: 15px;
-            }
-            .locationBox {
-                @include cflex;
-                width: 100%;
-                height: 50vh;
-                background: #999;
-                color: #333;
-                font-size: 36px;
-                font-weight: 600;
-            }
-        }
-        .popWarning {
-            h3 {
-                @include subT();
-            }
-            ul {
-                li {
-                    display: block;
-                    padding: 5px 0;
-                }
-            }
-        }
-        .popTime {
-            margin-bottom: 30px;
-            h3 {
-                @include subT();
-                margin-bottom: 5px;
-                font-size: 14px;
-            }
-            ul {
-                li {
-                    display: block;
-                    padding: 5px 0 5px 10px;
-                    font-size: 12px;
-                    font-weight: 400;
-                }
-            }
-        }
+      }
     }
+    .popInfo {
+      margin-bottom: 30px;
+      h1 {
+        display: block;
+        width: 100%;
+        font-weight: 500;
+        font-size: 16px;
+        padding: 10px 0;
+        border-bottom: 1px solid #333;
+        position: relative;
+        a {
+          color: #999;
+          font-size: 14px;
+          text-decoration: none;
+          margin-left: 15px;
+        }
+        input {
+          position: fixed;
+          left: -9999px;
+          + label {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translatey(-50%, 0);
+            &::before {
+              display: block;
+              content: "\f004";
+              font-family: "Font Awesome 5 Free";
+              font-weight: normal;
+              font-size: 22px;
+              cursor: pointer;
+            }
+          }
+          &:checked {
+            + label {
+              &::before {
+                display: block;
+                content: "\f004";
+                font-family: "Font Awesome 5 Free";
+                font-weight: bold;
+                font-size: 22px;
+                color: #e21680;
+              }
+            }
+          }
+        }
+      }
+      b {
+        display: block;
+        padding: 5px 0 5px 0;
+        font-size: 12px;
+        font-weight: 400;
+        .icon {
+          margin-right: 5px;
+        }
+      }
+      p {
+        font-size: 12px;
+        font-weight: 400;
+      }
+    }
+    .popReview {
+      margin-bottom: 30px;
+      h4 {
+        font-weight: 500;
+        font-size: 14px;
+        position: relative;
+        b {
+          @include flex(center, normal);
+          .staricon {
+            font-size: 12px;
+            margin-left: 5px;
+          }
+          span {
+            font-size: 14px;
+            margin-left: 2px;
+          }
+        }
+        a {
+          position: absolute;
+          top: 0;
+          right: 0;
+          color: #999;
+          font-weight: 400;
+          font-size: 14px;
+          text-decoration: none;
+        }
+      }
+      .popReviewList {
+        @include flex(center, space-between);
+
+        .popReviewItem {
+          width: 24%;
+          border-radius: 10px;
+          padding: 15px;
+          box-sizing: border-box;
+          position: relative;
+          border: 1px solid #ddd;
+          margin: 15px 0;
+          .reviewLogo {
+            border-radius: 100%;
+            // background: #333;
+            // background: #e21680;
+            background: #0472ff;
+            @include flex(center, center);
+            box-sizing: border-box;
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            h1 {
+              color: #fff;
+              font-size: 18px;
+            }
+          }
+          .reviewName {
+            padding-left: 40px;
+            font-size: 14px;
+            // padding-top: 5px;
+          }
+          .reviewContent {
+            padding: 30px 0;
+          }
+          .reviewDate {
+            font-size: 14px;
+            @include flex(center, flex-end);
+            color: #999;
+            margin-top: 15px;
+          }
+        }
+      }
+      button {
+        width: 100%;
+        border: 1px solid white;
+        font-size: 14px;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        border-radius: 50px;
+        margin-top: 10px;
+        transition: 0.3s ease all;
+        cursor: pointer;
+        background: #0472ff;
+        &:hover {
+          background: #fff;
+          color: #0472ff;
+          border: 1px solid #0472ff;
+        }
+      }
+      .popReviewList {
+        display: block;
+        padding: 15px 0;
+        .popReviewListItem {
+          display: block;
+          padding: 10px;
+          box-sizing: border-box;
+          border: 1px solid #ddd;
+          margin-bottom: 15px;
+          .top {
+            @include flex(center, normal);
+            h3 {
+              font-size: 14px;
+              font-weight: 500;
+              margin-right: 10px;
+            }
+            h4 {
+              font-size: 12px;
+              font-weight: 400;
+              color: #999;
+            }
+          }
+          .cont {
+            p {
+              display: block;
+              color: #333;
+              padding: 10px 0;
+              font-weight: 400;
+              font-size: 14px;
+            }
+          }
+          .imgToggleBtn {
+            display: block;
+            border: none;
+            text-align: left;
+            padding: 0;
+            width: auto;
+            transition: none;
+            border-radius: 0;
+            font-size: 12px;
+            background: #fff;
+            &:hover {
+              background: inherit;
+              color: #333;
+            }
+          }
+          .img {
+            .img1 {
+              display: block;
+              width: 49%;
+              margin-top: 10px;
+              img {
+                display: block;
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .img_wrap2 {
+              gap: 3%;
+              padding-top: 15px;
+              display: none;
+            }
+            .img_wrap.open {
+              .img_wrap2 {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+              }
+            }
+
+            .img_wrap.closed {
+              .img_wrap2 {
+                display: none;
+              }
+            }
+          }
+        }
+      }
+    }
+    .popInfo2 {
+      margin-bottom: 30px;
+      h3 {
+        @include subT;
+      }
+      p {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        color: #333;
+        font-size: 14px;
+        font-weight: 400;
+        border: 1px solid #ddd;
+        line-height: 160%;
+        white-space: pre-line;
+      }
+    }
+    .popLocation {
+      margin-bottom: 30px;
+      h3 {
+        font-size: 16px;
+        font-weight: 500;
+        display: block;
+        margin-bottom: 5px;
+      }
+      b {
+        font-size: 14px;
+        font-weight: 400;
+        display: block;
+        margin-bottom: 15px;
+      }
+      .locationBox {
+        @include cflex;
+        width: 100%;
+        height: 50vh;
+        background: #999;
+        color: #333;
+        font-size: 36px;
+        font-weight: 600;
+      }
+    }
+    .popWarning {
+      h3 {
+        @include subT();
+      }
+      ul {
+        li {
+          display: block;
+          padding: 5px 0;
+        }
+      }
+    }
+    .popTime {
+      margin-bottom: 30px;
+      h3 {
+        @include subT();
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+      ul {
+        li {
+          display: block;
+          padding: 5px 0 5px 10px;
+          font-size: 12px;
+          font-weight: 400;
+        }
+      }
+    }
+  }
 }
