@@ -18,6 +18,8 @@ router.get("/search", popupListController.searchPopUpList);
 
 router.get("/filter", popupListController.filterPopUpList);
 
+router.get("/sort", popupListController.sortingPopUpList);
+
 router.get("/recommend", validateToken, popupListController.recommendPopUpList);
 
 module.exports = router;

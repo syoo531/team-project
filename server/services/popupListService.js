@@ -129,6 +129,37 @@ async function filterPopUpList({ pageNumber, limit, area, category, date }) {
   return { totalPages, popupStores, documents };
 }
 
+async function sortingPopUpStore({ pageNumber, limit, order }) {
+  const query = {};
+  const currentDate = new Date();
+  const skip = (Number(pageNumber) - 1) * Number(limit);
+
+  if (order === "ongoing") {
+    query.start_date = { $lte: currentDate };
+    query.end_date = { $gte: currentDate };
+  }
+
+  if (order === "comingSoon") {
+    query.start_date = { $gte: currentDate };
+  }
+
+  if (order === "close") {
+    query.end_date = { $lte: currentDate };
+  }
+
+  const popupStores = await PopupStore.find(query)
+    .skip(skip)
+    .limit(Number(limit))
+    .populate("mainImage")
+    .populate("images");
+
+  const documents = await PopupStore.countDocuments(query);
+
+  const totalPages = Math.ceil(documents / Number(limit));
+
+  return { totalPages, popupStores, documents };
+}
+
 module.exports = {
   getAllPopUpList,
   seongsuPopUpList,
@@ -138,4 +169,5 @@ module.exports = {
   getPopUpStore,
   searchPopUpList,
   filterPopUpList,
+  sortingPopUpStore,
 };
