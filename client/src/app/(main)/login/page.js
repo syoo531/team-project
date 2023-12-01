@@ -19,8 +19,12 @@ export default function Login() {
       if (response.status === 200) {
         const accessToken = response.data.accessToken;
         localStorage.setItem("accessToken", accessToken);
-
-        window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
+        console.log("여기22", response.data);
+        if (response.data.is_admin === 2) {
+          window.location.href = "/serviceAdmin";
+        } else if (response.data.is_admin === 1) {
+          window.location.href = "/corpAdmin";
+        } else window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
       }
     } catch (error) {
       console.log(error);
