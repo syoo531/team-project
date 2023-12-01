@@ -73,7 +73,11 @@
           }
 
           .contentWrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             width: 46%;
+            height: 250px;
             color: #fff;
             text-align: center;
             z-index: 1;
@@ -146,11 +150,8 @@
         .seongsuPopUpWrapper {
           flex-basis: 100%;
 
-          .contentWrapper {
-            width: 60%;
-            color: #fff;
-            text-align: center;
-            z-index: 1;
+          .popupImage {
+            width: 100%;
           }
         }
       }

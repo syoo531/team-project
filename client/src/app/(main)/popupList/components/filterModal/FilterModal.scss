@@ -19,11 +19,11 @@
 
 .filterModal {
   position: fixed;
-  top: 50px;
+  top: 0;
   left: 50%;
   width: 60%;
   transform: translateX(-50%);
-  height: 700px;
+  height: 794px;
   border-radius: 14px;
   background-color: #fff;
   z-index: 3;
@@ -54,7 +54,7 @@
 
   .filterModalMain {
     overflow-y: auto;
-    height: 560px;
+    height: 654px;
 
     .filterNavWrapper {
       padding: 40px;
@@ -201,7 +201,7 @@
   .filterModal {
     top: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     border-radius: 0;
 
     .filterModalHeader {
@@ -229,7 +229,7 @@
 
     .filterModalMain {
       overflow-y: auto;
-      height: 594px;
+      height: 480px;
 
       .filterNavWrapper {
         padding: 20px;
