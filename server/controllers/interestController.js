@@ -33,8 +33,6 @@ async function addInterestPopupStore(req, res) {
 async function deleteInterestPopupStore(req, res) {
   const { id } = req.params;
   const userEmail = req.decoded.user.email;
-  console.log(id);
-  console.log(userEmail);
   try {
     const result = await interestService.deleteInterestPopupStore({
       id,
@@ -49,7 +47,6 @@ async function deleteInterestPopupStore(req, res) {
 async function getMyInterestPopupStore(req, res) {
   const userEmail = req.decoded.user.email;
 
-  console.log(userEmail);
   try {
     const result = await interestService.getMyInterestPopupStore({
       userEmail,

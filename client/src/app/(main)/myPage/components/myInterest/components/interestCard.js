@@ -17,7 +17,6 @@ export default function InterestCard({ data, onClick }) {
   const handleDeleteInterest = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("딜리트");
     const res = await instance.delete(`/interest/${data.popup_store._id}`);
     if (res.status === 200) {
       alert("관심팝업에서 해제되었습니다.");

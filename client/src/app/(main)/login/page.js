@@ -19,7 +19,6 @@ export default function Login() {
       if (response.status === 200) {
         const accessToken = response.data.accessToken;
         localStorage.setItem("accessToken", accessToken);
-        console.log("여기22", response.data);
         if (response.data.is_admin === 2) {
           window.location.href = "/serviceAdmin";
         } else if (response.data.is_admin === 1) {

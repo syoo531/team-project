@@ -16,14 +16,9 @@ const createReview = async (req, res, next) => {
     const reviewService = new ReviewService();
     const validateUser = await reviewService.validateUser(email, popupStoreId);
 
-    console.log("validateUser :", validateUser); // true
     if (!validateUser) {
       throw new Error("해당 팝업스토어의 리뷰를 쓸 권한이 없습니다.");
     }
-
-    // console.log("controller userId: ", userId);
-
-    console.log("controller popupStoreId: ", popupStoreId);
 
     const newReview = await reviewService.createReview({
       email,

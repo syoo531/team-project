@@ -50,7 +50,6 @@ const getAllStores = async (req, res) => {
 //! UPDATE STORE DATA
 const updatePopupStore = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
 
   try {
     const popupService = new PopupService();
