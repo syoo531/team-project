@@ -95,12 +95,12 @@ export default function GoogleAuth() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setTimeout(() => {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }, 0);
+    e.preventDefault();
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const [validCheck, setValidCheck] = useState({
@@ -157,6 +157,7 @@ export default function GoogleAuth() {
                   }`}
                   type="text"
                   name="phoneNumber"
+                  autoFocus
                   value={formData.phoneNumber}
                   onChange={(e) => {
                     const newValue = e.target.value;
