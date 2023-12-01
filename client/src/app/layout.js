@@ -7,6 +7,9 @@ config.autoAddCss = false;
 export const metadata = {
   title: "pop.spot!",
   description: "pop-up service",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({ children }) {
