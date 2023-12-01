@@ -21,12 +21,10 @@ export default function corpAdminWaitingList() {
     const getWaiting = async () => {
       try {
         const response = await instance.get(`/waiting/getWaitingUser`);
-        console.log("Loaded reservations:", response.data);
         const waitingReservations = response.data.filter((r) => !r.is_enter);
         const completedReservations = response.data.filter((r) => r.is_enter);
         setReservations(waitingReservations);
         setCompletedList(completedReservations);
-        console.log("Initial completed reservations:", completedReservations);
       } catch (error) {
         console.error("There was an error!", error);
       }
@@ -38,10 +36,6 @@ export default function corpAdminWaitingList() {
   useEffect(() => {
     sortReservations(sortOrder);
   }, [currentTab]);
-
-  useEffect(() => {
-    console.log("Completed reservations:", completedList);
-  }, [completedList]);
 
   const handleComplete = async (reservation, popupStoreId, userId) => {
     try {

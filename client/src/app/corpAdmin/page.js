@@ -40,7 +40,6 @@ export default function CorpAdmin() {
     instance
       .get("/reservation/getReservationByCorpAdmin")
       .then((response) => {
-        console.log("사전 예약 목록 API 응답:", response.data.data);
         if (Array.isArray(response.data.data)) {
           setReservations(response.data.data);
         } else {
@@ -48,7 +47,6 @@ export default function CorpAdmin() {
         }
       })
       .catch((error) => {
-        console.error("사전 예약 목록 가져오기 오류:", error);
         setReservations([]);
       });
   }, []);
@@ -58,7 +56,6 @@ export default function CorpAdmin() {
     instance
       .get("/waiting/getWaitingUser")
       .then((response) => {
-        console.log("웨이팅 목록 API 응답:", response.data);
         if (Array.isArray(response.data)) {
           setWaitingList(response.data);
         } else {
