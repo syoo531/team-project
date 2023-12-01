@@ -55,7 +55,7 @@ $speed: 1500ms !default;
     .waitingContent {
         z-index: 3;
         position: fixed;
-        width: 70%;
+        width: 45%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
@@ -103,19 +103,20 @@ $speed: 1500ms !default;
         }
         .reviewCompleteBtn {
             border: 0;
-            background: inherit;
+            background: #0472ff;
             text-align: center;
             padding: 15px 0;
             width: 100%;
             font-size: 17px;
-            border: 1px solid #999;
+            border: 1px solid #fff;
             border-radius: 10px;
             margin-top: 15px;
             cursor: pointer;
             transition: 0.3s ease all;
+            color: #fff;
             &:hover {
-                background: #0472ff;
-                color: #fff;
+                background: #fff;
+                color: #0472ff;
                 border-color: #0472ff;
             }
         }
@@ -155,7 +156,7 @@ $speed: 1500ms !default;
             top: 0%;
             left: 0%;
             transform: translate(-0%, -0%);
-            padding: 15px;
+            padding: 100px 15px 15px 15px;
             border-radius: 0;
             background: #fff;
             overflow-y: auto;
@@ -196,15 +197,16 @@ $speed: 1500ms !default;
             }
             .reviewCompleteBtn {
                 border: 0;
-                background: inherit;
+                background: #0472ff;
                 text-align: center;
                 padding: 150x 0;
                 width: 100%;
                 font-size: 14px;
-                // border:1px solid #ddd;
                 border-radius: 10px;
                 margin-top: 15px;
                 cursor: pointer;
+                color: #fff;
+                border: 1px solid #0472ff;
             }
             .reviewCloseBtn {
                 position: absolute;
