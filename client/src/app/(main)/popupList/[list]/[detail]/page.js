@@ -1,18 +1,21 @@
 "use client";
-import "./page.scss";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import ReviewModal from "./components/reviewModal/reviewModal";
 import ReservationModal from "./components/reservationModal/reservationModal";
 import WaitingModal from "./components/waitingModal/waitingModal"; // 추가된 부분
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useState } from "react";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { faFaceSmile } from "@fortawesome/free-regular-svg-icons";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import instance from "@/utils/instance";
 config.autoAddCss = false;
 import Link from "next/link";
+import "./page.scss";
 
 // 팝업스토어 상세 페이지
 export default function PopUp(props) {
@@ -24,10 +27,14 @@ export default function PopUp(props) {
     const [isReviewSubmitted, setIsReviewSubmitted] = useState(false);
     const [isReservationCompleted, setIsReservationCompleted] = useState(false); // 사전예약 했는지 안했는지 판단하기위한
     const [isWaitingCompleted, setIsWaitingCompleted] = useState(false); // 사전예약 했는지 안했는지 판단하기위한
+    const router = useRouter();
+    const [token, setToken] = useState(null);
     const [totalReviews, setTotalReviews] = useState(0);
+    const [isAdded, setIsAdded] = useState(false);
+    const [interestModal, setInterestModal] = useState(false);
+    const [interestStatus, setInterestStatus] = useState("");
 
     const storeId = props.params.detail;
-    console.log("storedId :", storeId);
     const startDate = popupData.start_date;
     const endDate = popupData.end_date;
     // start_date 변환
@@ -94,6 +101,52 @@ export default function PopUp(props) {
         setIsReviewSubmitted(false); //!! false로 바꿔준다
         window.alert("후기가 작성되었습니다!");
     };
+    async function addInterestPopupStore(storeId) {
+        try {
+            const response = await instance.post("/interest", {
+                popupStoreId: storeId,
+            });
+            if (response.status === 201) {
+                setIsAdded(true);
+                setInterestModal(true);
+                setInterestStatus("add");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    async function deleteInterestPopupStore(storeId) {
+        try {
+            const response = await instance.delete(`/interest/${storeId}`);
+            if (response.data.deletedCount === 1) {
+                setIsAdded(false);
+                setInterestModal(true);
+                setInterestStatus("delete");
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const accessToken = localStorage.getItem("accessToken");
+            setToken(accessToken);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (token) {
+            (async function () {
+                const response = await instance.get(`/interest/${storeId}`);
+                if (response.data.length !== 0) {
+                    setIsAdded(true);
+                } else {
+                    setIsAdded(false);
+                }
+            })();
+        }
+    }, [token]);
 
     const fetchData = async () => {
         try {
@@ -131,7 +184,56 @@ export default function PopUp(props) {
 
     return (
         <div className="PopUp">
-            {/* <div>팝업스토어 id : {storeId}</div> */}
+            {interestModal && (
+                <div
+                    className="modalBackground"
+                    onClick={() => {
+                        window.document.body.style.overflowY = "scroll";
+                        setInterestModal(false);
+                    }}
+                ></div>
+            )}
+            {interestModal && (
+                <div className="addInterestModal">
+                    <FontAwesomeIcon className="smileIcon" icon={faFaceSmile} />
+                    {interestStatus === "add" ? (
+                        <div className="interestModalMessage">
+                            해당 팝업스토어가 <br />
+                            관심 리스트에 추가되었습니다!
+                        </div>
+                    ) : (
+                        <div className="interestModalMessage">
+                            해당 팝업스토어가 <br />
+                            관심 리스트에서 삭제되었습니다!
+                        </div>
+                    )}
+                    {interestStatus === "add" ? (
+                        <div className="subText">마이페이지에서 관심 리스트를 확인하실 수 있습니다.</div>
+                    ) : (
+                        <div className="subText">마이페이지에서 관심 리스트를 확인하실 수 있습니다.</div>
+                    )}
+                    <div className="modalBtnWrapper">
+                        <div
+                            className="listMoveBtn"
+                            onClick={() => {
+                                window.document.body.style.overflowY = "scroll";
+                                router.push("/mypage");
+                            }}
+                        >
+                            마이페이지 이동
+                        </div>
+                        <div
+                            className="okBtn"
+                            onClick={() => {
+                                window.document.body.style.overflowY = "scroll";
+                                setInterestModal(false);
+                            }}
+                        >
+                            확인
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="popImgWrap">
                 <div className="mainImg">
                     <img src={popupData.mainImage?.url} alt="" />
@@ -149,6 +251,32 @@ export default function PopUp(props) {
                 <h1>
                     {popupData.name}
                     <a href="#">{popupData.category}</a>
+                    {!isAdded ? (
+                        <FontAwesomeIcon
+                            className="heartIcon"
+                            icon={regularHeart}
+                            onClick={() => {
+                                if (!token) {
+                                    alert("로그인 후 이용하실 수 있습니다.");
+                                    router.push("/login");
+                                    return;
+                                }
+                                window.document.body.style.overflowY = "hidden";
+                                addInterestPopupStore(storeId);
+                            }}
+                        />
+                    ) : (
+                        <FontAwesomeIcon
+                            className="heartIcon"
+                            icon={solidHeart}
+                            onClick={() => {
+                                if (token) {
+                                    window.document.body.style.overflowY = "hidden";
+                                    deleteInterestPopupStore(storeId);
+                                }
+                            }}
+                        />
+                    )}
                 </h1>
                 <b>
                     <FontAwesomeIcon className="icon" icon={faLocationDot} />
@@ -217,14 +345,25 @@ export default function PopUp(props) {
                         </div>
                     ))}
                 </div>
-                <button type="button" onClick={openModal}>
+                <button
+                    type="button"
+                    onClick={() => {
+                        if (!token) {
+                            alert("로그인 후 이용하실 수 있습니다.");
+                            router.push("/login");
+                            return;
+                        }
+                        window.document.body.style.overflowY = "hidden";
+                        openModal();
+                    }}
+                >
                     후기 작성하기
                 </button>
             </div>
             <div className="popLocation">
                 <h3>상세위치</h3>
                 <b>
-                    {popupData.address} {popupData.summary}
+                    {popupData.address} {popupData.name}
                 </b>
             </div>
             <div className="popWarning">
@@ -237,7 +376,15 @@ export default function PopUp(props) {
                 <div className="reserveBtn">
                     <button
                         type="button"
-                        onClick={openReservationModal}
+                        onClick={() => {
+                            if (!token) {
+                                alert("로그인 후 이용하실 수 있습니다.");
+                                router.push("/login");
+                                return;
+                            }
+                            window.document.body.style.overflowY = "hidden";
+                            openReservationModal();
+                        }}
                         disabled={isReservationCompleted} // 예약이 완료되면 버튼을 비활성화
                     >
                         {isReservationCompleted ? "사전예약이 완료되었습니다." : "사전예약하기"}
@@ -247,7 +394,15 @@ export default function PopUp(props) {
                 <div className="reserveBtn">
                     <button
                         type="button"
-                        onClick={openWaitingModal} // 추가된 부분
+                        onClick={() => {
+                            if (!token) {
+                                alert("로그인 후 이용하실 수 있습니다.");
+                                router.push("/login");
+                                return;
+                            }
+                            window.document.body.style.overflowY = "hidden";
+                            openWaitingModal();
+                        }}
                     >
                         현장대기
                     </button>
@@ -261,6 +416,8 @@ export default function PopUp(props) {
                     closeModal={closeModal}
                     handleReservationSubmit={handleReservationSubmit}
                     popupStoreId={storeId}
+                    startDate={startDate}
+                    endDate={endDate}
                 />
             )}
             {/* ReviewModal을 여기에 렌더링 */}
