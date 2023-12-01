@@ -36,7 +36,7 @@ class PopupService {
   }
 
   async getAllStores(reqQuery) {
-    const { page, limit, search, category, start_date, end_date, checkClosed } =
+    const { page, limit, search, category, start_date, end_date, status } =
       reqQuery;
     const limitPerPage = limit || 10; //기본 10개로 제한
     const skipCount = (Number(page) - 1) * limitPerPage;
@@ -63,13 +63,17 @@ class PopupService {
       query = { ...query, category };
     }
 
-    if (checkClosed && checkClosed == "running") {
+    if (status && status == "running") {
       query.start_date = { $lte: new Date() };
       query.end_date = { $gte: new Date() };
     }
 
-    if (checkClosed && checkClosed == "closed") {
+    if (status && status == "closed") {
       query.end_date = { $lt: new Date() };
+    }
+
+    if (status && status == "scheduled") {
+      query.start_date = { $gt: new Date() };
     }
 
     console.log(query);
@@ -138,7 +142,7 @@ class PopupService {
     const deletedImage = await Image.findByIdAndDelete(id);
     console.log(deletedImage);
 
-    //팝업스토어 이미지 배열에서 특정 이미지 삭제 (이미지 도큐먼트가 삭제되어도 배열에서는 삭제가 안됨)
+    //팝업스토어 이미지 배열에서 특정 이미지 삭제 (이미지 도큐먼트가 삭제되어도 배열에서는 삭제가 안되서 따로 pull해줘야함)
     const popupStore = await PopupStore.findOneAndUpdate(
       { images: id },
       { $pull: { images: id } },
@@ -164,7 +168,7 @@ class PopupService {
       .limit(limitPerPage)
       .skip(skipCount);
 
-    //오늘 가입한 사용자 수 (보류)
+    //오늘 가입한 사용자 수
     const today = new Date().toDateString();
     const newUserToday = await User.find({
       createdAt: {

@@ -27,7 +27,6 @@ export default function CreateStore() {
   const [newImages, setNewImages] = useState([]);
   const [mainImage, setMainImage] = useState(null);
   const [disableButton, setDisableButton] = useState(false);
-  const [error, setError] = useState({});
 
   const createPopupStore = async () => {
     try {
@@ -53,6 +52,11 @@ export default function CreateStore() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!mainImage) {
+      window.alert("메인 이미지를 업로드해주세요.");
+      return;
+    }
+
     setDisableButton(true);
 
     try {

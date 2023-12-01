@@ -33,7 +33,7 @@
         width: 50%;
         display: flex;
         flex-direction: column;
-        align-items: right;
+        align-items: flex-end;
         .popupName {
           color: black;
           font-size: 20px;
@@ -47,16 +47,44 @@
           font-weight: bold;
           font-size: 15px;
           text-align: right;
-
-          margin-top: 30px;
         }
         .hour {
           color: black;
           font-size: 15px;
           text-align: right;
         }
+        .cancelBtn {
+          margin-top: 5px;
+          width: 90px;
+          height: 30px;
+          color: white;
+          background: linear-gradient(
+            45deg,
+            #ff0000,
+            rgb(255, 0, 195),
+            #ff4500
+          );
+          border: 0px solid white;
+          border-radius: 5px;
+          cursor: pointer;
+          background-size: 200% 200%;
+          animation: gradient 2s ease infinite;
+        }
       }
+      cursor: pointer;
     }
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -91,7 +119,7 @@
         width: 50%;
         display: flex;
         flex-direction: column;
-        align-items: right;
+        align-items: flex-end;
         .popupName {
           color: black;
           font-size: 20px;
@@ -102,18 +130,35 @@
         }
         .date {
           color: #0472ff;
+          font-weight: bold;
           font-size: 15px;
           text-align: right;
-          font-weight: bold;
-
-          margin-top: 30px;
         }
         .hour {
           color: black;
           font-size: 15px;
           text-align: right;
         }
+        .cancelBtn {
+          margin-top: 5px;
+
+          width: 90px;
+          height: 30px;
+          color: white; /* 텍스트 색을 흰색으로 변경 */
+          background: linear-gradient(
+            45deg,
+            #ff0000,
+            rgb(255, 0, 195),
+            #ff4500
+          );
+          border: 0px solid white;
+          border-radius: 5px;
+          cursor: pointer;
+          background-size: 200% 200%;
+          animation: gradient 2s ease infinite;
+        }
       }
+      cursor: pointer;
     }
   }
 }

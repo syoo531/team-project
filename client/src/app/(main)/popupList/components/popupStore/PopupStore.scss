@@ -93,6 +93,7 @@
       position: relative;
       width: 250px;
       height: 250px;
+      flex-shrink: 0;
 
       .popupStoreImg {
         width: 100%;
@@ -111,6 +112,7 @@
         right: 10px;
         color: #fff;
         font-size: 26px;
+        z-index: 1;
         &:hover {
           cursor: pointer;
         }
@@ -125,9 +127,28 @@
         border-radius: 12px;
         background-color: rgba(0, 0, 0, 0.4);
         color: #fff;
-        font-size: 30px;
+        font-size: 28px;
         font-weight: 700;
-        letter-spacing: 2px;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .comingSoonImage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        inset: 0;
+        border-radius: 12px;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        font-size: 28px;
+        font-weight: 700;
+        text-align: center;
+        &:hover {
+          cursor: pointer;
+        }
       }
     }
 
@@ -198,12 +219,45 @@
           font-size: 12px;
         }
 
-        .doing {
-          padding: 6px 14px;
-          border-radius: 10px;
-          background-color: #0472ff;
-          color: #fff;
-          font-size: 12px;
+        .comingSoonWrapper {
+          display: flex;
+          gap: 10px;
+
+          .comingSoon {
+            padding: 6px 14px;
+            border-radius: 10px;
+            background-color: #0472ff;
+            color: #fff;
+            font-size: 12px;
+          }
+
+          .preBooking {
+            padding: 6px 14px;
+            border-radius: 10px;
+            background-color: #000;
+            color: #fff;
+            font-size: 12px;
+          }
+        }
+
+        .ongoingWrapper {
+          display: flex;
+          gap: 10px;
+
+          .ongoing {
+            padding: 6px 14px;
+            border-radius: 10px;
+            background-color: #0472ff;
+            color: #fff;
+            font-size: 12px;
+          }
+          .waiting {
+            padding: 6px 14px;
+            border-radius: 10px;
+            background-color: #000;
+            color: #fff;
+            font-size: 12px;
+          }
         }
 
         .readMore {
@@ -342,7 +396,15 @@
             font-size: 12px;
           }
 
-          .doing {
+          .ongoing {
+            padding: 6px 14px;
+            border-radius: 10px;
+            background-color: #0472ff;
+            color: #fff;
+            font-size: 12px;
+          }
+
+          .comingSoon {
             padding: 6px 14px;
             border-radius: 10px;
             background-color: #0472ff;

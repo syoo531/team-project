@@ -100,10 +100,12 @@ const updateReservation = async (req, res, next) => {
 // 예약 삭제
 const deleteReservation = async (req, res, next) => {
   try {
+    const email = req.decoded.user.email;
+    const id = req.params.id;
     const reservationService = new ReservationService();
     const deletedReservation = await reservationService.deleteReservation(
-      req.params.id,
-      req.body,
+      email,
+      id,
     );
     if (!deletedReservation) {
       throw new NotFoundError("조회되는 예약이 없습니다!");

@@ -18,6 +18,7 @@ const createWaiting = async (req, res, next) => {
     const validateWaitingService = await waitingService.validateWaiting(
       email,
       popup,
+      popup
     );
     if (!validateWaitingService) {
       throw new Error("해당 팝업스토어에 이미 현장대기 완료했습니다.");
@@ -80,6 +81,7 @@ const updateWaitingPeople = async (req, res, next) => {
       userId,
       popupStoreId,
       people,
+      people
     );
 
     return res.status(200).json({
@@ -93,22 +95,24 @@ const updateWaitingPeople = async (req, res, next) => {
   }
 };
 
-// 현장 대기 인원 삭제
-const deleteWaitingPeople = async (req, res, next) => {
+// 현장 대기 취소
+const cancelWaiting = async (req, res, next) => {
   try {
-    const { popupStoreId } = req.query;
+    const email = req.decoded.user.email;
+    const id = req.params.id;
+
     const waitingService = new WaitingService();
-    const deleteWaitingPeople =
-      await waitingService.deleteWaitingPeople(popupStoreId);
+    const canceledWaiting = await waitingService.cancelWaiting(email, id);
+
+    if (!canceledWaiting) {
+      throw new NotFoundError("조회되는 대기가 없습니다!");
+    }
 
     return res.status(200).json({
-      message: "해당 팝업스토어에 대한 현장 대기 인원 삭제 완료했습니다.",
+      message: "현장대기가 취소되었습니다.",
     });
   } catch (err) {
     next(err);
-    res.status(400).json({
-      error: "해당 팝업스토어에 대한 현장 대기 인원 수정 실패했습니다.",
-    });
   }
 };
 
@@ -138,7 +142,7 @@ const enterWaitingList = async (req, res, next) => {
     const waitingService = new WaitingService();
     const completedWaiting = await waitingService.enterWaitingList(
       popupStoreId,
-      userId,
+      userId
     );
 
     console.log("Completed waiting:", completedWaiting);
@@ -160,7 +164,7 @@ module.exports = {
   getPopupStoreId,
   getWaitingStatus,
   updateWaitingPeople,
-  deleteWaitingPeople,
+  cancelWaiting,
   getWaitingListByCorpAdmin,
   enterWaitingList,
 };

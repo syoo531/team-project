@@ -1,5 +1,28 @@
 @import url(https://use.fontawesome.com/releases/v5.15.3/css/all.css);
+@keyframes visible {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
+@mixin btnStyle {
+  padding: 10px 20px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  background-color: #000;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.4s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+  }
+}
 @mixin subT {
   font-size: 18px;
   font-weight: 500;
@@ -36,6 +59,62 @@
 
 .PopUp {
   @include container;
+  .modalBackground {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+  }
+
+  .addInterestModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 360px;
+    padding-top: 30px;
+    transform: translate(-50%, -50%);
+    border-radius: 12px;
+    background-color: #fff;
+    animation: visible 0.5s linear;
+    z-index: 1;
+
+    .smileIcon {
+      color: #0472ff;
+      font-size: 90px;
+      margin-bottom: 20px;
+    }
+
+    .interestModalMessage {
+      margin-bottom: 16px;
+      font-size: 24px;
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .subText {
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .modalBtnWrapper {
+      display: flex;
+      gap: 14px;
+
+      .listMoveBtn {
+        @include btnStyle;
+      }
+
+      .okBtn {
+        @include btnStyle;
+      }
+    }
+  }
   .reserveBtn {
     width: 100%;
     @include cflex();
@@ -47,18 +126,21 @@
       cursor: pointer;
       width: 100%;
       border: 0;
-      padding: 10px 30px;
+      padding: 15px 30px;
       box-sizing: border-box;
-      border-radius: 10px;
-      background: #fff;
-      color: #333;
+      border-radius: 50px;
+      color: #fff;
       font-size: 18px;
       font-weight: 500;
-      border: 1px solid #999;
+      border: 1px solid white;
       transition: 0.3s ease all;
+      max-width: 430px;
+      display: block;
+      margin: 0 auto;
+      background: #0472ff;
       &:hover {
-        background: #0472ff;
-        color: #fff;
+        background: #fff;
+        color: #0472ff;
         border: 1px solid #0472ff;
       }
       &:disabled {
@@ -116,13 +198,21 @@
           position: absolute;
           top: 0;
           left: 0;
-          object-fit: none;
+          object-fit: cover;
         }
       }
     }
   }
   .popInfo {
     margin-bottom: 60px;
+    position: relative;
+    .heartIcon {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      cursor: pointer;
+    }
     h1 {
       display: block;
       width: 100%;
@@ -254,20 +344,25 @@
     }
     button {
       width: 100%;
-      border: 1px solid #999;
+      border: 1px solid white;
       background: #fff;
       font-size: 16px;
-      color: #333;
       text-align: center;
       padding: 15px;
-      border-radius: 10px;
-      margin-top: 10px;
+      border-radius: 50px;
       transition: 0.3s ease all;
+      max-width: 430px;
+      display: block;
+      margin: 0 auto;
       cursor: pointer;
+      background: #0472ff;
+      color: #fff;
+      font-weight: 500;
+      font-size: 18px;
       &:hover {
-        background: #0472ff;
-        color: #fff;
-        border-color: #0472ff;
+        background: #fff;
+        color: #0472ff;
+        border: 1px solid #0472ff;
       }
     }
     .popReviewList {
@@ -279,6 +374,7 @@
         box-sizing: border-box;
         border: 1px solid #ddd;
         margin-bottom: 15px;
+        white-space: pre-line;
         .top {
           @include flex(center, normal);
           h3 {
@@ -309,6 +405,8 @@
           transition: none;
           border-radius: 0;
           font-size: 12px;
+          background: #fff;
+          color: #333;
           &:hover {
             background: inherit;
             color: #333;
@@ -455,17 +553,17 @@
         border: 0;
         padding: 10px 30px;
         box-sizing: border-box;
-        border-radius: 10px;
-        background: #fff;
-        color: #333;
+        border-radius: 50px;
+        background: #0472ff;
+        color: #fff;
         font-size: 14px;
         font-weight: 500;
-        border: 1px solid #999;
+        border: 1px solid white;
         transition: 0.3s ease all;
         &:hover {
-          background: inherit;
-          color: inherit;
-          border: 1px solid inherit;
+          background: #fff;
+          color: #0472ff;
+          border: 1px solid #0472ff;
         }
         &:disabled {
           background: #999;
@@ -493,14 +591,14 @@
       .subImg {
         margin-top: 15px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: space-between;
         width: 100%;
-        height: 35vh;
+        height: 22vh;
         gap: 10px;
         .subImg1 {
-          width: 100%;
-          height: 35vh;
+          width: 50%;
+          height: 22vh;
           position: relative;
           img {
             display: block;
@@ -513,8 +611,8 @@
           }
         }
         .subImg2 {
-          width: 100%;
-          height: 35vh;
+          width: 50%;
+          height: 22vh;
           position: relative;
           img {
             display: block;
@@ -523,7 +621,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            object-fit: none;
+            object-fit: cover;
           }
         }
       }
@@ -543,10 +641,6 @@
           font-size: 14px;
           text-decoration: none;
           margin-left: 15px;
-          position: absolute;
-          top: 50%;
-          right: 0;
-          transform: translateY(-50%);
         }
         input {
           position: fixed;
@@ -666,20 +760,20 @@
       }
       button {
         width: 100%;
-        border: 1px solid #999;
-        background: #fff;
+        border: 1px solid white;
         font-size: 14px;
-        color: #333;
+        color: #fff;
         text-align: center;
         padding: 10px;
-        border-radius: 10px;
+        border-radius: 50px;
         margin-top: 10px;
         transition: 0.3s ease all;
         cursor: pointer;
+        background: #0472ff;
         &:hover {
-          background: #0472ff;
-          color: #fff;
-          border-color: #0472ff;
+          background: #fff;
+          color: #0472ff;
+          border: 1px solid #0472ff;
         }
       }
       .popReviewList {
@@ -722,6 +816,7 @@
             transition: none;
             border-radius: 0;
             font-size: 12px;
+            background: #fff;
             &:hover {
               background: inherit;
               color: #333;

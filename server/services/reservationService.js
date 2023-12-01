@@ -55,13 +55,21 @@ class ReservationService {
         status: "대기중",
       },
       { status: "완료됨" },
+      { new: true },
     );
     return reservation;
   }
 
   // 예약 삭제
-  async deleteReservation(id) {
-    return await Reservation.findByIdAndDelete(id);
+  async deleteReservation(email, id) {
+    const user = await User.findOne({ email }).select("_id");
+
+    const deletedReservation = await Reservation.deleteOne({
+      popup_store: id,
+      user: user,
+    });
+
+    return deletedReservation;
   }
 
   // 예약 수정
@@ -75,7 +83,7 @@ class ReservationService {
     const user = await User.findOne({ email }).select("_id");
     const myReservation = await Reservation.find({ user }).populate({
       path: "popup_store",
-      select: ["name", "mainImage"],
+      select: ["name", "mainImage", "_id"],
       populate: {
         path: "mainImage",
         select: ["url"],

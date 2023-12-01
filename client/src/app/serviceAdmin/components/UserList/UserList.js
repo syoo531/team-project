@@ -19,7 +19,7 @@ export default function UserList({ userData, totalUsers }) {
             <tr>
               <th>사용자 이름</th>
               <th>전화번호</th>
-              <th className="email-col">사용자 이메일 주소</th>
+              <th className="email-col">이메일 주소</th>
               <th className="category-list-col">관심 카테고리</th>
               <th>가입일</th>
             </tr>

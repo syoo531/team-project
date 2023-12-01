@@ -62,7 +62,7 @@ export default function Reviews() {
   if (!loading && storeReviews.length === 0) {
     return (
       <div className="popReviewList" style={{ height: "50vh" }}>
-        <div>리뷰가 아직 없습니다!</div>
+        <div className="noReview">리뷰가 아직 없습니다!</div>
       </div>
     );
   }

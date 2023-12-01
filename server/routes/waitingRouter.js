@@ -4,7 +4,7 @@ const {
   createWaiting,
   getPopupStoreId,
   updateWaitingPeople,
-  deleteWaitingPeople,
+  cancelWaiting,
   getWaitingListByCorpAdmin,
   enterWaitingList,
 } = require("../controllers/waitingController");
@@ -17,7 +17,7 @@ router.get("/getWaitingStatus", validateToken, getWaitingStatus); // 현장대�
 router.post("/createWaiting", validateToken, createWaiting); // 현장대기 접수
 router.get("/popupStores", getPopupStoreId);
 router.put("/updatePeople", updateWaitingPeople);
-router.delete("/cancelWaiting", deleteWaitingPeople);
+router.delete("/cancelWaiting/:id", validateToken, cancelWaiting);
 router.get("/getWaitingUser", validateCorpAdmin, getWaitingListByCorpAdmin);
 router.put("/enterWaitingList", validateCorpAdmin, enterWaitingList);
 

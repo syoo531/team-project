@@ -9,6 +9,15 @@ async function getAllPopUpList(req, res) {
   }
 }
 
+async function seongsuPopUpList(req, res) {
+  try {
+    const result = await popupListService.seongsuPopUpList();
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: "failed" });
+  }
+}
+
 async function endSoonPopUpList(req, res) {
   try {
     const result = await popupListService.endSoonPopUpList();
@@ -40,7 +49,6 @@ async function pagingPopUpList(req, res) {
 
 async function getPopUpStore(req, res) {
   const { id } = req.params;
-  console.log(1);
   try {
     const result = await popupListService.getPopUpStore(id);
     res.status(200).json(result);
@@ -67,12 +75,23 @@ async function filterPopUpList(req, res) {
   }
 }
 
+async function sortingPopUpList(req, res) {
+  try {
+    const result = await popupListService.sortingPopUpStore(req.query);
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(400).json({ message: "failed" });
+  }
+}
+
 module.exports = {
   getAllPopUpList,
   pagingPopUpList,
   getPopUpStore,
   searchPopUpList,
   filterPopUpList,
+  seongsuPopUpList,
   endSoonPopUpList,
   recommendPopUpList,
+  sortingPopUpList,
 };

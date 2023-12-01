@@ -8,10 +8,22 @@ async function getAllPopUpList() {
   return popupStores;
 }
 
+async function seongsuPopUpList() {
+  const currentDate = new Date();
+  const popupStores = await PopupStore.find({
+    address: { $regex: "성수", $options: "i" },
+    end_date: { $gt: currentDate },
+  })
+    .populate("mainImage")
+    .populate("images");
+
+  return popupStores;
+}
+
 async function endSoonPopUpList() {
   const currentDate = new Date();
   const threeDaysLater = new Date();
-  threeDaysLater.setDate(currentDate.getDate() + 3);
+  threeDaysLater.setDate(currentDate.getDate() + 5);
 
   const query = {
     end_date: {
@@ -117,12 +129,45 @@ async function filterPopUpList({ pageNumber, limit, area, category, date }) {
   return { totalPages, popupStores, documents };
 }
 
+async function sortingPopUpStore({ pageNumber, limit, order }) {
+  const query = {};
+  const currentDate = new Date();
+  const skip = (Number(pageNumber) - 1) * Number(limit);
+
+  if (order === "ongoing") {
+    query.start_date = { $lte: currentDate };
+    query.end_date = { $gte: currentDate };
+  }
+
+  if (order === "comingSoon") {
+    query.start_date = { $gte: currentDate };
+  }
+
+  if (order === "close") {
+    query.end_date = { $lte: currentDate };
+  }
+
+  const popupStores = await PopupStore.find(query)
+    .skip(skip)
+    .limit(Number(limit))
+    .populate("mainImage")
+    .populate("images");
+
+  const documents = await PopupStore.countDocuments(query);
+
+  const totalPages = Math.ceil(documents / Number(limit));
+
+  return { totalPages, popupStores, documents };
+}
+
 module.exports = {
   getAllPopUpList,
+  seongsuPopUpList,
   endSoonPopUpList,
   recommendPopUpList,
   pagingPopUpList,
   getPopUpStore,
   searchPopUpList,
   filterPopUpList,
+  sortingPopUpStore,
 };

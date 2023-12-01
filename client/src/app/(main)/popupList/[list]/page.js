@@ -17,6 +17,7 @@ export default function PopupList() {
   const categoryValue = searchParams.get("category");
   const dateValue = searchParams.get("date");
   const pageNumberValue = searchParams.get("pageNumber");
+  const orderValue = searchParams.get("order");
 
   function dateFormat(date) {
     const selectDate = new Date(date);
@@ -31,6 +32,11 @@ export default function PopupList() {
     queryParams.set("pageNumber", currentPage);
     const queryString = queryParams.toString();
     router.push(`${pathname}?${queryString}`);
+  }
+
+  async function handleChange(e) {
+    const { value } = e.target;
+    router.push(`/popupList/sort?pageNumber=1&limit=8&order=${value}`);
   }
 
   useEffect(() => {
@@ -59,7 +65,16 @@ export default function PopupList() {
   return (
     <div className="popupList">
       {pathname === "/popupList/all" ? (
-        <div className="popupListBanner"></div>
+        <div
+          className="popupListBanner"
+          style={{ backgroundImage: "url(/images/popuplist.jpg)" }}
+        >
+          <div className="blackBackground"></div>
+          <div className="popupListTitle">
+            요즘 팝업스토어 뭐 있지? <br />
+            팝스팝에서 발견하세요!
+          </div>
+        </div>
       ) : pathname === "/popupList/search" ? (
         <div className="searchResult">
           '{searchKeyword}' 검색 결과 총 {documents}개의 팝업스토어를
@@ -81,8 +96,18 @@ export default function PopupList() {
             router.push("/popupList/all?pageNumber=1&limit=8");
           }}
         >
-          ALL VIEW
+          전체보기
         </div>
+        <select
+          className="sortBtn"
+          onChange={handleChange}
+          value={orderValue || "all"}
+        >
+          <option value="all">모든 팝업</option>
+          <option value="ongoing">현재 진행중</option>
+          <option value="comingSoon">곧 오픈</option>
+          <option value="close">종료</option>
+        </select>
       </div>
       {popupStores.length === 0 ? (
         <div className="notice">

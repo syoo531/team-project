@@ -25,7 +25,6 @@ export default function corpAdminReservations() {
         const response = await instance.get(
           "/reservation/getReservationByCorpAdmin",
         );
-        console.log("Loaded reservations:", response.data.data);
         const actualData = response.data.data;
         const waitingReservations = actualData.filter(
           (r) => r.status === "대기중",
@@ -54,8 +53,6 @@ export default function corpAdminReservations() {
         corpAdminPopupId: popupStoreId,
         userId: userId,
       });
-
-      console.log("Handle complete response:", response);
       if (response.status === 200 || response.status === 204) {
         const newReservations = reservations.filter(
           (r) => r._id !== reservationId,

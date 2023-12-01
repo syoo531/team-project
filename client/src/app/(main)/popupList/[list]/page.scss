@@ -1,9 +1,28 @@
 .popupList {
   .popupListBanner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
     width: 100%;
     height: 500px;
-    background-color: #000;
+    background-position: center;
+    background-size: cover;
     margin-bottom: 90px;
+
+    .blackBackground {
+      position: absolute;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .popupListTitle {
+      position: relative;
+      color: #fff;
+      font-size: 40px;
+      font-weight: 600;
+      text-align: center;
+    }
   }
 
   .searchResult {
@@ -21,6 +40,7 @@
   .btnWrapper {
     display: flex;
     justify-content: flex-end;
+    gap: 10px;
     width: 88%;
     margin: 0 auto 50px;
     padding-bottom: 30px;
@@ -40,6 +60,12 @@
         background-color: #fff;
         color: #000;
       }
+    }
+
+    .sortBtn {
+      padding: 0 6px;
+      border-radius: 10px;
+      text-align: center;
     }
   }
 
@@ -85,5 +111,22 @@
   }
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 768px) {
+  .popupList {
+    .popupListBanner {
+      .popupListTitle {
+        font-size: 30px;
+      }
+    }
+
+    .searchResult {
+      margin-bottom: 30px;
+      font-size: 20px;
+    }
+
+    .filterResult {
+      margin-bottom: 30px;
+      font-size: 20px;
+    }
+  }
 }

@@ -52,7 +52,7 @@ class UserService {
           },
         },
         process.env.ACCESS_TOKEN_SECERT,
-        { expiresIn: "1d" }
+        { expiresIn: "14d" }
       );
 
       if (user.admin_role !== 0) {
@@ -124,7 +124,7 @@ class UserService {
         },
       },
       process.env.ACCESS_TOKEN_SECERT,
-      { expiresIn: "1d" }
+      { expiresIn: "14d" }
     );
 
     if (user.admin_role !== 0) {

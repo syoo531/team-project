@@ -8,11 +8,16 @@ const ReservationModal = ({
   handleReservationSubmit,
   popupStoreId,
   setIsReservationCompleted,
+  startDate,
+  endDate,
 }) => {
   const reservationPopupStoreId = popupStoreId;
+  const limitedStartDate = startDate.split("T")[0];
+  const limitedEndDate = endDate.split("T")[0];
   const [reservationDate, setReservationDate] = useState("");
   const [reservationHour, setReservationHour] = useState("");
   const [reservationPeople, setReservationPeople] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // 로딩상태
   const timeOptions = [
     "11:00 AM",
     "11:30 AM",
@@ -32,7 +37,20 @@ const ReservationModal = ({
   ];
 
   const submitReservation = async () => {
+    if (!reservationDate) {
+      window.alert("날짜를 입력해주세요");
+      return;
+    } else if (!reservationHour) {
+      window.alert("시간을 입력해주세요");
+      return;
+    } else if (!reservationPeople) {
+      window.alert("인원을 입력해주세요");
+      return;
+    }
+
+    //예약하기
     try {
+      setIsLoading(true); // 로딩 시작
       const response = await instance.post("/reservation", {
         date: reservationDate,
         hour: reservationHour,
@@ -43,14 +61,28 @@ const ReservationModal = ({
       handleReservationSubmit(); // 여기서 함수를 호출합니다.
     } catch (error) {
       console.error("사전예약 작성에 실패하였습니다", error);
+    } finally {
+      setIsLoading(false); // 로딩 끝
     }
   };
 
   // 모달 내용 및 동작 구현
   return (
     <div className="reservationModal">
-      <div className="overlay" onClick={closeModal}></div>
+      <div
+        className="overlay"
+        onClick={() => {
+          window.document.body.style.overflowY = "scroll";
+          closeModal();
+        }}
+      ></div>
       <div className="reservationContent">
+        <div
+          className="loading-container"
+          style={{ display: isLoading ? "flex" : "none" }}
+        >
+          <div className="loading-spinner"></div>
+        </div>
         <h2>팝업스토어 사전예약</h2>
         <div className="reservationInput">
           <p>날짜</p>
@@ -60,6 +92,8 @@ const ReservationModal = ({
             placeholder="날짜"
             value={reservationDate}
             onChange={(e) => setReservationDate(e.target.value)}
+            min={limitedStartDate}
+            max={limitedEndDate}
           />
         </div>
         <div className="reservationInput">
@@ -93,11 +127,21 @@ const ReservationModal = ({
         <button
           type="button"
           className="reviewCompleteBtn"
-          onClick={submitReservation}
+          onClick={() => {
+            window.document.body.style.overflowY = "scroll";
+            submitReservation();
+          }}
         >
           사전예약하기
         </button>
-        <button type="button" className="reviewCloseBtn" onClick={closeModal}>
+        <button
+          type="button"
+          className="reviewCloseBtn"
+          onClick={() => {
+            window.document.body.style.overflowY = "scroll";
+            closeModal();
+          }}
+        >
           X
         </button>
       </div>

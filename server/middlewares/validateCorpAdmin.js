@@ -29,10 +29,9 @@ const validateCorpAdmin = async (req, res, next) => {
       req.corpAdminPopupId = user.admin_corp;
       next();
     } else {
-      const err = new Error("서비스 관리자가 아닙니다.");
+      const err = new Error("업체 관리자가 아닙니다.");
       err.statusCode = 404;
       throw err;
-      //res.status(404).json({ message: "서비스 관리자가 아닙니다." });
     }
   } catch (err) {
     next(err);

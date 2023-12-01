@@ -11,13 +11,16 @@ import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import "./PopupStore.scss";
 
 export default function PopupStore({ store }) {
+  const [token, setToken] = useState(null);
   const [isAdded, setIsAdded] = useState(false);
   const [interestModal, setInterestModal] = useState(false);
   const [interestStatus, setInterestStatus] = useState("");
   const router = useRouter();
   const currentDate = new Date();
+  const popupStartDate = new Date(store.start_date);
   const popupEndDate = new Date(store.end_date);
-  const diff = popupEndDate - currentDate;
+  const startDiff = popupStartDate - currentDate;
+  const endDiff = popupEndDate - currentDate;
 
   async function addInterestPopupStore(id) {
     try {
@@ -55,15 +58,24 @@ export default function PopupStore({ store }) {
   }
 
   useEffect(() => {
-    (async function () {
-      const response = await axios.get(`/interest/${store._id}`);
-      if (response.data.length !== 0) {
-        setIsAdded(true);
-      } else {
-        setIsAdded(false);
-      }
-    })();
+    if (typeof window !== "undefined") {
+      const accessToken = localStorage.getItem("accessToken");
+      setToken(accessToken);
+    }
   }, []);
+
+  useEffect(() => {
+    if (token) {
+      (async function () {
+        const response = await axios.get(`/interest/${store._id}`);
+        if (response.data.length !== 0) {
+          setIsAdded(true);
+        } else {
+          setIsAdded(false);
+        }
+      })();
+    }
+  }, [token]);
 
   return (
     <div className="popupStore">
@@ -125,7 +137,7 @@ export default function PopupStore({ store }) {
         <div className="imageWrapper">
           <div
             className="popupStoreImg"
-            style={{ backgroundImage: `url(${store.mainImage.url})` }}
+            style={{ backgroundImage: `url(${store?.mainImage?.url})` }}
             onClick={() => {
               router.push(`/popupList/all/${store._id}`);
             }}
@@ -135,6 +147,11 @@ export default function PopupStore({ store }) {
               className="heartIcon"
               icon={regularHeart}
               onClick={() => {
+                if (!token) {
+                  alert("로그인 후 이용하실 수 있습니다.");
+                  router.push("/login");
+                  return;
+                }
                 window.document.body.style.overflowY = "hidden";
                 addInterestPopupStore(store._id);
               }}
@@ -144,12 +161,34 @@ export default function PopupStore({ store }) {
               className="heartIcon"
               icon={solidHeart}
               onClick={() => {
-                window.document.body.style.overflowY = "hidden";
-                deleteInterestPopupStore(store._id);
+                if (token) {
+                  window.document.body.style.overflowY = "hidden";
+                  deleteInterestPopupStore(store._id);
+                }
               }}
             />
           )}
-          {diff < 0 && <div className="closeImage">CLOSE</div>}
+          {endDiff < 0 && (
+            <div
+              className="closeImage"
+              onClick={() => {
+                router.push(`/popupList/all/${store._id}`);
+              }}
+            >
+              CLOSE
+            </div>
+          )}
+          {startDiff > 0 && (
+            <div
+              className="comingSoonImage"
+              onClick={() => {
+                router.push(`/popupList/all/${store._id}`);
+              }}
+            >
+              COMING
+              <br /> SOON
+            </div>
+          )}
         </div>
         <div className="popupStoreInfoWrapper">
           <div className="infoTop">
@@ -169,10 +208,18 @@ export default function PopupStore({ store }) {
           </div>
 
           <div className="infoBottom">
-            {diff < 0 ? (
+            {endDiff < 0 ? (
               <div className="done">종료</div>
+            ) : startDiff > 0 ? (
+              <div className="comingSoonWrapper">
+                <div className="comingSoon">곧 오픈</div>
+                <div className="preBooking">사전예약</div>
+              </div>
             ) : (
-              <div className="doing">현재 운영중</div>
+              <div className="ongoingWrapper">
+                <div className="ongoing">운영중</div>
+                <div className="waiting">웨이팅</div>
+              </div>
             )}
 
             <div

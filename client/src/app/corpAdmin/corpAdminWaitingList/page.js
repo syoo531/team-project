@@ -21,7 +21,6 @@ export default function corpAdminWaitingList() {
     const getWaiting = async () => {
       try {
         const response = await instance.get(`/waiting/getWaitingUser`);
-        console.log("Loaded reservations:", response.data);
         const waitingReservations = response.data.filter((r) => !r.is_enter);
         const completedReservations = response.data.filter((r) => r.is_enter);
         setReservations(waitingReservations);
@@ -40,10 +39,6 @@ export default function corpAdminWaitingList() {
 
   const handleComplete = async (reservation, popupStoreId, userId) => {
     try {
-      console.log("Sending request with:", {
-        corpAdminPopupId: popupStoreId,
-        userId: reservation.user._id,
-      });
       const response = await instance.put("/waiting/enterWaitingList", {
         corpAdminPopupId: popupStoreId,
         userId: reservation.user._id,
