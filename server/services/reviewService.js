@@ -34,8 +34,6 @@ class ReviewService {
     const userName = await User.findOne({ email });
     const popupName = await PopupStore.findOne({ _id: popupStoreId });
 
-    console.log("Server Review Content:", text); // text 값이 제대로 출력되는지 확인
-    console.log("IMAGEEEEEE", image);
     const newReviewData = {
       popup_store: popupName._id,
       user: userName._id,
@@ -62,8 +60,6 @@ class ReviewService {
     // 3. 맞으면 새 리뷰글로 업데이트.
 
     const review = await Review.findById(reviewID);
-    console.log("리뷰글", review);
-    console.log("유저", user);
 
     if (review.user.toString() === user._id.toString()) {
       const res = await Review.findByIdAndUpdate(reviewID, {
@@ -72,7 +68,7 @@ class ReviewService {
       });
       return res;
     } else {
-      console.log("아니에용");
+      console.log("not match");
     }
   }
 

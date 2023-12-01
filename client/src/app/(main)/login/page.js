@@ -14,13 +14,16 @@ export default function Login() {
       const response = await axios.post(
         "http://kdt-sw-6-team04.elicecoding.com/api/users/login",
         { email, password },
-        { withCredentials: true }
+        { withCredentials: true },
       );
       if (response.status === 200) {
         const accessToken = response.data.accessToken;
         localStorage.setItem("accessToken", accessToken);
-
-        window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
+        if (response.data.is_admin === 2) {
+          window.location.href = "/serviceAdmin";
+        } else if (response.data.is_admin === 1) {
+          window.location.href = "/corpAdmin";
+        } else window.location.href = "/"; // 로그인 성공 시 홈페이지로 이동
       }
     } catch (error) {
       console.log(error);

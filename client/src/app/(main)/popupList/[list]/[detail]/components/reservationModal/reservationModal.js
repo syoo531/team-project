@@ -1,5 +1,7 @@
 // reservationModal.js
 import React, { useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 import "./reservationModal.scss";
 import instance from "@/utils/instance";
 
@@ -51,8 +53,17 @@ const ReservationModal = ({
     //예약하기
     try {
       setIsLoading(true); // 로딩 시작
+      // 수동으로 포맷 만들기
+      const formattedDate = `${reservationDate.getFullYear()}-${(
+        reservationDate.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}-${reservationDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")}T00:00:00.000Z`;
       const response = await instance.post("/reservation", {
-        date: reservationDate,
+        date: formattedDate,
         hour: reservationHour,
         people: reservationPeople,
         popup_store: reservationPopupStoreId,
@@ -86,14 +97,11 @@ const ReservationModal = ({
         <h2>팝업스토어 사전예약</h2>
         <div className="reservationInput">
           <p>날짜</p>
-          <input
-            type="date"
-            name="totalPeople"
-            placeholder="날짜"
+          <Calendar
+            onChange={setReservationDate}
             value={reservationDate}
-            onChange={(e) => setReservationDate(e.target.value)}
-            min={limitedStartDate}
-            max={limitedEndDate}
+            minDate={new Date(limitedStartDate)}
+            maxDate={new Date(limitedEndDate)}
           />
         </div>
         <div className="reservationInput">
@@ -103,7 +111,7 @@ const ReservationModal = ({
             onChange={(e) => setReservationHour(e.target.value)}
           >
             <option value="" disabled>
-              시간 선택
+              시간 선택 ▾
             </option>
             {timeOptions.map((time, index) => (
               <option key={index} value={time}>

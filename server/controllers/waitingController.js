@@ -17,7 +17,6 @@ const createWaiting = async (req, res, next) => {
     const waitingService = new WaitingService();
     const validateWaitingService = await waitingService.validateWaiting(
       email,
-      popup,
       popup
     );
     if (!validateWaitingService) {
@@ -80,7 +79,6 @@ const updateWaitingPeople = async (req, res, next) => {
     const updateWaitingPeople = await waitingService.updateWaitingPeople(
       userId,
       popupStoreId,
-      people,
       people
     );
 

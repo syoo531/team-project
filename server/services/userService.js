@@ -39,7 +39,7 @@ class UserService {
 
   // 로그인
   async login(email, password) {
-    let is_admin = false;
+    let is_admin;
     const user = await User.findOne({ email });
     const is_pass = await bcrypt.compare(password, user.password);
     if (user && is_pass) {
@@ -52,12 +52,10 @@ class UserService {
           },
         },
         process.env.ACCESS_TOKEN_SECERT,
-        { expiresIn: "14d" }
+        { expiresIn: "14d" },
       );
 
-      if (user.admin_role !== 0) {
-        is_admin = true;
-      }
+      is_admin = user.admin_role;
 
       return [accessToken, is_admin];
     } else return false;
@@ -78,7 +76,7 @@ class UserService {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-      }
+      },
     );
     const accessToken = response.data.access_token;
     const kakaoUser = await axios.post(
@@ -89,7 +87,7 @@ class UserService {
           Authorization: `Bearer ${accessToken}`,
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-      }
+      },
     );
     return [
       kakaoUser.data.id,
@@ -124,7 +122,7 @@ class UserService {
         },
       },
       process.env.ACCESS_TOKEN_SECERT,
-      { expiresIn: "14d" }
+      { expiresIn: "14d" },
     );
 
     if (user.admin_role !== 0) {
@@ -150,7 +148,7 @@ class UserService {
         headers: {
           "Content-type": "application/x-www-form-urlencoded;charset=utf-8",
         },
-      }
+      },
     );
 
     const accessToken = response.data.access_token;
@@ -160,7 +158,7 @@ class UserService {
         params: {
           access_token: accessToken,
         },
-      }
+      },
     );
     return [googleUser.data.id, googleUser.data.email, googleUser.data.name];
   }
@@ -179,7 +177,7 @@ class UserService {
         name,
         phone_number: phoneNumber,
         category: selectedInterests,
-      }
+      },
     );
     return userInfo;
   }
@@ -188,7 +186,7 @@ class UserService {
   async signOut(email) {
     const deletedUser = await User.findOneAndUpdate(
       { email },
-      { deleted_at: new Date() }
+      { deleted_at: new Date() },
     );
     return deletedUser;
   }
@@ -204,7 +202,7 @@ class UserService {
           { email },
           {
             password: hashedPassword,
-          }
+          },
         );
         return changedPasswordUser;
       }

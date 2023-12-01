@@ -46,13 +46,15 @@
     padding-bottom: 30px;
     border-bottom: 1px solid #929292;
 
-    .allViewBtn {
+    .filterBtnWrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
       padding: 12px 18px;
       border: 2px solid #222;
       border-radius: 10px;
       background-color: #000;
       color: #fff;
-      font-size: 14px;
       font-weight: 600;
       transition: 0.4s;
       &:hover {
@@ -60,11 +62,21 @@
         background-color: #fff;
         color: #000;
       }
+
+      .filterIcon {
+        font-size: 14px;
+      }
+
+      .filterText {
+        font-size: 14px;
+        font-weight: 600;
+      }
     }
 
     .sortBtn {
       padding: 0 6px;
       border-radius: 10px;
+      font-size: 14px;
       text-align: center;
     }
   }
@@ -121,12 +133,12 @@
 
     .searchResult {
       margin-bottom: 30px;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .filterResult {
       margin-bottom: 30px;
-      font-size: 20px;
+      font-size: 18px;
     }
   }
 }

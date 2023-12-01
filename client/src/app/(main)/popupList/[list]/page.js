@@ -3,12 +3,17 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "../../../../utils/instance";
 import PopupStore from "../components/popupStore/PopupStore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import ModalBackGround from "../components/modalBackGround/modalBackGround";
+import FilterModal from "../components/filterModal/FilterModal";
 import "./page.scss";
 
 export default function PopupList() {
   const [pages, setPages] = useState([]);
   const [popupStores, setPopupStores] = useState([]);
   const [documents, setDocuments] = useState(0);
+  const [filterModal, setFilterModal] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -64,6 +69,8 @@ export default function PopupList() {
 
   return (
     <div className="popupList">
+      {filterModal && <ModalBackGround setFilterModal={setFilterModal} />}
+      {filterModal && <FilterModal setFilterModal={setFilterModal} />}
       {pathname === "/popupList/all" ? (
         <div
           className="popupListBanner"
@@ -72,7 +79,7 @@ export default function PopupList() {
           <div className="blackBackground"></div>
           <div className="popupListTitle">
             요즘 팝업스토어 뭐 있지? <br />
-            팝스팝에서 발견하세요!
+            팝스팟에서 발견하세요!
           </div>
         </div>
       ) : pathname === "/popupList/search" ? (
@@ -91,12 +98,14 @@ export default function PopupList() {
       )}
       <div className="btnWrapper">
         <div
-          className="allViewBtn"
+          className="filterBtnWrapper"
           onClick={() => {
-            router.push("/popupList/all?pageNumber=1&limit=8");
+            window.document.body.style.overflowY = "hidden";
+            setFilterModal(true);
           }}
         >
-          전체보기
+          <FontAwesomeIcon className="filterIcon" icon={faSliders} />
+          <div className="filterText">FILTER</div>
         </div>
         <select
           className="sortBtn"

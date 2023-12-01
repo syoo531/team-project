@@ -95,10 +95,12 @@ export default function KakaoAuth() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setTimeout(() => {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }, 0);
   };
 
   const [validCheck, setValidCheck] = useState({

@@ -22,7 +22,7 @@ const SELECT_VALUE = {
   date: null,
 };
 
-export default function FilterModal({ closeModal }) {
+export default function FilterModal({ setFilterModal }) {
   const [currentId, setCurrentId] = useState(1);
   const [selectValue, setSelectValue] = useState(SELECT_VALUE);
   const router = useRouter();
@@ -39,7 +39,8 @@ export default function FilterModal({ closeModal }) {
         selectValue.date ? `&date=${selectValue.date}` : ""
       }`,
     );
-    closeModal();
+    window.document.body.style.overflowY = "scroll";
+    setFilterModal(false);
   }
 
   return (
@@ -50,7 +51,8 @@ export default function FilterModal({ closeModal }) {
           className="closeBtn"
           icon={faCircleXmark}
           onClick={() => {
-            closeModal();
+            window.document.body.style.overflowY = "scroll";
+            setFilterModal(false);
           }}
         />
       </div>

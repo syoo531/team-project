@@ -1,0 +1,208 @@
+.area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+
+  .areaTitle {
+    align-self: flex-start;
+    margin-bottom: 10px;
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .areaSubTitle {
+    align-self: flex-start;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 50px;
+  }
+
+  .seoulMap {
+    width: 80%;
+    margin-bottom: 40px;
+
+    .region {
+      transform-box: fill-box;
+      transform-origin: center;
+      transition: 0.5s;
+
+      &.select {
+        .land {
+          fill: #0472ff;
+        }
+
+        .shadow {
+          fill: #02469d;
+        }
+      }
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(0.9);
+      }
+
+      .land {
+        fill: #c0c0c1;
+        transition: 0.5s;
+      }
+
+      .shadow {
+        fill: #9b9c9b;
+        transition: 0.5s;
+      }
+
+      .regionText {
+        fill: #fff;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        transition: 0.5s;
+      }
+    }
+  }
+  .selectContainer {
+    align-self: flex-start;
+
+    .selectTitle {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .selectEmpty {
+      font-size: 16px;
+      color: #9b9c9b;
+    }
+
+    .selectAreaWrapper {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+
+      .selectArea {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 16px;
+        border: 1px solid #000;
+        border-radius: 50px;
+
+        .areaText {
+          font-size: 14px;
+        }
+        .removeBtn {
+          font-size: 14px;
+          font-weight: 900;
+          color: #fc0320;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .area {
+    padding: 20px;
+
+    .areaTitle {
+      font-size: 18px;
+    }
+
+    .areaSubTitle {
+      font-size: 14px;
+    }
+
+    .seoulMap {
+      width: 100%;
+      margin-bottom: 40px;
+
+      .region {
+        transform-box: fill-box;
+        transform-origin: center;
+        transition: 0.5s;
+
+        &.select {
+          .land {
+            fill: #0472ff;
+          }
+
+          .shadow {
+            fill: #02469d;
+          }
+        }
+
+        &:hover {
+          cursor: pointer;
+          transform: scale(0.9);
+        }
+
+        .land {
+          fill: #c0c0c1;
+          transition: 0.5s;
+        }
+
+        .shadow {
+          fill: #9b9c9b;
+          transition: 0.5s;
+        }
+
+        .regionText {
+          fill: #fff;
+          font-size: 24px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          transition: 0.5s;
+        }
+      }
+    }
+    .selectContainer {
+      align-self: flex-start;
+
+      .selectTitle {
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+
+      .selectEmpty {
+        font-size: 16px;
+        color: #9b9c9b;
+      }
+
+      .selectAreaWrapper {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+
+        .selectArea {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 8px;
+          padding: 6px 16px;
+          border: 1px solid #000;
+          border-radius: 50px;
+
+          .areaText {
+            font-size: 14px;
+          }
+          .removeBtn {
+            font-size: 14px;
+            font-weight: 900;
+            color: #fc0320;
+
+            &:hover {
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -143,7 +143,8 @@ class WaitingService {
         user: userId,
         is_enter: false,
       },
-      { is_enter: true }
+      { is_enter: true },
+      { new: true }
     );
     return waitingList;
   }

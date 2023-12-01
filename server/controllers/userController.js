@@ -28,7 +28,6 @@ const login = async (req, res, next) => {
       throw new ForbiddenError("이메일 또는 비밀번호를 잘못 입력하셨습니다.");
     }
     const [accessToken, is_admin] = loginResult;
-    console.log(loginResult);
     res.status(200).json({
       is_admin: is_admin,
       accessToken: accessToken,
@@ -45,7 +44,6 @@ const signup = async (req, res, next) => {
     if (!name || !email || !password || !phoneNumber || !selectedInterests) {
       throw new BadRequestError("모든 정보가 필요합니다");
     }
-    console.log(name, email, password, phoneNumber, selectedInterests);
     const userService = new UserService();
     const isRegistered = await userService.checkRegistration(email);
 
@@ -76,11 +74,9 @@ const kakaoAuth = async (req, res, next) => {
     const code = req.body.code;
     const userService = new UserService();
     const [kakao_id, email, name] = await userService.kakaoAuth(code);
-    console.log([kakao_id, email, name]); // [카카오회원번호, 이메일, 닉네임]
     const isRegistered = await userService.checkRegistration(email);
     if (isRegistered === "already_sign") {
       // 이미 가입된 경우
-      console.log("이미가입", isRegistered);
       const [accessToken, is_admin] = await userService.oAuthLogin(email);
       res.status(200).json({
         is_admin: is_admin,
@@ -139,7 +135,6 @@ const googleAuth = async (req, res, next) => {
     const userService = new UserService();
 
     const [google_id, email, name] = await userService.googleAuth(code);
-    console.log([google_id, email, name]); // [구글회원번호, 이메일, 이름]
 
     const isRegistered = await userService.checkRegistration(email);
     if (isRegistered === "signout_user") {
@@ -149,7 +144,6 @@ const googleAuth = async (req, res, next) => {
     }
     if (isRegistered === "already_sign") {
       // 이미 가입된 경우
-      console.log("이미가입", isRegistered);
       const [accessToken, is_admin] = await userService.oAuthLogin(email);
 
       res.status(200).json({
