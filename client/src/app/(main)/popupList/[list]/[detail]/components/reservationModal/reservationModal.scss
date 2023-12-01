@@ -224,15 +224,16 @@ $speed: 1500ms !default;
                 padding: 10px 0;
                 width: 100%;
                 font-size: 14px;
-                border: 1px solid #999;
+                border: 1px solid #fff;
                 border-radius: 10px;
                 margin-top: 15px;
                 cursor: pointer;
+                background: #0472ff;
+                color: #fff;
                 &:hover {
-                    color: inherit;
-                    background: inherit;
-                    font-weight: 400;
-                    border-color: inherit;
+                    background: #fff;
+                    color: #0472ff;
+                    border-color: #0472ff;
                 }
             }
             .reviewCloseBtn {
