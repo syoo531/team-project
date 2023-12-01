@@ -2,18 +2,15 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faGripVertical } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "./components/searchBar/SearchBar";
-import ModalBackGround from "./components/modalBackGround/modalBackGround";
-import FilterModal from "./components/filterModal/FilterModal";
 import "./Header.scss";
 
 export default function Header() {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [visible, setVisible] = useState(false);
   const [isOpened, setIsOpened] = useState(false);
   const [infoModal, setInfoModal] = useState(false);
   const router = useRouter();
@@ -26,20 +23,8 @@ export default function Header() {
     }
   }, []);
 
-  function openModal() {
-    setVisible(true);
-    window.document.body.style.overflowY = "hidden";
-  }
-
-  function closeModal() {
-    setVisible(false);
-    window.document.body.style.overflowY = "scroll";
-  }
-
   return (
     <div className="header">
-      {visible && <ModalBackGround closeModal={closeModal} />}
-      {visible && <FilterModal closeModal={closeModal} />}
       {infoModal && (
         <div className="infoBox">
           {token ? (
@@ -47,6 +32,7 @@ export default function Header() {
               className="myPageText"
               onClick={() => {
                 router.push("/mypage");
+                window.scrollTo(0, 0);
                 setInfoModal(false);
               }}
             >
@@ -131,7 +117,13 @@ export default function Header() {
             로그인
           </div>
         ) : (
-          <div className="myBtn" onClick={() => router.push("/mypage")}>
+          <div
+            className="myBtn"
+            onClick={() => {
+              router.push("/mypage");
+              window.scrollTo(0, 0);
+            }}
+          >
             마이페이지
           </div>
         )}
@@ -157,8 +149,11 @@ export default function Header() {
           </div>
         )}
 
-        <div className="findBtnWrapper" onClick={openModal}>
-          <FontAwesomeIcon className="icon" icon={faSliders} />
+        <div
+          className="findBtnWrapper"
+          onClick={() => router.push("/popupList/all?pageNumber=1&limit=8")}
+        >
+          <FontAwesomeIcon className="icon" icon={faGripVertical} />
           <div className="text">FIND</div>
         </div>
       </div>
