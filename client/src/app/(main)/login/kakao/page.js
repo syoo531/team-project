@@ -31,7 +31,7 @@ export default function KakaoAuth() {
           {
             code: code,
           },
-          { withCredentials: true },
+          { withCredentials: true }
         );
         if (res.status === 200) {
           const accessToken = res.data.accessToken;
@@ -130,7 +130,7 @@ export default function KakaoAuth() {
           email: receivedEmail,
           phoneNumber,
           selectedInterests,
-        },
+        }
       );
 
       if (response.status === 200) {
@@ -161,11 +161,7 @@ export default function KakaoAuth() {
                   onChange={(e) => {
                     const newValue = e.target.value;
                     if (!isNaN(newValue)) {
-                      // handleInputChange(e);
-                      setFormData({
-                        ...formData,
-                        [phoneNumber]: e.target.value,
-                      });
+                      handleInputChange(e);
                     }
                   }}
                   placeholder="- 없이 숫자만 입력"
